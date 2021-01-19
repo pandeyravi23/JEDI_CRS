@@ -4,6 +4,13 @@ public class User {
 	protected int userId;
 	protected String userName;
 	protected String role;
+	protected String email;
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	public int getUserId() {
 		return userId;
 	}
