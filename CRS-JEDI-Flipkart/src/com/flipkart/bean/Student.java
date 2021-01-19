@@ -1,4 +1,4 @@
-package com.flipkart.demo;
+package com.flipkart.bean;
 import java.util.ArrayList;
 
 public class Student extends User{
