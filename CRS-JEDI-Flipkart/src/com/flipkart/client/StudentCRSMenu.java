@@ -34,6 +34,7 @@ public class StudentCRSMenu {
     	        student.setEmail(StudentDaoOperation.students.get(i).getEmail());
     	        student.setRollNo(StudentDaoOperation.students.get(i).getRollNo());
     	        student.setBranch(StudentDaoOperation.students.get(i).getBranch());
+    	        student.setIsRegistered(false);
     	        x = 1;
     		}
     	}
