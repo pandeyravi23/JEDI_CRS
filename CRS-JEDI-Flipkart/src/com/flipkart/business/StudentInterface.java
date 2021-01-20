@@ -1,6 +1,7 @@
 package com.flipkart.business;
 
 import com.flipkart.bean.Student;
+import com.flipkart.bean.Course;
 
 public interface StudentInterface {
 
