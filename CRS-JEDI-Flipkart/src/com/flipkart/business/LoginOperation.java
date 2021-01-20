@@ -10,9 +10,9 @@ public class LoginOperation {
 	
 	private Logger logger = Logger.getLogger(LoginOperation.class);
 	
-	public String login(String username, String password) {
+	public boolean login(String username, String password) {
 		logger.info("login");
-		return "";
+		return false;
 	}
 
 	

@@ -6,7 +6,7 @@ import com.flipkart.bean.Student;
 public class StudentOperation implements StudentInterface {
     private static Logger logger = Logger.getLogger(StudentOperation.class);
 
-    public void showcourses(int studentId){
+    public void showCourses(int studentId){
         logger.info("Inside showCourse Method");
     }
 

@@ -4,7 +4,7 @@ import com.flipkart.bean.Student;
 
 public interface StudentInterface {
 
-    public void showcourses(int studentId);
+    public void showCourses(int studentId);
 
     public void viewGrades(int studentId);
 
