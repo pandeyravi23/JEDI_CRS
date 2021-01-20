@@ -636,3 +636,17 @@
 23:05:12,837  INFO StudentCRSMenu,main:81 - Invalid choice
 >>>>>>> d6c929ba306943f1ecc59a76569ced8741246a0b
 >>>>>>> 407af3ffc8da8f35fa0f2bc2a088e647e0aaef30
+23:29:21,593  INFO StudentCRSMenu,main:28 - Enter Student Id
+23:29:47,880  INFO StudentCRSMenu,main:44 - User Not Found
+23:29:56,080  INFO StudentCRSMenu,main:28 - Enter Student Id
+23:29:59,260  INFO StudentCRSMenu,main:90 - Select an operation: 
+23:29:59,260  INFO StudentCRSMenu,main:91 - 1. Show courses
+23:29:59,260  INFO StudentCRSMenu,main:92 - 2. Register courses
+23:29:59,260  INFO StudentCRSMenu,main:93 - 3. Add a course
+23:29:59,260  INFO StudentCRSMenu,main:94 - 4. Drop a course
+23:29:59,260  INFO StudentCRSMenu,main:95 - 5. View registered courses
+23:29:59,260  INFO StudentCRSMenu,main:96 - 6. View grades
+23:29:59,260  INFO StudentCRSMenu,main:97 - 7. Make payment
+23:29:59,260  INFO StudentCRSMenu,main:98 - 8. Update info
+23:29:59,260  INFO StudentCRSMenu,main:99 - -1 to exit menu
+23:30:03,879  INFO StudentCRSMenu,main:56 - Exiting Menu.....
