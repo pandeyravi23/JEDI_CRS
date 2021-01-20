@@ -1,5 +1,15 @@
 package com.flipkart.business;
 
-public interface LoginInterface {
+import com.flipkart.bean.Admin;
+import com.flipkart.bean.Professor;
+import com.flipkart.bean.Student;
 
+public interface LoginInterface {
+	public String login(String username, String password);
+
+	public void registerStudent(Student student, String password);
+
+	public void registerProfessor(Professor professor, String password);
+
+	public void registerAdmin(Admin admin, String password);
 }
