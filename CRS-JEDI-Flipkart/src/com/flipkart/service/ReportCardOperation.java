@@ -1,4 +1,4 @@
-package com.flipkart.business;
+package com.flipkart.service;
 import org.apache.log4j.Logger;
 import com.flipkart.bean.Student;
 import com.flipkart.bean.Admin;
