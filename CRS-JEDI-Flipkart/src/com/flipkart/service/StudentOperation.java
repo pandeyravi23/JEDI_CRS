@@ -29,8 +29,35 @@ public class StudentOperation implements StudentInterface {
         return false;
     }
 
-    public boolean updateInfo(int studentId){
+    public boolean updateInfo(Student student){
         logger.info("Inside updateInfo Method");
+        
+        logger.info("Enter 1 to update email");
+        logger.info("Enter 2 to update name");
+        
+        Scanner sc = new Scanner(System.in);
+        int choice = sc.nextInt();
+        
+        switch(choice)
+        {
+        	case 1:
+        		logger.info("Enter the new email : ");
+        		String email = sc.nextLine();
+        		if(email.equals(""))
+        			email = sc.nextLine();
+        		student.setEmail(email);
+        		logger.info("Email Successully updated");
+        		break;
+        	case 2:
+        		logger.info("Enter the new name : ");
+        		String name = sc.nextLine();
+        		if(name.equals(""))
+        			name = sc.nextLine();
+        		student.setUserName(name);
+        		logger.info("Name Successully updated");
+        		break;
+        }
+        
         return false;
     }
 
