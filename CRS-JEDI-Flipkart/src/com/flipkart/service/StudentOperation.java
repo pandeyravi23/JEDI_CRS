@@ -13,10 +13,11 @@ public class StudentOperation implements StudentInterface {
 	CoursesDaoOperation courseListObj = new CoursesDaoOperation();
 
     public void showCourses(int studentId){
-    	logger.info("Inside showCourse Method");
+    	logger.info("================AVAILABLE COURSES================\n");
     	for (Course course : CoursesDaoOperation.courses) {
     		logger.info(course.getCourseID() + " " + course.getCourseName());
     	}
+    	logger.info("=================================================\n");
     }
 
     public void viewGrades(int studentId){
@@ -30,7 +31,7 @@ public class StudentOperation implements StudentInterface {
     }
 
     public boolean updateInfo(Student student){
-        logger.info("Inside updateInfo Method");
+        logger.info("================UPDATE INFO================\n");
         
         logger.info("Enter 1 to update email");
         logger.info("Enter 2 to update name");
@@ -57,45 +58,40 @@ public class StudentOperation implements StudentInterface {
         		logger.info("Name Successully updated");
         		break;
         }
-        
+        logger.info("===========================================\n");
         return false;
     }
 
     public boolean addCourse(Student student, int courseId){
-        logger.info("Inside addCourse Method");
         ArrayList<Integer> enrolledCourses = student.getEnrolledCourses();
         if(enrolledCourses.contains(courseId)==false){
             enrolledCourses.add(courseId);
             student.setEnrolledCourses(enrolledCourses);
             //viewRegisteredCourses(student);
-            logger.info("Course added successfully");
+            logger.info(">>>>  Course added successfully  <<<<\n");
         }
         else{
-            logger.info("Course already exists");
+            logger.info(">>>>  Course already exists  <<<<\n");
         }
-
         return false;
     }
 
     public boolean deleteCourse(Student student, int courseId){
-        logger.info("Inside deleteCourse Method");
-
         ArrayList<Integer> enrolledCourses = student.getEnrolledCourses();
         if(enrolledCourses.contains(courseId)){
             enrolledCourses.remove(Integer.valueOf(courseId));
             student.setEnrolledCourses(enrolledCourses);
-            logger.info("Course removed successfully");
+            logger.info(">>>>  Course removed successfully  <<<<\n");
         }
         else{
-            logger.info("Course does not exists");
+            logger.info(">>>>  Course does not exists  <<<<\n");
         }
-
         return false;
     }
 
     public boolean registerCourses(Student student){
     	student.setIsRegistered(true);
-        logger.info("Inside registerCourse Method");
+        logger.info("================COURSE REGISTRATION================\n");
         while(true){
             logger.info("Enter 1 to add course");
             logger.info("Enter 2 to delete course");
@@ -117,15 +113,17 @@ public class StudentOperation implements StudentInterface {
                 break;
             }
         }
+        logger.info("==============================================\n");
         return false;
     }
 
     public void viewRegisteredCourses(Student student){
         ArrayList<Integer> enrolledCourses = student.getEnrolledCourses();
-        logger.info("Registered Course IDs: ");
+        logger.info("================REGISTERED COURSES================\n");
         for(Integer i : enrolledCourses){
             logger.info(i);
         }
+        logger.info("==================================================\n");
     }
 }
 
