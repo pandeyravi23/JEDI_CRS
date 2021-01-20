@@ -435,3 +435,169 @@
 21:57:48,244  INFO StudentOperation,main:19 - 153 Electronics
 21:57:50,411  INFO StudentCRSMenu,main:66 - Invalid choice
 >>>>>>> 116bfa1965d841906e3d7fb397d64eea785f6c3d
+23:07:43,263  INFO StudentCRSMenu,main:28 - Enter Student Id
+23:07:56,170  INFO StudentCRSMenu,main:43 - User Not Found
+23:08:55,268  INFO StudentCRSMenu,main:28 - Enter Student Id
+23:09:01,290  INFO StudentCRSMenu,main:87 - Select an operation: 
+23:09:01,290  INFO StudentCRSMenu,main:88 - 1. Show courses
+23:09:01,290  INFO StudentCRSMenu,main:89 - 2. Register courses
+23:09:01,298  INFO StudentCRSMenu,main:90 - 3. Add a course
+23:09:01,299  INFO StudentCRSMenu,main:91 - 4. Drop a course
+23:09:01,299  INFO StudentCRSMenu,main:92 - 5. View registered courses
+23:09:01,299  INFO StudentCRSMenu,main:93 - 6. View grades
+23:09:01,299  INFO StudentCRSMenu,main:94 - 7. Make payment
+23:09:01,299  INFO StudentCRSMenu,main:95 - 8. Update info
+23:09:04,728  INFO StudentCRSMenu,main:100 - Student needs to start registration to add course
+23:09:06,820  INFO StudentOperation,main:71 - Inside registerCourse Method
+23:09:06,820  INFO StudentOperation,main:72 - Enter 1 to add course
+23:09:06,820  INFO StudentOperation,main:73 - Enter 2 to delete course
+23:09:06,820  INFO StudentOperation,main:74 - Enter 3 to finish registration process
+23:09:08,469  INFO StudentOperation,main:78 - Enter course ID: 
+23:09:11,319  INFO StudentOperation,main:38 - Inside addCourse Method
+23:09:11,319  INFO StudentOperation,main:44 - Course added successfully
+23:09:19,448  INFO StudentOperation,main:16 - Inside showCourse Method
+23:09:19,472  INFO StudentOperation,main:18 - 151 Mathematics
+23:09:19,472  INFO StudentOperation,main:18 - 152 ComputerScience
+23:09:19,478  INFO StudentOperation,main:18 - 153 Electronics
+23:11:26,649  INFO StudentCRSMenu,main:80 - Invalid choice
+23:11:37,488  INFO StudentCRSMenu,main:28 - Enter Student Id
+23:11:40,379  INFO StudentCRSMenu,main:87 - Select an operation: 
+23:11:40,379  INFO StudentCRSMenu,main:88 - 1. Show courses
+23:11:40,379  INFO StudentCRSMenu,main:89 - 2. Register courses
+23:11:40,379  INFO StudentCRSMenu,main:90 - 3. Add a course
+23:11:40,379  INFO StudentCRSMenu,main:91 - 4. Drop a course
+23:11:40,379  INFO StudentCRSMenu,main:92 - 5. View registered courses
+23:11:40,379  INFO StudentCRSMenu,main:93 - 6. View grades
+23:11:40,379  INFO StudentCRSMenu,main:94 - 7. Make payment
+23:11:40,379  INFO StudentCRSMenu,main:95 - 8. Update info
+23:11:43,360  INFO StudentOperation,main:71 - Inside registerCourse Method
+23:11:43,368  INFO StudentOperation,main:73 - Enter 1 to add course
+23:11:43,368  INFO StudentOperation,main:74 - Enter 2 to delete course
+23:11:43,368  INFO StudentOperation,main:75 - Enter 3 to finish registration process
+23:11:44,908  INFO StudentOperation,main:79 - Enter course ID: 
+23:11:48,538  INFO StudentOperation,main:38 - Inside addCourse Method
+23:11:48,539  INFO StudentOperation,main:44 - Course added successfully
+23:11:48,539  INFO StudentOperation,main:73 - Enter 1 to add course
+23:11:48,539  INFO StudentOperation,main:74 - Enter 2 to delete course
+23:11:48,539  INFO StudentOperation,main:75 - Enter 3 to finish registration process
+23:11:56,718  INFO StudentOperation,main:79 - Enter course ID: 
+23:11:59,400  INFO StudentOperation,main:38 - Inside addCourse Method
+23:11:59,400  INFO StudentOperation,main:44 - Course added successfully
+23:11:59,400  INFO StudentOperation,main:73 - Enter 1 to add course
+23:11:59,400  INFO StudentOperation,main:74 - Enter 2 to delete course
+23:11:59,408  INFO StudentOperation,main:75 - Enter 3 to finish registration process
+23:12:01,849  INFO StudentOperation,main:89 - Proceed to make payment
+23:13:39,338  INFO StudentCRSMenu,main:80 - Invalid choice
+23:13:48,589  INFO StudentCRSMenu,main:28 - Enter Student Id
+23:13:52,550  INFO StudentCRSMenu,main:86 - Select an operation: 
+23:13:52,550  INFO StudentCRSMenu,main:87 - 1. Show courses
+23:13:52,550  INFO StudentCRSMenu,main:88 - 2. Register courses
+23:13:52,550  INFO StudentCRSMenu,main:89 - 3. Add a course
+23:13:52,550  INFO StudentCRSMenu,main:90 - 4. Drop a course
+23:13:52,550  INFO StudentCRSMenu,main:91 - 5. View registered courses
+23:13:52,550  INFO StudentCRSMenu,main:92 - 6. View grades
+23:13:52,550  INFO StudentCRSMenu,main:93 - 7. Make payment
+23:13:52,550  INFO StudentCRSMenu,main:94 - 8. Update info
+23:13:58,460  INFO StudentOperation,main:71 - Inside registerCourse Method
+23:13:58,460  INFO StudentOperation,main:73 - Enter 1 to add course
+23:13:58,460  INFO StudentOperation,main:74 - Enter 2 to delete course
+23:13:58,460  INFO StudentOperation,main:75 - Enter 3 to finish registration process
+23:14:00,490  INFO StudentOperation,main:79 - Enter course ID: 
+23:14:04,409  INFO StudentOperation,main:38 - Inside addCourse Method
+23:14:04,409  INFO StudentOperation,main:44 - Course added successfully
+23:14:04,409  INFO StudentOperation,main:73 - Enter 1 to add course
+23:14:04,409  INFO StudentOperation,main:74 - Enter 2 to delete course
+23:14:04,409  INFO StudentOperation,main:75 - Enter 3 to finish registration process
+23:14:06,600  INFO StudentOperation,main:79 - Enter course ID: 
+23:14:08,478  INFO StudentOperation,main:38 - Inside addCourse Method
+23:14:08,478  INFO StudentOperation,main:44 - Course added successfully
+23:14:08,478  INFO StudentOperation,main:73 - Enter 1 to add course
+23:14:08,478  INFO StudentOperation,main:74 - Enter 2 to delete course
+23:14:08,478  INFO StudentOperation,main:75 - Enter 3 to finish registration process
+23:14:10,949  INFO StudentOperation,main:89 - Proceed to make payment
+23:14:10,949  INFO StudentCRSMenu,main:86 - Select an operation: 
+23:14:10,949  INFO StudentCRSMenu,main:87 - 1. Show courses
+23:14:10,949  INFO StudentCRSMenu,main:88 - 2. Register courses
+23:14:10,949  INFO StudentCRSMenu,main:89 - 3. Add a course
+23:14:10,949  INFO StudentCRSMenu,main:90 - 4. Drop a course
+23:14:10,949  INFO StudentCRSMenu,main:91 - 5. View registered courses
+23:14:10,949  INFO StudentCRSMenu,main:92 - 6. View grades
+23:14:10,949  INFO StudentCRSMenu,main:93 - 7. Make payment
+23:14:10,949  INFO StudentCRSMenu,main:94 - 8. Update info
+23:14:59,559  INFO StudentCRSMenu,main:79 - Invalid choice
+23:15:07,883  INFO StudentCRSMenu,main:28 - Enter Student Id
+23:15:14,118  INFO StudentCRSMenu,main:86 - Select an operation: 
+23:15:14,118  INFO StudentCRSMenu,main:87 - 1. Show courses
+23:15:14,118  INFO StudentCRSMenu,main:88 - 2. Register courses
+23:15:14,118  INFO StudentCRSMenu,main:89 - 3. Add a course
+23:15:14,118  INFO StudentCRSMenu,main:90 - 4. Drop a course
+23:15:14,118  INFO StudentCRSMenu,main:91 - 5. View registered courses
+23:15:14,123  INFO StudentCRSMenu,main:92 - 6. View grades
+23:15:14,123  INFO StudentCRSMenu,main:93 - 7. Make payment
+23:15:14,123  INFO StudentCRSMenu,main:94 - 8. Update info
+23:15:14,123  INFO StudentCRSMenu,main:95 - -1 to exit menu
+23:15:25,948  INFO StudentCRSMenu,main:79 - Invalid choice
+23:16:18,680  INFO StudentCRSMenu,main:28 - Enter Student Id
+23:16:20,999  INFO StudentCRSMenu,main:89 - Select an operation: 
+23:16:20,999  INFO StudentCRSMenu,main:90 - 1. Show courses
+23:16:20,999  INFO StudentCRSMenu,main:91 - 2. Register courses
+23:16:21,008  INFO StudentCRSMenu,main:92 - 3. Add a course
+23:16:21,008  INFO StudentCRSMenu,main:93 - 4. Drop a course
+23:16:21,008  INFO StudentCRSMenu,main:94 - 5. View registered courses
+23:16:21,008  INFO StudentCRSMenu,main:95 - 6. View grades
+23:16:21,008  INFO StudentCRSMenu,main:96 - 7. Make payment
+23:16:21,008  INFO StudentCRSMenu,main:97 - 8. Update info
+23:16:21,008  INFO StudentCRSMenu,main:98 - -1 to exit menu
+23:16:23,579  INFO StudentCRSMenu,main:55 - Exiting Menu.....
+23:22:09,499  INFO StudentCRSMenu,main:28 - Enter Student Id
+23:22:12,668  INFO StudentCRSMenu,main:89 - Select an operation: 
+23:22:12,669  INFO StudentCRSMenu,main:90 - 1. Show courses
+23:22:12,670  INFO StudentCRSMenu,main:91 - 2. Register courses
+23:22:12,670  INFO StudentCRSMenu,main:92 - 3. Add a course
+23:22:12,670  INFO StudentCRSMenu,main:93 - 4. Drop a course
+23:22:12,670  INFO StudentCRSMenu,main:94 - 5. View registered courses
+23:22:12,670  INFO StudentCRSMenu,main:95 - 6. View grades
+23:22:12,670  INFO StudentCRSMenu,main:96 - 7. Make payment
+23:22:12,670  INFO StudentCRSMenu,main:97 - 8. Update info
+23:22:12,670  INFO StudentCRSMenu,main:98 - -1 to exit menu
+23:22:21,509  INFO StudentOperation,main:71 - Inside registerCourse Method
+23:22:21,510  INFO StudentOperation,main:73 - Enter 1 to add course
+23:22:21,510  INFO StudentOperation,main:74 - Enter 2 to delete course
+23:22:21,510  INFO StudentOperation,main:75 - Enter 3 to finish registration process
+23:22:23,300  INFO StudentOperation,main:79 - Enter course ID: 
+23:22:25,728  INFO StudentOperation,main:38 - Inside addCourse Method
+23:22:25,729  INFO StudentOperation,main:44 - Course added successfully
+23:22:25,730  INFO StudentOperation,main:73 - Enter 1 to add course
+23:22:25,730  INFO StudentOperation,main:74 - Enter 2 to delete course
+23:22:25,730  INFO StudentOperation,main:75 - Enter 3 to finish registration process
+23:22:40,550  INFO StudentOperation,main:79 - Enter course ID: 
+23:22:43,219  INFO StudentOperation,main:38 - Inside addCourse Method
+23:22:43,219  INFO StudentOperation,main:44 - Course added successfully
+23:22:43,219  INFO StudentOperation,main:73 - Enter 1 to add course
+23:22:43,219  INFO StudentOperation,main:74 - Enter 2 to delete course
+23:22:43,219  INFO StudentOperation,main:75 - Enter 3 to finish registration process
+23:22:56,570  INFO StudentOperation,main:89 - Proceed to make payment
+23:22:56,570  INFO StudentCRSMenu,main:89 - Select an operation: 
+23:22:56,570  INFO StudentCRSMenu,main:90 - 1. Show courses
+23:22:56,578  INFO StudentCRSMenu,main:91 - 2. Register courses
+23:22:56,578  INFO StudentCRSMenu,main:92 - 3. Add a course
+23:22:56,579  INFO StudentCRSMenu,main:93 - 4. Drop a course
+23:22:56,579  INFO StudentCRSMenu,main:94 - 5. View registered courses
+23:22:56,579  INFO StudentCRSMenu,main:95 - 6. View grades
+23:22:56,579  INFO StudentCRSMenu,main:96 - 7. Make payment
+23:22:56,579  INFO StudentCRSMenu,main:97 - 8. Update info
+23:22:56,579  INFO StudentCRSMenu,main:98 - -1 to exit menu
+23:23:19,610  INFO StudentOperation,main:98 - Registered Course IDs: 
+23:23:19,610  INFO StudentOperation,main:100 - 151
+23:23:19,610  INFO StudentOperation,main:100 - 152
+23:23:19,610  INFO StudentCRSMenu,main:89 - Select an operation: 
+23:23:19,610  INFO StudentCRSMenu,main:90 - 1. Show courses
+23:23:19,610  INFO StudentCRSMenu,main:91 - 2. Register courses
+23:23:19,610  INFO StudentCRSMenu,main:92 - 3. Add a course
+23:23:19,610  INFO StudentCRSMenu,main:93 - 4. Drop a course
+23:23:19,610  INFO StudentCRSMenu,main:94 - 5. View registered courses
+23:23:19,610  INFO StudentCRSMenu,main:95 - 6. View grades
+23:23:19,610  INFO StudentCRSMenu,main:96 - 7. Make payment
+23:23:19,618  INFO StudentCRSMenu,main:97 - 8. Update info
+23:23:19,618  INFO StudentCRSMenu,main:98 - -1 to exit menu
+23:23:29,428  INFO StudentCRSMenu,main:55 - Exiting Menu.....

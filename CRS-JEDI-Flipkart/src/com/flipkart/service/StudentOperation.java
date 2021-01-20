@@ -69,23 +69,26 @@ public class StudentOperation implements StudentInterface {
     public boolean registerCourses(Student student){
     	student.setIsRegistered(true);
         logger.info("Inside registerCourse Method");
-        logger.info("Enter 1 to add course");
-        logger.info("Enter 2 to delete course");
-        logger.info("Enter 3 to finish registration process");
-        Scanner input = new Scanner(System.in);
-        int operation = input.nextInt();
-        if(operation==1){
-            logger.info("Enter course ID: ");
-            int courseID = input.nextInt();
-            addCourse(student,courseID);
-        }
-        else if(operation==2){
-            logger.info("Enter course ID: ");
-            int courseID = input.nextInt();
-            deleteCourse(student,courseID);
-        }
-        else if(operation==3){
-            logger.info("Proceed to make payment");
+        while(true){
+            logger.info("Enter 1 to add course");
+            logger.info("Enter 2 to delete course");
+            logger.info("Enter 3 to finish registration process");
+            Scanner input = new Scanner(System.in);
+            int operation = input.nextInt();
+            if(operation==1){
+                logger.info("Enter course ID: ");
+                int courseID = input.nextInt();
+                addCourse(student,courseID);
+            }
+            else if(operation==2){
+                logger.info("Enter course ID: ");
+                int courseID = input.nextInt();
+                deleteCourse(student,courseID);
+            }
+            else if(operation==3){
+                logger.info("Proceed to make payment");
+                break;
+            }
         }
         return false;
     }
