@@ -18,12 +18,13 @@ public class ProfessorOperation implements ProfessorInterface {
 
 	@Override
 	public Boolean gradeStudents() {
-		return null;
+		logger.info("Inside Grade Students");
+		return true;
 	}
 
 	@Override
 	public void showCourses() {
-		
+		logger.info("Inside showCourses");
 	}
 
 }
