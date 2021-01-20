@@ -51,6 +51,7 @@ public class StudentCRSMenu {
         do{
             showChoices();
             choice = input.nextInt();
+
             switch (choice){
                 case -1:
                     logger.info("Exiting Menu.....");
@@ -77,7 +78,7 @@ public class StudentCRSMenu {
                     makePayment();
                     break;
                 case 8:
-                    studentOperation.updateInfo(student.getUserId());
+                    studentOperation.updateInfo(student);
                     break;
                 default:
                     logger.info("Invalid choice");
