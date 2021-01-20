@@ -6,13 +6,15 @@ import com.flipkart.service.StudentInterface;
 import com.flipkart.service.StudentOperation;
 import org.apache.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class StudentCRSMenu {
 
     private static Logger logger = Logger.getLogger(StudentCRSMenu.class);
     private static StudentInterface studentOperation = new StudentOperation();
-    private static Student student = new Student();
+    public static Student student = new Student();
+    //public static ArrayList<Integer> al = new ArrayList<>();
 
     public static void main(String[] args){
 
@@ -21,6 +23,7 @@ public class StudentCRSMenu {
         student.setEmail("xyz@gmail.com");
         student.setRollNo(10275);
         student.setBranch("ECE");
+
 
         //populate
         CoursesDaoOperation obj = new CoursesDaoOperation();
@@ -74,14 +77,14 @@ public class StudentCRSMenu {
         logger.info("Enter course ID to be added");
         Scanner input = new Scanner(System.in);
         int courseID = input.nextInt();
-        studentOperation.addCourse(student.getUserId(),courseID);
+        studentOperation.addCourse(student,courseID);
     }
 
     public static void dropCourse(){
         logger.info("Enter course ID to be dropped");
         Scanner input = new Scanner(System.in);
         int courseID = input.nextInt();
-        studentOperation.deleteCourse(student.getUserId(),courseID);
+        studentOperation.deleteCourse(student,courseID);
     }
 
     public static void makePayment(){
