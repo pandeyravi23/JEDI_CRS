@@ -467,3 +467,37 @@
 23:05:10,592  INFO StudentOperation,main:19 - 153 Electronics
 23:05:12,837  INFO StudentCRSMenu,main:81 - Invalid choice
 >>>>>>> d6c929ba306943f1ecc59a76569ced8741246a0b
+23:09:58,039  INFO StudentCRSMenu,main:27 - Enter Student Id
+23:10:03,391  INFO StudentCRSMenu,main:88 - Select an operation: 
+23:10:03,392  INFO StudentCRSMenu,main:89 - 1. Show courses
+23:10:03,392  INFO StudentCRSMenu,main:90 - 2. Register courses
+23:10:03,392  INFO StudentCRSMenu,main:91 - 3. Add a course
+23:10:03,393  INFO StudentCRSMenu,main:92 - 4. Drop a course
+23:10:03,394  INFO StudentCRSMenu,main:93 - 5. View registered courses
+23:10:03,394  INFO StudentCRSMenu,main:94 - 6. View grades
+23:10:03,394  INFO StudentCRSMenu,main:95 - 7. Make payment
+23:10:03,394  INFO StudentCRSMenu,main:96 - 8. Update info
+23:10:13,117  INFO StudentCRSMenu,main:27 - Enter Student Id
+23:10:15,423  INFO StudentCRSMenu,main:88 - Select an operation: 
+23:10:15,424  INFO StudentCRSMenu,main:89 - 1. Show courses
+23:10:15,424  INFO StudentCRSMenu,main:90 - 2. Register courses
+23:10:15,425  INFO StudentCRSMenu,main:91 - 3. Add a course
+23:10:15,425  INFO StudentCRSMenu,main:92 - 4. Drop a course
+23:10:15,425  INFO StudentCRSMenu,main:93 - 5. View registered courses
+23:10:15,426  INFO StudentCRSMenu,main:94 - 6. View grades
+23:10:15,426  INFO StudentCRSMenu,main:95 - 7. Make payment
+23:10:15,426  INFO StudentCRSMenu,main:96 - 8. Update info
+23:18:14,503  INFO StudentCRSMenu,main:27 - Enter Student Id
+23:18:18,867  INFO StudentCRSMenu,main:88 - Select an operation: 
+23:18:18,868  INFO StudentCRSMenu,main:89 - 1. Show courses
+23:18:18,868  INFO StudentCRSMenu,main:90 - 2. Register courses
+23:18:18,869  INFO StudentCRSMenu,main:91 - 3. Add a course
+23:18:18,869  INFO StudentCRSMenu,main:92 - 4. Drop a course
+23:18:18,869  INFO StudentCRSMenu,main:93 - 5. View registered courses
+23:18:18,869  INFO StudentCRSMenu,main:94 - 6. View grades
+23:18:18,870  INFO StudentCRSMenu,main:95 - 7. Make payment
+23:18:18,870  INFO StudentCRSMenu,main:96 - 8. Update info
+23:19:48,989  INFO StudentCRSMenu,main:27 - Enter Student Id
+23:20:41,016  INFO StudentCRSMenu,main:27 - Enter Student Id
+23:20:43,327  INFO StudentCRSMenu,main:27 - Enter Student Id
+23:20:48,552  INFO StudentCRSMenu,main:27 - Enter Student Id
