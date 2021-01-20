@@ -4,12 +4,13 @@ import com.flipkart.bean.Student;
 import com.flipkart.bean.Admin;
 
 public class ReportCardOperation implements ReportCardInterface {
-
-	void printGradeReport(int adminId, Student student){
+	private static Logger logger = Logger.getLogger(StudentOperation.class);
+	
+	public void printGradeReport(int adminId, Student student){
 		logger.info("Inside printGradeReport Method");
 	}
 
-	void emailGradeReport(int adminId, Student student){
+	public void emailGradeReport(int adminId, Student student){
 		logger.info("Inside emailGradeReport Method");
 	}
 }
