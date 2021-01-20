@@ -1,12 +1,14 @@
 package com.flipkart.business;
 
+import com.flipkart.bean.Student;
+
 public interface StudentInterface {
 
     public void showcourses(int studentId);
 
     public void viewGrades(int studentId);
 
-    public boolean makePayment(Sudent student);
+    public boolean makePayment(Student student);
 
     public boolean updateInfo(int studentId);
 

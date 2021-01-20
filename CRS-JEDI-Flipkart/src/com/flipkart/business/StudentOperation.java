@@ -1,35 +1,42 @@
 package com.flipkart.business;
 import org.apache.log4j.Logger;
 
+import com.flipkart.bean.Student;
+
 public class StudentOperation implements StudentInterface {
     private static Logger logger = Logger.getLogger(StudentOperation.class);
 
     public void showcourses(int studentId){
-        looger.info("Inside showCourse Method");
+        logger.info("Inside showCourse Method");
     }
 
     public void viewGrades(int studentId){
-        looger.info("Inside viewGrades Method");
+        logger.info("Inside viewGrades Method");
     }
 
-    public boolean makePayment(Sudent student){
-        looger.info("Inside makePayment Method");
+    public boolean makePayment(Student student){
+        logger.info("Inside makePayment Method");
+        return false;
     }
 
     public boolean updateInfo(int studentId){
-        looger.info("Inside updateInfo Method");
+        logger.info("Inside updateInfo Method");
+        return false;
     }
 
     public boolean addCourse(int studentId,int courseId){
-        looger.info("Inside addCourse Method");
+        logger.info("Inside addCourse Method");
+        return false;
     }
 
     public boolean deleteCourse(int studentId,int courseId){
-        looger.info("Inside deleteCourse Method");
+        logger.info("Inside deleteCourse Method");
+        return false;
     }
 
     public boolean registerCourses(Student student){
-        looger.info("Inside registerCourse Method");
+        logger.info("Inside registerCourse Method");
+        return false;
     }
 }
 

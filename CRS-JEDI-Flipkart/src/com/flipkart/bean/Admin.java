@@ -1,5 +1,7 @@
 package com.flipkart.bean;
 
+import com.flipkart.bean.User;
+
 public class Admin extends User {
 	
 	private int adminId;
