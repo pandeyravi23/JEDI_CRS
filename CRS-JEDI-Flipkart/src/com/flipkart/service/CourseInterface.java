@@ -2,7 +2,7 @@ package com.flipkart.service;
 
 import com.flipkart.bean.Course;
 
-public interface CourseCatalogInterface {
+public interface CourseInterface {
     public boolean addCourse(Course course);
 
     public boolean deleteCourse(int courseID);

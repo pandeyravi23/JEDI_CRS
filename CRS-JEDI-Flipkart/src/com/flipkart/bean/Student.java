@@ -5,22 +5,22 @@ public class Student extends User{
 	
 	private int rollNo;
 	private boolean isRegistered;
-	private ArrayList<Integer> enrolledCourses = new ArrayList<>();
+	private ArrayList<Integer> enrolledCourses;
 	public String branch;
 	
-	public void setrollNo(int rollNo) {
+	public void setRollNo(int rollNo) {
 		this.rollNo = rollNo;
 	}
 	
-	public int getrollNo() {
+	public int getRollNo() {
 		return rollNo;
 	}
 	
-	public boolean getisRegistered() {
+	public boolean getIsRegistered() {
 		return isRegistered;
 	}
 	
-	public void setisRegistered(boolean isRegistered) {
+	public void setIsRegistered(boolean isRegistered) {
 		this.isRegistered = isRegistered;
 	}
 	
