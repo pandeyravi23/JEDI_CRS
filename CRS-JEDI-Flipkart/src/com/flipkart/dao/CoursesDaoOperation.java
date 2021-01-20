@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.*;
 
 import com.flipkart.bean.Course;
+import com.flipkart.bean.Student;
 
 public class CoursesDaoOperation implements CoursesDaoInterface {
 	List<Course> courses = new ArrayList<>();
@@ -14,15 +15,15 @@ public class CoursesDaoOperation implements CoursesDaoInterface {
 	}
 
 	@Override
-	public ArrayList<String> getEnrolledStudentsID(int courseId) {
-		ArrayList<String> enrolledStudentsID = new ArrayList<String>();
+	public ArrayList<Student> getEnrolledStudents(int courseId) {
+		ArrayList<Student> enrolledStudents = new ArrayList<Student>();
 		for(Course course: courses) {
 			if(course.getCourseID() == courseId) {
-				enrolledStudentsID = course.getListOfEnrolledStudents();
+				enrolledStudents = course.getListOfEnrolledStudents();
 				break;
 			}
 		}
-		return enrolledStudentsID;
+		return enrolledStudents;
 	}
 	
 	@Override
@@ -42,9 +43,12 @@ public class CoursesDaoOperation implements CoursesDaoInterface {
 				newCourse.setProfessorAllotted(elements[2]);
 				newCourse.setCredits(Integer.parseInt(elements[3]));
 				
-				ArrayList<String> studentsEnrolled = new ArrayList<>();
-				for(int i = 4; i < elements.length; ++i) {
-					studentsEnrolled.add(elements[i]);
+				ArrayList<Student> studentsEnrolled = new ArrayList<>();
+				for(int i = 4; i < elements.length; i+=2) {
+					Student newStudent = new Student();
+					newStudent.setUserName(elements[i]);
+					newStudent.setUserId(Integer.parseInt(elements[i + 1]));
+					studentsEnrolled.add(newStudent);
 				}
 				newCourse.setListOfEnrolledStudents(studentsEnrolled);
 				
