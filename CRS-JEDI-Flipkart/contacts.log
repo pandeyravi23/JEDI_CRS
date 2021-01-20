@@ -1,2 +1,12 @@
 14:05:54,603  INFO StudentOperation,main:11 - Welcome!!!
 14:06:07,380  INFO UserClient,main:11 - Welcome!!!
+19:58:31,225  INFO StudentCRSMenu,main:59 - Select an operation: 
+19:58:31,232  INFO StudentCRSMenu,main:60 - 1. Show courses
+19:58:31,233  INFO StudentCRSMenu,main:61 - 2. Register courses
+19:58:31,233  INFO StudentCRSMenu,main:62 - 3. Add a course
+19:58:31,234  INFO StudentCRSMenu,main:63 - 4. Drop a course
+19:58:31,234  INFO StudentCRSMenu,main:64 - 5. View registered courses
+19:58:31,234  INFO StudentCRSMenu,main:65 - 6. View grades
+19:58:31,236  INFO StudentCRSMenu,main:66 - 7. Make payment
+19:58:31,236  INFO StudentCRSMenu,main:67 - 8. Update info
+19:58:39,458  INFO StudentOperation,main:11 - Inside showCourse Method
