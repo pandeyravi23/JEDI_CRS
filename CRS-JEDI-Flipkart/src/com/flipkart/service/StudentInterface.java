@@ -11,7 +11,7 @@ public interface StudentInterface {
 
     public boolean makePayment(Student student);
 
-    public boolean updateInfo(int studentId);
+    public boolean updateInfo(Student student);
 
     public boolean addCourse(Student student,int courseId);
 

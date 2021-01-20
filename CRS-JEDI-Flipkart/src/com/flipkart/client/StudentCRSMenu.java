@@ -75,7 +75,7 @@ public class StudentCRSMenu {
                 makePayment();
                 break;
             case 8:
-                studentOperation.updateInfo(student.getUserId());
+                studentOperation.updateInfo(student);
                 break;
             default:
                 logger.info("Invalid choice");
