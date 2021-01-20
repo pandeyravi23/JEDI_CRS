@@ -67,6 +67,7 @@ public class StudentOperation implements StudentInterface {
     }
 
     public boolean registerCourses(Student student){
+    	student.setIsRegistered(true);
         logger.info("Inside registerCourse Method");
         logger.info("Enter 1 to add course");
         logger.info("Enter 2 to delete course");

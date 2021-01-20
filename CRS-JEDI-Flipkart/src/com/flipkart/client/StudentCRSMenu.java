@@ -13,25 +13,40 @@ public class StudentCRSMenu {
 
     private static Logger logger = Logger.getLogger(StudentCRSMenu.class);
     private static StudentInterface studentOperation = new StudentOperation();
-    public static Student student = new Student();
+    private static Student student = new Student();
     //public static ArrayList<Integer> al = new ArrayList<>();
 
     public static void main(String[] args){
-
-        student.setUserId(101);
-        student.setUserName("Chinmay");
-        student.setEmail("xyz@gmail.com");
-        student.setRollNo(10275);
-        student.setBranch("ECE");
-
-
-        //populate
+    	//populate
         CoursesDaoOperation obj = new CoursesDaoOperation();
         obj.populate();
+        StudentDaoOperation obj2 = new StudentDaoOperation();
+        obj2.populate();
+    	Scanner input = new Scanner(System.in);
+    	logger.info("Enter Student Id");
+    	int x = 0;
+    	int id = input.nextInt();
+    	for(int i=0;i<StudentDaoOperation.students.size();i++) {
+    		if (StudentDaoOperation.students.get(i).getUserId()==id) {
+    			student.setUserId(StudentDaoOperation.students.get(i).getUserId());
+    	        student.setUserName(StudentDaoOperation.students.get(i).getUserName());
+    	        student.setEmail(StudentDaoOperation.students.get(i).getEmail());
+    	        student.setRollNo(StudentDaoOperation.students.get(i).getRollNo());
+    	        student.setBranch(StudentDaoOperation.students.get(i).getBranch());
+    	        x = 1;
+    		}
+    	}
+        if (x==0) {
+        	logger.info("User Not Found");
+        	return;
+        }
+
+
+        
 
         
         showChoices();
-        Scanner input = new Scanner(System.in);
+        
         int choice;
 
         do{
@@ -80,6 +95,10 @@ public class StudentCRSMenu {
     }
 
     public static void addCourse(){
+    	if (student.getIsRegistered()==false) {
+        	logger.info("Student needs to start registration to add course");
+        	return;
+        }
         logger.info("Enter course ID to be added");
         Scanner input = new Scanner(System.in);
         int courseID = input.nextInt();
@@ -87,6 +106,10 @@ public class StudentCRSMenu {
     }
 
     public static void dropCourse(){
+    	if (student.getIsRegistered()==false) {
+        	logger.info("Student needs to start registration to drop course");
+        	return;
+        }
         logger.info("Enter course ID to be dropped");
         Scanner input = new Scanner(System.in);
         int courseID = input.nextInt();
