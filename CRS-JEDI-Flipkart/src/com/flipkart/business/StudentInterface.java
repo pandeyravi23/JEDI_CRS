@@ -1,5 +1,5 @@
 package com.flipkart.business;
 
-public class StudentInterface {
+public interface StudentInterface {
 
 }
