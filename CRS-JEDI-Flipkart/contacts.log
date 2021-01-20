@@ -241,3 +241,88 @@
 21:37:32,537  INFO StudentOperation,main:19 - 152 ComputerScience
 21:37:32,537  INFO StudentOperation,main:19 - 153 Electronics
 21:37:45,908  INFO StudentCRSMenu,main:66 - Invalid choice
+21:43:44,897  INFO StudentCRSMenu,main:72 - Select an operation: 
+21:43:44,901  INFO StudentCRSMenu,main:73 - 1. Show courses
+21:43:44,902  INFO StudentCRSMenu,main:74 - 2. Register courses
+21:43:44,902  INFO StudentCRSMenu,main:75 - 3. Add a course
+21:43:44,903  INFO StudentCRSMenu,main:76 - 4. Drop a course
+21:43:44,903  INFO StudentCRSMenu,main:77 - 5. View registered courses
+21:43:44,904  INFO StudentCRSMenu,main:78 - 6. View grades
+21:43:44,904  INFO StudentCRSMenu,main:79 - 7. Make payment
+21:43:44,904  INFO StudentCRSMenu,main:80 - 8. Update info
+21:43:51,250  INFO StudentOperation,main:71 - Inside registerCourse Method
+21:43:51,251  INFO StudentOperation,main:72 - Enter 1 to add course
+21:43:51,251  INFO StudentOperation,main:73 - Enter 2 to delete course
+21:43:51,251  INFO StudentOperation,main:74 - Enter 3 to finish registration process
+21:43:53,076  INFO StudentOperation,main:78 - Enter course ID: 
+21:43:56,289  INFO StudentOperation,main:39 - Inside addCourse Method
+21:43:56,289  INFO StudentOperation,main:45 - Course added successfully
+21:44:02,914  INFO StudentOperation,main:95 - Registered Course IDs: 
+21:44:02,914  INFO StudentOperation,main:97 - 151
+21:44:06,301  INFO StudentCRSMenu,main:66 - Invalid choice
+21:45:55,480  INFO StudentCRSMenu,main:72 - Select an operation: 
+21:45:55,482  INFO StudentCRSMenu,main:73 - 1. Show courses
+21:45:55,482  INFO StudentCRSMenu,main:74 - 2. Register courses
+21:45:55,482  INFO StudentCRSMenu,main:75 - 3. Add a course
+21:45:55,482  INFO StudentCRSMenu,main:76 - 4. Drop a course
+21:45:55,482  INFO StudentCRSMenu,main:77 - 5. View registered courses
+21:45:55,483  INFO StudentCRSMenu,main:78 - 6. View grades
+21:45:55,483  INFO StudentCRSMenu,main:79 - 7. Make payment
+21:45:55,483  INFO StudentCRSMenu,main:80 - 8. Update info
+21:45:59,102  INFO StudentOperation,main:17 - Inside showCourse Method
+21:46:01,825  INFO StudentCRSMenu,main:66 - Invalid choice
+21:51:40,652  INFO StudentCRSMenu,main:72 - Select an operation: 
+21:51:40,653  INFO StudentCRSMenu,main:73 - 1. Show courses
+21:51:40,653  INFO StudentCRSMenu,main:74 - 2. Register courses
+21:51:40,654  INFO StudentCRSMenu,main:75 - 3. Add a course
+21:51:40,654  INFO StudentCRSMenu,main:76 - 4. Drop a course
+21:51:40,654  INFO StudentCRSMenu,main:77 - 5. View registered courses
+21:51:40,654  INFO StudentCRSMenu,main:78 - 6. View grades
+21:51:40,654  INFO StudentCRSMenu,main:79 - 7. Make payment
+21:51:40,655  INFO StudentCRSMenu,main:80 - 8. Update info
+21:51:45,726  INFO StudentCRSMenu,main:66 - Invalid choice
+21:53:22,125  INFO StudentCRSMenu,main:72 - Select an operation: 
+21:53:22,126  INFO StudentCRSMenu,main:73 - 1. Show courses
+21:53:22,126  INFO StudentCRSMenu,main:74 - 2. Register courses
+21:53:22,127  INFO StudentCRSMenu,main:75 - 3. Add a course
+21:53:22,127  INFO StudentCRSMenu,main:76 - 4. Drop a course
+21:53:22,127  INFO StudentCRSMenu,main:77 - 5. View registered courses
+21:53:22,127  INFO StudentCRSMenu,main:78 - 6. View grades
+21:53:22,127  INFO StudentCRSMenu,main:79 - 7. Make payment
+21:53:22,128  INFO StudentCRSMenu,main:80 - 8. Update info
+21:53:25,464  INFO StudentOperation,main:17 - Inside showCourse Method
+21:53:27,528  INFO StudentCRSMenu,main:66 - Invalid choice
+21:54:05,476  INFO StudentCRSMenu,main:72 - Select an operation: 
+21:54:05,477  INFO StudentCRSMenu,main:73 - 1. Show courses
+21:54:05,477  INFO StudentCRSMenu,main:74 - 2. Register courses
+21:54:05,477  INFO StudentCRSMenu,main:75 - 3. Add a course
+21:54:05,478  INFO StudentCRSMenu,main:76 - 4. Drop a course
+21:54:05,478  INFO StudentCRSMenu,main:77 - 5. View registered courses
+21:54:05,478  INFO StudentCRSMenu,main:78 - 6. View grades
+21:54:05,478  INFO StudentCRSMenu,main:79 - 7. Make payment
+21:54:05,478  INFO StudentCRSMenu,main:80 - 8. Update info
+21:56:57,810  INFO StudentCRSMenu,main:72 - Select an operation: 
+21:56:57,811  INFO StudentCRSMenu,main:73 - 1. Show courses
+21:56:57,811  INFO StudentCRSMenu,main:74 - 2. Register courses
+21:56:57,811  INFO StudentCRSMenu,main:75 - 3. Add a course
+21:56:57,812  INFO StudentCRSMenu,main:76 - 4. Drop a course
+21:56:57,812  INFO StudentCRSMenu,main:77 - 5. View registered courses
+21:56:57,812  INFO StudentCRSMenu,main:78 - 6. View grades
+21:56:57,812  INFO StudentCRSMenu,main:79 - 7. Make payment
+21:56:57,812  INFO StudentCRSMenu,main:80 - 8. Update info
+21:57:03,598  INFO StudentOperation,main:17 - Inside showCourse Method
+21:57:05,109  INFO StudentCRSMenu,main:66 - Invalid choice
+21:57:42,327  INFO StudentCRSMenu,main:72 - Select an operation: 
+21:57:42,329  INFO StudentCRSMenu,main:73 - 1. Show courses
+21:57:42,329  INFO StudentCRSMenu,main:74 - 2. Register courses
+21:57:42,330  INFO StudentCRSMenu,main:75 - 3. Add a course
+21:57:42,330  INFO StudentCRSMenu,main:76 - 4. Drop a course
+21:57:42,330  INFO StudentCRSMenu,main:77 - 5. View registered courses
+21:57:42,330  INFO StudentCRSMenu,main:78 - 6. View grades
+21:57:42,330  INFO StudentCRSMenu,main:79 - 7. Make payment
+21:57:42,331  INFO StudentCRSMenu,main:80 - 8. Update info
+21:57:48,243  INFO StudentOperation,main:17 - Inside showCourse Method
+21:57:48,244  INFO StudentOperation,main:19 - 151 Mathematics
+21:57:48,244  INFO StudentOperation,main:19 - 152 ComputerScience
+21:57:48,244  INFO StudentOperation,main:19 - 153 Electronics
+21:57:50,411  INFO StudentCRSMenu,main:66 - Invalid choice
