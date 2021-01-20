@@ -7,7 +7,7 @@ public class Course {
     private String courseName;
     private String professorAllotted;
     private int credits;
-    private ArrayList<String> listOfEnrolledStudents = new ArrayList<>();
+    private ArrayList<Student> listOfEnrolledStudents = new ArrayList<>();
 
     public void setCourseID(int courseID){
         this.courseID = courseID;
@@ -41,11 +41,11 @@ public class Course {
         return credits;
     }
 
-    public void setListOfEnrolledStudents(ArrayList<String> students){
+    public void setListOfEnrolledStudents(ArrayList<Student> students){
         listOfEnrolledStudents.addAll(students);
     }
 
-    public ArrayList<String> getListOfEnrolledStudents(){
+    public ArrayList<Student> getListOfEnrolledStudents(){
         return listOfEnrolledStudents;
     }
 }

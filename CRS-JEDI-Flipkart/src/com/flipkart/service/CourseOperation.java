@@ -4,9 +4,9 @@ import com.flipkart.bean.Course;
 
 import org.apache.log4j.Logger;
 
-public class CourseCatalogOperation implements CourseCatalogInterface{
+public class CourseOperation implements CourseInterface {
 
-    private static Logger logger = Logger.getLogger(CourseCatalogOperation.class);
+    private static Logger logger = Logger.getLogger(CourseOperation.class);
 
     @Override
     public boolean addCourse(Course course) {

@@ -39,6 +39,10 @@ public class StudentOperation implements StudentInterface {
         logger.info("Inside registerCourse Method");
         return false;
     }
+
+    public void viewRegisteredCourses(int studentID){
+
+    }
 }
 
 
