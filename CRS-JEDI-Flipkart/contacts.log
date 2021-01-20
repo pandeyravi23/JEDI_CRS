@@ -79,3 +79,16 @@
 20:30:58,258  INFO StudentOperation,main:15 - 151 Mathematics
 20:30:58,258  INFO StudentOperation,main:15 - 152 ComputerScience
 20:30:58,258  INFO StudentOperation,main:15 - 153 Electronics
+20:46:21,088  INFO StudentCRSMenu,main:62 - Select an operation: 
+20:46:21,089  INFO StudentCRSMenu,main:63 - 1. Show courses
+20:46:21,090  INFO StudentCRSMenu,main:64 - 2. Register courses
+20:46:21,090  INFO StudentCRSMenu,main:65 - 3. Add a course
+20:46:21,090  INFO StudentCRSMenu,main:66 - 4. Drop a course
+20:46:21,090  INFO StudentCRSMenu,main:67 - 5. View registered courses
+20:46:21,090  INFO StudentCRSMenu,main:68 - 6. View grades
+20:46:21,090  INFO StudentCRSMenu,main:69 - 7. Make payment
+20:46:21,090  INFO StudentCRSMenu,main:70 - 8. Update info
+20:46:22,831  INFO StudentOperation,main:13 - Inside showCourse Method
+20:46:22,831  INFO StudentOperation,main:15 - 151 Mathematics
+20:46:22,831  INFO StudentOperation,main:15 - 152 ComputerScience
+20:46:22,831  INFO StudentOperation,main:15 - 153 Electronics

@@ -2,6 +2,7 @@ package com.flipkart.client;
 
 import com.flipkart.bean.Student;
 import com.flipkart.dao.CoursesDaoOperation;
+import com.flipkart.dao.StudentDaoOperation;
 import com.flipkart.service.StudentInterface;
 import com.flipkart.service.StudentOperation;
 import org.apache.log4j.Logger;
@@ -26,6 +27,7 @@ public class StudentCRSMenu {
         CoursesDaoOperation obj = new CoursesDaoOperation();
         obj.populate();
 
+        
         showChoices();
         Scanner input = new Scanner(System.in);
         int choice = input.nextInt();
