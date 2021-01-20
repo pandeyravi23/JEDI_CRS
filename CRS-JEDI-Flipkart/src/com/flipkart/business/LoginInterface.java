@@ -5,7 +5,7 @@ import com.flipkart.bean.Professor;
 import com.flipkart.bean.Student;
 
 public interface LoginInterface {
-	public String login(String username, String password);
+	public boolean login(String username, String password);
 
 	public void registerStudent(Student student, String password);
 
