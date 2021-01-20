@@ -7,13 +7,15 @@ import com.flipkart.service.StudentInterface;
 import com.flipkart.service.StudentOperation;
 import org.apache.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class StudentCRSMenu {
 
     private static Logger logger = Logger.getLogger(StudentCRSMenu.class);
     private static StudentInterface studentOperation = new StudentOperation();
-    private static Student student = new Student();
+    public static Student student = new Student();
+    //public static ArrayList<Integer> al = new ArrayList<>();
 
     public static void main(String[] args){
 
@@ -23,6 +25,7 @@ public class StudentCRSMenu {
         student.setRollNo(10275);
         student.setBranch("ECE");
 
+
         //populate
         CoursesDaoOperation obj = new CoursesDaoOperation();
         obj.populate();
@@ -30,8 +33,10 @@ public class StudentCRSMenu {
         
         showChoices();
         Scanner input = new Scanner(System.in);
-        int choice = input.nextInt();
+        int choice;
 
+        do{
+            choice = input.nextInt();
         switch (choice){
             case 1:
                 studentOperation.showCourses(student.getUserId());
@@ -46,7 +51,7 @@ public class StudentCRSMenu {
                 dropCourse();
                 break;
             case 5:
-                studentOperation.viewRegisteredCourses(student.getUserId());
+                studentOperation.viewRegisteredCourses(student);
                 break;
             case 6:
                 studentOperation.viewGrades(student.getUserId());
@@ -57,7 +62,10 @@ public class StudentCRSMenu {
             case 8:
                 studentOperation.updateInfo(student.getUserId());
                 break;
-        }
+            default:
+                logger.info("Invalid choice");
+                break;
+        }}while (choice!=-1);
     }
 
     public static void showChoices(){
@@ -76,14 +84,14 @@ public class StudentCRSMenu {
         logger.info("Enter course ID to be added");
         Scanner input = new Scanner(System.in);
         int courseID = input.nextInt();
-        studentOperation.addCourse(student.getUserId(),courseID);
+        studentOperation.addCourse(student,courseID);
     }
 
     public static void dropCourse(){
         logger.info("Enter course ID to be dropped");
         Scanner input = new Scanner(System.in);
         int courseID = input.nextInt();
-        studentOperation.deleteCourse(student.getUserId(),courseID);
+        studentOperation.deleteCourse(student,courseID);
     }
 
     public static void makePayment(){

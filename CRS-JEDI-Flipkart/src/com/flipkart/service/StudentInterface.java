@@ -13,12 +13,12 @@ public interface StudentInterface {
 
     public boolean updateInfo(int studentId);
 
-    public boolean addCourse(int studentId,int courseId);
+    public boolean addCourse(Student student,int courseId);
 
-    public boolean deleteCourse(int studentId,int courseId);
+    public boolean deleteCourse(Student student,int courseId);
 
     public boolean registerCourses(Student student);
 
-    public void viewRegisteredCourses(int studentID);
+    public void viewRegisteredCourses(Student student);
 
 }
