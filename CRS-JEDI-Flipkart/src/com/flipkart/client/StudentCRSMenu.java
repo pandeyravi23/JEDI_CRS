@@ -33,8 +33,10 @@ public class StudentCRSMenu {
         
         showChoices();
         Scanner input = new Scanner(System.in);
-        int choice = input.nextInt();
+        int choice;
 
+        do{
+            choice = input.nextInt();
         switch (choice){
             case 1:
                 studentOperation.showCourses(student.getUserId());
@@ -49,7 +51,7 @@ public class StudentCRSMenu {
                 dropCourse();
                 break;
             case 5:
-                studentOperation.viewRegisteredCourses(student.getUserId());
+                studentOperation.viewRegisteredCourses(student);
                 break;
             case 6:
                 studentOperation.viewGrades(student.getUserId());
@@ -60,7 +62,10 @@ public class StudentCRSMenu {
             case 8:
                 studentOperation.updateInfo(student.getUserId());
                 break;
-        }
+            default:
+                logger.info("Invalid choice");
+                break;
+        }}while (choice!=-1);
     }
 
     public static void showChoices(){

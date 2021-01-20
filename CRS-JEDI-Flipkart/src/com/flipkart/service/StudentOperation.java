@@ -38,9 +38,10 @@ public class StudentOperation implements StudentInterface {
     public boolean addCourse(Student student, int courseId){
         logger.info("Inside addCourse Method");
         ArrayList<Integer> enrolledCourses = student.getEnrolledCourses();
-        if(!enrolledCourses.contains(courseId)){
+        if(enrolledCourses.contains(courseId)==false){
             enrolledCourses.add(courseId);
             student.setEnrolledCourses(enrolledCourses);
+            //viewRegisteredCourses(student);
             logger.info("Course added successfully");
         }
         else{
@@ -55,7 +56,7 @@ public class StudentOperation implements StudentInterface {
 
         ArrayList<Integer> enrolledCourses = student.getEnrolledCourses();
         if(enrolledCourses.contains(courseId)){
-            enrolledCourses.remove(courseId);
+            enrolledCourses.remove(Integer.valueOf(courseId));
             student.setEnrolledCourses(enrolledCourses);
             logger.info("Course removed successfully");
         }
@@ -83,12 +84,18 @@ public class StudentOperation implements StudentInterface {
             int courseID = input.nextInt();
             deleteCourse(student,courseID);
         }
-
+        else if(operation==3){
+            logger.info("Proceed to make payment");
+        }
         return false;
     }
 
-    public void viewRegisteredCourses(int studentID){
+    public void viewRegisteredCourses(Student student){
         ArrayList<Integer> enrolledCourses = student.getEnrolledCourses();
+        logger.info("Registered Course IDs: ");
+        for(Integer i : enrolledCourses){
+            logger.info(i);
+        }
     }
 }
 

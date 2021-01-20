@@ -19,6 +19,6 @@ public interface StudentInterface {
 
     public boolean registerCourses(Student student);
 
-    public void viewRegisteredCourses(int studentID);
+    public void viewRegisteredCourses(Student student);
 
 }

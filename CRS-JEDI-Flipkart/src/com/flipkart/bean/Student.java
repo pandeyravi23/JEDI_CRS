@@ -5,7 +5,7 @@ public class Student extends User{
 	
 	private int rollNo;
 	private boolean isRegistered;
-	private ArrayList<Integer> enrolledCourses;
+	private ArrayList<Integer> enrolledCourses = new ArrayList<>();
 	public String branch;
 	
 	public void setRollNo(int rollNo) {
