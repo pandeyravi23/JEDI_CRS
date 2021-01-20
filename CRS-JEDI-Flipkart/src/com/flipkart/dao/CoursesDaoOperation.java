@@ -7,7 +7,7 @@ import com.flipkart.bean.Course;
 import com.flipkart.bean.Student;
 
 public class CoursesDaoOperation implements CoursesDaoInterface {
-	List<Course> courses = new ArrayList<>();
+	public static List<Course> courses = new ArrayList<>();
 
 	@Override
 	public List<Course> getAllCourseDetails() {
@@ -32,6 +32,8 @@ public class CoursesDaoOperation implements CoursesDaoInterface {
 		
 		try {	
 			inputStream = new FileInputStream("D:/JEDI/testingJava/db/courses.txt");
+//			inputStream = new FileInputStream("/Users/bhavya/Desktop/data.txt");
+
 			Scanner scanner = new Scanner(inputStream);
 			while(scanner.hasNext()) {
 				String line = scanner.nextLine();
