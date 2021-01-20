@@ -7,7 +7,6 @@ import com.flipkart.bean.Course;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.concurrent.ScheduledExecutorService;
 
 public class StudentOperation implements StudentInterface {
     private static Logger logger = Logger.getLogger(StudentOperation.class);
