@@ -34,10 +34,10 @@ public class StudentDaoOperation implements StudentDaoInterface {
 		
 		try {	
 
-//			inputStream = new FileInputStream("/Users/bhavya/Desktop/stu.txt");
-			String filePath = new File("").getAbsolutePath();
-			inputStream = new FileInputStream(filePath.concat("/src/stu.txt"));
-			
+			inputStream = new FileInputStream("/home/ravi/Desktop/uml/CRS-JEDI-Flipkart/src/stu.txt");
+//			String filePath = new File("").getAbsolutePath();
+//			inputStream = new FileInputStream(filePath.concat("/src/stu.txt"));
+//			
 			Scanner scanner = new Scanner(inputStream);
 			while(scanner.hasNext()) {
 				String line = scanner.nextLine();
