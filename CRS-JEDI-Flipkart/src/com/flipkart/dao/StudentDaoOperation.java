@@ -32,7 +32,14 @@ public class StudentDaoOperation implements StudentDaoInterface {
 	public void populate() {
 		FileInputStream inputStream = null;
 		
-		try {	
+		try {
+//			inputStream = new FileInputStream("D:/JEDI/testingJava/db/students.txt");
+			//inputStream = new FileInputStream("/Users/bhavya/Desktop/stu.txt");
+			//inputStream = new FileInputStream("C:\\Users\\chinm\\OneDrive\\Desktop\\Flipkart_Internship\\JEDI_Bootcamp\\JAVA\\data.txt");
+
+			//inputStream = new FileInputStream("C:\\Users\\chinm\\OneDrive\\Desktop\\Flipkart_Internship\\JEDI_Bootcamp\\JEDI_SRS\\CRS-JEDI-Flipkart\\src\\data.txt");
+			//inputStream = new FileInputStream("C:\\Users\\chinm\\OneDrive\\Desktop\\Flipkart_Internship\\JEDI_Bootcamp\\JAVA\\student.txt");
+
 
 //			inputStream = new FileInputStream("/Users/bhavya/Desktop/stu.txt");
 			String filePath = new File("").getAbsolutePath();

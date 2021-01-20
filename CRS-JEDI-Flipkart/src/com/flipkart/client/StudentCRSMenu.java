@@ -1,10 +1,8 @@
 package com.flipkart.client;
 
-import com.flipkart.bean.Student;
-import com.flipkart.dao.CoursesDaoOperation;
-import com.flipkart.dao.StudentDaoOperation;
-import com.flipkart.service.StudentInterface;
-import com.flipkart.service.StudentOperation;
+import com.flipkart.bean.*;
+import com.flipkart.dao.*;
+import com.flipkart.service.*;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -21,12 +19,16 @@ public class StudentCRSMenu {
     	//populate
         CoursesDaoOperation obj = new CoursesDaoOperation();
         obj.populate();
+
         StudentDaoOperation obj2 = new StudentDaoOperation();
         obj2.populate();
-    	Scanner input = new Scanner(System.in);
-    	logger.info("Enter Student Id");
+
+        Scanner input = new Scanner(System.in);
+
+        logger.info("Enter Student Id");
     	int x = 0;
     	int id = input.nextInt();
+
     	for(int i=0;i<StudentDaoOperation.students.size();i++) {
     		if (StudentDaoOperation.students.get(i).getUserId()==id) {
     			student.setUserId(StudentDaoOperation.students.get(i).getUserId());
@@ -34,6 +36,7 @@ public class StudentCRSMenu {
     	        student.setEmail(StudentDaoOperation.students.get(i).getEmail());
     	        student.setRollNo(StudentDaoOperation.students.get(i).getRollNo());
     	        student.setBranch(StudentDaoOperation.students.get(i).getBranch());
+    	        student.setIsRegistered(false);
     	        x = 1;
     		}
     	}
@@ -43,44 +46,45 @@ public class StudentCRSMenu {
         }
 
 
-        
-
-        
-        showChoices();
-        
         int choice;
 
         do{
+            showChoices();
             choice = input.nextInt();
-        switch (choice){
-            case 1:
-                studentOperation.showCourses(student.getUserId());
-                break;
-            case 2:
-                studentOperation.registerCourses(student);
-                break;
-            case 3:
-                addCourse();
-                break;
-            case 4:
-                dropCourse();
-                break;
-            case 5:
-                studentOperation.viewRegisteredCourses(student);
-                break;
-            case 6:
-                studentOperation.viewGrades(student.getUserId());
-                break;
-            case 7:
-                makePayment();
-                break;
-            case 8:
-                studentOperation.updateInfo(student);
-                break;
-            default:
-                logger.info("Invalid choice");
-                break;
-        }}while (choice!=-1);
+
+            switch (choice){
+                case -1:
+                    logger.info("Exiting Menu.....");
+                    break;
+                case 1:
+                    studentOperation.showCourses(student.getUserId());
+                    break;
+                case 2:
+                    studentOperation.registerCourses(student);
+                    break;
+                case 3:
+                    addCourse();
+                    break;
+                case 4:
+                    dropCourse();
+                    break;
+                case 5:
+                    studentOperation.viewRegisteredCourses(student);
+                    break;
+                case 6:
+                    studentOperation.viewGrades(student.getUserId());
+                    break;
+                case 7:
+                    makePayment();
+                    break;
+                case 8:
+                    studentOperation.updateInfo(student);
+                    break;
+                default:
+                    logger.info("Invalid choice");
+                    break;
+            }
+        }while (choice!=-1);
     }
 
     public static void showChoices(){
@@ -93,6 +97,7 @@ public class StudentCRSMenu {
         logger.info("6. View grades");
         logger.info("7. Make payment");
         logger.info("8. Update info");
+        logger.info("-1 to exit menu");
     }
 
     public static void addCourse(){
