@@ -32,23 +32,22 @@ public class CoursesDaoOperation implements CoursesDaoInterface {
 		
 		try {	
 			//inputStream = new FileInputStream("D:/JEDI/testingJava/db/courses.txt");
-<<<<<<< HEAD
+
 //			inputStream = new FileInputStream("/Users/bhavya/Desktop/data.txt");
 			//inputStream = new FileInputStream("C:\\Users\\chinm\\OneDrive\\Desktop\\Flipkart_Internship\\JEDI_Bootcamp\\JAVA\\data.txt");
 //			inputStream = new FileInputStream("C:\\Users\\chinm\\OneDrive\\Desktop\\Flipkart_Internship\\JEDI_Bootcamp\\JEDI_SRS\\CRS-JEDI-Flipkart\\src\\data.txt");
-			inputStream = new FileInputStream("/home/ravi/Desktop/uml/CRS-JEDI-Flipkart/src/data.txt");
+			inputStream = new FileInputStream("data.txt");
 //
 //			String filePath = new File("").getAbsolutePath();
 //			inputStream = new FileInputStream(filePath.concat("/src/data.txt"));
-=======
+
 			//inputStream = new FileInputStream("/Users/bhavya/Desktop/data.txt");
 			//inputStream = new FileInputStream("C:\\Users\\chinm\\OneDrive\\Desktop\\Flipkart_Internship\\JEDI_Bootcamp\\JAVA\\data.txt");
 			//inputStream = new FileInputStream("C:\\Users\\chinm\\OneDrive\\Desktop\\Flipkart_Internship\\JEDI_Bootcamp\\JEDI_SRS\\CRS-JEDI-Flipkart\\src\\data.txt");
 
 
-			String filePath = new File("").getAbsolutePath();
-			inputStream = new FileInputStream(filePath.concat("/src/data.txt"));
->>>>>>> 1c64aab26d2d54fb60a83f7dc00c747fecd9d53f
+//			String filePath = new File("").getAbsolutePath();
+//			inputStream = new FileInputStream(filePath.concat("/src/data.txt"));
 
 
 			Scanner scanner = new Scanner(inputStream);

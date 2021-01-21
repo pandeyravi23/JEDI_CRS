@@ -1,17 +1,17 @@
 package com.flipkart.client;
 
-<<<<<<< HEAD
-import com.flipkart.bean.Student;
 
-import com.flipkart.dao.CoursesDaoOperation;
-import com.flipkart.dao.StudentDaoOperation;
-import com.flipkart.service.StudentInterface;
-import com.flipkart.service.StudentOperation;
-=======
+//import com.flipkart.bean.Student;
+//
+//import com.flipkart.dao.CoursesDaoOperation;
+//import com.flipkart.dao.StudentDaoOperation;
+//import com.flipkart.service.StudentInterface;
+//import com.flipkart.service.StudentOperation;
+
 import com.flipkart.bean.*;
 import com.flipkart.dao.*;
 import com.flipkart.service.*;
->>>>>>> 1c64aab26d2d54fb60a83f7dc00c747fecd9d53f
+
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;

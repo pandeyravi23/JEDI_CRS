@@ -41,7 +41,7 @@ public class StudentDaoOperation implements StudentDaoInterface {
 			//inputStream = new FileInputStream("C:\\Users\\chinm\\OneDrive\\Desktop\\Flipkart_Internship\\JEDI_Bootcamp\\JAVA\\student.txt");
 
 
-			inputStream = new FileInputStream("/home/ravi/Desktop/uml/CRS-JEDI-Flipkart/src/stu.txt");
+			inputStream = new FileInputStream("stu.txt");
 //			String filePath = new File("").getAbsolutePath();
 //			inputStream = new FileInputStream(filePath.concat("/src/stu.txt"));
 //			
