@@ -19,9 +19,11 @@ public class StudentCRSMenu {
     private static Student student = new Student();
 
     public static void main(String[] args){
+
         CoursesDaoOperation obj = new CoursesDaoOperation();
         obj.populate();
 
+        // populate students list
         StudentDaoOperation obj2 = new StudentDaoOperation();
         obj2.populate();
 
@@ -31,7 +33,6 @@ public class StudentCRSMenu {
     	int x = 0;
     	int id = input.nextInt();
 
-    	// Registering student from the studentDaoOperation populate method
     	for(int i=0;i<StudentDaoOperation.students.size();i++) {
     		if (StudentDaoOperation.students.get(i).getUserId()==id) {
     			student.setUserId(StudentDaoOperation.students.get(i).getUserId());
@@ -103,8 +104,7 @@ public class StudentCRSMenu {
         logger.info("8. Update info");
         logger.info("-1 to exit menu");
     }
-    
-    // Add course in Enrolled Course list
+
     public static void addCourse(){
     	if (student.getIsRegistered()==false) {
         	logger.info("Student needs to start registration to add course\n");
@@ -116,8 +116,7 @@ public class StudentCRSMenu {
         int courseID = input.nextInt();
         studentOperation.addCourse(student,courseID);
     }
-    
-    // Drop course from Enrolled courses 
+
     public static void dropCourse(){
     	if (student.getIsRegistered()==false) {
         	logger.info("Student needs to start registration to drop course\n");
@@ -130,7 +129,7 @@ public class StudentCRSMenu {
         studentOperation.deleteCourse(student,courseID);
     }
 
-    //Make payment after student has Registered courses
+
     public static void makePayment(){
     	if(student.getEnrolledCourses().size()==0) {
     		logger.info("Please Register courses to Make Payment: ");
