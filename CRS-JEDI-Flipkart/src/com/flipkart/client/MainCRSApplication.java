@@ -32,8 +32,8 @@ public class MainCRSApplication {
 					studentClient.init(email);
 					break;
 				case 2: // Professor
-					ProfessorMenu professorClient = new ProfessorMenu();
-					professorClient.init(email);
+//					ProfessorMenu professorClient = new ProfessorMenu();
+//					professorClient.init(email);
 				case 3: // Admin
 				default: 
 						logger.info("Invalid credentials");
