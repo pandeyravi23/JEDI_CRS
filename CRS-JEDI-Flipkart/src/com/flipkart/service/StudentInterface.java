@@ -20,5 +20,7 @@ public interface StudentInterface {
     public boolean registerCourses(Student student);
 
     public void viewRegisteredCourses(Student student);
+    
+    public Student getStudentByEmail(String email);
 
 }

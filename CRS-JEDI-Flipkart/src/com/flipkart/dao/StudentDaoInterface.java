@@ -9,4 +9,5 @@ public interface StudentDaoInterface {
 	public List<Student> getAllStudents();
 	public Student getStudentById(int studentId);
 	public void populate();
+	public Student getStudentByEmail(String email);
 }
