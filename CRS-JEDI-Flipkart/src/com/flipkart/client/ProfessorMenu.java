@@ -14,7 +14,7 @@ public class ProfessorMenu {
     private ProfessorInterface professorOperation = new ProfessorOperation();
 
     public void professorClient(Professor professor){
-    	logger.info("Welcome Professor " + professor.getUserName());
+    	logger.info("Welcome Professor " + professor.getUserName() + "!!");
         int choice;
         Scanner input = new Scanner(System.in);
         do{
@@ -23,10 +23,10 @@ public class ProfessorMenu {
 
             switch (choice){
                 case -1:
-                    logger.info(".....Exiting Menu.....\n");
+                    logger.info(".....Logging Out.....\n");
                     break;
                 case 1:
-                    viewGrades();
+                    gradeStudents();
                     break;
                 case 2:
                     allotedCourse(professor.getUserId());
@@ -53,19 +53,18 @@ public class ProfessorMenu {
         logger.info("1. Grade Students");
         logger.info("2. View Alloted Courses");
         logger.info("3. View Students Enrolled in a course ");
-        logger.info("-1 to exit menu");
+        logger.info("-1 to Logout");
     }
 
     // method to add course
-    public void viewGrades(){
-        logger.info("Inside View Course Method");
+    public void gradeStudents(){
+        logger.info("Inside Grade Student Method");
     }
 
     // method to drop a course
     public void allotedCourse(int professorId){
     	ProfessorOperation professorOperation = new ProfessorOperation();
     	professorOperation.showCourses(professorId);
-        logger.info("Inside Alloted Course Method");
     }
 
     // method to make payment
