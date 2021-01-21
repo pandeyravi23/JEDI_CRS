@@ -33,7 +33,9 @@ public class CoursesDaoOperation implements CoursesDaoInterface {
 		FileInputStream inputStream = null;
 		
 		try {	
-			inputStream = new FileInputStream("C:\\Users\\chinm\\OneDrive\\Desktop\\Flipkart_Internship\\JEDI_Bootcamp\\JAVA\\data.txt");
+			String filePath = new File("").getAbsolutePath();
+			inputStream = new FileInputStream(filePath.concat("/src/data.txt"));
+//			inputStream = new FileInputStream("C:\\Users\\chinm\\OneDrive\\Desktop\\Flipkart_Internship\\JEDI_Bootcamp\\JAVA\\data.txt");
 			Scanner scanner = new Scanner(inputStream);
 			while(scanner.hasNext()) {
 				String line = scanner.nextLine();
