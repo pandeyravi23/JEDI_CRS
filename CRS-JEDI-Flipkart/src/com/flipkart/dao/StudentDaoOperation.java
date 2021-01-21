@@ -11,11 +11,13 @@ public class StudentDaoOperation implements StudentDaoInterface {
 	
 	public static List<Student> students = new ArrayList<>();
 
+	// to get all students in database
 	@Override
 	public List<Student> getAllStudents() {
 		return students;
 	}
 
+	// to get student object based on studentID
 	@Override
 	public Student getStudentById(int studentId) {
 		Student st = null;
@@ -28,23 +30,13 @@ public class StudentDaoOperation implements StudentDaoInterface {
 		return st;
 	}
 
+	// read student database and populate students list
 	@Override
 	public void populate() {
 		FileInputStream inputStream = null;
 		
 		try {
-//			inputStream = new FileInputStream("D:/JEDI/testingJava/db/students.txt");
-			//inputStream = new FileInputStream("/Users/bhavya/Desktop/stu.txt");
-			//inputStream = new FileInputStream("C:\\Users\\chinm\\OneDrive\\Desktop\\Flipkart_Internship\\JEDI_Bootcamp\\JAVA\\data.txt");
-
-			//inputStream = new FileInputStream("C:\\Users\\chinm\\OneDrive\\Desktop\\Flipkart_Internship\\JEDI_Bootcamp\\JEDI_SRS\\CRS-JEDI-Flipkart\\src\\data.txt");
-			//inputStream = new FileInputStream("C:\\Users\\chinm\\OneDrive\\Desktop\\Flipkart_Internship\\JEDI_Bootcamp\\JAVA\\student.txt");
-
-
-//			inputStream = new FileInputStream("/Users/bhavya/Desktop/stu.txt");
-			String filePath = new File("").getAbsolutePath();
-			inputStream = new FileInputStream(filePath.concat("/src/stu.txt"));
-			
+			inputStream = new FileInputStream("C:\\Users\\chinm\\OneDrive\\Desktop\\Flipkart_Internship\\JEDI_Bootcamp\\JAVA\\student.txt");
 			Scanner scanner = new Scanner(inputStream);
 			while(scanner.hasNext()) {
 				String line = scanner.nextLine();
