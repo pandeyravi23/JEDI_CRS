@@ -11,15 +11,24 @@ import java.util.Scanner;
 
 public class StudentOperation implements StudentInterface {
     private static Logger logger = Logger.getLogger(StudentOperation.class);
-	CoursesDaoOperation courseListObj = new CoursesDaoOperation();
+	CoursesDaoOperation coursesDaoOperation = new CoursesDaoOperation();
+    StudentDaoOperation studentDaoOperation = new StudentDaoOperation();
 
 	// operation to show available courses in course catalog
-    public void showCourses(int studentId){
-    	logger.info("================AVAILABLE COURSES================\n");
-    	for (Course course : CoursesDaoOperation.courses) {
-    		logger.info(course.getCourseID() + " " + course.getCourseName());
-    	}
-    	logger.info("=================================================\n");
+    public void showCourses(){
+
+        try{
+            ArrayList<Course> courses = coursesDaoOperation.getAllCourses();
+            logger.info("================AVAILABLE COURSES================\n");
+            logger.info("Course ID\tCourse Name\tCredits");
+            for (Course course : courses) {
+                logger.info(course.getCourseID() + "\t\t" + course.getCourseName() + "\t\t" + course.getCredits());
+            }
+            logger.info("=================================================\n");
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void viewGrades(int studentId){
@@ -115,7 +124,7 @@ public class StudentOperation implements StudentInterface {
 
     // operation to add course to registered courses
     public boolean addCourse(Student student, int courseId){
-        ArrayList<Integer> enrolledCourses = student.getEnrolledCourses();
+        /*ArrayList<Integer> enrolledCourses = student.getEnrolledCourses();
         if(enrolledCourses.contains(courseId)==false){
             enrolledCourses.add(courseId);
             student.setEnrolledCourses(enrolledCourses);
@@ -124,13 +133,22 @@ public class StudentOperation implements StudentInterface {
         }
         else{
             logger.info(">>>>  Course already exists  <<<<\n");
+        }*/
+
+
+        try{
+            studentDaoOperation.addCourse(student,courseId);
         }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+
         return false;
     }
 
     // operation to delete course from registered courses
     public boolean deleteCourse(Student student, int courseId){
-        ArrayList<Integer> enrolledCourses = student.getEnrolledCourses();
+        /*ArrayList<Integer> enrolledCourses = student.getEnrolledCourses();
         if(enrolledCourses.contains(courseId)){
             enrolledCourses.remove(Integer.valueOf(courseId));
             student.setEnrolledCourses(enrolledCourses);
@@ -138,13 +156,27 @@ public class StudentOperation implements StudentInterface {
         }
         else{
             logger.info(">>>>  Course does not exists  <<<<\n");
+        }*/
+
+
+        try{
+            studentDaoOperation.dropCourse(student,courseId);
         }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+
         return false;
     }
 
     // operation to register for courses
     public boolean registerCourses(Student student){
-    	student.setIsRegistered(true);
+    	if(student.getIsRegistered()){
+    	    logger.info("You have already registered");
+    	    return true;
+        }
+
+    	int courseCounter = 0;
         logger.info("================COURSE REGISTRATION================\n");
         while(true){
             logger.info("Enter 1 to add course");
@@ -152,19 +184,32 @@ public class StudentOperation implements StudentInterface {
             logger.info("Enter 3 to finish registration process");
             Scanner input = new Scanner(System.in);
             int operation = input.nextInt();
+
             if(operation==1){
-                logger.info("Enter course ID: ");
+                logger.info("Enter course ID to be added: ");
                 int courseID = input.nextInt();
                 addCourse(student,courseID);
+                courseCounter++;
             }
             else if(operation==2){
-                logger.info("Enter course ID: ");
+                logger.info("Enter course ID to be dropped: ");
                 int courseID = input.nextInt();
                 deleteCourse(student,courseID);
+                courseCounter--;
             }
             else if(operation==3){
-                logger.info("Proceed to make payment\n");
-                break;
+                if(courseCounter>=4 && courseCounter<=6){
+                    logger.info("Proceed to make payment\n");
+                    setRegistrationStatus(student);
+                    student.setIsRegistered(true);
+                    break;
+                }
+                else if(courseCounter<4){
+                    logger.info("Less than 4 courses registered. Add more courses");
+                }
+                else if(courseCounter>6){
+                    logger.info("More than 6 courses registered. Drop few courses");
+                }
             }
         }
         logger.info("==============================================\n");
@@ -174,12 +219,20 @@ public class StudentOperation implements StudentInterface {
 
     // operation to show registered courses
     public void viewRegisteredCourses(Student student){
-        ArrayList<Integer> enrolledCourses = student.getEnrolledCourses();
-        logger.info("================REGISTERED COURSES================\n");
-        for(Integer i : enrolledCourses){
-            logger.info(i);
+
+        try{
+            ArrayList<Course> enrolledCourses = studentDaoOperation.getEnrolledCourses(student);
+            logger.info("================REGISTERED COURSES================\n");
+            logger.info("Course ID\tCourse Name");
+            for(Course course : enrolledCourses){
+                logger.info(course.getCourseID() + "\t\t" + course.getCourseName());
+            }
+            logger.info("==================================================\n");
         }
-        logger.info("==================================================\n");
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
     
     public Student getStudentByEmail(String email) {
@@ -187,4 +240,17 @@ public class StudentOperation implements StudentInterface {
     	Student st = studentOperation.getStudentByEmail(email);
     	return st;
     }
+
+
+    public void setRegistrationStatus(Student student){
+        try{
+            studentDaoOperation.setRegistrationStatus(student);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }
+
+
+

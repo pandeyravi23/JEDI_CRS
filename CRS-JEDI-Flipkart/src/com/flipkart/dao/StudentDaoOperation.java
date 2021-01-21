@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.*;
 
+import com.flipkart.bean.Course;
 import org.apache.log4j.Logger;
 
 import com.flipkart.bean.Student;
@@ -24,6 +25,7 @@ public class StudentDaoOperation implements StudentDaoInterface {
 	private static Logger logger = Logger.getLogger(StudentDaoOperation.class);
 	Connection connection = null;
 	PreparedStatement ps = null;
+	CoursesDaoOperation coursesDaoOperation = new CoursesDaoOperation();
 
 	// to get all students in database
 	@Override
@@ -104,4 +106,76 @@ public class StudentDaoOperation implements StudentDaoInterface {
 		return student;
 	}
 
+
+	public void addCourse(Student student, int courseID){
+		try{
+			connection = DBConnection.getConnection();
+			String SQLQuery = "INSERT INTO RegisteredCourses(studentID, courseID) values(?,?)";
+			ps = connection.prepareStatement(SQLQuery);
+
+			ps.setInt(1,student.getUserId());
+			ps.setInt(2,courseID);
+
+			int added = ps.executeUpdate();
+			if(added>0){
+				logger.info("Course " + courseID + " added successfully");
+			}
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	public void dropCourse(Student student, int courseID){
+		try{
+			connection = DBConnection.getConnection();
+			String SQLQuery = "DELETE FROM RegisteredCourses where studentID = ? and courseID = ?";
+			ps = connection.prepareStatement(SQLQuery);
+
+			ps.setInt(1,student.getUserId());
+			ps.setInt(2,courseID);
+
+			int dropped = ps.executeUpdate();
+			logger.info("Course " + courseID + " deleted successfully");
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	public ArrayList<Course> getEnrolledCourses(Student student){
+		ArrayList<Course> enrolledCourses = new ArrayList<>();
+
+		try{
+			connection = DBConnection.getConnection();
+			String SQLQuery = "SELECT courseID FROM RegisteredCourses WHERE studentID=?";
+			ps = connection.prepareStatement(SQLQuery);
+
+			ps.setInt(1,student.getUserId());
+			ResultSet resultSet = ps.executeQuery();
+			while(resultSet.next()){
+				Course course = coursesDaoOperation.getCourseByID(resultSet.getInt("courseID"));
+				enrolledCourses.add(course);
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+
+		return enrolledCourses;
+	}
+
+	public void setRegistrationStatus(Student student){
+		try{
+			connection = DBConnection.getConnection();
+			String SQLQuery = "UPDATE student SET isRegistered = 1 where id = ?";
+			ps = connection.prepareStatement(SQLQuery);
+
+			ps.setInt(1,student.getUserId());
+			ps.executeUpdate();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
 }

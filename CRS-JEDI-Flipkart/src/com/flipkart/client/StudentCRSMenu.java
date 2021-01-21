@@ -51,10 +51,10 @@ public class StudentCRSMenu {
 
             switch (choice){
                 case -1:
-                    logger.info(".....Exiting Menu.....\n");
+                    logger.info(".....Logged Out.....\n");
                     break;
                 case 1:
-                    studentOperation.showCourses(student.getUserId());
+                    studentOperation.showCourses();
                     break;
                 case 2:
                     studentOperation.registerCourses(student);
@@ -102,7 +102,7 @@ public class StudentCRSMenu {
         logger.info("6. View grades");
         logger.info("7. Make payment");
         logger.info("8. Update info");
-        logger.info("-1 to exit menu");
+        logger.info("-1 to Logout");
     }
 
 

@@ -5,7 +5,7 @@ import com.flipkart.bean.Course;
 
 public interface StudentInterface {
 
-    public void showCourses(int studentId);
+    public void showCourses();
 
     public void viewGrades(int studentId);
 
@@ -22,5 +22,7 @@ public interface StudentInterface {
     public void viewRegisteredCourses(Student student);
     
     public Student getStudentByEmail(String email);
+
+    public void setRegistrationStatus(Student student);
 
 }
