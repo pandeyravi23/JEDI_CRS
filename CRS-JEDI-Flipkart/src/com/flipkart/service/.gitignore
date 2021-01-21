@@ -13,3 +13,5 @@
 /StudentInterface.class
 /StudentOperation.class
 /UserInterface.class
+/AuthCredentialSystem.class
+/AuthCredentialSystemInterface.class

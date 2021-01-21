@@ -2,6 +2,9 @@ package com.flipkart.service;
 
 import org.apache.log4j.Logger;
 
+import com.flipkart.bean.Professor;
+import com.flipkart.dao.ProfessorDaoOperation;
+
 public class ProfessorOperation implements ProfessorInterface {
 	
 	private static Logger logger = Logger.getLogger(ProfessorOperation.class);
@@ -27,4 +30,9 @@ public class ProfessorOperation implements ProfessorInterface {
 		logger.info("Inside showCourses");
 	}
 
+	public Professor getProfessorByEmail(String email) {
+		ProfessorDaoOperation professorDaoOperation = new ProfessorDaoOperation();
+		Professor p = professorDaoOperation.getProfessorByEmail(email);
+		return p;
+	}
 }

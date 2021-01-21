@@ -241,6 +241,7 @@ public class StudentOperation implements StudentInterface {
     	return st;
     }
 
+
     public void setRegistrationStatus(Student student){
         try{
             studentDaoOperation.setRegistrationStatus(student);
@@ -250,5 +251,6 @@ public class StudentOperation implements StudentInterface {
         }
     }
 }
+
 
 

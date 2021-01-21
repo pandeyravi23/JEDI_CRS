@@ -14,8 +14,13 @@ import org.apache.log4j.Logger;
 import com.flipkart.bean.Student;
 import com.flipkart.util.DBConnection;
 
+/*
+ * @author JEDI 04
+ */
+
 public class StudentDaoOperation implements StudentDaoInterface {
 	
+	// creating students list 
 	public static List<Student> students = new ArrayList<>();
 	private static Logger logger = Logger.getLogger(StudentDaoOperation.class);
 	Connection connection = null;
@@ -30,6 +35,7 @@ public class StudentDaoOperation implements StudentDaoInterface {
 
 	// to get student object based on studentID
 	@Override
+	// get student information using student id
 	public Student getStudentById(int studentId) {
 		Student st = null;
 		for(Student student: students) {
@@ -43,12 +49,13 @@ public class StudentDaoOperation implements StudentDaoInterface {
 
 	// read student database and populate students list
 	@Override
+	// creating student objects using stu.txt file and adding to students list 
 	public void populate() {
 		FileInputStream inputStream = null;
 		
 		try {
-			String filePath = new File("").getAbsolutePath();
-			inputStream = new FileInputStream(filePath.concat("/src/stu.txt"));
+//			String filePath = new File("").getAbsolutePath();
+			inputStream = new FileInputStream("stu.txt");
 //			inputStream = new FileInputStream("C:\\Users\\chinm\\OneDrive\\Desktop\\Flipkart_Internship\\JEDI_Bootcamp\\JAVA\\student.txt");
 			Scanner scanner = new Scanner(inputStream);
 			while(scanner.hasNext()) {

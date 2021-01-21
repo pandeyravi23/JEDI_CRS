@@ -1,23 +1,30 @@
 package com.flipkart.dao;
 
 import java.io.*;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+
+
 import java.util.*;
 
 import com.flipkart.bean.Course;
 import com.flipkart.bean.Student;
 import com.flipkart.util.DBConnection;
 
+/*
+ * @author JEDI 04
+ */
 public class CoursesDaoOperation implements CoursesDaoInterface {
 
 	Connection connection = null;
 	PreparedStatement ps = null;
 
 
-
 	@Override
+	// get list of enrolled students;
 	public ArrayList<Student> getEnrolledStudents(int courseId) {
 		ArrayList<Student> enrolledStudents = new ArrayList<Student>();
 		/*for(Course course: courses) {
