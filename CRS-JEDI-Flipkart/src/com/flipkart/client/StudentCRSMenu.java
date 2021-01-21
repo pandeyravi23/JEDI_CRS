@@ -1,13 +1,5 @@
 package com.flipkart.client;
 
-
-//import com.flipkart.bean.Student;
-//
-//import com.flipkart.dao.CoursesDaoOperation;
-//import com.flipkart.dao.StudentDaoOperation;
-//import com.flipkart.service.StudentInterface;
-//import com.flipkart.service.StudentOperation;
-
 import com.flipkart.bean.*;
 import com.flipkart.dao.*;
 import com.flipkart.service.*;

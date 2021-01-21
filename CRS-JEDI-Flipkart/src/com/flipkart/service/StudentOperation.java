@@ -57,6 +57,7 @@ public class StudentOperation implements StudentInterface {
         		student.setUserName(name);
         		logger.info("Name Successully updated");
         		break;
+        	
         }
         logger.info("===========================================\n");
         return false;
