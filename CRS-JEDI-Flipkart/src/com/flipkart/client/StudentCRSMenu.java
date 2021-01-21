@@ -3,6 +3,7 @@ package com.flipkart.client;
 import com.flipkart.bean.*;
 import com.flipkart.dao.*;
 import com.flipkart.service.*;
+
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -54,7 +55,7 @@ public class StudentCRSMenu {
 
             switch (choice){
                 case -1:
-                    logger.info("Exiting Menu.....");
+                    logger.info(".....Exiting Menu.....\n");
                     break;
                 case 1:
                     studentOperation.showCourses(student.getUserId());
@@ -81,7 +82,7 @@ public class StudentCRSMenu {
                     studentOperation.updateInfo(student);
                     break;
                 default:
-                    logger.info("Invalid choice");
+                    logger.info("Invalid choice\n");
                     break;
             }
         }while (choice!=-1);
@@ -102,7 +103,7 @@ public class StudentCRSMenu {
 
     public static void addCourse(){
     	if (student.getIsRegistered()==false) {
-        	logger.info("Student needs to start registration to add course");
+        	logger.info("Student needs to start registration to add course\n");
         	return;
         }
         logger.info("Enter course ID to be added");
@@ -113,7 +114,7 @@ public class StudentCRSMenu {
 
     public static void dropCourse(){
     	if (student.getIsRegistered()==false) {
-        	logger.info("Student needs to start registration to drop course");
+        	logger.info("Student needs to start registration to drop course\n");
         	return;
         }
         logger.info("Enter course ID to be dropped");
@@ -123,13 +124,11 @@ public class StudentCRSMenu {
     }
 
     public static void makePayment(){
+    	if(student.getEnrolledCourses().size()==0) {
+    		logger.info("Please Register courses to Make Payment: ");
+    		return ;
+    	}
         logger.info("Choose a payment method: ");
-        logger.info("1. Net Banking");
-        logger.info("2. Credit card");
-        logger.info("3. Scholarship");
-
-        Scanner input = new Scanner(System.in);
-        int paymentMethod = input.nextInt();
         studentOperation.makePayment(student);
     }
 }
