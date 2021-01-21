@@ -111,7 +111,7 @@ public class StudentCRSMenu {
 
     public static void addCourse(){
     	if (student.getIsRegistered()==false) {
-        	logger.info("Student needs to start registration to add course");
+        	logger.info("Student needs to start registration to add course\n");
         	return;
         }
         logger.info("Enter course ID to be added");
@@ -122,7 +122,7 @@ public class StudentCRSMenu {
 
     public static void dropCourse(){
     	if (student.getIsRegistered()==false) {
-        	logger.info("Student needs to start registration to drop course");
+        	logger.info("Student needs to start registration to drop course\n");
         	return;
         }
         logger.info("Enter course ID to be dropped");
@@ -135,7 +135,7 @@ public class StudentCRSMenu {
         logger.info("Choose a payment method: ");
         logger.info("1. Net Banking");
         logger.info("2. Credit card");
-        logger.info("3. Scholarship");
+        logger.info("3. Scholarship\n");
 
         Scanner input = new Scanner(System.in);
         int paymentMethod = input.nextInt();
