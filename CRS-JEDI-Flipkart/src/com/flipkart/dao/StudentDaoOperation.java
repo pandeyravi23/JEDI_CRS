@@ -36,7 +36,9 @@ public class StudentDaoOperation implements StudentDaoInterface {
 		FileInputStream inputStream = null;
 		
 		try {
-			inputStream = new FileInputStream("C:\\Users\\chinm\\OneDrive\\Desktop\\Flipkart_Internship\\JEDI_Bootcamp\\JAVA\\student.txt");
+			String filePath = new File("").getAbsolutePath();
+			inputStream = new FileInputStream(filePath.concat("/src/stu.txt"));
+//			inputStream = new FileInputStream("C:\\Users\\chinm\\OneDrive\\Desktop\\Flipkart_Internship\\JEDI_Bootcamp\\JAVA\\student.txt");
 			Scanner scanner = new Scanner(inputStream);
 			while(scanner.hasNext()) {
 				String line = scanner.nextLine();
