@@ -21,13 +21,57 @@ public class StudentOperation implements StudentInterface {
     }
 
     public void viewGrades(int studentId){
-        logger.info("Inside viewGrades Method");
+        logger.info("Inside viewGrades Method\n");
 
     }
 
     public boolean makePayment(Student student){
-        logger.info("Inside makePayment Method");
-        return false;
+//        logger.info("Inside makePayment Method\n");
+    	logger.info("Available options: \n");
+    	logger.info("Enter 1 to proceed via Netbanking");
+        logger.info("Enter 2 to proceed via Debit card");
+        Scanner sc = new Scanner(System.in);
+        int choice = sc.nextInt();
+        
+        switch(choice)
+        {
+        	case 1:
+        		logger.info("Enter Bank Name : ");
+        		String bank = sc.nextLine();
+        		if(bank.equals(""))
+        			bank = sc.nextLine();
+        		logger.info("Enter Ifsc Code : ");
+        		String ifsc = sc.nextLine();
+        		if(ifsc.equals(""))
+        			ifsc = sc.nextLine();
+        		logger.info("Enter Account Number : ");
+        		String account = sc.nextLine();
+        		if(account.equals(""))
+        			account = sc.nextLine();
+        		logger.info("Payment Done Successfully");
+        		logger.info("===========================================\n\n");
+        		return true;
+        	case 2:
+        		logger.info("Enter Card Number : ");
+        		String card = sc.nextLine();
+        		if(card.equals(""))
+        			card = sc.nextLine();
+        		logger.info("Enter Expiration Date : ");
+        		String date = sc.nextLine();
+        		if(date.equals(""))
+        			date = sc.nextLine();
+        		logger.info("Enter cvv Number : ");
+        		String cvv = sc.nextLine();
+        		if(cvv.equals(""))
+        			cvv = sc.nextLine();
+        		logger.info("Payment Done Successfully");
+        		logger.info("===========================================\n\n");
+        		return true;
+        	default:
+        		logger.info("Invalid choice----Exiting----");
+        		logger.info("===========================================\n\n");
+        		return false;
+        }
     }
 
     public boolean updateInfo(Student student){
@@ -58,9 +102,9 @@ public class StudentOperation implements StudentInterface {
         		logger.info("Name Successully updated");
         		break;
         	default:
-        		logger.info("Invalid option----Exiting----");
+        		logger.info("Invalid choice----Exiting----");
         }
-        logger.info("===========================================\n");
+        logger.info("===========================================\n\n");
         return false;
     }
 
@@ -111,7 +155,7 @@ public class StudentOperation implements StudentInterface {
                 deleteCourse(student,courseID);
             }
             else if(operation==3){
-                logger.info("Proceed to make payment");
+                logger.info("Proceed to make payment\n");
                 break;
             }
         }

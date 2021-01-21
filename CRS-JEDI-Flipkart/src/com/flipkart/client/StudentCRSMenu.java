@@ -55,7 +55,7 @@ public class StudentCRSMenu {
 
             switch (choice){
                 case -1:
-                    logger.info("Exiting Menu.....");
+                    logger.info(".....Exiting Menu.....\n");
                     break;
                 case 1:
                     studentOperation.showCourses(student.getUserId());
@@ -82,7 +82,7 @@ public class StudentCRSMenu {
                     studentOperation.updateInfo(student);
                     break;
                 default:
-                    logger.info("Invalid choice");
+                    logger.info("Invalid choice\n");
                     break;
             }
         }while (choice!=-1);
@@ -124,13 +124,11 @@ public class StudentCRSMenu {
     }
 
     public static void makePayment(){
+    	if(student.getEnrolledCourses().size()==0) {
+    		logger.info("Please Register courses to Make Payment: ");
+    		return ;
+    	}
         logger.info("Choose a payment method: ");
-        logger.info("1. Net Banking");
-        logger.info("2. Credit card");
-        logger.info("3. Scholarship\n");
-
-        Scanner input = new Scanner(System.in);
-        int paymentMethod = input.nextInt();
         studentOperation.makePayment(student);
     }
 }
