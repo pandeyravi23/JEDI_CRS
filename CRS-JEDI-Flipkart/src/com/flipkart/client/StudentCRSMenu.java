@@ -10,43 +10,34 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class StudentCRSMenu {
-
     private static Logger logger = Logger.getLogger(StudentCRSMenu.class);
-    private static StudentInterface studentOperation = new StudentOperation();
-    private static Student student = new Student();
+    private StudentInterface studentOperation = new StudentOperation();
+    private  Student student = new Student();
     //public static ArrayList<Integer> al = new ArrayList<>();
 
-    public static void main(String[] args){
-    	// populate courses list
-        CoursesDaoOperation obj = new CoursesDaoOperation();
-        obj.populate();
-
-        // populate students list
-        StudentDaoOperation obj2 = new StudentDaoOperation();
-        obj2.populate();
-
+    public void studentClient(){
         Scanner input = new Scanner(System.in);
 
-        logger.info("Enter Student Id");
-    	int x = 0;
-    	int id = input.nextInt();
-
-    	// verify the entered student id
-    	for(int i=0;i<StudentDaoOperation.students.size();i++) {
-    		if (StudentDaoOperation.students.get(i).getUserId()==id) {
-    			student.setUserId(StudentDaoOperation.students.get(i).getUserId());
-    	        student.setUserName(StudentDaoOperation.students.get(i).getUserName());
-    	        student.setEmail(StudentDaoOperation.students.get(i).getEmail());
-    	        student.setRollNo(StudentDaoOperation.students.get(i).getRollNo());
-    	        student.setBranch(StudentDaoOperation.students.get(i).getBranch());
-    	        student.setIsRegistered(false);
-    	        x = 1;
-    		}
-    	}
-        if (x==0) {
-        	logger.info("User Not Found");
-        	return;
-        }
+//        logger.info("Enter Student Id");
+//    	int x = 0;
+//    	int id = input.nextInt();
+//
+//    	// verify the entered student id
+//    	for(int i=0;i<StudentDaoOperation.students.size();i++) {
+//    		if (StudentDaoOperation.students.get(i).getUserId()==id) {
+//    			student.setUserId(StudentDaoOperation.students.get(i).getUserId());
+//    	        student.setUserName(StudentDaoOperation.students.get(i).getUserName());
+//    	        student.setEmail(StudentDaoOperation.students.get(i).getEmail());
+//    	        student.setRollNo(StudentDaoOperation.students.get(i).getRollNo());
+//    	        student.setBranch(StudentDaoOperation.students.get(i).getBranch());
+//    	        student.setIsRegistered(false);
+//    	        x = 1;
+//    		}
+//    	}
+//        if (x==0) {
+//        	logger.info("User Not Found");
+//        	return;
+//        }
 
 
         int choice;
@@ -90,6 +81,13 @@ public class StudentCRSMenu {
             }
         }while (choice!=-1);
     }
+    
+    
+    
+    public void init(String email) {
+    	student = studentOperation.getStudentByEmail(email);
+    	studentClient();
+    }
 
     public static void showChoices(){
         logger.info("Select an operation: ");
@@ -105,7 +103,7 @@ public class StudentCRSMenu {
     }
 
     // method to add course
-    public static void addCourse(){
+    public void addCourse(){
     	if (student.getIsRegistered()==false) {
         	logger.info("Student needs to start registration to add course\n");
         	return;
@@ -117,7 +115,7 @@ public class StudentCRSMenu {
     }
 
     // method to drop a course
-    public static void dropCourse(){
+    public void dropCourse(){
     	if (student.getIsRegistered()==false) {
         	logger.info("Student needs to start registration to drop course\n");
         	return;
@@ -129,7 +127,7 @@ public class StudentCRSMenu {
     }
 
     // method to make payment
-    public static void makePayment(){
+    public void makePayment(){
     	if(student.getEnrolledCourses().size()==0) {
     		logger.info("Please Register courses to Make Payment: ");
     		return ;

@@ -3,6 +3,7 @@ import org.apache.log4j.Logger;
 
 import com.flipkart.bean.Student;
 import com.flipkart.dao.CoursesDaoOperation;
+import com.flipkart.dao.StudentDaoOperation;
 import com.flipkart.bean.Course;
 
 import java.util.ArrayList;
@@ -179,6 +180,12 @@ public class StudentOperation implements StudentInterface {
             logger.info(i);
         }
         logger.info("==================================================\n");
+    }
+    
+    public Student getStudentByEmail(String email) {
+    	StudentDaoOperation studentOperation = new StudentDaoOperation();
+    	Student st = studentOperation.getStudentByEmail(email);
+    	return st;
     }
 }
 
