@@ -8,10 +8,15 @@ import com.flipkart.bean.Course;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/*
+ * @author JEDI 04
+ */
+
 public class StudentOperation implements StudentInterface {
     private static Logger logger = Logger.getLogger(StudentOperation.class);
 	CoursesDaoOperation courseListObj = new CoursesDaoOperation();
 
+	// Show courses Details
     public void showCourses(int studentId){
     	logger.info("================AVAILABLE COURSES================\n");
     	for (Course course : CoursesDaoOperation.courses) {
@@ -20,6 +25,7 @@ public class StudentOperation implements StudentInterface {
     	logger.info("=================================================\n");
     }
 
+    // view Student grades 
     public void viewGrades(int studentId){
         logger.info("Inside viewGrades Method\n");
 
@@ -35,7 +41,7 @@ public class StudentOperation implements StudentInterface {
         
         switch(choice)
         {
-        	case 1:
+        	case 1:// Payment using Netbanking
         		logger.info("Enter Bank Name : ");
         		String bank = sc.nextLine();
         		if(bank.equals(""))
@@ -51,7 +57,7 @@ public class StudentOperation implements StudentInterface {
         		logger.info("Payment Done Successfully");
         		logger.info("===========================================\n\n");
         		return true;
-        	case 2:
+        	case 2:// Payment using Debit card 
         		logger.info("Enter Card Number : ");
         		String card = sc.nextLine();
         		if(card.equals(""))
@@ -74,6 +80,7 @@ public class StudentOperation implements StudentInterface {
         }
     }
 
+    // updating student information 
     public boolean updateInfo(Student student){
         logger.info("================UPDATE INFO================\n");
         
@@ -108,6 +115,7 @@ public class StudentOperation implements StudentInterface {
         return false;
     }
 
+    //Adding new Course
     public boolean addCourse(Student student, int courseId){
         ArrayList<Integer> enrolledCourses = student.getEnrolledCourses();
         if(enrolledCourses.contains(courseId)==false){
@@ -122,6 +130,7 @@ public class StudentOperation implements StudentInterface {
         return false;
     }
 
+    //Dropping existing course from student enrolled courses list
     public boolean deleteCourse(Student student, int courseId){
         ArrayList<Integer> enrolledCourses = student.getEnrolledCourses();
         if(enrolledCourses.contains(courseId)){
@@ -135,6 +144,7 @@ public class StudentOperation implements StudentInterface {
         return false;
     }
 
+    // Register course
     public boolean registerCourses(Student student){
     	student.setIsRegistered(true);
         logger.info("================COURSE REGISTRATION================\n");
@@ -163,6 +173,7 @@ public class StudentOperation implements StudentInterface {
         return false;
     }
 
+    //View Enrolled courses 
     public void viewRegisteredCourses(Student student){
         ArrayList<Integer> enrolledCourses = student.getEnrolledCourses();
         logger.info("================REGISTERED COURSES================\n");

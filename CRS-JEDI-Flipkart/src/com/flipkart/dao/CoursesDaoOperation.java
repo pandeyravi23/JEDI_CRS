@@ -1,20 +1,26 @@
 package com.flipkart.dao;
 
 import java.io.*;
+
 import java.util.*;
 
 import com.flipkart.bean.Course;
 import com.flipkart.bean.Student;
 
+/*
+ * @author JEDI 04
+ */
 public class CoursesDaoOperation implements CoursesDaoInterface {
 	public static List<Course> courses = new ArrayList<>();
 
 	@Override
+	// return all courses details
 	public List<Course> getAllCourseDetails() {
 		return courses;
 	}
 
 	@Override
+	// get list of enrolled students;
 	public ArrayList<Student> getEnrolledStudents(int courseId) {
 		ArrayList<Student> enrolledStudents = new ArrayList<Student>();
 		for(Course course: courses) {
@@ -27,6 +33,8 @@ public class CoursesDaoOperation implements CoursesDaoInterface {
 	}
 	
 	@Override
+	
+	//Populate All Courses from data.txt file to courses list 
 	public void populate() {
 		FileInputStream inputStream = null;
 		

@@ -9,15 +9,16 @@ import org.apache.log4j.Logger;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/*
+ * @author JEDI 04
+ */
 public class StudentCRSMenu {
 
     private static Logger logger = Logger.getLogger(StudentCRSMenu.class);
     private static StudentInterface studentOperation = new StudentOperation();
     private static Student student = new Student();
-    //public static ArrayList<Integer> al = new ArrayList<>();
 
     public static void main(String[] args){
-    	//populate
         CoursesDaoOperation obj = new CoursesDaoOperation();
         obj.populate();
 
@@ -30,6 +31,7 @@ public class StudentCRSMenu {
     	int x = 0;
     	int id = input.nextInt();
 
+    	// Registering student from the studentDaoOperation populate method
     	for(int i=0;i<StudentDaoOperation.students.size();i++) {
     		if (StudentDaoOperation.students.get(i).getUserId()==id) {
     			student.setUserId(StudentDaoOperation.students.get(i).getUserId());
@@ -88,6 +90,7 @@ public class StudentCRSMenu {
         }while (choice!=-1);
     }
 
+    //showing available choices for student
     public static void showChoices(){
         logger.info("Select an operation: ");
         logger.info("1. Show courses");
@@ -100,34 +103,40 @@ public class StudentCRSMenu {
         logger.info("8. Update info");
         logger.info("-1 to exit menu");
     }
-
+    
+    // Add course in Enrolled Course list
     public static void addCourse(){
     	if (student.getIsRegistered()==false) {
         	logger.info("Student needs to start registration to add course\n");
         	return;
         }
+    	
         logger.info("Enter course ID to be added");
         Scanner input = new Scanner(System.in);
         int courseID = input.nextInt();
         studentOperation.addCourse(student,courseID);
     }
-
+    
+    // Drop course from Enrolled courses 
     public static void dropCourse(){
     	if (student.getIsRegistered()==false) {
         	logger.info("Student needs to start registration to drop course\n");
         	return;
         }
+    	
         logger.info("Enter course ID to be dropped");
         Scanner input = new Scanner(System.in);
         int courseID = input.nextInt();
         studentOperation.deleteCourse(student,courseID);
     }
 
+    //Make payment after student has Registered courses
     public static void makePayment(){
     	if(student.getEnrolledCourses().size()==0) {
     		logger.info("Please Register courses to Make Payment: ");
     		return ;
     	}
+    	
         logger.info("Choose a payment method: ");
         studentOperation.makePayment(student);
     }

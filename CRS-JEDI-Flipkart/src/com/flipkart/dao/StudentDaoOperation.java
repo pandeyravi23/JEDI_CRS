@@ -7,8 +7,13 @@ import java.util.*;
 
 import com.flipkart.bean.Student;
 
+/*
+ * @author JEDI 04
+ */
+
 public class StudentDaoOperation implements StudentDaoInterface {
 	
+	// creating students list 
 	public static List<Student> students = new ArrayList<>();
 
 	@Override
@@ -17,6 +22,7 @@ public class StudentDaoOperation implements StudentDaoInterface {
 	}
 
 	@Override
+	// get student information using student id
 	public Student getStudentById(int studentId) {
 		Student st = null;
 		for(Student student: students) {
@@ -29,6 +35,7 @@ public class StudentDaoOperation implements StudentDaoInterface {
 	}
 
 	@Override
+	// creating student objects using stu.txt file and adding to students list 
 	public void populate() {
 		FileInputStream inputStream = null;
 		
