@@ -9,6 +9,7 @@ import com.flipkart.bean.Student;
 public class CoursesDaoOperation implements CoursesDaoInterface {
 	public static List<Course> courses = new ArrayList<>();
 
+	// to get all the courses in course catalog
 	@Override
 	public List<Course> getAllCourseDetails() {
 		return courses;
@@ -25,13 +26,16 @@ public class CoursesDaoOperation implements CoursesDaoInterface {
 		}
 		return enrolledStudents;
 	}
-	
+
+	// read the course catalog and populate the courses list
 	@Override
 	public void populate() {
 		FileInputStream inputStream = null;
 		
 		try {	
-			inputStream = new FileInputStream("data.txt");
+			String filePath = new File("").getAbsolutePath();
+			inputStream = new FileInputStream(filePath.concat("/src/data.txt"));
+//			inputStream = new FileInputStream("C:\\Users\\chinm\\OneDrive\\Desktop\\Flipkart_Internship\\JEDI_Bootcamp\\JAVA\\data.txt");
 			Scanner scanner = new Scanner(inputStream);
 			while(scanner.hasNext()) {
 				String line = scanner.nextLine();

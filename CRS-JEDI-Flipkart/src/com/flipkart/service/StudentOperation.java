@@ -12,6 +12,7 @@ public class StudentOperation implements StudentInterface {
     private static Logger logger = Logger.getLogger(StudentOperation.class);
 	CoursesDaoOperation courseListObj = new CoursesDaoOperation();
 
+	// operation to show available courses in course catalog
     public void showCourses(int studentId){
     	logger.info("================AVAILABLE COURSES================\n");
     	for (Course course : CoursesDaoOperation.courses) {
@@ -25,17 +26,19 @@ public class StudentOperation implements StudentInterface {
 
     }
 
+    // operation to make payment
     public boolean makePayment(Student student){
-//        logger.info("Inside makePayment Method\n");
+        logger.info("Inside makePayment Method\n");
     	logger.info("Available options: \n");
     	logger.info("Enter 1 to proceed via Netbanking");
         logger.info("Enter 2 to proceed via Debit card");
         Scanner sc = new Scanner(System.in);
         int choice = sc.nextInt();
-        
+
+        // operations based on payment method
         switch(choice)
         {
-        	case 1:
+        	case 1:   // for net banking method
         		logger.info("Enter Bank Name : ");
         		String bank = sc.nextLine();
         		if(bank.equals(""))
@@ -51,7 +54,7 @@ public class StudentOperation implements StudentInterface {
         		logger.info("Payment Done Successfully");
         		logger.info("===========================================\n\n");
         		return true;
-        	case 2:
+        	case 2:   // for credit card method
         		logger.info("Enter Card Number : ");
         		String card = sc.nextLine();
         		if(card.equals(""))
@@ -74,6 +77,7 @@ public class StudentOperation implements StudentInterface {
         }
     }
 
+    // operation to update student info
     public boolean updateInfo(Student student){
         logger.info("================UPDATE INFO================\n");
         
@@ -108,6 +112,7 @@ public class StudentOperation implements StudentInterface {
         return false;
     }
 
+    // operation to add course to registered courses
     public boolean addCourse(Student student, int courseId){
         ArrayList<Integer> enrolledCourses = student.getEnrolledCourses();
         if(enrolledCourses.contains(courseId)==false){
@@ -122,6 +127,7 @@ public class StudentOperation implements StudentInterface {
         return false;
     }
 
+    // operation to delete course from registered courses
     public boolean deleteCourse(Student student, int courseId){
         ArrayList<Integer> enrolledCourses = student.getEnrolledCourses();
         if(enrolledCourses.contains(courseId)){
@@ -135,6 +141,7 @@ public class StudentOperation implements StudentInterface {
         return false;
     }
 
+    // operation to register for courses
     public boolean registerCourses(Student student){
     	student.setIsRegistered(true);
         logger.info("================COURSE REGISTRATION================\n");
@@ -163,6 +170,8 @@ public class StudentOperation implements StudentInterface {
         return false;
     }
 
+
+    // operation to show registered courses
     public void viewRegisteredCourses(Student student){
         ArrayList<Integer> enrolledCourses = student.getEnrolledCourses();
         logger.info("================REGISTERED COURSES================\n");
