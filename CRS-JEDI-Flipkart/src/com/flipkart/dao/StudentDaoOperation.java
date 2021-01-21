@@ -3,9 +3,15 @@ package com.flipkart.dao;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.*;
 
+import org.apache.log4j.Logger;
+
 import com.flipkart.bean.Student;
+import com.flipkart.util.DBConnection;
 
 /*
  * @author JEDI 04
@@ -15,6 +21,9 @@ public class StudentDaoOperation implements StudentDaoInterface {
 	
 	// creating students list 
 	public static List<Student> students = new ArrayList<>();
+	private static Logger logger = Logger.getLogger(StudentDaoOperation.class);
+	Connection connection = null;
+	PreparedStatement ps = null;
 
 	// to get all students in database
 	@Override
@@ -43,7 +52,7 @@ public class StudentDaoOperation implements StudentDaoInterface {
 		FileInputStream inputStream = null;
 		
 		try {
-			String filePath = new File("").getAbsolutePath();
+//			String filePath = new File("").getAbsolutePath();
 			inputStream = new FileInputStream("stu.txt");
 //			inputStream = new FileInputStream("C:\\Users\\chinm\\OneDrive\\Desktop\\Flipkart_Internship\\JEDI_Bootcamp\\JAVA\\student.txt");
 			Scanner scanner = new Scanner(inputStream);
@@ -68,6 +77,31 @@ public class StudentDaoOperation implements StudentDaoInterface {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public Student getStudentByEmail(String email) {
+		Student student = new Student();
+		try {
+			connection = DBConnection.getConnection();
+			String sqlQuery = "SELECT * FROM student WHERE email=?";
+			ps = connection.prepareStatement(sqlQuery);
+			
+			ps.setString(1, email);
+			
+			ResultSet result = ps.executeQuery();
+			result.next();
+			student.setEmail(result.getString("email"));
+			student.setBranch(result.getString("branch"));
+			student.setUserId(result.getInt("id"));
+			boolean bool = result.getInt("isRegistered") == 1 ? true : false;
+			student.setIsRegistered(bool);
+			student.setUserName(result.getString("name"));
+			student.setRollNo(result.getInt("rollno"));	
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return student;
 	}
 
 }
