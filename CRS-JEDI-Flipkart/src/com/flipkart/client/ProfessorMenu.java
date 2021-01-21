@@ -29,7 +29,7 @@ public class ProfessorMenu {
                     viewGrades();
                     break;
                 case 2:
-                    allotedCourse();
+                    allotedCourse(professor.getUserId());
                     break;
                 case 3:
                     viewStudents();
@@ -62,7 +62,9 @@ public class ProfessorMenu {
     }
 
     // method to drop a course
-    public void allotedCourse(){
+    public void allotedCourse(int professorId){
+    	ProfessorOperation professorOperation = new ProfessorOperation();
+    	professorOperation.showCourses(professorId);
         logger.info("Inside Alloted Course Method");
     }
 

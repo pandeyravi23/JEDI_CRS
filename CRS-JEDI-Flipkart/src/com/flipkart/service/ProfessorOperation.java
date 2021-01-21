@@ -26,8 +26,10 @@ public class ProfessorOperation implements ProfessorInterface {
 	}
 
 	@Override
-	public void showCourses() {
+	public void showCourses(int professorId) {
 		logger.info("Inside showCourses");
+		ProfessorDaoOperation professorDaoOperation = new ProfessorDaoOperation();
+		professorDaoOperation.showCourses(professorId);
 	}
 
 	public Professor getProfessorByEmail(String email) {
