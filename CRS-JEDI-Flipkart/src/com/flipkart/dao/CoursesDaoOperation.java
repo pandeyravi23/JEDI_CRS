@@ -1,21 +1,27 @@
 package com.flipkart.dao;
 
 import java.io.*;
+
 import java.util.*;
 
 import com.flipkart.bean.Course;
 import com.flipkart.bean.Student;
 
+/*
+ * @author JEDI 04
+ */
 public class CoursesDaoOperation implements CoursesDaoInterface {
 	public static List<Course> courses = new ArrayList<>();
 
 	// to get all the courses in course catalog
 	@Override
+	// return all courses details
 	public List<Course> getAllCourseDetails() {
 		return courses;
 	}
 
 	@Override
+	// get list of enrolled students;
 	public ArrayList<Student> getEnrolledStudents(int courseId) {
 		ArrayList<Student> enrolledStudents = new ArrayList<Student>();
 		for(Course course: courses) {
@@ -29,12 +35,14 @@ public class CoursesDaoOperation implements CoursesDaoInterface {
 
 	// read the course catalog and populate the courses list
 	@Override
+	
+	//Populate All Courses from data.txt file to courses list 
 	public void populate() {
 		FileInputStream inputStream = null;
 		
 		try {	
-			String filePath = new File("").getAbsolutePath();
-			inputStream = new FileInputStream(filePath.concat("/src/data.txt"));
+//			String filePath = new File("").getAbsolutePath();
+			inputStream = new FileInputStream("data.txt");
 //			inputStream = new FileInputStream("C:\\Users\\chinm\\OneDrive\\Desktop\\Flipkart_Internship\\JEDI_Bootcamp\\JAVA\\data.txt");
 			Scanner scanner = new Scanner(inputStream);
 			while(scanner.hasNext()) {
