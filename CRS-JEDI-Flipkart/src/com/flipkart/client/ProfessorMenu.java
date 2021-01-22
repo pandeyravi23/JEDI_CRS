@@ -10,66 +10,78 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ProfessorMenu {
-    private static Logger logger = Logger.getLogger(ProfessorMenu.class);
-    private ProfessorInterface professorOperation = new ProfessorOperation();
+	private static Logger logger = Logger.getLogger(ProfessorMenu.class);
+	private ProfessorInterface professorOperation = new ProfessorOperation();
 
-    public void professorClient(Professor professor){
-    	logger.info("Welcome Professor " + professor.getUserName());
-        int choice;
-        Scanner input = new Scanner(System.in);
-        do{
-            showChoices();
-            choice = input.nextInt();
+	public void professorClient(Professor professor) {
+		logger.info("Welcome Professor " + professor.getUserName());
+		int choice;
+		Scanner input = new Scanner(System.in);
+		do {
+			showChoices();
+			choice = input.nextInt();
 
-            switch (choice){
-                case -1:
-                    logger.info(".....Exiting Menu.....\n");
-                    break;
-                case 1:
-                    viewGrades();
-                    break;
-                case 2:
-                    allotedCourse(professor.getUserId());
-                    break;
-                case 3:
-                    viewStudents();
-                    break;
-                default:
-                    logger.info("Invalid choice\n");
-                    break;
-            }
-        }while (choice!=-1);
-    }
-    
-    
-    
-    public void init(String email) {
-    	Professor professor = professorOperation.getProfessorByEmail(email);
-    	professorClient(professor);
-    }
+			switch (choice) {
+			case -1:
+				logger.info(".....Exiting Menu.....\n");
+				break;
+			case 1:
+				viewGrades();
+				break;
+			case 2:
+				allotedCourse(professor.getUserId());
+				break;
+			case 3:
+				viewStudents();
+				break;
+			default:
+				logger.info("Invalid choice\n");
+				break;
+			}
+		} while (choice != -1);
+	}
 
-    public static void showChoices(){
-        logger.info("Please select an operation: ");
-        logger.info("1. Grade Students");
-        logger.info("2. View Alloted Courses");
-        logger.info("3. View Students Enrolled in a course ");
-        logger.info("-1 to exit menu");
-    }
+	public void init(String email) {
+		Professor professor = professorOperation.getProfessorByEmail(email);
+		professorClient(professor);
+	}
 
-    // method to add course
-    public void viewGrades(){
-        logger.info("Inside View Course Method");
-    }
+	public static void showChoices() {
+		logger.info("Please select an operation: ");
+		logger.info("1. Grade Students");
+		logger.info("2. View Alloted Courses");
+		logger.info("3. View Students Enrolled in a course ");
+		logger.info("-1 to exit menu");
+	}
 
-    // method to drop a course
-    public void allotedCourse(int professorId){
-    	ProfessorOperation professorOperation = new ProfessorOperation();
-    	professorOperation.showCourses(professorId);
-        logger.info("Inside Alloted Course Method");
-    }
+	// method to add course
+	public void viewGrades() {
+		logger.info("Inside View Course Method");
+	}
 
-    // method to make payment
-    public void viewStudents(){
-    	logger.info("Inside View Student Method");
-    }
+	// method to drop a course
+	public void allotedCourse(int professorId) {
+		logger.info("Inside Alloted Course Method");
+		ProfessorOperation professorOperation = new ProfessorOperation();
+		professorOperation.showCourses(professorId);
+
+	}
+
+	// method to make payment
+	public void viewStudents() {
+		Scanner sc = new Scanner(System.in);
+		logger.info("Inside View Student Method");
+		try {
+			ProfessorOperation professorOperation = new ProfessorOperation();
+			logger.info("	Enter courseId");
+			int courseId = sc.nextInt();
+			professorOperation.viewStudentsEnrolled(courseId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (sc != null) {
+				sc.close();
+			}
+		}
+	}
 }

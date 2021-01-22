@@ -21,10 +21,10 @@ public class DBConnection {
 	static final String USER = "root";
 
 //	static final String PASS = "common2";
-//	static final String PASS = "bernabeu";
+	static final String PASS = "bernabeu";
 
 
-	static final String PASS = "invictus@1999";
+//	static final String PASS = "invictus@1999";
 
 	//static final String PASS = "common2";
 
