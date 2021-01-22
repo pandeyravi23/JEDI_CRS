@@ -14,6 +14,17 @@ public class StudentOperation implements StudentInterface {
     private static Logger logger = Logger.getLogger(StudentOperation.class);
 	CoursesDaoOperation coursesDaoOperation = new CoursesDaoOperation();
     StudentDaoOperation studentDaoOperation = new StudentDaoOperation();
+    
+    public int getNumberOfEnrolledCourses(Student student) {
+    	int count = 0;
+    	try {
+    		count = studentDaoOperation.getNoOfCourses(student);
+    	}
+    	catch (Exception e) {
+    		 e.printStackTrace();
+    	}
+    	return count;
+    }
 
 	// operation to show available courses in course catalog
     public void showCourses(){
@@ -23,7 +34,7 @@ public class StudentOperation implements StudentInterface {
             logger.info("================AVAILABLE COURSES================\n");
             logger.info("Course ID\tCourse Name\tCredits");
             for (Course course : courses) {
-                logger.info(course.getCourseID() + "\t\t" + course.getCourseName() + "\t\t" + course.getCredits());
+                logger.info(course.getCourseID() + "\t" + course.getCourseName() + "\t" + course.getCredits());
             }
             logger.info("=================================================\n");
         }
@@ -50,53 +61,13 @@ public class StudentOperation implements StudentInterface {
     }
 
     // operation to make payment
-    public boolean makePayment(Student student){
-        logger.info("Inside makePayment Method\n");
-    	logger.info("Available options: \n");
-    	logger.info("Enter 1 to proceed via Netbanking");
-        logger.info("Enter 2 to proceed via Debit card");
-        Scanner sc = new Scanner(System.in);
-        int choice = sc.nextInt();
-
-        // operations based on payment method
-        switch(choice)
-        {
-        	case 1:   // for net banking method
-        		logger.info("Enter Bank Name : ");
-        		String bank = sc.nextLine();
-        		if(bank.equals(""))
-        			bank = sc.nextLine();
-        		logger.info("Enter Ifsc Code : ");
-        		String ifsc = sc.nextLine();
-        		if(ifsc.equals(""))
-        			ifsc = sc.nextLine();
-        		logger.info("Enter Account Number : ");
-        		String account = sc.nextLine();
-        		if(account.equals(""))
-        			account = sc.nextLine();
-        		logger.info("Payment Done Successfully");
-        		logger.info("===========================================\n\n");
-        		return true;
-        	case 2:   // for credit card method
-        		logger.info("Enter Card Number : ");
-        		String card = sc.nextLine();
-        		if(card.equals(""))
-        			card = sc.nextLine();
-        		logger.info("Enter Expiration Date : ");
-        		String date = sc.nextLine();
-        		if(date.equals(""))
-        			date = sc.nextLine();
-        		logger.info("Enter cvv Number : ");
-        		String cvv = sc.nextLine();
-        		if(cvv.equals(""))
-        			cvv = sc.nextLine();
-        		logger.info("Payment Done Successfully");
-        		logger.info("===========================================\n\n");
-        		return true;
-        	default:
-        		logger.info("Invalid choice----Exiting----");
-        		logger.info("===========================================\n\n");
-        		return false;
+    public void makePayment(Student student){
+        try {
+        	studentDaoOperation.setPaymentStatus(student);
+        	student.setPaymentStatus(true);
+        }
+        catch(Exception e) {
+        	e.printStackTrace();
         }
     }
 

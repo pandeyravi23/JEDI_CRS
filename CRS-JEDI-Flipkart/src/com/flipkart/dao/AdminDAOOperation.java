@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
+import com.flipkart.bean.Admin;
 import com.flipkart.bean.Professor;
 import com.flipkart.util.DBConnection;
 
@@ -38,20 +39,34 @@ public class AdminDAOOperation implements AdminDAOInterface {
 		return true;
 	}
 	
-	public int addAdmin(String email, String password)
+	public int addAdmin(String password, Admin admin)
 	{
 		try
 		{
-			if(verifyEmail(email) == false)
-			{
-				return 2;
-			}
-			String sqlQuery = "insert into credentials(role, email, password) values(?, ?, ?)";
-			ps = connection.prepareStatement(sqlQuery);
+			String sqlQuery = "insert into credentials(role, email, password, isApproved, address, age, gender, contact, nationality) values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			ps = connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS);
 			
 			ps.setInt(1, 3);
-			ps.setString(2,  email);
+			ps.setString(2,  admin.getEmail());
 			ps.setString(3, password);
+			ps.setInt(4,  1);
+			ps.setString(5, admin.getAddress());
+			ps.setInt(6, admin.getAge());
+			ps.setString(7, admin.getGender());
+			ps.setString(8,  admin.getContact());
+			ps.setString(9, admin.getNationality());
+			
+			ps.executeUpdate();
+			ResultSet rs = ps.getGeneratedKeys();
+			
+			rs.next();
+			admin.setUserId(rs.getInt(1));
+			
+			String adminQuery = "insert into admin values(?, ?, ?)";
+			ps = connection.prepareStatement(adminQuery);
+			ps.setInt(1, admin.getUserId());
+			ps.setString(2, admin.getUserName());
+			ps.setString(3, admin.getEmail());
 			
 			ps.executeUpdate();
 			return 1;
@@ -66,11 +81,17 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	{
 		try
 		{
-			String credQuery = "insert into credentials(role, email, password) values (?, ?, ?)";
+			String credQuery = "insert into credentials(role, email, password, isApproved, address, age, gender, contact, nationality) values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			ps = connection.prepareStatement(credQuery, Statement.RETURN_GENERATED_KEYS);
-			ps.setInt(1,  2);
+			ps.setInt(1, 2);
 			ps.setString(2,  prof.getEmail());
 			ps.setString(3, password);
+			ps.setInt(4,  1);
+			ps.setString(5, prof.getAddress());
+			ps.setInt(6, prof.getAge());
+			ps.setString(7, prof.getGender());
+			ps.setString(8,  prof.getContact());
+			ps.setString(9, prof.getNationality());
 			
 			ps.executeUpdate();
 			ResultSet rs = ps.getGeneratedKeys();

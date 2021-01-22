@@ -9,7 +9,7 @@ public interface StudentInterface {
 
     public void viewGrades(int studentId);
 
-    public boolean makePayment(Student student);
+    public void makePayment(Student student);
 
     public boolean updateInfo(Student student);
 
@@ -24,5 +24,7 @@ public interface StudentInterface {
     public Student getStudentByEmail(String email);
 
     public void setRegistrationStatus(Student student);
+    
+    public int getNumberOfEnrolledCourses(Student student);
 
 }
