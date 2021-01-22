@@ -23,7 +23,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 	PreparedStatement stmt;
 
 	/*
-	 * Method creates professor object using email ID from the database
+	 * Method creates and returns professor object using email ID from the database
 	 */
 	public Professor getProfessorByEmail(String email) {
 		Professor professor = new Professor();
@@ -49,6 +49,10 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 		return professor;
 	}
 
+	/*
+	 * Method Displays list of courses alloted to the 
+	 * professor after getting from the database
+	 */
 	public void showCourses(int professorId) {
 		try {
 			con = DBConnection.getConnection();
@@ -66,6 +70,10 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 		}
 	}
 
+	/*
+	 * Returns list of all student objects associated with the particular
+	 * course id whose grade is Not Available from the database
+	 */
 	public ArrayList<Student> getEnrolledStudents(int courseId) {
 		ArrayList<Student> al = new ArrayList<Student>();
 		try {
@@ -118,6 +126,11 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 		return al;
 	}
 	
+	/*
+	 * Updates grades of multiple student belonging
+	 * to a particular courseId whose grades are currently
+	 * not available
+	 */
 	public void setGrades(ArrayList<Student>toGrade,int courseId) {
 		Scanner sc = new Scanner(System.in);
 		try {
@@ -146,7 +159,10 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 		return ;
 	}
 	
-	
+	/*
+	 * Updates grades of a single student belonging
+	 * to a particular courseId
+	 */
 	public boolean updateStudentGrades(int courseId,int studentId, String grades) {
 		try {
 			con = DBConnection.getConnection();
@@ -165,6 +181,10 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 		return false;
 	}
 	
+	/*
+	 * Show Grades of all enrolled students associated with the 
+	 * courseId
+	 */
 	public void showGrades(ArrayList<Student>enolledStudent,int courseId) {
 		try {
 			con = DBConnection.getConnection();
@@ -188,8 +208,11 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 	}
 	
 	
-	//////////////////////////////////////////////////////////////////////
 	
+	/*
+	 * Returns list of all student objects associated with the particular
+	 * course id from the database
+	 */
 	public ArrayList<Student> getStudents(int courseId) {
 		ArrayList<Student> al = new ArrayList<Student>();
 		try {

@@ -14,6 +14,12 @@ public class ProfessorOperation implements ProfessorInterface {
 	
 	private static Logger logger = Logger.getLogger(ProfessorOperation.class);
 	private ProfessorDaoOperation professorDaoOperation = new ProfessorDaoOperation();
+	
+	
+	/*
+	 * Method to get and display enrolled student in a particular course
+	 * whose grades are currently Not Available
+	 */
 	@Override
 	public void viewStudentsEnrolled(int courseId) {
 		logger.info("Inside viewStudentEnrolled");
@@ -30,6 +36,10 @@ public class ProfessorOperation implements ProfessorInterface {
 		}
 	}
 
+	/*
+	 * Get and display grades of all students in a course 
+	 *  linked with courseId
+	 */
 	@Override
 	public void viewGrades(int courseId) {
 		ArrayList<Student> studentsEnrolled = professorDaoOperation.getStudents(courseId);
@@ -41,6 +51,9 @@ public class ProfessorOperation implements ProfessorInterface {
 		}
 	}
 
+	/*
+	 * Grade Students in a batch with mentioned courseId
+	 */
 	@Override
 	public Boolean gradeStudents (int courseId) {
 		ArrayList<Student> studentsEnrolled = professorDaoOperation.getEnrolledStudents(courseId);
@@ -53,12 +66,20 @@ public class ProfessorOperation implements ProfessorInterface {
 		return true;
 	}
 
+	/*
+	 * Get and display all courses alloted to the 
+	 * professor with given courseId 
+	 */
 	@Override
 	public void showCourses(int professorId) {
 		logger.info("Inside showCourses");
 		professorDaoOperation.showCourses(professorId);
 	}
 
+	/*
+	 * Returns professor object associated with 
+	 * given email
+	 */
 	public Professor getProfessorByEmail(String email) {
 		Professor p = professorDaoOperation.getProfessorByEmail(email);
 		return p;
