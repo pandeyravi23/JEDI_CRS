@@ -10,6 +10,7 @@ import java.util.*;
 
 import com.flipkart.bean.Course;
 import com.flipkart.bean.Grades;
+import com.flipkart.constant.SQLQueriesConstant;
 import org.apache.log4j.Logger;
 
 import com.flipkart.bean.Student;
@@ -87,8 +88,8 @@ public class StudentDaoOperation implements StudentDaoInterface {
 		Student student = new Student();
 		try {
 			connection = DBConnection.getConnection();
-			String sqlQuery = "SELECT * FROM student WHERE email=?";
-			ps = connection.prepareStatement(sqlQuery);
+			//String sqlQuery = "SELECT * FROM student WHERE email=?";
+			ps = connection.prepareStatement(SQLQueriesConstant.GET_STUDENT_BY_EMAIL_QUERY);
 			
 			ps.setString(1, email);
 			
@@ -119,8 +120,8 @@ public class StudentDaoOperation implements StudentDaoInterface {
 		else{
 			try{
 				connection = DBConnection.getConnection();
-				String SQLQuery = "INSERT INTO RegisteredCourses(studentID, courseID) values(?,?)";
-				ps = connection.prepareStatement(SQLQuery);
+				//String SQLQuery = "INSERT INTO RegisteredCourses(studentID, courseID) values(?,?)";
+				ps = connection.prepareStatement(SQLQueriesConstant.ADD_COURSE_STUDENT_QUERY);
 
 				ps.setInt(1,student.getUserId());
 				ps.setInt(2,courseID);
@@ -147,8 +148,8 @@ public class StudentDaoOperation implements StudentDaoInterface {
 		else {
 			try {
 				connection = DBConnection.getConnection();
-				String SQLQuery = "DELETE FROM RegisteredCourses where studentID = ? and courseID = ?";
-				ps = connection.prepareStatement(SQLQuery);
+				//String SQLQuery = "DELETE FROM RegisteredCourses where studentID = ? and courseID = ?";
+				ps = connection.prepareStatement(SQLQueriesConstant.DROP_COURSE_STUDENT_QUERY);
 
 				ps.setInt(1, student.getUserId());
 				ps.setInt(2, courseID);
@@ -167,8 +168,8 @@ public class StudentDaoOperation implements StudentDaoInterface {
 
 		try{
 			connection = DBConnection.getConnection();
-			String SQLQuery = "SELECT COUNT(*) FROM RegisteredCourses WHERE studentID=?";
-			ps = connection.prepareStatement(SQLQuery);
+			//String SQLQuery = "SELECT COUNT(*) FROM RegisteredCourses WHERE studentID=?";
+			ps = connection.prepareStatement(SQLQueriesConstant.GET_NO_OF_COURSES_QUERY);
 
 			ps.setInt(1,student.getUserId());
 			ResultSet resultSet = ps.executeQuery();
@@ -188,8 +189,8 @@ public class StudentDaoOperation implements StudentDaoInterface {
 
 		try{
 			connection = DBConnection.getConnection();
-			String SQLQuery = "SELECT COUNT(*) FROM RegisteredCourses WHERE studentID=? AND courseID=?";
-			ps = connection.prepareStatement(SQLQuery);
+			//String SQLQuery = "SELECT COUNT(*) FROM RegisteredCourses WHERE studentID=? AND courseID=?";
+			ps = connection.prepareStatement(SQLQueriesConstant.GET_COURSE_QUERY);
 
 			ps.setInt(1,student.getUserId());
 			ps.setInt(2,courseID);
@@ -212,8 +213,8 @@ public class StudentDaoOperation implements StudentDaoInterface {
 
 		try{
 			connection = DBConnection.getConnection();
-			String SQLQuery = "SELECT courseID FROM RegisteredCourses WHERE studentID=?";
-			ps = connection.prepareStatement(SQLQuery);
+			//String SQLQuery = "SELECT courseID FROM RegisteredCourses WHERE studentID=?";
+			ps = connection.prepareStatement(SQLQueriesConstant.GET_ENROLLED_COURSES_QUERY);
 
 			ps.setInt(1,student.getUserId());
 			ResultSet resultSet = ps.executeQuery();
@@ -233,8 +234,8 @@ public class StudentDaoOperation implements StudentDaoInterface {
 	public void setRegistrationStatus(Student student){
 		try{
 			connection = DBConnection.getConnection();
-			String SQLQuery = "UPDATE student SET isRegistered = 1 where id = ?";
-			ps = connection.prepareStatement(SQLQuery);
+			//String SQLQuery = "UPDATE student SET isRegistered = 1 where id = ?";
+			ps = connection.prepareStatement(SQLQueriesConstant.SET_REGISTRATION_STATUS_QUERY);
 
 			ps.setInt(1,student.getUserId());
 			ps.executeUpdate();
@@ -250,8 +251,8 @@ public class StudentDaoOperation implements StudentDaoInterface {
 
 		try{
 			connection = DBConnection.getConnection();
-			String SQLQuery = "SELECT grades.courseId, course.name as courseName, grades.grade, grades.studentId FROM grades INNER JOIN course ON grades.courseId = course.id AND grades.studentId=?";
-			ps = connection.prepareStatement(SQLQuery);
+			//String SQLQuery = "SELECT grades.courseId, course.name as courseName, grades.grade, grades.studentId FROM grades INNER JOIN course ON grades.courseId = course.id AND grades.studentId=?";
+			ps = connection.prepareStatement(SQLQueriesConstant.GET_GRADES_QUERY);
 
 			ps.setInt(1,studentID);
 			ResultSet resultSet = ps.executeQuery();
