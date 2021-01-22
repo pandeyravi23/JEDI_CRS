@@ -30,26 +30,7 @@ public class AdminMenu {
 				case 2:
 					adminOperation.addProfessor();
 					break;
-				case 3:
-//					logger.info("Enter the new email : ");
-//					sc.nextLine();
-//					
-//					String userName = sc.nextLine();
-//					
-//					String pwd1 = "abc";
-//					String pwd2 = "xyz";
-//					
-//					while(!pwd1.equals(pwd2)) {
-//						logger.info("Enter password : ");
-//						pwd1 = sc.nextLine();
-//						logger.info("Re-enter password : ");
-//						pwd2 = sc.nextLine();
-//						if(!pwd1.equals(pwd2))
-//						{
-//							logger.info("Passwords do not match. Please re-enter.");
-//						}
-//					}
-//					
+				case 3:				
 					adminOperation.addAdmin();
 					break;
 				case 4:

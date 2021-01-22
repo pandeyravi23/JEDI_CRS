@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import org.apache.log4j.Logger;
 
@@ -149,6 +150,51 @@ public class AdminDAOOperation implements AdminDAOInterface {
 			e.printStackTrace();
 		}
 		return ;
+	}
+	
+	public void approveStudent() {
+		try {
+			Scanner sc = new Scanner(System.in);
+			String str = "select * from credentials where isApproved=0";
+			ps = connection.prepareStatement(str);
+			ResultSet rs = ps.executeQuery();
+			logger.info("=======================================");
+			while(rs.next()) {
+				logger.info("Student ID: " + rs.getInt("id"));
+				logger.info("Email: " + rs.getString("email"));
+				logger.info("Address: " + rs.getString("address"));
+				logger.info("Age: " + rs.getInt("age"));
+				logger.info("Gender: " + rs.getString("gender"));
+				logger.info("Contact Number: " + rs.getString("contact"));
+				logger.info("Nationality: " + rs.getString("nationality"));
+				logger.info("=======================================");
+				logger.info("Enter 'yes' to Approve, 'no' to Reject");
+				String choice = sc.next();
+				if(choice.equals("yes")) {
+					String res = "update credentials set isApproved=1 where id = ?";
+					ps = connection.prepareStatement(res);
+					ps.setInt(1, rs.getInt("id"));
+					ps.executeUpdate();
+					logger.info("Student Approved !!");
+					logger.info("=======================================");
+				}
+				else{
+					String res = "Delete from credentials where id = ?";
+					ps = connection.prepareStatement(res);
+					ps.setInt(1, rs.getInt("id"));
+					ps.executeUpdate();
+					res = "Delete from student where id = ?";
+					ps = connection.prepareStatement(res);
+					ps.setInt(1, rs.getInt("id"));
+					ps.executeUpdate();
+					logger.info("Student Rejected !!");
+					logger.info("=======================================");
+				}
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 }

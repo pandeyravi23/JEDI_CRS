@@ -140,7 +140,7 @@ public class AdminOperation implements AdminInterface{
 	@Override
 	public void approveStudent() {
 		// TODO Auto-generated method stub
-		logger.info("In addProfesoor method");
+		adminDAO.approveStudent();
 	}
 
 	@Override
