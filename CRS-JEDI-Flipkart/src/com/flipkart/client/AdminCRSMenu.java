@@ -31,7 +31,7 @@ public class AdminCRSMenu {
 					adminOperation.addProfessor();
 					break;
 				case 3:
-					logger.info("Enter the new username : ");
+					logger.info("Enter the new email : ");
 					sc.nextLine();
 					
 					String userName = sc.nextLine();
