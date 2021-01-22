@@ -11,6 +11,7 @@ import java.util.Scanner;
 import org.apache.log4j.Logger;
 
 import com.flipkart.bean.Admin;
+import com.flipkart.bean.Course;
 import com.flipkart.bean.Professor;
 import com.flipkart.util.DBConnection;
 
@@ -196,5 +197,59 @@ public class AdminDAOOperation implements AdminDAOInterface {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	/*
+	 * Query to add a course to a courseCatalog by admin
+	 * only if course id provided is unique
+	 */
+	
+	public boolean addCourse(Course course) {
+		try {
+			String str = "insert into coursecatalog (courseName,courseId,credits) values (?,?,?)";
+			ps = connection.prepareStatement(str);
+			ps.setString(1, course.getCourseName());
+			ps.setInt(2,course.getCourseID());
+			ps.setInt(3, course.getCredits());
+			int val = ps.executeUpdate();
+			if(val>0) {
+				return true;
+			}
+		}
+		catch(Exception e) {
+			//// Write exception here
+			logger.info("Course ID's cannot be duplicate");
+			logger.info(e.getMessage());
+		}
+		return false;
+	}
+	
+	
+	/*
+	 * Delete course from course catalog and course tables
+	 * where id matches the given courseId;
+	 */
+	
+	public boolean deleteCourse(int courseId) {
+		try {
+			String str = "delete from courseCatalog where courseId = ?";
+			ps = connection.prepareStatement(str);
+			ps.setInt(1, courseId);
+			int val = ps.executeUpdate();
+			str = "delete from course where id = ?";
+			ps = connection.prepareStatement(str);
+			ps.setInt(1, courseId);
+			int val2 = ps.executeUpdate();
+			if (val>0) {
+				return true;
+			}
+		}
+		catch(Exception e) {
+			logger.info(e.getMessage());
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
 	
 }
