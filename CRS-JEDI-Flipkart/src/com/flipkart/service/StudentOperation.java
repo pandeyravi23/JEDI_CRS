@@ -1,4 +1,5 @@
 package com.flipkart.service;
+import com.flipkart.bean.*;
 import org.apache.log4j.Logger;
 
 import com.flipkart.bean.Student;
@@ -24,6 +25,7 @@ public class StudentOperation implements StudentInterface {
             for (Course course : courses) {
                 logger.info(course.getCourseID() + "\t\t" + course.getCourseName() + "\t\t" + course.getCredits());
             }
+            logger.info("\n");
             logger.info("=================================================\n");
         }
         catch (Exception e){
@@ -32,7 +34,20 @@ public class StudentOperation implements StudentInterface {
     }
 
     public void viewGrades(int studentId){
-        logger.info("Inside viewGrades Method\n");
+        try{
+            logger.info("Inside viewGrades Method\n");
+            ArrayList<Grades> grades = studentDaoOperation.getGrades(studentId);
+            logger.info("======================GRADES===================\n");
+            logger.info("Coure ID\tCourse Name\t\tGrade");
+            for(Grades grade : grades){
+                logger.info(grade.getCourseId() + "\t\t" + grade.getCourseName() + "\t\t" + grade.getGrade());
+            }
+            logger.info("\n");
+            logger.info("=================================================\n");
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     // operation to make payment
