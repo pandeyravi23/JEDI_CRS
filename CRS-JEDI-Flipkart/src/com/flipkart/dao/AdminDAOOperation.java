@@ -1,9 +1,11 @@
 package com.flipkart.dao;
 
 import java.sql.Connection;
+import com.flipkart.bean.Student;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
@@ -92,6 +94,40 @@ public class AdminDAOOperation implements AdminDAOInterface {
 			e.printStackTrace();
 		}
 		return 0;
+	}
+	
+	public void printGrades(int studentId) {
+		try {
+//			ArrayList<Student> arr = new ArrayList<Student>();
+			String str = "select name from student where id = ?";
+			ps = connection.prepareStatement(str);
+			ps.setInt(1, studentId);
+			ResultSet rs =  ps.executeQuery();
+			String name = "";
+			rs.next();
+			name = rs.getString("name");
+			str = "select grade,courseId from grades where studentId=?";
+			ps = connection.prepareStatement(str);
+			ps.setInt(1, studentId);
+			rs =  ps.executeQuery();
+			logger.info("=======================================");
+			logger.info("        Report Card of " + name + " :");
+			logger.info("=======================================");
+			logger.info("CourseID     Course Name     Grade");
+			while(rs.next()) {
+				String sr = "select courseName from courseCatalog where courseId = ? ";
+				ps = connection.prepareStatement(sr);
+				ps.setInt(1,rs.getInt("courseId"));
+				ResultSet res = ps.executeQuery();
+				res.next();
+				logger.info(rs.getInt("courseId") + "          " + res.getString("courseName") + "         " + rs.getString("grade"));
+			}
+			logger.info("=======================================");
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return ;
 	}
 	
 }

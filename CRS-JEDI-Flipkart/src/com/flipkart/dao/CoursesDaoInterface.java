@@ -7,7 +7,7 @@ import com.flipkart.bean.Student;
 
 public interface CoursesDaoInterface {
 	public ArrayList<Student> getEnrolledStudents(int courseId);
-
+	public void printGrades(int studentId);
 	public Course getCourseByID(int courseID);
 	public ArrayList<Course> getAllCourses();
 }

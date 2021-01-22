@@ -36,7 +36,7 @@ public class MainCRSApplication {
 					professorClient.init(email);
 					break;
 				case 3: // Admin
-					AdminCRSMenu adminClient = new AdminCRSMenu();
+					AdminMenu adminClient = new AdminMenu();
 					adminClient.AdminClient();
 					break;
 					

@@ -10,6 +10,7 @@ import com.flipkart.bean.Professor;
  *
  */
 public interface AdminDAOInterface {
+	public void printGrades(int studentId);
 	public boolean verifyEmail(String email);
 	public int addAdmin(String email, String password);
 	public int addProfessor(String password, Professor prof);

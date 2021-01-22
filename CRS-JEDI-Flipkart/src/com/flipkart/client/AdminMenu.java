@@ -7,8 +7,8 @@ import org.apache.log4j.Logger;
 import com.flipkart.bean.Admin;
 import com.flipkart.service.AdminOperation;
 
-public class AdminCRSMenu {
-	private static Logger logger = Logger.getLogger(AdminCRSMenu.class);
+public class AdminMenu {
+	private static Logger logger = Logger.getLogger(AdminMenu.class);
 	private AdminOperation adminOperation = new AdminOperation();
 	private Admin admin = new Admin();
 	

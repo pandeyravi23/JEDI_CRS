@@ -15,7 +15,11 @@ public class AdminOperation implements AdminInterface{
 	@Override
 	public void generateReportCard() {
 		// TODO Auto-generated method stub
-		logger.info("In generate report method");
+		logger.info("Please Enter Student ID to Generate Report Card");
+		Scanner sc = new Scanner(System.in);
+		int sid = sc.nextInt();
+		adminDAO.printGrades(sid);
+		return ;
 	}
 
 	@Override
