@@ -31,13 +31,18 @@ public class ProfessorOperation implements ProfessorInterface {
 	}
 
 	@Override
-	public void viewGrades() {
-		logger.info("Inside viewGrades");
+	public void viewGrades(int courseId) {
+		ArrayList<Student> studentsEnrolled = professorDaoOperation.getStudents(courseId);
+		if (studentsEnrolled.size()>0) {
+			professorDaoOperation.showGrades(studentsEnrolled,courseId);
+		}
+		else {
+			logger.info("No Student present !!");
+		}
 	}
 
 	@Override
 	public Boolean gradeStudents (int courseId) {
-		ProfessorDaoOperation professorDaoOperation = new ProfessorDaoOperation();
 		ArrayList<Student> studentsEnrolled = professorDaoOperation.getEnrolledStudents(courseId);
 		if (studentsEnrolled.size()>0) {
 			professorDaoOperation.setGrades(studentsEnrolled,courseId);

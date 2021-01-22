@@ -163,5 +163,82 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 		}
 		return false;
 	}
+	
+	public void showGrades(ArrayList<Student>enolledStudent,int courseId) {
+		try {
+			con = DBConnection.getConnection();
+			logger.info("===================================");
+			logger.info("UserId    UserName    Grade Obtained");
+			for(Student st : enolledStudent) {
+				String str = "Select grade from grades where studentId = ? and courseId = ?";
+				stmt = con.prepareStatement(str);
+				stmt.setInt(1, st.getUserId());
+				stmt.setInt(2, courseId);
+				ResultSet rs = stmt.executeQuery();
+				while (rs.next()) {
+					logger.info(st.getUserId() + "        " + st.getUserName() + "        " + rs.getString("grade"));
+				}
+			}
+			logger.info("===================================");
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		return ;
+	}
+	
+	
+	//////////////////////////////////////////////////////////////////////
+	
+	public ArrayList<Student> getStudents(int courseId) {
+		ArrayList<Student> al = new ArrayList<Student>();
+		try {
+			con = DBConnection.getConnection();
+			stmt = con.prepareStatement("Select studentId from grades where courseId=?");
+			stmt.setInt(1, courseId);
+			ResultSet rs = stmt.executeQuery();
+			ArrayList<Integer> al2 = new ArrayList<Integer>();
+			while (rs.next()) {
+				al2.add(rs.getInt(1));
+			}
+			if (al2.size() == 0) {
+				return al;
+			}
+			String listOfStudentIds = "(";
+			String str2 = "";
+			for (int i = 0; i < al2.size(); i++) {
+				listOfStudentIds += al2.get(i);
+				str2 += "?";
+				if (i != al2.size() - 1) {
+					listOfStudentIds += ",";
+					str2 += ",";
+				}
+			}
+			listOfStudentIds += ")";
+			str2 += ")";
+			String str = "Select id,name,email,branch from student where id in (";
+			str += str2;
+			stmt = con.prepareStatement(str);
+			
+			for (int i = 1; i <= al2.size(); i++) {
+				stmt.setInt(i, al2.get(i-1));
+			}
+			
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				Student st = new Student();
+				st.setUserId(rs.getInt("id"));
+				st.setUserName(rs.getString("name"));
+				st.setEmail(rs.getString("email"));
+				st.setBranch(rs.getString("branch"));
+				al.add(st);
+			}
+			al.size();
 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return al;
+	}
+	
 }

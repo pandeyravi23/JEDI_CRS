@@ -34,6 +34,9 @@ public class ProfessorMenu {
 			case 3:
 				viewStudents();
 				break;
+			case 4:
+				viewGrades();
+				break;
 			default:
 				logger.info("Invalid choice\n");
 				break;
@@ -79,6 +82,7 @@ public class ProfessorMenu {
 		logger.info("1. Grade Students");
 		logger.info("2. View Alloted Courses");
 		logger.info("3. View Students Enrolled in a course ");
+		logger.info("4. View Students Grade");
 		logger.info("-1 to Logout");
 	}
 
@@ -113,6 +117,19 @@ public class ProfessorMenu {
 			logger.info("	Enter courseId");
 			int courseId = sc.nextInt();
 			professorOperation.viewStudentsEnrolled(courseId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void viewGrades() {
+		Scanner sc = new Scanner(System.in);
+		logger.info("Inside View Student Method");
+		try {
+			ProfessorOperation professorOperation = new ProfessorOperation();
+			logger.info("Enter courseId");
+			int courseId = sc.nextInt();
+			professorOperation.viewGrades(courseId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
