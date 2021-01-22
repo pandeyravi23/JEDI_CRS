@@ -25,7 +25,6 @@ public class StudentOperation implements StudentInterface {
             for (Course course : courses) {
                 logger.info(course.getCourseID() + "\t\t" + course.getCourseName() + "\t\t" + course.getCredits());
             }
-            logger.info("\n");
             logger.info("=================================================\n");
         }
         catch (Exception e){
@@ -42,7 +41,6 @@ public class StudentOperation implements StudentInterface {
             for(Grades grade : grades){
                 logger.info(grade.getCourseId() + "\t\t" + grade.getCourseName() + "\t\t" + grade.getGrade());
             }
-            logger.info("\n");
             logger.info("=================================================\n");
         }
         catch(Exception e){
