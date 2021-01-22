@@ -100,4 +100,6 @@ public class User {
 	public void setNationality(String nationality) {
 		this.nationality = nationality;
 	}
+
 }
+

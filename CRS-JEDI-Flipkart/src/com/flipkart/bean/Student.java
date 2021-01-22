@@ -6,8 +6,17 @@ public class Student extends User{
 	private int rollNo;
 	private boolean isRegistered;
 	private ArrayList<Integer> enrolledCourses = new ArrayList<>();
-	public String branch;
+	private String branch;
+	private boolean paymentStatus;
 	
+	public boolean getPaymentStatus() {
+		return paymentStatus;
+	}
+
+	public void setPaymentStatus(boolean paymentStatus) {
+		this.paymentStatus = paymentStatus;
+	}
+
 	public void setRollNo(int rollNo) {
 		this.rollNo = rollNo;
 	}

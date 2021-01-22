@@ -8,9 +8,6 @@ import com.flipkart.bean.Student;
 
 
 public interface StudentDaoInterface {
-	public List<Student> getAllStudents();
-	public Student getStudentById(int studentId);
-	public void populate();
 	public Student getStudentByEmail(String email);
 	public void addCourse(Student student, int courseID);
 	public void dropCourse(Student student, int courseID);
@@ -23,4 +20,6 @@ public interface StudentDaoInterface {
 	public int getNoOfCourses(Student student);
 
 	public boolean getCourse(Student student, int courseID);
+	
+	public void setPaymentStatus(Student student);
 }

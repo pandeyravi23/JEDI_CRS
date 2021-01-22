@@ -38,7 +38,7 @@ public class CoursesDaoOperation implements CoursesDaoInterface {
 
 
 	public Course getCourseByID(int courseID){
-		Course course = new Course();
+		Course course = null;
 
 		try{
 			connection = DBConnection.getConnection();
@@ -47,8 +47,8 @@ public class CoursesDaoOperation implements CoursesDaoInterface {
 
 			ps.setInt(1,courseID);
 			ResultSet resultSet = ps.executeQuery();
-
 			while(resultSet.next()){
+				course = new Course();
 				course.setCourseID(resultSet.getInt("id"));
 				course.setCourseName(resultSet.getString("name"));
 				course.setCredits(resultSet.getInt("credits"));
@@ -68,18 +68,16 @@ public class CoursesDaoOperation implements CoursesDaoInterface {
 
 		try{
 			connection = DBConnection.getConnection();
-			String SQLQuery = "SELECT * FROM course";
+			String SQLQuery = "SELECT * FROM courseCatalog";
 			ps = connection.prepareStatement(SQLQuery);
 
 			ResultSet resultSet = ps.executeQuery();
 
 			while(resultSet.next()){
 				Course course = new Course();
-				course.setCourseID(resultSet.getInt("id"));
-				course.setCourseName(resultSet.getString("name"));
+				course.setCourseID(resultSet.getInt("courseId"));
+				course.setCourseName(resultSet.getString("courseName"));
 				course.setCredits(resultSet.getInt("credits"));
-				course.setProfessorAllotted(resultSet.getInt("professorId"));
-
 				courses.add(course);
 			}
 		}
