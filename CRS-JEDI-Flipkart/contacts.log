@@ -63,3 +63,8 @@
 14:53:38,268  INFO AdminCRSMenu,main:84 - Press 6 to delete a course
 14:53:38,268  INFO AdminCRSMenu,main:85 - Press -1 to exit
 15:01:16,854  INFO AdminCRSMenu,main:65 - Logged Out Successfully
+15:07:32,511  INFO MainCRSApplication,main:13 - Welcome!!!
+15:07:32,514  INFO MainCRSApplication,main:17 - Login
+15:07:32,540  INFO MainCRSApplication,main:20 - Enter your email: 
+15:07:36,884  INFO MainCRSApplication,main:23 - Enter password: 
+15:07:40,357  INFO MainCRSApplication,main:44 - Invalid credentials

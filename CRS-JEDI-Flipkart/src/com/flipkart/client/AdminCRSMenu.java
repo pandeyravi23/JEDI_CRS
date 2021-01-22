@@ -20,6 +20,7 @@ public class AdminCRSMenu {
 		do
 		{		
 			showChoices();
+			logger.info("Enter an operation choice:");
 			choice = sc.nextInt();
 			
 			switch(choice)
