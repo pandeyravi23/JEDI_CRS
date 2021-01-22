@@ -36,6 +36,10 @@ public class MainCRSApplication {
 					professorClient.init(email);
 					break;
 				case 3: // Admin
+					AdminCRSMenu adminClient = new AdminCRSMenu();
+					adminClient.AdminClient();
+					break;
+					
 				default: 
 						logger.info("Invalid credentials");
 						break;

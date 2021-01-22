@@ -56,19 +56,45 @@ public class ProfessorMenu {
         logger.info("-1 to Logout");
     }
 
-    // method to add course
+    // method to grade stduent
     public void gradeStudents(){
+        Scanner sc = new Scanner(System.in);
         logger.info("Inside Grade Student Method");
+		try {
+			ProfessorOperation professorOperation = new ProfessorOperation();
+			logger.info("	Enter courseId");
+			int courseId = sc.nextInt();
+			professorOperation.gradeStudents(courseId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (sc != null) {
+				sc.close();
+			}
+		}
     }
 
-    // method to drop a course
+    // method to view alloted course
     public void allotedCourse(int professorId){
     	ProfessorOperation professorOperation = new ProfessorOperation();
     	professorOperation.showCourses(professorId);
     }
 
-    // method to make payment
-    public void viewStudents(){
-    	logger.info("Inside View Student Method");
-    }
+	// method to view enrolled student in a particular course
+	public void viewStudents() {
+		Scanner sc = new Scanner(System.in);
+		logger.info("Inside View Student Method");
+		try {
+			ProfessorOperation professorOperation = new ProfessorOperation();
+			logger.info("	Enter courseId");
+			int courseId = sc.nextInt();
+			professorOperation.viewStudentsEnrolled(courseId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (sc != null) {
+				sc.close();
+			}
+		}
+	}
 }
