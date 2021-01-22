@@ -1,0 +1,43 @@
+11:19:43,126  INFO MainCRSApplication,main:13 - Welcome!!!
+11:19:43,128  INFO MainCRSApplication,main:17 - Login
+11:19:43,150  INFO MainCRSApplication,main:20 - Enter your email: 
+11:19:53,050  INFO MainCRSApplication,main:23 - Enter password: 
+11:19:55,909  INFO UserDaoOperation,main:35 - Cannot invoke "java.sql.Connection.prepareStatement(String)" because "this.connection" is null
+11:19:55,909  INFO MainCRSApplication,main:44 - Invalid credentials
+11:20:29,340  INFO MainCRSApplication,main:13 - Welcome!!!
+11:20:29,343  INFO MainCRSApplication,main:17 - Login
+11:20:29,367  INFO MainCRSApplication,main:20 - Enter your email: 
+11:20:39,221  INFO MainCRSApplication,main:23 - Enter password: 
+11:20:42,942  INFO ProfessorMenu,main:17 - Welcome Professor ravi!!
+11:20:42,943  INFO ProfessorMenu,main:52 - Please select an operation: 
+11:20:42,943  INFO ProfessorMenu,main:53 - 1. Grade Students
+11:20:42,943  INFO ProfessorMenu,main:54 - 2. View Alloted Courses
+11:20:42,943  INFO ProfessorMenu,main:55 - 3. View Students Enrolled in a course 
+11:20:42,943  INFO ProfessorMenu,main:56 - -1 to Logout
+11:20:49,643  INFO ProfessorOperation,main:44 - Inside showCourses
+11:20:49,644  INFO ProfessorDaoOperation,main:76 - ===============================================
+11:20:49,644  INFO ProfessorDaoOperation,main:77 - ID		CourseName		Credits
+11:20:49,645  INFO ProfessorDaoOperation,main:79 - 157		Course-7		6
+11:20:49,645  INFO ProfessorDaoOperation,main:81 - ================================================
+
+
+11:20:49,645  INFO ProfessorMenu,main:52 - Please select an operation: 
+11:20:49,645  INFO ProfessorMenu,main:53 - 1. Grade Students
+11:20:49,645  INFO ProfessorMenu,main:54 - 2. View Alloted Courses
+11:20:49,646  INFO ProfessorMenu,main:55 - 3. View Students Enrolled in a course 
+11:20:49,646  INFO ProfessorMenu,main:56 - -1 to Logout
+11:20:54,315  INFO ProfessorMenu,main:73 - Inside View Student Method
+11:20:54,315  INFO ProfessorMenu,main:76 - 	Enter courseId
+11:20:58,220  INFO ProfessorOperation,main:18 - Inside viewStudentEnrolled
+11:20:58,224  INFO ProfessorOperation,main:22 - 
+========================================
+11:20:58,225  INFO ProfessorOperation,main:23 - StudentID		StudentName		StudentEmail		Branch
+11:20:58,225  INFO ProfessorOperation,main:25 - 101		name		chinmay@gmail.com		ECE
+11:20:58,225  INFO ProfessorOperation,main:27 - ========================================
+
+11:20:58,225  INFO ProfessorMenu,main:52 - Please select an operation: 
+11:20:58,226  INFO ProfessorMenu,main:53 - 1. Grade Students
+11:20:58,226  INFO ProfessorMenu,main:54 - 2. View Alloted Courses
+11:20:58,226  INFO ProfessorMenu,main:55 - 3. View Students Enrolled in a course 
+11:20:58,226  INFO ProfessorMenu,main:56 - -1 to Logout
+11:20:58,227  WARN MainCRSApplication,main:51 - 

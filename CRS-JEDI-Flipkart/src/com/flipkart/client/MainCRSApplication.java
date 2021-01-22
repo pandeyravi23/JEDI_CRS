@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 import org.apache.log4j.Logger;
 
-import com.flipkart.service.AuthCredentialSystem;
+import com.flipkart.service.AuthCredentialSystemOperations;
 
 public class MainCRSApplication {
 	private static Logger logger = Logger.getLogger(MainCRSApplication.class);
@@ -23,7 +23,7 @@ public class MainCRSApplication {
 			logger.info("Enter password: ");
 			String pass = sc.nextLine();
 			
-			AuthCredentialSystem auth = new AuthCredentialSystem();
+			AuthCredentialSystemOperations auth = new AuthCredentialSystemOperations();
 			int res = auth.login(email, pass);
 			
 			switch(res) {
@@ -36,6 +36,10 @@ public class MainCRSApplication {
 					professorClient.init(email);
 					break;
 				case 3: // Admin
+					AdminCRSMenu adminClient = new AdminCRSMenu();
+					adminClient.AdminClient();
+					break;
+					
 				default: 
 						logger.info("Invalid credentials");
 						break;

@@ -33,7 +33,6 @@ public class StudentOperation implements StudentInterface {
 
     public void viewGrades(int studentId){
         logger.info("Inside viewGrades Method\n");
-
     }
 
     // operation to make payment
