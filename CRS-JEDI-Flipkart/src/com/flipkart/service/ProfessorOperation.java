@@ -19,12 +19,14 @@ public class ProfessorOperation implements ProfessorInterface {
 		ProfessorDaoOperation professorDaoOperation = new ProfessorDaoOperation();
 		ArrayList<Student> studentsEnrolled = professorDaoOperation.getEnrolledStudents(courseId);
 		if (studentsEnrolled.size()>0) {
-			logger.info("\n========================================");
-			logger.info("StudentID		StudentName		StudentEmail		Branch");
+			logger.info("\n\n");
+			logger.info("====================================================================================================");
+
+			logger.info("StudentID		StudentName		StudentEmail			Branch");
 			for (Student st : studentsEnrolled) {
-				logger.info(st.getUserId() + "		" + st.getUserName()+"		"+st.getEmail()+"		"+st.getBranch());
+				logger.info(st.getUserId() + "			" + st.getUserName()+"			"+st.getEmail()+"		"+st.getBranch());
 			}
-			logger.info("========================================\n");
+			logger.info("====================================================================================================");
 		}
 	}
 

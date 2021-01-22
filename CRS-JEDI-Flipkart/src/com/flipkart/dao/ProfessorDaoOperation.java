@@ -115,14 +115,15 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 			stmt = con.prepareStatement(str);
 			
 			for (int i = 1; i <= al2.size(); i++) {
-				stmt.setInt(i, al2.get(i - 1));
+				stmt.setInt(i, al2.get(i-1));
 			}
 			
 			rs = stmt.executeQuery();
+			
 			while (rs.next()) {
 				Student st = new Student();
 				st.setUserId(rs.getInt("id"));
-				st.setUserName("name");
+				st.setUserName(rs.getString("name"));
 				st.setEmail(rs.getString("email"));
 				st.setBranch(rs.getString("branch"));
 				al.add(st);
