@@ -81,7 +81,8 @@ public class StudentDaoOperation implements StudentDaoInterface {
 		}
 		
 	}
-	
+
+	// to get the student details from db based on email entered during login
 	public Student getStudentByEmail(String email) {
 		Student student = new Student();
 		try {
@@ -107,7 +108,7 @@ public class StudentDaoOperation implements StudentDaoInterface {
 		return student;
 	}
 
-
+	// to add course in db based on student ID
 	public void addCourse(Student student, int courseID){
 		try{
 			connection = DBConnection.getConnection();
@@ -127,6 +128,7 @@ public class StudentDaoOperation implements StudentDaoInterface {
 		}
 	}
 
+	// to delete a course from db based on student ID
 	public void dropCourse(Student student, int courseID){
 		try{
 			connection = DBConnection.getConnection();
@@ -144,6 +146,7 @@ public class StudentDaoOperation implements StudentDaoInterface {
 		}
 	}
 
+	// to get all coursed in which a student is enrolled from db
 	public ArrayList<Course> getEnrolledCourses(Student student){
 		ArrayList<Course> enrolledCourses = new ArrayList<>();
 
@@ -166,6 +169,7 @@ public class StudentDaoOperation implements StudentDaoInterface {
 		return enrolledCourses;
 	}
 
+	// to set registration status of a student in db
 	public void setRegistrationStatus(Student student){
 		try{
 			connection = DBConnection.getConnection();
@@ -180,6 +184,7 @@ public class StudentDaoOperation implements StudentDaoInterface {
 		}
 	}
 
+	// to fetch grades of a student based on student ID
 	public ArrayList<Grades> getGrades(int studentID){
 		ArrayList<Grades> grades = new ArrayList<>();
 

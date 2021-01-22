@@ -21,28 +21,6 @@ public class StudentCRSMenu {
     public void studentClient(){
         Scanner input = new Scanner(System.in);
 
-//        logger.info("Enter Student Id");
-//    	int x = 0;
-//    	int id = input.nextInt();
-//
-//    	// verify the entered student id
-//    	for(int i=0;i<StudentDaoOperation.students.size();i++) {
-//    		if (StudentDaoOperation.students.get(i).getUserId()==id) {
-//    			student.setUserId(StudentDaoOperation.students.get(i).getUserId());
-//    	        student.setUserName(StudentDaoOperation.students.get(i).getUserName());
-//    	        student.setEmail(StudentDaoOperation.students.get(i).getEmail());
-//    	        student.setRollNo(StudentDaoOperation.students.get(i).getRollNo());
-//    	        student.setBranch(StudentDaoOperation.students.get(i).getBranch());
-//    	        student.setIsRegistered(false);
-//    	        x = 1;
-//    		}
-//    	}
-//        if (x==0) {
-//        	logger.info("User Not Found");
-//        	return;
-//        }
-
-
         int choice;
 
         do{
