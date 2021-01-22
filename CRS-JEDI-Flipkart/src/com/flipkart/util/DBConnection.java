@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.flipkart.util;
 
 import java.io.FileNotFoundException;
