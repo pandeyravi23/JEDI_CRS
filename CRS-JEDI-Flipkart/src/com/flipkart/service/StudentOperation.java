@@ -32,6 +32,7 @@ public class StudentOperation implements StudentInterface {
         }
     }
 
+    // operation to view grades assigned by professor
     public void viewGrades(int studentId){
         try{
             logger.info("Inside viewGrades Method\n");
@@ -136,17 +137,6 @@ public class StudentOperation implements StudentInterface {
 
     // operation to add course to registered courses
     public boolean addCourse(Student student, int courseId){
-        /*ArrayList<Integer> enrolledCourses = student.getEnrolledCourses();
-        if(enrolledCourses.contains(courseId)==false){
-            enrolledCourses.add(courseId);
-            student.setEnrolledCourses(enrolledCourses);
-            //viewRegisteredCourses(student);
-            logger.info(">>>>  Course added successfully  <<<<\n");
-        }
-        else{
-            logger.info(">>>>  Course already exists  <<<<\n");
-        }*/
-
 
         try{
             studentDaoOperation.addCourse(student,courseId);
@@ -160,16 +150,6 @@ public class StudentOperation implements StudentInterface {
 
     // operation to delete course from registered courses
     public boolean deleteCourse(Student student, int courseId){
-        /*ArrayList<Integer> enrolledCourses = student.getEnrolledCourses();
-        if(enrolledCourses.contains(courseId)){
-            enrolledCourses.remove(Integer.valueOf(courseId));
-            student.setEnrolledCourses(enrolledCourses);
-            logger.info(">>>>  Course removed successfully  <<<<\n");
-        }
-        else{
-            logger.info(">>>>  Course does not exists  <<<<\n");
-        }*/
-
 
         try{
             studentDaoOperation.dropCourse(student,courseId);
@@ -189,6 +169,7 @@ public class StudentOperation implements StudentInterface {
         }
 
     	int courseCounter = 0;
+    	ArrayList<Integer> courseCart = new ArrayList<>();
         logger.info("================COURSE REGISTRATION================\n");
         while(true){
             logger.info("Enter 1 to add course");
@@ -200,27 +181,32 @@ public class StudentOperation implements StudentInterface {
             if(operation==1){
                 logger.info("Enter course ID to be added: ");
                 int courseID = input.nextInt();
-                addCourse(student,courseID);
+                //addCourse(student,courseID);
+                courseCart.add(courseID);
                 courseCounter++;
             }
             else if(operation==2){
                 logger.info("Enter course ID to be dropped: ");
                 int courseID = input.nextInt();
-                deleteCourse(student,courseID);
+                //deleteCourse(student,courseID);
+                courseCart.remove(Integer.valueOf(courseID));
                 courseCounter--;
             }
             else if(operation==3){
                 if(courseCounter>=4 && courseCounter<=6){
+                    for(Integer courseID : courseCart){
+                        studentDaoOperation.addCourse(student,courseID);
+                    }
                     logger.info("Proceed to make payment\n");
                     setRegistrationStatus(student);
                     student.setIsRegistered(true);
                     break;
                 }
                 else if(courseCounter<4){
-                    logger.info("Less than 4 courses registered. Add more courses");
+                    logger.info("Less than 4 courses registered. Add more courses.");
                 }
                 else if(courseCounter>6){
-                    logger.info("More than 6 courses registered. Drop few courses");
+                    logger.info("More than 6 courses registered. Drop few courses.");
                 }
             }
         }
