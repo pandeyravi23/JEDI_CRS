@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import org.apache.log4j.Logger;
 
@@ -19,12 +20,6 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 	private static Logger logger = Logger.getLogger(ProfessorDaoOperation.class);
 	Connection con;
 	PreparedStatement stmt;
-
-//	public static void main(String [] args) {
-//		ProfessorDaoOperation obj = new ProfessorDaoOperation();
-//		Professor p = obj.getProfessorByEmail("pf1@crs.com");
-//		System.out.println(p.getRole());
-//	}
 
 	/*
 	 * Method creates professor object using email ID from the database
@@ -50,20 +45,6 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 			e.printStackTrace();
 
 		}
-//			finally {
-//
-//			try {
-//				con.close();
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//
-//			try {
-//				stmt.close();
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		}
 		return professor;
 	}
 
@@ -131,11 +112,38 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 			al.size();
 
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		}
 		return al;
 	}
 	
+	public void setGrades(ArrayList<Student>toGrade,int courseId) {
+		Scanner sc = new Scanner(System.in);
+		try {
+			con = DBConnection.getConnection();
+			for(Student st : toGrade) {
+				logger.info("Please Enter Grade for " + st.getUserName());
+				String grd = sc.next();
+				if(grd=="")
+					grd = sc.next();
+				String str = "update grades set grade = ? where studentId = ? and courseId = ?";
+				stmt = con.prepareStatement(str);
+				stmt.setString(1, grd);
+				stmt.setInt(2, st.getUserId());
+				stmt.setInt(3, courseId);
+				int isUpdated = stmt.executeUpdate();
+				if(isUpdated > 0) {
+					logger.info("Uploaded grade");
+				}
+				else {
+					logger.info("Couldn't upload try again");
+				}
+			}
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		return ;
+	}
 	
 	
 	public boolean updateStudentGrades(int courseId,int studentId, String grades) {

@@ -1,6 +1,7 @@
 package com.flipkart.service;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import org.apache.log4j.Logger;
 
@@ -35,8 +36,15 @@ public class ProfessorOperation implements ProfessorInterface {
 	}
 
 	@Override
-	public Boolean gradeStudents() {
-		logger.info("Inside Grade Students");
+	public Boolean gradeStudents (int courseId) {
+		ProfessorDaoOperation professorDaoOperation = new ProfessorDaoOperation();
+		ArrayList<Student> studentsEnrolled = professorDaoOperation.getEnrolledStudents(courseId);
+		if (studentsEnrolled.size()>0) {
+			professorDaoOperation.setGrades(studentsEnrolled,courseId);
+		}
+		else {
+			logger.info("No Student to Grade");
+		}
 		return true;
 	}
 

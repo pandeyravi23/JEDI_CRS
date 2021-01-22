@@ -26,7 +26,7 @@ public class ProfessorMenu {
 				logger.info(".....Logging Out.....\n");
 				break;
 			case 1:
-				updateStudentGrades();
+				gradeStudents();
 				break;
 			case 2:
 				allotedCourse(professor.getUserId());
@@ -44,6 +44,34 @@ public class ProfessorMenu {
 	public void init(String email) {
 		Professor professor = professorOperation.getProfessorByEmail(email);
 		professorClient(professor);
+	}
+
+	// method to grade stduent
+	public void gradeStudents() {
+		Scanner sc = new Scanner(System.in);
+		logger.info("Please select an operation: ");
+		logger.info("1. Grade Students by CourseId");
+		logger.info("2. Update Grade of Particular Student");
+		int choice = sc.nextInt();
+		if (choice == 2) {
+			updateStudentGrades();
+		} 
+		else {
+			try {
+				ProfessorOperation professorOperation = new ProfessorOperation();
+				logger.info("Enter courseId");
+				int courseId = sc.nextInt();
+				professorOperation.gradeStudents(courseId);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	// method to view alloted course
+	public void allotedCourse(int professorId) {
+		ProfessorOperation professorOperation = new ProfessorOperation();
+		professorOperation.showCourses(professorId);
 	}
 
 	public static void showChoices() {
@@ -73,16 +101,10 @@ public class ProfessorMenu {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-		} 
+		}
 	}
 
-	// method to drop a course
-	public void allotedCourse(int professorId) {
-		ProfessorOperation professorOperation = new ProfessorOperation();
-		professorOperation.showCourses(professorId);
-	}
-
-	// method to make payment
+	// method to view enrolled student in a particular course
 	public void viewStudents() {
 		Scanner sc = new Scanner(System.in);
 		logger.info("Inside View Student Method");
@@ -93,6 +115,6 @@ public class ProfessorMenu {
 			professorOperation.viewStudentsEnrolled(courseId);
 		} catch (Exception e) {
 			e.printStackTrace();
-		} 
+		}
 	}
 }
