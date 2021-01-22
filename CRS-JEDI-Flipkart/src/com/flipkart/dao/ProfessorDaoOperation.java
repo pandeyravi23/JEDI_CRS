@@ -135,5 +135,25 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 		}
 		return al;
 	}
+	
+	
+	
+	public boolean updateStudentGrades(int courseId,int studentId, String grades) {
+		try {
+			con = DBConnection.getConnection();
+			stmt = con.prepareStatement("update grades set grade=? where courseId =? and studentId=?");
+			stmt.setString(1,grades);
+			stmt.setInt(2,courseId);
+			stmt.setInt(3,studentId);
+			int status = stmt.executeUpdate();
+			if (status>0) {
+				return true;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 
 }

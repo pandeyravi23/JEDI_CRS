@@ -12,11 +12,10 @@ import com.flipkart.dao.ProfessorDaoOperation;
 public class ProfessorOperation implements ProfessorInterface {
 	
 	private static Logger logger = Logger.getLogger(ProfessorOperation.class);
-	
+	private ProfessorDaoOperation professorDaoOperation = new ProfessorDaoOperation();
 	@Override
 	public void viewStudentsEnrolled(int courseId) {
 		logger.info("Inside viewStudentEnrolled");
-		ProfessorDaoOperation professorDaoOperation = new ProfessorDaoOperation();
 		ArrayList<Student> studentsEnrolled = professorDaoOperation.getEnrolledStudents(courseId);
 		if (studentsEnrolled.size()>0) {
 			logger.info("\n\n");
@@ -44,13 +43,19 @@ public class ProfessorOperation implements ProfessorInterface {
 	@Override
 	public void showCourses(int professorId) {
 		logger.info("Inside showCourses");
-		ProfessorDaoOperation professorDaoOperation = new ProfessorDaoOperation();
 		professorDaoOperation.showCourses(professorId);
 	}
 
 	public Professor getProfessorByEmail(String email) {
-		ProfessorDaoOperation professorDaoOperation = new ProfessorDaoOperation();
 		Professor p = professorDaoOperation.getProfessorByEmail(email);
 		return p;
+	}
+	
+	/*
+	 *  Updates Student grade and returns upadte status
+	 *  as boolean
+	 */
+	public boolean updateStudentGrade(int courseId,int studentId, String grade) {
+		return professorDaoOperation.updateStudentGrades(courseId, studentId, grade);
 	}
 }
