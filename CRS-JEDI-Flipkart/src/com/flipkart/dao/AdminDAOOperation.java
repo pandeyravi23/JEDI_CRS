@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 import com.flipkart.bean.Professor;
 import com.flipkart.util.DBConnection;
 
-public class AdminDAOOperation {
+public class AdminDAOOperation implements AdminDAOInterface {
 	
 	private static Logger logger = Logger.getLogger(AdminDAOOperation.class);
 	Connection connection = DBConnection.getConnection();

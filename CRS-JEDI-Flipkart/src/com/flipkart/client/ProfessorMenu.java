@@ -9,10 +9,18 @@ import org.apache.log4j.Logger;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/*
+ *  User Interactive menu if user logs in
+ *  is a professor
+ */
 public class ProfessorMenu {
 	private static Logger logger = Logger.getLogger(ProfessorMenu.class);
 	private ProfessorInterface professorOperation = new ProfessorOperation();
 
+	/*
+	 *  Manages the major roles of professor
+	 *  based on user inputs
+	 */
 	public void professorClient(Professor professor) {
 		logger.info("Welcome Professor " + professor.getUserName() + "!!");
 		int choice;
@@ -34,6 +42,9 @@ public class ProfessorMenu {
 			case 3:
 				viewStudents();
 				break;
+			case 4:
+				viewGrades();
+				break;
 			default:
 				logger.info("Invalid choice\n");
 				break;
@@ -41,12 +52,21 @@ public class ProfessorMenu {
 		} while (choice != -1);
 	}
 
+	/*
+	 * Initializes professor object with 
+	 * values in the database
+	 * fetching from the email
+	 */
 	public void init(String email) {
 		Professor professor = professorOperation.getProfessorByEmail(email);
 		professorClient(professor);
 	}
 
-	// method to grade stduent
+	/*
+	 * Grade students with 2 options
+	 * 1) Grade Students with a particular courseId
+	 * 2) Update student grades by providing courseId and studentId
+	 */
 	public void gradeStudents() {
 		Scanner sc = new Scanner(System.in);
 		logger.info("Please select an operation: ");
@@ -68,21 +88,32 @@ public class ProfessorMenu {
 		}
 	}
 
-	// method to view alloted course
+	/*
+	 * Displays List of all courses that are alotted
+	 * to the professor carrying a particular professorId
+	 */
 	public void allotedCourse(int professorId) {
 		ProfessorOperation professorOperation = new ProfessorOperation();
 		professorOperation.showCourses(professorId);
 	}
 
+	/*
+	 * Displays menu for professor interaction
+	 * to perform various operations
+	 */
 	public static void showChoices() {
 		logger.info("Please select an operation: ");
 		logger.info("1. Grade Students");
 		logger.info("2. View Alloted Courses");
 		logger.info("3. View Students Enrolled in a course ");
+		logger.info("4. View Students Grade");
 		logger.info("-1 to Logout");
 	}
 
-	// method to add course
+	/*
+	 * Updates grades for a student with given courseId
+	 * and studentId
+	 */
 	public void updateStudentGrades() {
 		logger.info("Inside Grade Student Method");
 		Scanner sc = new Scanner(System.in);
@@ -104,7 +135,10 @@ public class ProfessorMenu {
 		}
 	}
 
-	// method to view enrolled student in a particular course
+	/*
+	 * Method to view enrolled student in a particular course
+	 * whose grades are currently Not Available
+	 */
 	public void viewStudents() {
 		Scanner sc = new Scanner(System.in);
 		logger.info("Inside View Student Method");
@@ -113,6 +147,23 @@ public class ProfessorMenu {
 			logger.info("	Enter courseId");
 			int courseId = sc.nextInt();
 			professorOperation.viewStudentsEnrolled(courseId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/*
+	 * View grades of all students in a course 
+	 *  by providing the courseId
+	 */
+	public void viewGrades() {
+		Scanner sc = new Scanner(System.in);
+		logger.info("Inside View Student Method");
+		try {
+			ProfessorOperation professorOperation = new ProfessorOperation();
+			logger.info("Enter courseId");
+			int courseId = sc.nextInt();
+			professorOperation.viewGrades(courseId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
