@@ -7,8 +7,8 @@ import org.apache.log4j.Logger;
 import com.flipkart.bean.Admin;
 import com.flipkart.service.AdminOperation;
 
-public class AdminCRSMenu {
-	private static Logger logger = Logger.getLogger(AdminCRSMenu.class);
+public class AdminMenu {
+	private static Logger logger = Logger.getLogger(AdminMenu.class);
 	private AdminOperation adminOperation = new AdminOperation();
 	private Admin admin = new Admin();
 	
@@ -20,7 +20,6 @@ public class AdminCRSMenu {
 		do
 		{		
 			showChoices();
-			logger.info("Enter an operation choice:");
 			choice = sc.nextInt();
 			
 			switch(choice)
@@ -31,27 +30,8 @@ public class AdminCRSMenu {
 				case 2:
 					adminOperation.addProfessor();
 					break;
-				case 3:
-					logger.info("Enter the new email : ");
-					sc.nextLine();
-					
-					String userName = sc.nextLine();
-					
-					String pwd1 = "abc";
-					String pwd2 = "xyz";
-					
-					while(!pwd1.equals(pwd2)) {
-						logger.info("Enter password : ");
-						pwd1 = sc.nextLine();
-						logger.info("Re-enter password : ");
-						pwd2 = sc.nextLine();
-						if(!pwd1.equals(pwd2))
-						{
-							logger.info("Passwords do not match. Please re-enter.");
-						}
-					}
-					
-					adminOperation.addAdmin(userName, pwd1);
+				case 3:				
+					adminOperation.addAdmin();
 					break;
 				case 4:
 					adminOperation.approveStudent();

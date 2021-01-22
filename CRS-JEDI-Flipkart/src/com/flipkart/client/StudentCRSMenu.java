@@ -66,7 +66,12 @@ public class StudentCRSMenu {
     
     public void init(String email) {
     	student = studentOperation.getStudentByEmail(email);
-    	studentClient();
+    	if(student.isApproved()) {
+    		studentClient();
+    	}
+    	else {
+    		logger.info("Student not yet approved by Admin.");
+    	}
     }
 
     //showing available choices for student
@@ -86,10 +91,14 @@ public class StudentCRSMenu {
 
     // method to add course
     public void addCourse(){
-    	if (student.getIsRegistered()==false) {
+    	if (!student.getIsRegistered()) {
         	logger.info("Student needs to start registration to add course\n");
         	return;
         }
+    	else if(studentOperation.getNumberOfEnrolledCourses(student) >= 6) {
+    		logger.info("Cannot add more courses. You already have 6 courses\n");
+    		return;
+    	}
     	
         logger.info("Enter course ID to be added");
         Scanner input = new Scanner(System.in);
@@ -99,10 +108,14 @@ public class StudentCRSMenu {
 
     // method to drop a course
     public void dropCourse(){
-    	if (student.getIsRegistered()==false) {
+    	if (!student.getIsRegistered()) {
         	logger.info("Student needs to start registration to drop course\n");
         	return;
         }
+    	else if(studentOperation.getNumberOfEnrolledCourses(student) == 4) {
+    		logger.info("Cannot drop the course. You only have 4 courses\n");
+    		return;
+    	}
     	
         logger.info("Enter course ID to be dropped");
         Scanner input = new Scanner(System.in);
@@ -112,12 +125,39 @@ public class StudentCRSMenu {
 
     // method to make payment
     public void makePayment(){
-    	if(student.getEnrolledCourses().size()==0) {
-    		logger.info("Please Register courses to Make Payment: ");
-    		return ;
+    	if(student.getIsRegistered() == false) {
+    		logger.info("Please complete your course registration to make payment\n");
     	}
-    	
-        logger.info("Choose a payment method: ");
-        studentOperation.makePayment(student);
+    	else if(student.getPaymentStatus() == true) {
+    		logger.info("Payment already made");
+    	}
+    	else {
+        	logger.info("Available options: \n");
+        	logger.info("1. To pay via Netbanking");
+            logger.info("2. To pay via Debit card");
+            logger.info("3. To use Scholarship");
+            Scanner sc = new Scanner(System.in);
+            int choice = sc.nextInt();
+
+            // operations based on payment method
+            switch(choice)
+            {
+            	case 1:   // for net banking method
+            		logger.info("You have chosen net banking");
+            		break;
+            	case 2:   // for credit card method
+            		logger.info("You have chosen debit card");
+            		break;
+            	case 3: // for scholarship
+            		logger.info("You have chosen to use Scholarship");
+            		break;
+            	default:
+            		logger.info("Invalid choice----Exiting----");
+            		logger.info("===========================================\n\n");
+            }
+            
+            logger.info(">>> Proceed to make payment <<<");
+            studentOperation.makePayment(student);
+    	}
     }
 }

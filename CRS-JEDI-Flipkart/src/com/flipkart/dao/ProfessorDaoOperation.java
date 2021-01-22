@@ -125,13 +125,14 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 		}
 		return al;
 	}
-	
+
 	/*
 	 * Updates grades of multiple student belonging
 	 * to a particular courseId whose grades are currently
 	 * not available
 	 */
 	public void setGrades(ArrayList<Student>toGrade,int courseId) {
+
 		Scanner sc = new Scanner(System.in);
 		try {
 			con = DBConnection.getConnection();
