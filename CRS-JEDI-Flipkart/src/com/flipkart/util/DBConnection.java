@@ -18,6 +18,7 @@ public class DBConnection {
 	public static Connection connection = null;
 	private static Logger logger = Logger.getLogger(DBConnection.class);
 
+
 	public static Connection getConnection() {
 		if (connection != null)
             return connection;

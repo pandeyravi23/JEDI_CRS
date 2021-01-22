@@ -67,8 +67,21 @@ public class ProfessorMenu {
     	professorOperation.showCourses(professorId);
     }
 
-    // method to make payment
-    public void viewStudents(){
-    	logger.info("Inside View Student Method");
-    }
+	// method to make payment
+	public void viewStudents() {
+		Scanner sc = new Scanner(System.in);
+		logger.info("Inside View Student Method");
+		try {
+			ProfessorOperation professorOperation = new ProfessorOperation();
+			logger.info("	Enter courseId");
+			int courseId = sc.nextInt();
+			professorOperation.viewStudentsEnrolled(courseId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (sc != null) {
+				sc.close();
+			}
+		}
+	}
 }
