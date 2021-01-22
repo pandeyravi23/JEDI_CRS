@@ -21,20 +21,6 @@ public class DBConnection {
 	public static Connection connection = null;
 	private static Logger logger = Logger.getLogger(DBConnection.class);
 
-	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-	static final String DB_URL = "jdbc:mysql://localhost/test";
-	static final String USER = "root";
-
-//	static final String PASS = "common2";
-//	static final String PASS = "bernabeu";
-	static final String PASS = "99Partha19op@#";
-
-//	static final String PASS = "invictus@1999";
-
-//	static final String PASS = "common2";
-
-
-
 	public static Connection getConnection() {
 		if (connection != null)
             return connection;
