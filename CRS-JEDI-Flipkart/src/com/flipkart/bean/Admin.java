@@ -3,9 +3,9 @@ package com.flipkart.bean;
 import com.flipkart.bean.User;
 
 public class Admin extends User {
-	
 	private int adminId;
-	private String name;
+	private String adminName;
+	private String adminEmail;
 	
 	public int getAdminId() {
 		return adminId;
@@ -13,10 +13,16 @@ public class Admin extends User {
 	public void setAdminId(int adminId) {
 		this.adminId = adminId;
 	}
-	public String getName() {
-		return name;
+	public String getAdminName() {
+		return adminName;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setAdminName(String adminName) {
+		this.adminName = adminName;
+	}
+	public String getAdminEmail() {
+		return adminEmail;
+	}
+	public void setAdminEmail(String adminEmail) {
+		this.adminEmail = adminEmail;
 	}
 }

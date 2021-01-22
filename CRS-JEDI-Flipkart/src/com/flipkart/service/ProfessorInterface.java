@@ -4,7 +4,7 @@ import com.flipkart.bean.Professor;
 
 
 public interface ProfessorInterface {
-	public void viewGrades();
+	public void viewGrades(int courseId);
 	public Boolean gradeStudents(int courseId);
 	public void showCourses(int professorId);
 	public Professor getProfessorByEmail(String email);

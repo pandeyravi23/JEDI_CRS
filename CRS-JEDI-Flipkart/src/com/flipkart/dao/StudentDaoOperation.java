@@ -10,6 +10,7 @@ import java.util.*;
 
 import com.flipkart.bean.Course;
 import com.flipkart.bean.Grades;
+import com.flipkart.constant.SQLQueriesConstant;
 import org.apache.log4j.Logger;
 
 import com.flipkart.bean.Student;
@@ -87,8 +88,8 @@ public class StudentDaoOperation implements StudentDaoInterface {
 		Student student = new Student();
 		try {
 			connection = DBConnection.getConnection();
-			String sqlQuery = "SELECT * FROM student WHERE email=?";
-			ps = connection.prepareStatement(sqlQuery);
+			//String sqlQuery = "SELECT * FROM student WHERE email=?";
+			ps = connection.prepareStatement(SQLQueriesConstant.GET_STUDENT_BY_EMAIL_QUERY);
 			
 			ps.setString(1, email);
 			
@@ -110,40 +111,100 @@ public class StudentDaoOperation implements StudentDaoInterface {
 
 	// to add course in db based on student ID
 	public void addCourse(Student student, int courseID){
-		try{
-			connection = DBConnection.getConnection();
-			String SQLQuery = "INSERT INTO RegisteredCourses(studentID, courseID) values(?,?)";
-			ps = connection.prepareStatement(SQLQuery);
-
-			ps.setInt(1,student.getUserId());
-			ps.setInt(2,courseID);
-
-			int added = ps.executeUpdate();
-			if(added>0){
-				logger.info("Course " + courseID + " added successfully");
-			}
+		if(getNoOfCourses(student)>=6){
+			logger.info("Cannot add more course. You have already added 6 courses.");
 		}
-		catch (Exception e){
-			e.printStackTrace();
+		else if(getCourse(student, courseID)){
+			logger.info("You have already added this course.");
+		}
+		else{
+			try{
+				connection = DBConnection.getConnection();
+				//String SQLQuery = "INSERT INTO RegisteredCourses(studentID, courseID) values(?,?)";
+				ps = connection.prepareStatement(SQLQueriesConstant.ADD_COURSE_STUDENT_QUERY);
+
+				ps.setInt(1,student.getUserId());
+				ps.setInt(2,courseID);
+
+				int added = ps.executeUpdate();
+				if(added>0){
+					logger.info("Course " + courseID + " added successfully");
+				}
+			}
+			catch (Exception e){
+				e.printStackTrace();
+			}
 		}
 	}
 
 	// to delete a course from db based on student ID
 	public void dropCourse(Student student, int courseID){
+		if(!getCourse(student, courseID)){
+			logger.info("You have not registered for this course.");
+		}
+		else if(getNoOfCourses(student)==4){
+			logger.info("Only 4 courses registered. Cannot drop a course.");
+		}
+		else {
+			try {
+				connection = DBConnection.getConnection();
+				//String SQLQuery = "DELETE FROM RegisteredCourses where studentID = ? and courseID = ?";
+				ps = connection.prepareStatement(SQLQueriesConstant.DROP_COURSE_STUDENT_QUERY);
+
+				ps.setInt(1, student.getUserId());
+				ps.setInt(2, courseID);
+
+				int dropped = ps.executeUpdate();
+				logger.info("Course " + courseID + " deleted successfully");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	// to get the no of courses in which a student is enrolled
+	public int getNoOfCourses(Student student){
+		int count = 0;
+
 		try{
 			connection = DBConnection.getConnection();
-			String SQLQuery = "DELETE FROM RegisteredCourses where studentID = ? and courseID = ?";
-			ps = connection.prepareStatement(SQLQuery);
+			//String SQLQuery = "SELECT COUNT(*) FROM RegisteredCourses WHERE studentID=?";
+			ps = connection.prepareStatement(SQLQueriesConstant.GET_NO_OF_COURSES_QUERY);
 
 			ps.setInt(1,student.getUserId());
-			ps.setInt(2,courseID);
-
-			int dropped = ps.executeUpdate();
-			logger.info("Course " + courseID + " deleted successfully");
+			ResultSet resultSet = ps.executeQuery();
+			if(resultSet.next()) {
+				count = resultSet.getInt(1);
+			}
 		}
 		catch(Exception e){
 			e.printStackTrace();
 		}
+
+		return count;
+	}
+
+	public boolean getCourse(Student student, int courseID){
+		int count = 0;
+
+		try{
+			connection = DBConnection.getConnection();
+			//String SQLQuery = "SELECT COUNT(*) FROM RegisteredCourses WHERE studentID=? AND courseID=?";
+			ps = connection.prepareStatement(SQLQueriesConstant.GET_COURSE_QUERY);
+
+			ps.setInt(1,student.getUserId());
+			ps.setInt(2,courseID);
+
+			ResultSet resultSet = ps.executeQuery();
+			if(resultSet.next()) {
+				count = resultSet.getInt(1);
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+
+		return count>0;
 	}
 
 	// to get all coursed in which a student is enrolled from db
@@ -152,8 +213,8 @@ public class StudentDaoOperation implements StudentDaoInterface {
 
 		try{
 			connection = DBConnection.getConnection();
-			String SQLQuery = "SELECT courseID FROM RegisteredCourses WHERE studentID=?";
-			ps = connection.prepareStatement(SQLQuery);
+			//String SQLQuery = "SELECT courseID FROM RegisteredCourses WHERE studentID=?";
+			ps = connection.prepareStatement(SQLQueriesConstant.GET_ENROLLED_COURSES_QUERY);
 
 			ps.setInt(1,student.getUserId());
 			ResultSet resultSet = ps.executeQuery();
@@ -173,8 +234,8 @@ public class StudentDaoOperation implements StudentDaoInterface {
 	public void setRegistrationStatus(Student student){
 		try{
 			connection = DBConnection.getConnection();
-			String SQLQuery = "UPDATE student SET isRegistered = 1 where id = ?";
-			ps = connection.prepareStatement(SQLQuery);
+			//String SQLQuery = "UPDATE student SET isRegistered = 1 where id = ?";
+			ps = connection.prepareStatement(SQLQueriesConstant.SET_REGISTRATION_STATUS_QUERY);
 
 			ps.setInt(1,student.getUserId());
 			ps.executeUpdate();
@@ -190,8 +251,8 @@ public class StudentDaoOperation implements StudentDaoInterface {
 
 		try{
 			connection = DBConnection.getConnection();
-			String SQLQuery = "SELECT grades.courseId, course.name as courseName, grades.grade, grades.studentId FROM grades INNER JOIN course ON grades.courseId = course.id AND grades.studentId=?";
-			ps = connection.prepareStatement(SQLQuery);
+			//String SQLQuery = "SELECT grades.courseId, course.name as courseName, grades.grade, grades.studentId FROM grades INNER JOIN course ON grades.courseId = course.id AND grades.studentId=?";
+			ps = connection.prepareStatement(SQLQueriesConstant.GET_GRADES_QUERY);
 
 			ps.setInt(1,studentID);
 			ResultSet resultSet = ps.executeQuery();

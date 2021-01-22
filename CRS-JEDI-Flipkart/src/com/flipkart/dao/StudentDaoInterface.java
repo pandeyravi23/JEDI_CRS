@@ -19,4 +19,8 @@ public interface StudentDaoInterface {
 	public void setRegistrationStatus(Student student);
 
 	public ArrayList<Grades> getGrades(int studentID);
+
+	public int getNoOfCourses(Student student);
+
+	public boolean getCourse(Student student, int courseID);
 }
