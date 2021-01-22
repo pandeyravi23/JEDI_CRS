@@ -33,6 +33,10 @@ public class MainCRSApplication {
 					break;
 				case 2: // Professor
 				case 3: // Admin
+					AdminCRSMenu adminClient = new AdminCRSMenu();
+					adminClient.AdminClient();
+					break;
+					
 				default: 
 						logger.info("Invalid credentials");
 						break;

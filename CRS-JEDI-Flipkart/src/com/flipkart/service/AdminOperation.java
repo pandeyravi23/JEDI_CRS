@@ -2,9 +2,12 @@ package com.flipkart.service;
 
 import org.apache.log4j.Logger;
 
+import com.flipkart.dao.AdminDAOOperation;
+
 public class AdminOperation implements AdminInterface{
 
 	public static Logger logger = Logger.getLogger(AdminOperation.class);
+	AdminDAOOperation adminDAO = new AdminDAOOperation();
 	
 	@Override
 	public void generateReportCard() {
@@ -19,9 +22,16 @@ public class AdminOperation implements AdminInterface{
 	}
 
 	@Override
-	public void addAdmin() {
+	public void addAdmin(String username, String password) {
 		// TODO Auto-generated method stub
-		logger.info("In addProfesoor method");
+		if(adminDAO.addAdmin(username, password))
+		{
+			logger.info("Admin added successfully");
+		}
+		else
+		{
+			logger.info("Unable to add admin");
+		}
 	}
 
 	@Override
