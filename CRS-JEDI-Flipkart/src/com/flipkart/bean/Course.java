@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Course {
     private int courseID;
     private String courseName;
-    private String professorAllotted;
+    private int professorAllotted;
     private int credits;
     private ArrayList<Student> listOfEnrolledStudents = new ArrayList<>();
 
@@ -25,11 +25,11 @@ public class Course {
         return courseName;
     }
 
-    public void setProfessorAllotted(String professorName){
-        this.professorAllotted = professorName;
+    public void setProfessorAllotted(int professorID){
+        this.professorAllotted = professorID;
     }
 
-    public String getProfessorAllotted(){
+    public int getProfessorAllotted(){
         return professorAllotted;
     }
 

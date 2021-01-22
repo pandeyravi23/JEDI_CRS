@@ -8,17 +8,24 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.*;
 
+import com.flipkart.bean.Course;
 import org.apache.log4j.Logger;
 
 import com.flipkart.bean.Student;
 import com.flipkart.util.DBConnection;
 
+/*
+ * @author JEDI 04
+ */
+
 public class StudentDaoOperation implements StudentDaoInterface {
 	
+	// creating students list 
 	public static List<Student> students = new ArrayList<>();
 	private static Logger logger = Logger.getLogger(StudentDaoOperation.class);
 	Connection connection = null;
 	PreparedStatement ps = null;
+	CoursesDaoOperation coursesDaoOperation = new CoursesDaoOperation();
 
 	// to get all students in database
 	@Override
@@ -28,6 +35,7 @@ public class StudentDaoOperation implements StudentDaoInterface {
 
 	// to get student object based on studentID
 	@Override
+	// get student information using student id
 	public Student getStudentById(int studentId) {
 		Student st = null;
 		for(Student student: students) {
@@ -41,12 +49,13 @@ public class StudentDaoOperation implements StudentDaoInterface {
 
 	// read student database and populate students list
 	@Override
+	// creating student objects using stu.txt file and adding to students list 
 	public void populate() {
 		FileInputStream inputStream = null;
 		
 		try {
-			String filePath = new File("").getAbsolutePath();
-			inputStream = new FileInputStream(filePath.concat("/src/stu.txt"));
+//			String filePath = new File("").getAbsolutePath();
+			inputStream = new FileInputStream("stu.txt");
 //			inputStream = new FileInputStream("C:\\Users\\chinm\\OneDrive\\Desktop\\Flipkart_Internship\\JEDI_Bootcamp\\JAVA\\student.txt");
 			Scanner scanner = new Scanner(inputStream);
 			while(scanner.hasNext()) {
@@ -97,4 +106,76 @@ public class StudentDaoOperation implements StudentDaoInterface {
 		return student;
 	}
 
+
+	public void addCourse(Student student, int courseID){
+		try{
+			connection = DBConnection.getConnection();
+			String SQLQuery = "INSERT INTO RegisteredCourses(studentID, courseID) values(?,?)";
+			ps = connection.prepareStatement(SQLQuery);
+
+			ps.setInt(1,student.getUserId());
+			ps.setInt(2,courseID);
+
+			int added = ps.executeUpdate();
+			if(added>0){
+				logger.info("Course " + courseID + " added successfully");
+			}
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	public void dropCourse(Student student, int courseID){
+		try{
+			connection = DBConnection.getConnection();
+			String SQLQuery = "DELETE FROM RegisteredCourses where studentID = ? and courseID = ?";
+			ps = connection.prepareStatement(SQLQuery);
+
+			ps.setInt(1,student.getUserId());
+			ps.setInt(2,courseID);
+
+			int dropped = ps.executeUpdate();
+			logger.info("Course " + courseID + " deleted successfully");
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	public ArrayList<Course> getEnrolledCourses(Student student){
+		ArrayList<Course> enrolledCourses = new ArrayList<>();
+
+		try{
+			connection = DBConnection.getConnection();
+			String SQLQuery = "SELECT courseID FROM RegisteredCourses WHERE studentID=?";
+			ps = connection.prepareStatement(SQLQuery);
+
+			ps.setInt(1,student.getUserId());
+			ResultSet resultSet = ps.executeQuery();
+			while(resultSet.next()){
+				Course course = coursesDaoOperation.getCourseByID(resultSet.getInt("courseID"));
+				enrolledCourses.add(course);
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+
+		return enrolledCourses;
+	}
+
+	public void setRegistrationStatus(Student student){
+		try{
+			connection = DBConnection.getConnection();
+			String SQLQuery = "UPDATE student SET isRegistered = 1 where id = ?";
+			ps = connection.prepareStatement(SQLQuery);
+
+			ps.setInt(1,student.getUserId());
+			ps.executeUpdate();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
 }

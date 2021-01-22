@@ -9,6 +9,9 @@ import org.apache.log4j.Logger;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/*
+ * @author JEDI 04
+ */
 public class StudentCRSMenu {
     private static Logger logger = Logger.getLogger(StudentCRSMenu.class);
     private StudentInterface studentOperation = new StudentOperation();
@@ -42,17 +45,16 @@ public class StudentCRSMenu {
 
         int choice;
 
-        // choices for student operations
         do{
             showChoices();
             choice = input.nextInt();
 
             switch (choice){
                 case -1:
-                    logger.info(".....Exiting Menu.....\n");
+                    logger.info(".....Logged Out.....\n");
                     break;
                 case 1:
-                    studentOperation.showCourses(student.getUserId());
+                    studentOperation.showCourses();
                     break;
                 case 2:
                     studentOperation.registerCourses(student);
@@ -89,6 +91,7 @@ public class StudentCRSMenu {
     	studentClient();
     }
 
+    //showing available choices for student
     public static void showChoices(){
         logger.info("Select an operation: ");
         logger.info("1. Show courses");
@@ -99,8 +102,9 @@ public class StudentCRSMenu {
         logger.info("6. View grades");
         logger.info("7. Make payment");
         logger.info("8. Update info");
-        logger.info("-1 to exit menu");
+        logger.info("-1 to Logout");
     }
+
 
     // method to add course
     public void addCourse(){
@@ -108,6 +112,7 @@ public class StudentCRSMenu {
         	logger.info("Student needs to start registration to add course\n");
         	return;
         }
+    	
         logger.info("Enter course ID to be added");
         Scanner input = new Scanner(System.in);
         int courseID = input.nextInt();
@@ -120,6 +125,7 @@ public class StudentCRSMenu {
         	logger.info("Student needs to start registration to drop course\n");
         	return;
         }
+    	
         logger.info("Enter course ID to be dropped");
         Scanner input = new Scanner(System.in);
         int courseID = input.nextInt();
@@ -132,6 +138,7 @@ public class StudentCRSMenu {
     		logger.info("Please Register courses to Make Payment: ");
     		return ;
     	}
+    	
         logger.info("Choose a payment method: ");
         studentOperation.makePayment(student);
     }
