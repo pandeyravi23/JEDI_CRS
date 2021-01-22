@@ -21,67 +21,10 @@ import com.flipkart.util.DBConnection;
  */
 
 public class StudentDaoOperation implements StudentDaoInterface {
-	
-	// creating students list 
-	public static List<Student> students = new ArrayList<>();
 	private static Logger logger = Logger.getLogger(StudentDaoOperation.class);
 	Connection connection = null;
 	PreparedStatement ps = null;
 	CoursesDaoOperation coursesDaoOperation = new CoursesDaoOperation();
-
-	// to get all students in database
-	@Override
-	public List<Student> getAllStudents() {
-		return students;
-	}
-
-	// to get student object based on studentID
-	@Override
-	// get student information using student id
-	public Student getStudentById(int studentId) {
-		Student st = null;
-		for(Student student: students) {
-			if(student.getUserId() == studentId) {
-				st = student;
-				break;
-			}
-		}
-		return st;
-	}
-
-	// read student database and populate students list
-	@Override
-	// creating student objects using stu.txt file and adding to students list 
-	public void populate() {
-		FileInputStream inputStream = null;
-		
-		try {
-//			String filePath = new File("").getAbsolutePath();
-			inputStream = new FileInputStream("stu.txt");
-//			inputStream = new FileInputStream("C:\\Users\\chinm\\OneDrive\\Desktop\\Flipkart_Internship\\JEDI_Bootcamp\\JAVA\\student.txt");
-			Scanner scanner = new Scanner(inputStream);
-			while(scanner.hasNext()) {
-				String line = scanner.nextLine();
-				String elements[] = line.split(" ");
-				
-				Student newStudent = new Student();
-				newStudent.setUserId(Integer.parseInt(elements[0]));
-				newStudent.setUserName(elements[1]);
-				newStudent.setRole(elements[2]);
-				newStudent.setEmail(elements[3]);
-				newStudent.setRollNo(Integer.parseInt(elements[4]));
-				newStudent.setBranch(elements[5]);
-				students.add(newStudent);
-			}
-			
-			scanner.close();
-			inputStream.close();
-		} 
-		catch(IOException e) {
-			e.printStackTrace();
-		}
-		
-	}
 
 	// to get the student details from db based on email entered during login
 	public Student getStudentByEmail(String email) {
@@ -102,6 +45,8 @@ public class StudentDaoOperation implements StudentDaoInterface {
 			student.setIsRegistered(bool);
 			student.setUserName(result.getString("name"));
 			student.setRollNo(result.getInt("rollno"));	
+			student.setApproved(result.getBoolean("isApproved"));
+			student.setPaymentStatus(result.getBoolean("paymentStatus"));
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -111,9 +56,13 @@ public class StudentDaoOperation implements StudentDaoInterface {
 
 	// to add course in db based on student ID
 	public void addCourse(Student student, int courseID){
-		if(getNoOfCourses(student)>=6){
-			logger.info("Cannot add more course. You have already added 6 courses.");
+		Course course = coursesDaoOperation.getCourseByID(courseID);
+		if(course == null) {
+			logger.info(">>>>>>>> Invalid Course ID <<<<<<<<<<\n");
 		}
+//		else if(getNoOfCourses(student)>=6){
+//			logger.info("Cannot add more course. You have already added 6 courses.");
+//		}
 		else if(getCourse(student, courseID)){
 			logger.info("You have already added this course.");
 		}
@@ -139,12 +88,16 @@ public class StudentDaoOperation implements StudentDaoInterface {
 
 	// to delete a course from db based on student ID
 	public void dropCourse(Student student, int courseID){
-		if(!getCourse(student, courseID)){
+		Course course = coursesDaoOperation.getCourseByID(courseID);
+		if(course == null) {
+			logger.info(">>>>>>>> Invalid Course ID <<<<<<<<<<\n");
+		}
+		else if(!getCourse(student, courseID)){
 			logger.info("You have not registered for this course.");
 		}
-		else if(getNoOfCourses(student)==4){
-			logger.info("Only 4 courses registered. Cannot drop a course.");
-		}
+//		else if(getNoOfCourses(student)==4){
+//			logger.info("Only 4 courses registered. Cannot drop a course.");
+//		}
 		else {
 			try {
 				connection = DBConnection.getConnection();
@@ -219,7 +172,9 @@ public class StudentDaoOperation implements StudentDaoInterface {
 			ps.setInt(1,student.getUserId());
 			ResultSet resultSet = ps.executeQuery();
 			while(resultSet.next()){
-				Course course = coursesDaoOperation.getCourseByID(resultSet.getInt("courseID"));
+				Course course = new Course();
+				course.setCourseID(resultSet.getInt("courseID"));
+				course.setCourseName(resultSet.getString("name"));
 				enrolledCourses.add(course);
 			}
 		}
@@ -270,5 +225,21 @@ public class StudentDaoOperation implements StudentDaoInterface {
 		}
 
 		return grades;
+	}
+	
+	public void setPaymentStatus(Student student) {
+		try{
+			connection = DBConnection.getConnection();
+			ps = connection.prepareStatement(SQLQueriesConstant.SET_PAYMENT_STATUS_QUERY);
+
+			ps.setInt(1, student.getUserId());
+			int paid = ps.executeUpdate();
+			if(paid > 0) {
+				logger.info("Payment Successful\n");
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 }

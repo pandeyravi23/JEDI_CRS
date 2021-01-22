@@ -12,14 +12,15 @@ import java.security.PublicKey;
 public class SQLQueriesConstant {
 
 	// SQL Queries for Student
-	public static final String GET_STUDENT_BY_EMAIL_QUERY = "SELECT * FROM student WHERE email=?";
+	public static final String GET_STUDENT_BY_EMAIL_QUERY = "SELECT st.email, st.name, st.rollno, st.branch, st.id, st.isRegistered, cr.isApproved, st.paymentStatus FROM student as st INNER JOIN credentials as cr ON st.id = cr.id AND st.email=?";
 	public static final String ADD_COURSE_STUDENT_QUERY = "INSERT INTO RegisteredCourses(studentID, courseID) values(?,?)";
 	public static final String DROP_COURSE_STUDENT_QUERY = "DELETE FROM RegisteredCourses where studentID = ? and courseID = ?";
 	public static final String GET_NO_OF_COURSES_QUERY = "SELECT COUNT(*) FROM RegisteredCourses WHERE studentID=?";
 	public static final String GET_COURSE_QUERY = "SELECT COUNT(*) FROM RegisteredCourses WHERE studentID=? AND courseID=?";
-	public static final String GET_ENROLLED_COURSES_QUERY = "SELECT courseID FROM RegisteredCourses WHERE studentID=?";
+	public static final String GET_ENROLLED_COURSES_QUERY = "SELECT rc.courseID, c.name FROM RegisteredCourses as rc INNER JOIN course as c ON rc.courseID = c.id AND studentID=?";
 	public static final String SET_REGISTRATION_STATUS_QUERY = "UPDATE student SET isRegistered = 1 where id = ?";
 	public static final String GET_GRADES_QUERY = "SELECT grades.courseId, course.name as courseName, grades.grade, grades.studentId FROM grades INNER JOIN course ON grades.courseId = course.id AND grades.studentId=?";
+	public static final String SET_PAYMENT_STATUS_QUERY = "UPDATE student set paymentStatus = true WHERE id=?";
 
 
 	// SQL Queries for Professor
