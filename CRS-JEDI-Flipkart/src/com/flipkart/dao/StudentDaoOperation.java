@@ -110,40 +110,100 @@ public class StudentDaoOperation implements StudentDaoInterface {
 
 	// to add course in db based on student ID
 	public void addCourse(Student student, int courseID){
-		try{
-			connection = DBConnection.getConnection();
-			String SQLQuery = "INSERT INTO RegisteredCourses(studentID, courseID) values(?,?)";
-			ps = connection.prepareStatement(SQLQuery);
-
-			ps.setInt(1,student.getUserId());
-			ps.setInt(2,courseID);
-
-			int added = ps.executeUpdate();
-			if(added>0){
-				logger.info("Course " + courseID + " added successfully");
-			}
+		if(getNoOfCourses(student)>=6){
+			logger.info("Cannot add more course. You have already added 6 courses.");
 		}
-		catch (Exception e){
-			e.printStackTrace();
+		else if(getCourse(student, courseID)){
+			logger.info("You have already added this course.");
+		}
+		else{
+			try{
+				connection = DBConnection.getConnection();
+				String SQLQuery = "INSERT INTO RegisteredCourses(studentID, courseID) values(?,?)";
+				ps = connection.prepareStatement(SQLQuery);
+
+				ps.setInt(1,student.getUserId());
+				ps.setInt(2,courseID);
+
+				int added = ps.executeUpdate();
+				if(added>0){
+					logger.info("Course " + courseID + " added successfully");
+				}
+			}
+			catch (Exception e){
+				e.printStackTrace();
+			}
 		}
 	}
 
 	// to delete a course from db based on student ID
 	public void dropCourse(Student student, int courseID){
+		if(!getCourse(student, courseID)){
+			logger.info("You have not registered for this course.");
+		}
+		else if(getNoOfCourses(student)==4){
+			logger.info("Only 4 courses registered. Cannot drop a course.");
+		}
+		else {
+			try {
+				connection = DBConnection.getConnection();
+				String SQLQuery = "DELETE FROM RegisteredCourses where studentID = ? and courseID = ?";
+				ps = connection.prepareStatement(SQLQuery);
+
+				ps.setInt(1, student.getUserId());
+				ps.setInt(2, courseID);
+
+				int dropped = ps.executeUpdate();
+				logger.info("Course " + courseID + " deleted successfully");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	// to get the no of courses in which a student is enrolled
+	public int getNoOfCourses(Student student){
+		int count = 0;
+
 		try{
 			connection = DBConnection.getConnection();
-			String SQLQuery = "DELETE FROM RegisteredCourses where studentID = ? and courseID = ?";
+			String SQLQuery = "SELECT COUNT(*) FROM RegisteredCourses WHERE studentID=?";
+			ps = connection.prepareStatement(SQLQuery);
+
+			ps.setInt(1,student.getUserId());
+			ResultSet resultSet = ps.executeQuery();
+			if(resultSet.next()) {
+				count = resultSet.getInt(1);
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+
+		return count;
+	}
+
+	public boolean getCourse(Student student, int courseID){
+		int count = 0;
+
+		try{
+			connection = DBConnection.getConnection();
+			String SQLQuery = "SELECT COUNT(*) FROM RegisteredCourses WHERE studentID=? AND courseID=?";
 			ps = connection.prepareStatement(SQLQuery);
 
 			ps.setInt(1,student.getUserId());
 			ps.setInt(2,courseID);
 
-			int dropped = ps.executeUpdate();
-			logger.info("Course " + courseID + " deleted successfully");
+			ResultSet resultSet = ps.executeQuery();
+			if(resultSet.next()) {
+				count = resultSet.getInt(1);
+			}
 		}
 		catch(Exception e){
 			e.printStackTrace();
 		}
+
+		return count>0;
 	}
 
 	// to get all coursed in which a student is enrolled from db

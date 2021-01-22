@@ -117,7 +117,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 		return al;
 	}
 	
-	public void setGrades(ArrayList<Student>toGrade,int courseId) {
+	public void setGrades(ArrayList<Student> toGrade,int courseId) {
 		Scanner sc = new Scanner(System.in);
 		try {
 			con = DBConnection.getConnection();

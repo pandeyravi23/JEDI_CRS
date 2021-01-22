@@ -108,7 +108,7 @@ public class StudentCRSMenu {
 
     // method to add course
     public void addCourse(){
-    	if (student.getIsRegistered()==false) {
+    	if (!student.getIsRegistered()) {
         	logger.info("Student needs to start registration to add course\n");
         	return;
         }
@@ -121,7 +121,7 @@ public class StudentCRSMenu {
 
     // method to drop a course
     public void dropCourse(){
-    	if (student.getIsRegistered()==false) {
+    	if (!student.getIsRegistered()) {
         	logger.info("Student needs to start registration to drop course\n");
         	return;
         }
