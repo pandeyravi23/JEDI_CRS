@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 
 import com.flipkart.bean.Professor;
 import com.flipkart.bean.Student;
+import com.flipkart.constant.SQLQueriesConstant;
 import com.flipkart.util.DBConnection;
 import com.mysql.cj.protocol.Resultset;
 
@@ -29,7 +30,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 		try {
 
 			con = DBConnection.getConnection();
-			stmt = con.prepareStatement("select * from professor where email=?");
+			stmt = con.prepareStatement(SQLQueriesConstant.professorGetProfessorByEmailQuery);
 			stmt.setString(1, email);
 			ResultSet rs = stmt.executeQuery();
 
@@ -51,7 +52,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 	public void showCourses(int professorId) {
 		try {
 			con = DBConnection.getConnection();
-			stmt = con.prepareStatement("Select id,name,credits from course where professorId=?");
+			stmt = con.prepareStatement(SQLQueriesConstant.professorShowCoursesQuery);
 			stmt.setInt(1, professorId);
 			ResultSet rs = stmt.executeQuery();
 			logger.info("===============================================");
@@ -69,7 +70,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 		ArrayList<Student> al = new ArrayList<Student>();
 		try {
 			con = DBConnection.getConnection();
-			stmt = con.prepareStatement("Select studentId from grades where courseId=? and grade='NA'");
+			stmt = con.prepareStatement(SQLQueriesConstant.professorGetEnrolledStudentListQuery);
 			stmt.setInt(1, courseId);
 			ResultSet rs = stmt.executeQuery();
 			ArrayList<Integer> al2 = new ArrayList<Integer>();
@@ -126,7 +127,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 				String grd = sc.next();
 				if(grd=="")
 					grd = sc.next();
-				String str = "update grades set grade = ? where studentId = ? and courseId = ?";
+				String str = SQLQueriesConstant.professorSetGradesQuery;
 				stmt = con.prepareStatement(str);
 				stmt.setString(1, grd);
 				stmt.setInt(2, st.getUserId());
@@ -149,7 +150,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 	public boolean updateStudentGrades(int courseId,int studentId, String grades) {
 		try {
 			con = DBConnection.getConnection();
-			stmt = con.prepareStatement("update grades set grade=? where courseId =? and studentId=?");
+			stmt = con.prepareStatement(SQLQueriesConstant.professorUpdateGradesQuery);
 			stmt.setString(1,grades);
 			stmt.setInt(2,courseId);
 			stmt.setInt(3,studentId);
@@ -170,7 +171,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 			logger.info("===================================");
 			logger.info("UserId    UserName    Grade Obtained");
 			for(Student st : enolledStudent) {
-				String str = "Select grade from grades where studentId = ? and courseId = ?";
+				String str = SQLQueriesConstant.professorShowGradesQuery;
 				stmt = con.prepareStatement(str);
 				stmt.setInt(1, st.getUserId());
 				stmt.setInt(2, courseId);
@@ -193,7 +194,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 		ArrayList<Student> al = new ArrayList<Student>();
 		try {
 			con = DBConnection.getConnection();
-			stmt = con.prepareStatement("Select studentId from grades where courseId=?");
+			stmt = con.prepareStatement(SQLQueriesConstant.professorGetStudentsQuery);
 			stmt.setInt(1, courseId);
 			ResultSet rs = stmt.executeQuery();
 			ArrayList<Integer> al2 = new ArrayList<Integer>();
