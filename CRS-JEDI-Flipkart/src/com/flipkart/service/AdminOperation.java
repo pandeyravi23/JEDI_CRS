@@ -26,7 +26,14 @@ public class AdminOperation implements AdminInterface{
 		logger.info("Enter the new email : ");
 		
 		String email = sc.nextLine();
-		
+
+
+		if(adminDAO.verifyEmail(email)==false)
+		{
+			logger.info("Email already exists.Please retry.");
+			return;
+		}
+
 		String pwd1 = "abc";
 		String pwd2 = "xyz";
 		
@@ -41,12 +48,7 @@ public class AdminOperation implements AdminInterface{
 			}
 		}
 		
-		if(!adminDAO.verifyEmail(email))
-		{
-			logger.info("Email already exists.Please retry.");
-			sc.close();
-			return;
-		}
+
 		
 		logger.info("Please enter your name : ");
 		Professor prof = new Professor();
