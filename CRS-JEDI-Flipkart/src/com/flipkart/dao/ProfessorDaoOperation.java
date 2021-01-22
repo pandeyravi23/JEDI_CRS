@@ -21,12 +21,6 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 	Connection con;
 	PreparedStatement stmt;
 
-//	public static void main(String [] args) {
-//		ProfessorDaoOperation obj = new ProfessorDaoOperation();
-//		Professor p = obj.getProfessorByEmail("pf1@crs.com");
-//		System.out.println(p.getRole());
-//	}
-
 	/*
 	 * Method creates professor object using email ID from the database
 	 */
@@ -51,20 +45,6 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 			e.printStackTrace();
 
 		}
-//			finally {
-//
-//			try {
-//				con.close();
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//
-//			try {
-//				stmt.close();
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		}
 		return professor;
 	}
 
@@ -116,10 +96,11 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 			stmt = con.prepareStatement(str);
 			
 			for (int i = 1; i <= al2.size(); i++) {
-				stmt.setInt(i, al2.get(i - 1));
+				stmt.setInt(i, al2.get(i-1));
 			}
 			
 			rs = stmt.executeQuery();
+			
 			while (rs.next()) {
 				Student st = new Student();
 				st.setUserId(rs.getInt("id"));
@@ -136,7 +117,6 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 		return al;
 	}
 	
-	////////////////////////////////////////////////////////////////////
 	public void setGrades(ArrayList<Student>toGrade,int courseId) {
 		Scanner sc = new Scanner(System.in);
 		try {
@@ -163,6 +143,25 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 			e.printStackTrace();
 		}
 		return ;
+	}
+	
+	
+	public boolean updateStudentGrades(int courseId,int studentId, String grades) {
+		try {
+			con = DBConnection.getConnection();
+			stmt = con.prepareStatement("update grades set grade=? where courseId =? and studentId=?");
+			stmt.setString(1,grades);
+			stmt.setInt(2,courseId);
+			stmt.setInt(3,studentId);
+			int status = stmt.executeUpdate();
+			if (status>0) {
+				return true;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 }

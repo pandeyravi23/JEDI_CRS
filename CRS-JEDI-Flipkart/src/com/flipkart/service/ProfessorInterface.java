@@ -8,5 +8,6 @@ public interface ProfessorInterface {
 	public Boolean gradeStudents(int courseId);
 	public void showCourses(int professorId);
 	public Professor getProfessorByEmail(String email);
-	void viewStudentsEnrolled(int courseId);
+	public void viewStudentsEnrolled(int courseId);
+	public boolean updateStudentGrade(int courseId,int studentId, String grade);
 }

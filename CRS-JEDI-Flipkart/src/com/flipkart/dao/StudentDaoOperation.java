@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.util.*;
 
 import com.flipkart.bean.Course;
+import com.flipkart.bean.Grades;
 import org.apache.log4j.Logger;
 
 import com.flipkart.bean.Student;
@@ -177,5 +178,31 @@ public class StudentDaoOperation implements StudentDaoInterface {
 		catch(Exception e){
 			e.printStackTrace();
 		}
+	}
+
+	public ArrayList<Grades> getGrades(int studentID){
+		ArrayList<Grades> grades = new ArrayList<>();
+
+		try{
+			connection = DBConnection.getConnection();
+			String SQLQuery = "SELECT grades.courseId, course.name as courseName, grades.grade, grades.studentId FROM grades INNER JOIN course ON grades.courseId = course.id AND grades.studentId=?";
+			ps = connection.prepareStatement(SQLQuery);
+
+			ps.setInt(1,studentID);
+			ResultSet resultSet = ps.executeQuery();
+			while(resultSet.next()){
+				Grades grade = new Grades();
+				grade.setCourseID(resultSet.getInt("courseId"));
+				grade.setCourseName(resultSet.getString("courseName"));
+				grade.setGrade(resultSet.getString("grade"));
+				grade.setStudentId(resultSet.getInt("studentId"));
+				grades.add(grade);
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+
+		return grades;
 	}
 }
