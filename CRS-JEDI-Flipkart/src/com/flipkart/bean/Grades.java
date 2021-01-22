@@ -4,7 +4,10 @@ import java.util.ArrayList;
 
 public class Grades {
 	private int studentId;
-	private ArrayList<String> recordedGrades = new ArrayList<>();
+	private int courseID;
+	private String courseName;
+	private String grade;
+	//private ArrayList<String> recordedGrades = new ArrayList<>();
 	
 	
 	public int getStudentId() {
@@ -15,13 +18,37 @@ public class Grades {
 		this.studentId = studentId;
 	}
 
-	public ArrayList<String> getRecordedGrades() {
+	public int getCourseId(){
+		return courseID;
+	}
+
+	public void setCourseID(int courseID) {
+		this.courseID = courseID;
+	}
+
+	public String getCourseName(){
+		return courseName;
+	}
+
+	public void setCourseName(String courseName){
+		this.courseName = courseName;
+	}
+
+	public String getGrade(){
+		return grade;
+	}
+
+	public void setGrade(String grade){
+		this.grade = grade;
+	}
+
+	/*public ArrayList<String> getRecordedGrades() {
 		return recordedGrades;
 	}
 
 	public void setRecordedGrades(ArrayList<String> recordedGrades) {
 		this.recordedGrades = recordedGrades;
-	}
+	}*/
 	
 	
 }

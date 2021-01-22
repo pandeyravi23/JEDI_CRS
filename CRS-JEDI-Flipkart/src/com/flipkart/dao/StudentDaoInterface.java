@@ -3,6 +3,7 @@ package com.flipkart.dao;
 import java.util.*;
 
 import com.flipkart.bean.Course;
+import com.flipkart.bean.Grades;
 import com.flipkart.bean.Student;
 
 
@@ -16,4 +17,6 @@ public interface StudentDaoInterface {
 	public ArrayList<Course> getEnrolledCourses(Student student);
 
 	public void setRegistrationStatus(Student student);
+
+	public ArrayList<Grades> getGrades(int studentID);
 }
