@@ -27,7 +27,6 @@ public class AdminOperation implements AdminInterface{
 		
 		String email = sc.nextLine();
 
-
 		if(adminDAO.verifyEmail(email)==false)
 		{
 			logger.info("Email already exists.Please retry.");
@@ -47,8 +46,6 @@ public class AdminOperation implements AdminInterface{
 				logger.info("Passwords do not match. Please re-enter.");
 			}
 		}
-		
-
 		
 		logger.info("Please enter your name : ");
 		Professor prof = new Professor();

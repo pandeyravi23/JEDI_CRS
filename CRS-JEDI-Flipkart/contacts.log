@@ -1,0 +1,70 @@
+14:46:41,470  INFO AdminOperation,main:26 - Enter the new email : 
+14:46:57,824  INFO AdminOperation,main:34 - Enter password : 
+14:46:59,326  INFO AdminOperation,main:36 - Re-enter password : 
+14:47:00,210  INFO AdminOperation,main:46 - Email already exists.Please retry.
+14:47:00,211  INFO AdminCRSMenu,main:78 - Select an operation
+14:47:00,211  INFO AdminCRSMenu,main:79 - Press 1 to generate report card of a student
+14:47:00,211  INFO AdminCRSMenu,main:80 - Press 2 to add professor
+14:47:00,211  INFO AdminCRSMenu,main:81 - Press 3 to add Admin
+14:47:00,211  INFO AdminCRSMenu,main:82 - Press 4 to approve students
+14:47:00,211  INFO AdminCRSMenu,main:83 - Press 5 to add course
+14:47:00,211  INFO AdminCRSMenu,main:84 - Press 6 to delete a course
+14:47:00,211  INFO AdminCRSMenu,main:85 - Press -1 to exit
+14:47:00,212  WARN MainCRSApplication,main:51 - 
+14:52:34,438  INFO MainCRSApplication,main:13 - Welcome!!!
+14:52:34,441  INFO MainCRSApplication,main:17 - Login
+14:52:34,466  INFO MainCRSApplication,main:20 - Enter your email: 
+14:52:40,766  INFO MainCRSApplication,main:23 - Enter password: 
+14:52:44,193  INFO AdminCRSMenu,main:17 - Welcome Admin.
+14:52:44,193  INFO AdminCRSMenu,main:78 - Select an operation
+14:52:44,193  INFO AdminCRSMenu,main:79 - Press 1 to generate report card of a student
+14:52:44,194  INFO AdminCRSMenu,main:80 - Press 2 to add professor
+14:52:44,194  INFO AdminCRSMenu,main:81 - Press 3 to add Admin
+14:52:44,194  INFO AdminCRSMenu,main:82 - Press 4 to approve students
+14:52:44,194  INFO AdminCRSMenu,main:83 - Press 5 to add course
+14:52:44,195  INFO AdminCRSMenu,main:84 - Press 6 to delete a course
+14:52:44,195  INFO AdminCRSMenu,main:85 - Press -1 to exit
+14:52:45,995  INFO AdminOperation,main:26 - Enter the new email : 
+14:52:53,674  INFO AdminOperation,main:34 - Enter password : 
+14:52:54,883  INFO AdminOperation,main:36 - Re-enter password : 
+14:52:55,965  INFO AdminOperation,main:46 - Email already exists.Please retry.
+14:52:55,965  INFO AdminCRSMenu,main:78 - Select an operation
+14:52:55,966  INFO AdminCRSMenu,main:79 - Press 1 to generate report card of a student
+14:52:55,966  INFO AdminCRSMenu,main:80 - Press 2 to add professor
+14:52:55,966  INFO AdminCRSMenu,main:81 - Press 3 to add Admin
+14:52:55,966  INFO AdminCRSMenu,main:82 - Press 4 to approve students
+14:52:55,967  INFO AdminCRSMenu,main:83 - Press 5 to add course
+14:52:55,967  INFO AdminCRSMenu,main:84 - Press 6 to delete a course
+14:52:55,968  INFO AdminCRSMenu,main:85 - Press -1 to exit
+14:52:55,968  WARN MainCRSApplication,main:51 - 
+14:53:21,717  INFO MainCRSApplication,main:13 - Welcome!!!
+14:53:21,720  INFO MainCRSApplication,main:17 - Login
+14:53:21,747  INFO MainCRSApplication,main:20 - Enter your email: 
+14:53:29,397  INFO MainCRSApplication,main:23 - Enter password: 
+14:53:32,133  INFO AdminCRSMenu,main:17 - Welcome Admin.
+14:53:32,134  INFO AdminCRSMenu,main:78 - Select an operation
+14:53:32,134  INFO AdminCRSMenu,main:79 - Press 1 to generate report card of a student
+14:53:32,135  INFO AdminCRSMenu,main:80 - Press 2 to add professor
+14:53:32,135  INFO AdminCRSMenu,main:81 - Press 3 to add Admin
+14:53:32,136  INFO AdminCRSMenu,main:82 - Press 4 to approve students
+14:53:32,137  INFO AdminCRSMenu,main:83 - Press 5 to add course
+14:53:32,138  INFO AdminCRSMenu,main:84 - Press 6 to delete a course
+14:53:32,138  INFO AdminCRSMenu,main:85 - Press -1 to exit
+14:53:33,675  INFO AdminOperation,main:26 - Enter the new email : 
+14:53:36,457  INFO AdminOperation,main:34 - Enter password : 
+14:53:37,400  INFO AdminOperation,main:36 - Re-enter password : 
+14:53:38,266  INFO AdminOperation,main:46 - Email already exists.Please retry.
+14:53:38,266  INFO AdminCRSMenu,main:78 - Select an operation
+14:53:38,266  INFO AdminCRSMenu,main:79 - Press 1 to generate report card of a student
+14:53:38,266  INFO AdminCRSMenu,main:80 - Press 2 to add professor
+14:53:38,267  INFO AdminCRSMenu,main:81 - Press 3 to add Admin
+14:53:38,267  INFO AdminCRSMenu,main:82 - Press 4 to approve students
+14:53:38,267  INFO AdminCRSMenu,main:83 - Press 5 to add course
+14:53:38,268  INFO AdminCRSMenu,main:84 - Press 6 to delete a course
+14:53:38,268  INFO AdminCRSMenu,main:85 - Press -1 to exit
+15:01:16,854  INFO AdminCRSMenu,main:65 - Logged Out Successfully
+15:07:32,511  INFO MainCRSApplication,main:13 - Welcome!!!
+15:07:32,514  INFO MainCRSApplication,main:17 - Login
+15:07:32,540  INFO MainCRSApplication,main:20 - Enter your email: 
+15:07:36,884  INFO MainCRSApplication,main:23 - Enter password: 
+15:07:40,357  INFO MainCRSApplication,main:44 - Invalid credentials
