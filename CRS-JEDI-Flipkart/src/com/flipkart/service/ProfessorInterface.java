@@ -4,9 +4,10 @@ import com.flipkart.bean.Professor;
 
 
 public interface ProfessorInterface {
-	public void viewStudentsEnrolled();
 	public void viewGrades();
 	public Boolean gradeStudents();
 	public void showCourses(int professorId);
 	public Professor getProfessorByEmail(String email);
+	public void viewStudentsEnrolled(int courseId);
+	public boolean updateStudentGrade(int courseId,int studentId, String grade);
 }
