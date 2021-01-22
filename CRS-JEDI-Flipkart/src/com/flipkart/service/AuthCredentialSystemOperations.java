@@ -9,9 +9,9 @@ import com.flipkart.dao.UserDaoOperation;
 
 // @Author JedI04
 
-public class AuthCredentialSystem implements AuthCredentialSystemInterface {
+public class AuthCredentialSystemOperations implements AuthCredentialSystemInterface {
 
-	private Logger logger = Logger.getLogger(AuthCredentialSystem.class);
+	private Logger logger = Logger.getLogger(AuthCredentialSystemOperations.class);
 
 	/*
 	 * Returns RoleId if login success
