@@ -128,7 +128,7 @@ public class AdminOperation implements AdminInterface {
 	}
 
 	@Override
-	public void approveStudent() {
+	public void approveStudents() {
 		// TODO Auto-generated method stub
 		adminDAO.approveStudent();
 	}

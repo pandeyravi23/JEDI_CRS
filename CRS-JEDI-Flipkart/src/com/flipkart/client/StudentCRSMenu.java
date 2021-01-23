@@ -92,11 +92,11 @@ public class StudentCRSMenu {
     // method to add course
     public void addCourse(){
     	if (!student.getIsRegistered()) {
-        	logger.info("Student needs to start registration to add course\n");
+        	logger.info("Student needs to start registration to add course.\n");
         	return;
         }
     	else if(studentOperation.getNumberOfEnrolledCourses(student) >= 6) {
-    		logger.info("Cannot add more courses. You already have 6 courses\n");
+    		logger.info("Cannot add more courses. You already have 6 courses.\n");
     		return;
     	}
     	
