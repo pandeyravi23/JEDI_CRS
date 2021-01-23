@@ -2,6 +2,7 @@ package com.flipkart.dao;
 
 import java.sql.Connection;
 import com.flipkart.bean.Student;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -33,7 +34,9 @@ public class AdminDAOOperation implements AdminDAOInterface {
 			ResultSet rs =  ps.executeQuery();
 			
 			if(rs.next())
+			{
 				return false;
+			}
 		}catch(Exception e)
 		{
 			e.printStackTrace();
