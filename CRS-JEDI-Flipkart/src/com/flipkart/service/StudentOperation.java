@@ -26,6 +26,21 @@ public class StudentOperation implements StudentInterface {
     	}
     	return count;
     }
+    
+    public ArrayList<Course> getAllCourses() {
+    	ArrayList<Course> courses = null;
+    	try{
+            courses = coursesDaoOperation.getAllCourses();
+            return courses;
+        }
+        catch(CommonException e) {
+        	logger.info(e.getMessage());
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    	return courses;
+    }
 
 	// operation to show available courses in course catalog
     public void showCourses(){
@@ -110,90 +125,107 @@ public class StudentOperation implements StudentInterface {
 
         return false;
     }
+    
+    public boolean registerCourses(ArrayList<Integer> courseCart, Student student) {
+    	try {
+    		for (Integer courseID : courseCart) {
+                studentDaoOperation.addCourse(student, courseID);
+            }
+            logger.info("Proceed to make payment\n");
+            setRegistrationStatus(student);
+            student.setIsRegistered(true);
+            
+            return true;
+    	}
+    	catch(Exception e) {
+    		e.printStackTrace();
+    	}
+    	return false;
+    }
 
     // operation to register for courses
-    public boolean registerCourses(Student student){
-    	if(student.getIsRegistered()){
-    	    logger.info("You have already registered.\n");
-    	    return true;
-        }
-
-    	int courseCounter = 0;
-    	ArrayList<Integer> courseCart = new ArrayList<>();
-        logger.info("================COURSE REGISTRATION================\n");
-        while(true) {
-            logger.info("Enter 1 to view available courses.");
-            logger.info("Enter 2 to add course.");
-            logger.info("Enter 3 to delete course.");
-            logger.info("Enter 4 to view course cart.");
-            logger.info("Enter 5 to finish registration process.");
-            logger.info("Enter 6 to cancel registration process.");
-            Scanner input = new Scanner(System.in);
-            int operation = input.nextInt();
-
-            if(operation==1){
-                showCourses();
-            }
-            else if (operation == 2) {
-                logger.info("Enter course ID to be added: ");
-                int courseID = input.nextInt();
-                //addCourse(student,courseID);
-                if(courseCart.contains(courseID)){
-                    logger.info("Course " + courseID + " already in course cart\n");
-                }
-                else if(coursesDaoOperation.noOfEnrolledStudents(courseID)>=10){
-                    logger.info("Course " + courseID + " is full. Please add some other course.\n");
-                }
-                else{
-                    courseCart.add(courseID);
-                    courseCounter++;
-                    logger.info("Course " + courseID + " added to Course Cart.\n");
-                }
-            }
-            else if (operation == 3) {
-                logger.info("Enter course ID to be dropped: ");
-                int courseID = input.nextInt();
-                //deleteCourse(student,courseID);
-                if(!courseCart.contains(courseID)){
-                    logger.info("Course " + courseID + " not in cart\n");
-                }
-                else {
-                    courseCart.remove(Integer.valueOf(courseID));
-                    courseCounter--;
-                    logger.info("Course " + courseID + " deleted to Course Cart.\n");
-                }
-            }
-            else if (operation == 4){
-                logger.info("============Course Cart============\n");
-                logger.info("Course IDs:");
-                for(Integer courseId : courseCart){
-                    logger.info(courseId);
-                }
-                logger.info("====================================\n");
-            }
-            else if (operation == 5) {
-                if (courseCounter >= 4 && courseCounter <= 6) {
-                    for (Integer courseID : courseCart) {
-                        studentDaoOperation.addCourse(student, courseID);
-                    }
-                    logger.info("Proceed to make payment\n");
-                    setRegistrationStatus(student);
-                    student.setIsRegistered(true);
-                    break;
-                } else if (courseCounter < 4) {
-                    logger.info("Less than 4 courses registered. Add more courses.\n");
-                } else if (courseCounter > 6) {
-                    logger.info("More than 6 courses registered. Drop few courses.\n");
-                }
-            }
-            else if(operation == 6){
-                logger.info("......... Exiting from Registration Process ...........\n");
-                break;
-            }
-        }
-        logger.info("==============================================\n");
-        return false;
-    }
+//    public boolean registerCourses(Student student){
+//    	if(student.getIsRegistered()){
+//    	    logger.info("You have already registered.\n");
+//    	    return true;
+//        }
+//
+//    	int courseCounter = 0;
+//    	ArrayList<Integer> courseCart = new ArrayList<>();
+//        logger.info("================COURSE REGISTRATION================\n");
+//        while(true) {
+//            logger.info("Enter 1 to view available courses.");
+//            logger.info("Enter 2 to add course.");
+//            logger.info("Enter 3 to delete course.");
+//            logger.info("Enter 4 to view course cart.");
+//            logger.info("Enter 5 to finish registration process.");
+//            logger.info("Enter 6 to cancel registration process.");
+//            Scanner input = new Scanner(System.in);
+//            int operation = input.nextInt();
+//
+//            if(operation==1){
+//                showCourses();
+//            }
+//            else if (operation == 2) {
+//                logger.info("Enter course ID to be added: ");
+//                int courseID = input.nextInt();
+//                //addCourse(student,courseID);
+//                if(courseCart.contains(courseID)){
+//                    logger.info("Course " + courseID + " already in course cart\n");
+//                }
+//                else if(coursesDaoOperation.noOfEnrolledStudents(courseID)>=10){
+//                    logger.info("Course " + courseID + " is full. Please add some other course.\n");
+//                }
+//                else{
+//                    courseCart.add(courseID);
+//                    courseCounter++;
+//                    logger.info("Course " + courseID + " added to Course Cart.\n");
+//                }
+//            }
+//            else if (operation == 3) {
+//                logger.info("Enter course ID to be dropped: ");
+//                int courseID = input.nextInt();
+//                //deleteCourse(student,courseID);
+//                if(!courseCart.contains(courseID)){
+//                    logger.info("Course " + courseID + " not in cart\n");
+//                }
+//                else {
+//                    courseCart.remove(Integer.valueOf(courseID));
+//                    courseCounter--;
+//                    logger.info("Course " + courseID + " deleted to Course Cart.\n");
+//                }
+//            }
+//            else if (operation == 4){
+//                logger.info("============Course Cart============\n");
+//                logger.info("Course IDs:");
+//                for(Integer courseId : courseCart){
+//                    logger.info(courseId);
+//                }
+//                logger.info("====================================\n");
+//            }
+//            else if (operation == 5) {
+//                if (courseCounter >= 4 && courseCounter <= 6) {
+//                    for (Integer courseID : courseCart) {
+//                        studentDaoOperation.addCourse(student, courseID);
+//                    }
+//                    logger.info("Proceed to make payment\n");
+//                    setRegistrationStatus(student);
+//                    student.setIsRegistered(true);
+//                    break;
+//                } else if (courseCounter < 4) {
+//                    logger.info("Less than 4 courses registered. Add more courses.\n");
+//                } else if (courseCounter > 6) {
+//                    logger.info("More than 6 courses registered. Drop few courses.\n");
+//                }
+//            }
+//            else if(operation == 6){
+//                logger.info("......... Exiting from Registration Process ...........\n");
+//                break;
+//            }
+//        }
+//        logger.info("==============================================\n");
+//        return false;
+//    }
 
 
     // operation to show registered courses

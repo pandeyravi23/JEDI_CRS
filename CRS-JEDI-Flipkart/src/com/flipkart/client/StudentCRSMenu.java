@@ -1,7 +1,6 @@
 package com.flipkart.client;
 
 import com.flipkart.bean.*;
-import com.flipkart.dao.*;
 import com.flipkart.service.*;
 
 import org.apache.log4j.Logger;
@@ -15,6 +14,7 @@ import java.util.Scanner;
 public class StudentCRSMenu {
     private static Logger logger = Logger.getLogger(StudentCRSMenu.class);
     private StudentInterface studentOperation = new StudentOperation();
+    private CourseOperation courseOperation = new CourseOperation();
     private  Student student = new Student();
     //public static ArrayList<Integer> al = new ArrayList<>();
 
@@ -38,7 +38,7 @@ public class StudentCRSMenu {
                     studentOperation.showCourses();
                     break;
                 case 3:
-                    studentOperation.registerCourses(student);
+                    registerCourses();
                     break;
                 case 4:
                     addCourse();
@@ -65,8 +65,6 @@ public class StudentCRSMenu {
         }while (choice!=-1);
     }
     
-    
-    
     public void init(String email) {
     	student = studentOperation.getStudentByEmail(email);
     	if(student.isApproved()) {
@@ -76,9 +74,108 @@ public class StudentCRSMenu {
     		logger.info("Student not yet approved by Admin.\n");
     	}
     }
+    
+    public void registerCourses() {
+    	try {
+    		if(student.getIsRegistered()){
+        	    logger.info("You have already registered.\n");
+        	    return;
+            }
+
+        	int courseCounter = 0;
+        	ArrayList<Integer> courseCart = new ArrayList<>();
+            logger.info("================COURSE REGISTRATION================\n");
+            while(true) {
+                logger.info("Enter 1 to view available courses.");
+                logger.info("Enter 2 to add course.");
+                logger.info("Enter 3 to delete course.");
+                logger.info("Enter 4 to view course cart.");
+                logger.info("Enter 5 to finish registration process.");
+                logger.info("Enter 6 to cancel registration process.");
+                Scanner input = new Scanner(System.in);
+                int operation = Integer.parseInt(input.nextLine());
+
+                if(operation==1){
+                    ArrayList<Course> courses = studentOperation.getAllCourses();
+                    logger.info("================AVAILABLE COURSES================\n");
+                    logger.info("Course ID\tCourse Name\tCredits\tStatus");
+                    for (Course course : courses) {
+                    	int remaining = 10 - courseOperation.noOfEnrolledStudents(course.getCourseID());
+                    	String status = "Full";
+                    	if(courseCart.contains(course.getCourseID())) {
+                    		status = "Chosen";
+                    	}
+                    	else if(remaining > 0) {
+                    		status = Integer.toString(remaining) + " seats left";
+                    	}
+                        logger.info(course.getCourseID() + "\t\t" + course.getCourseName() + "\t" + course.getCredits() + "\t" + status);
+                    }
+                    logger.info("=================================================\n");
+                }
+                else if (operation == 2) {
+                    logger.info("Enter course ID to be added: ");
+                    int courseID = Integer.parseInt(input.nextLine());
+                    //addCourse(student,courseID);
+                    if(courseCart.contains(courseID)){
+                        logger.info("Course " + courseID + " already in course cart\n");
+                    }
+                    else if(courseOperation.getCourseById(courseID) == null) {
+                    	logger.info("Course " + courseID + " doesn't exist\n");
+                    }
+                    else if(courseOperation.noOfEnrolledStudents(courseID) >= 10){
+                        logger.info("Course " + courseID + " is full. Please add some other course.\n");
+                    }
+                    else{
+                        courseCart.add(courseID);
+                        courseCounter++;
+                        logger.info("Course " + courseID + " added to Course Cart.\n");
+                    }
+                }
+                else if (operation == 3) {
+                    logger.info("Enter course ID to be dropped: ");
+                    int courseID = Integer.parseInt(input.nextLine());
+                    //deleteCourse(student,courseID);
+                    if(!courseCart.contains(courseID)){
+                        logger.info("Course " + courseID + " not in cart\n");
+                    }
+                    else {
+                        courseCart.remove(Integer.valueOf(courseID));
+                        courseCounter--;
+                        logger.info("Course " + courseID + " deleted to Course Cart.\n");
+                    }
+                }
+                else if (operation == 4){
+                    logger.info("============Course Cart============\n");
+                    logger.info("Course IDs:");
+                    for(Integer courseId : courseCart){
+                        logger.info(courseId);
+                    }
+                    logger.info("====================================\n");
+                }
+                else if (operation == 5) {
+                    if (courseCounter >= 4 && courseCounter <= 6) {
+                        studentOperation.registerCourses(courseCart, student);
+                        break;
+                    } else if (courseCounter < 4) {
+                        logger.info("Less than 4 courses registered. Add more courses.\n");
+                    } else if (courseCounter > 6) {
+                        logger.info("More than 6 courses registered. Drop few courses.\n");
+                    }
+                }
+                else if(operation == 6){
+                    logger.info("......... Exiting from Registration Process ...........\n");
+                    break;
+                }
+            }
+            logger.info("==============================================\n");
+    	}
+    	catch(Exception e) {
+    		logger.info(e.getMessage());
+    	}
+    }
 
     //showing available choices for student
-    public static void showChoices(){
+    public void showChoices(){
         logger.info("Select an operation: ");
         logger.info("1. View student details");
         logger.info("2. Show courses");
@@ -176,6 +273,8 @@ public class StudentCRSMenu {
             if(choice != 4) {
                 logger.info(">>> Proceed to make payment <<<");
                 studentOperation.makePayment(student);
+                
+                NotificationSystemOperation.paymentSuccessful();
             }
     	}
     }
@@ -256,8 +355,11 @@ public class StudentCRSMenu {
         logger.info("Age: " + student.getAge());
         logger.info("Address: " + student.getAddress());
         logger.info("Contact: " + student.getContact());
+        logger.info("Branch: " + student.getBranch());
         logger.info("Gender: " + student.getGender());
-        logger.info("Nationality: " + student.getNationality() + "\n");
+        logger.info("Nationality: " + student.getNationality());
+        logger.info("Registration status: " + (student.getIsRegistered() == true ? "Complete" : "Pending"));
+        logger.info("Payment status: " + (student.getPaymentStatus() == true ? "Complete" : "Pending") + "\n");
         logger.info("=============================================");
     }
 }

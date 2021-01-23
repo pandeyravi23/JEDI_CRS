@@ -10,4 +10,8 @@ public interface CourseInterface {
     public void getCourseDetail(int courseID);
 
     public void assignProfessor(int courseID);
+    
+    public int noOfEnrolledStudents(int courseID);
+    
+    public Course getCourseById(int courseID);
 }

@@ -1,11 +1,15 @@
 package com.flipkart.service;
 
-import com.flipkart.bean.Student;
 import com.flipkart.bean.Course;
+import com.flipkart.bean.Student;
+
+import java.util.ArrayList;
 
 public interface StudentInterface {
 
     public void showCourses();
+    
+    public ArrayList<Course> getAllCourses();
 
     public void viewGrades(int studentId);
 
@@ -17,7 +21,9 @@ public interface StudentInterface {
 
     public boolean deleteCourse(Student student,int courseId);
 
-    public boolean registerCourses(Student student);
+//    public boolean registerCourses(Student student);
+    
+    public boolean registerCourses(ArrayList<Integer> courseCart, Student student);
 
     public void viewRegisteredCourses(Student student);
     
