@@ -53,7 +53,8 @@ public class StudentCRSMenu {
                     makePayment();
                     break;
                 case 8:
-                    studentOperation.updateInfo(student);
+                    updateInfo();
+                    //studentOperation.updateInfo(student);
                     break;
                 default:
                     logger.info("Invalid choice.\n");
@@ -84,7 +85,7 @@ public class StudentCRSMenu {
         logger.info("5. View registered courses");
         logger.info("6. View grades");
         logger.info("7. Make payment");
-        logger.info("8. Update info");
+        logger.info("8. Update personal info");
         logger.info("-1 to Logout");
     }
 
@@ -125,10 +126,10 @@ public class StudentCRSMenu {
 
     // method to make payment
     public void makePayment(){
-    	if(student.getIsRegistered() == false) {
+    	if(!student.getIsRegistered()) {
     		logger.info("Please complete your course registration to make payment\n");
     	}
-    	else if(student.getPaymentStatus() == true) {
+    	else if(student.getPaymentStatus()) {
     		logger.info("Payment already made");
     	}
     	else {
@@ -159,5 +160,70 @@ public class StudentCRSMenu {
             logger.info(">>> Proceed to make payment <<<");
             studentOperation.makePayment(student);
     	}
+    }
+
+    public void updateInfo(){
+        logger.info("================UPDATE INFO================\n");
+        // Name, age, address, contact, gender, nationality
+
+        Scanner sc = new Scanner(System.in);
+        int choice;
+
+        do {
+            logger.info("Enter 1 to update Name.");
+            logger.info("Enter 2 to update Age.");
+            logger.info("Enter 3 to update Address.");
+            logger.info("Enter 4 to update Contact.");
+            logger.info("Enter 5 to update Gender.");
+            logger.info("Enter 6 to update Nationality.");
+            logger.info("Enter 7 to confirm update.");
+            logger.info("Enter -1 to exit.");
+
+            choice = sc.nextInt();
+            sc.nextLine();
+
+            switch (choice){
+                case -1:
+                    logger.info(">>>>> Exiting <<<<<\n");
+                    break;
+                case 1:
+                    logger.info("Enter name:");
+                    String name = sc.nextLine();
+                    student.setUserName(name);
+                    break;
+                case 2:
+                    logger.info("Enter age:");
+                    int age = Integer.parseInt(sc.nextLine());
+                    student.setAge(age);
+                    break;
+                case 3:
+                    logger.info("Enter address:");
+                    String address = sc.nextLine();
+                    student.setAddress(address);
+                    break;
+                case 4:
+                    logger.info("Enter contact:");
+                    String contact = sc.nextLine();
+                    student.setContact(contact);
+                    break;
+                case 5:
+                    logger.info("Enter gender:");
+                    String gender = sc.nextLine();
+                    student.setGender(gender);
+                    break;
+                case 6:
+                    logger.info("Enter nationality:");
+                    String nationality = sc.nextLine();
+                    student.setNationality(nationality);
+                    break;
+                case 7:
+                    studentOperation.updateInfo(student);
+                    logger.info(">>>>>>> Student Information Updated. <<<<<<<\n");
+                    break;
+                default:
+                    logger.info("Invalid choice.\n");
+            }
+
+        }while(choice != -1);
     }
 }
