@@ -22,7 +22,7 @@ public class StudentCRSMenu {
         Scanner input = new Scanner(System.in);
 
         int choice;
-        logger.info("Welcome " + student.getUserName() + "\n");
+        logger.info("Welcome " + student.getUserName() + "!\n");
         do{
             showChoices();
             choice = input.nextInt();
@@ -56,7 +56,7 @@ public class StudentCRSMenu {
                     studentOperation.updateInfo(student);
                     break;
                 default:
-                    logger.info("Invalid choice\n");
+                    logger.info("Invalid choice.\n");
                     break;
             }
         }while (choice!=-1);
@@ -70,7 +70,7 @@ public class StudentCRSMenu {
     		studentClient();
     	}
     	else {
-    		logger.info("Student not yet approved by Admin.");
+    		logger.info("Student not yet approved by Admin.\n");
     	}
     }
 

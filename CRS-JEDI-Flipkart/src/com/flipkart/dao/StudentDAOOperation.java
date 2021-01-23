@@ -80,8 +80,10 @@ public class StudentDAOOperation implements StudentDAOInterface {
 
 				int added = ps.executeUpdate();
 				if(added>0){
-					logger.info("Course " + courseID + " added successfully");
+					logger.info("Course " + courseID + " added successfully.\n");
 				}
+
+				addCourseToGrades(student.getUserId(),courseID);
 			}
 			catch (Exception e){
 				e.printStackTrace();
@@ -98,9 +100,9 @@ public class StudentDAOOperation implements StudentDAOInterface {
 		else if(!getCourse(student, courseID)){
 			logger.info("You have not registered for this course.\n");
 		}
-//		else if(getNoOfCourses(student)==4){
-//			logger.info("Only 4 courses registered. Cannot drop a course.");
-//		}
+		/*else if(getNoOfCourses(student)==4){
+			logger.info("Only 4 courses registered. Cannot drop a course.");
+		}*/
 		else {
 			try {
 				connection = DBConnection.getConnection();
@@ -111,8 +113,13 @@ public class StudentDAOOperation implements StudentDAOInterface {
 				ps.setInt(2, courseID);
 
 				int dropped = ps.executeUpdate();
-				logger.info("Course " + courseID + " deleted successfully\n");
-			} catch (Exception e) {
+				if(dropped>0) {
+					logger.info("Course " + courseID + " deleted successfully\n");
+				}
+
+				deleteCourseFromGrades(student.getUserId(),courseID);
+			}
+			catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -162,6 +169,40 @@ public class StudentDAOOperation implements StudentDAOInterface {
 
 		return count>0;
 	}
+
+	// to add student and its courses to grades table in db
+	public void addCourseToGrades(int studentID, int courseID){
+		try{
+			connection = DBConnection.getConnection();
+			//String SQLQuery = "INSERT INTO grades(studentId, courseId) values(?,?)";
+			ps = connection.prepareStatement(SQLQueriesConstant.ADD_COURSE_TO_GRADES_QUERY);
+
+			ps.setInt(1,studentID);
+			ps.setInt(2,courseID);
+
+			ps.executeUpdate();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	public void deleteCourseFromGrades(int studentID, int courseID){
+		try{
+			connection = DBConnection.getConnection();
+			//String SQLQuery = "DELETE FROM grades WHERE studentID = ? AND courseID = ?";
+			ps = connection.prepareStatement(SQLQueriesConstant.DELETE_COURSE_FROM_GRADES_QUERY);
+
+			ps.setInt(1,studentID);
+			ps.setInt(2,courseID);
+
+			ps.executeUpdate();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
 
 	// to get all coursed in which a student is enrolled from db
 	public ArrayList<Course> getEnrolledCourses(Student student){
