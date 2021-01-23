@@ -20,11 +20,11 @@ import com.flipkart.util.DBConnection;
  * @author JEDI 04
  */
 
-public class StudentDaoOperation implements StudentDaoInterface {
-	private static Logger logger = Logger.getLogger(StudentDaoOperation.class);
+public class StudentDAOOperation implements StudentDAOInterface {
+	private static Logger logger = Logger.getLogger(StudentDAOOperation.class);
 	Connection connection = null;
 	PreparedStatement ps = null;
-	CoursesDaoOperation coursesDaoOperation = new CoursesDaoOperation();
+	CoursesDAOOperation coursesDaoOperation = new CoursesDAOOperation();
 
 	// to get the student details from db based on email entered during login
 	public Student getStudentByEmail(String email) {
@@ -243,6 +243,33 @@ public class StudentDaoOperation implements StudentDaoInterface {
 		}
 		catch(Exception e){
 			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void registerStudent(Student student, int id) {
+		try {
+			connection = DBConnection.getConnection();
+			String sqlQuery = "INSERT INTO student(id, name, email, rollno, branch, isRegistered, paymentStatus) values(?, ?, ?, ?, ?, ?, ?)";
+			ps = connection.prepareStatement(sqlQuery);
+			ps.setInt(1, id);
+			ps.setString(2,  student.getUserName());
+			ps.setString(3,  student.getEmail());
+			ps.setInt(4, student.getRollNo());
+			ps.setString(5, student.getBranch());
+			ps.setBoolean(6, student.getIsRegistered());
+			ps.setBoolean(7, student.getPaymentStatus());
+			
+			int count = ps.executeUpdate();
+			if(count > 0) {
+				// Registered
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			// connection.close();
 		}
 	}
 }

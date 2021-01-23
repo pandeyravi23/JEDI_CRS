@@ -22,7 +22,7 @@ public class StudentCRSMenu {
         Scanner input = new Scanner(System.in);
 
         int choice;
-
+        logger.info("Welcome " + student.getUserName() + "\n");
         do{
             showChoices();
             choice = input.nextInt();

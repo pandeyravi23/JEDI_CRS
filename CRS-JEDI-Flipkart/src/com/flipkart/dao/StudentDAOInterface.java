@@ -7,7 +7,7 @@ import com.flipkart.bean.Grades;
 import com.flipkart.bean.Student;
 
 
-public interface StudentDaoInterface {
+public interface StudentDAOInterface {
 	public Student getStudentByEmail(String email);
 	public void addCourse(Student student, int courseID);
 	public void dropCourse(Student student, int courseID);
@@ -22,4 +22,6 @@ public interface StudentDaoInterface {
 	public boolean getCourse(Student student, int courseID);
 	
 	public void setPaymentStatus(Student student);
+	
+	public void registerStudent(Student student, int id);
 }

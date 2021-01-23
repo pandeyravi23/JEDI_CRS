@@ -7,13 +7,13 @@ import org.apache.log4j.Logger;
 
 import com.flipkart.bean.Professor;
 import com.flipkart.bean.Student;
-import com.flipkart.dao.ProfessorDaoOperation;
+import com.flipkart.dao.ProfessorDAOOperation;
 
 
 public class ProfessorOperation implements ProfessorInterface {
 	
 	private static Logger logger = Logger.getLogger(ProfessorOperation.class);
-	private ProfessorDaoOperation professorDaoOperation = new ProfessorDaoOperation();
+	private ProfessorDAOOperation professorDaoOperation = new ProfessorDAOOperation();
 	
 	
 	/*

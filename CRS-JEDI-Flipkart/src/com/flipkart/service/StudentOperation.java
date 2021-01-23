@@ -3,8 +3,8 @@ import com.flipkart.bean.*;
 import org.apache.log4j.Logger;
 
 import com.flipkart.bean.Student;
-import com.flipkart.dao.CoursesDaoOperation;
-import com.flipkart.dao.StudentDaoOperation;
+import com.flipkart.dao.CoursesDAOOperation;
+import com.flipkart.dao.StudentDAOOperation;
 import com.flipkart.bean.Course;
 
 import java.util.ArrayList;
@@ -12,8 +12,8 @@ import java.util.Scanner;
 
 public class StudentOperation implements StudentInterface {
     private static Logger logger = Logger.getLogger(StudentOperation.class);
-	CoursesDaoOperation coursesDaoOperation = new CoursesDaoOperation();
-    StudentDaoOperation studentDaoOperation = new StudentDaoOperation();
+	CoursesDAOOperation coursesDaoOperation = new CoursesDAOOperation();
+    StudentDAOOperation studentDaoOperation = new StudentDAOOperation();
     
     public int getNumberOfEnrolledCourses(Student student) {
     	int count = 0;
@@ -238,7 +238,7 @@ public class StudentOperation implements StudentInterface {
     }
     
     public Student getStudentByEmail(String email) {
-    	StudentDaoOperation studentOperation = new StudentDaoOperation();
+    	StudentDAOOperation studentOperation = new StudentDAOOperation();
     	Student st = studentOperation.getStudentByEmail(email);
     	return st;
     }

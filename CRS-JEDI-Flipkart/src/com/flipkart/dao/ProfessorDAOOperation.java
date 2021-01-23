@@ -17,8 +17,8 @@ import com.flipkart.util.DBConnection;
 import com.mysql.cj.protocol.Resultset;
 
 // @Author Jedi04
-public class ProfessorDaoOperation implements ProfessorDaoInterface {
-	private static Logger logger = Logger.getLogger(ProfessorDaoOperation.class);
+public class ProfessorDAOOperation implements ProfessorDAOInterface {
+	private static Logger logger = Logger.getLogger(ProfessorDAOOperation.class);
 	Connection con;
 	PreparedStatement stmt;
 

@@ -18,7 +18,7 @@ import com.flipkart.util.DBConnection;
 /*
  * @author JEDI 04
  */
-public class CoursesDaoOperation implements CoursesDaoInterface {
+public class CoursesDAOOperation implements CoursesDAOInterface {
 
 	Connection connection = null;
 	PreparedStatement ps = null;
