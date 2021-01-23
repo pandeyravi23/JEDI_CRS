@@ -66,7 +66,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 			}
 			logger.info("================================================\n\n");
 		} catch (Exception e) {
-			e.getStackTrace();
+			e.printStackTrace();
 		}
 	}
 
@@ -258,7 +258,6 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 				st.setBranch(rs.getString("branch"));
 				al.add(st);
 			}
-			al.size();
 
 		} catch (Exception e) {
 			e.printStackTrace();
