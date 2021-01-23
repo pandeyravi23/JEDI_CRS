@@ -176,12 +176,32 @@ public class AdminOperation implements AdminInterface {
 			int x = sc.nextInt();
 			boolean res = adminDAO.deleteCourse(x);
 			logger.info("====================================");
-			logger.info("Add Course Status : " + res);
+			logger.info("Delete Course Status : " + res);
 			logger.info("====================================");
 		} catch (Exception e) {
 			logger.info(e.getMessage());
 		}
-
+	}
+	
+	
+	
+	/*
+	 * Allot course to professor with the entered 
+	 * course ID and Professor ID
+	 * by Admin
+	 */
+	@Override
+	public void allotCourse() {
+		Scanner sc = new Scanner(System.in);
+		try {
+			logger.info("Please Enter Professor ID");
+			int professorId = sc.nextInt();
+			logger.info("Please Enter Course ID");
+			int courseId = sc.nextInt();
+			adminDAO.allotCourses(courseId,professorId);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }
