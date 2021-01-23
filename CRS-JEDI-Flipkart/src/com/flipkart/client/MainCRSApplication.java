@@ -37,6 +37,8 @@ public class MainCRSApplication {
 					case 3:
 						logger.info(">>>>>>> Exiting Application <<<<<<<<");
 						break;
+					default:
+						logger.info("Invalid choice.\n");
 				}
 			}while(choice != 3);
 		}

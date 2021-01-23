@@ -11,6 +11,12 @@ import java.security.PublicKey;
  */
 public class SQLQueriesConstant {
 
+	// SQL Queries for User
+	public static final String VERIFY_LOGIN_CREDENTIALS_QUERY = "SELECT role FROM credentials WHERE email=? AND password=?";
+	public static final String CHECK_EMAIL_AVAILABILITY_QUERY = "SELECT * FROM credentials WHERE email=?";
+	public static final String REGISTER_USER_QUERY = "INSERT INTO credentials(role, email, password, isApproved, address, age, gender, contact, nationality) values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+
 	// SQL Queries for Student
 	public static final String GET_STUDENT_BY_EMAIL_QUERY = "SELECT st.email, st.name, st.rollno, st.branch, st.id, st.isRegistered, cr.isApproved, st.paymentStatus FROM student as st INNER JOIN credentials as cr ON st.id = cr.id AND st.email=?";
 	public static final String ADD_COURSE_STUDENT_QUERY = "INSERT INTO RegisteredCourses(studentID, courseID) values(?,?)";
@@ -21,7 +27,8 @@ public class SQLQueriesConstant {
 	public static final String SET_REGISTRATION_STATUS_QUERY = "UPDATE student SET isRegistered = 1 where id = ?";
 	public static final String GET_GRADES_QUERY = "SELECT grades.courseId, course.name as courseName, grades.grade, grades.studentId FROM grades INNER JOIN course ON grades.courseId = course.id AND grades.studentId=?";
 	public static final String SET_PAYMENT_STATUS_QUERY = "UPDATE student set paymentStatus = true WHERE id=?";
-
+	public static final String ADD_COURSE_TO_GRADES_QUERY = "INSERT INTO grades(studentId, courseId) values(?,?)";
+	public static final String DELETE_COURSE_FROM_GRADES_QUERY = "DELETE FROM grades WHERE studentID = ? AND courseID = ?";
 
 	// SQL Queries for Professor
 	public static final String professorGetProfessorByEmailQuery = "select * from professor where email=?";

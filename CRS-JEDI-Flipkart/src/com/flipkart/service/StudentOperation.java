@@ -74,9 +74,9 @@ public class StudentOperation implements StudentInterface {
     // operation to update student info
     public boolean updateInfo(Student student){
         logger.info("================UPDATE INFO================\n");
-        
-        logger.info("Enter 1 to update email");
-        logger.info("Enter 2 to update name");
+        // Name, age, address, contact, gender, nationality
+
+        logger.info("Enter 1 to update Name");
         
         Scanner sc = new Scanner(System.in);
         int choice = sc.nextInt();
@@ -134,7 +134,7 @@ public class StudentOperation implements StudentInterface {
     // operation to register for courses
     public boolean registerCourses(Student student){
     	if(student.getIsRegistered()){
-    	    logger.info("You have already registered");
+    	    logger.info("You have already registered.\n");
     	    return true;
         }
 
@@ -142,12 +142,12 @@ public class StudentOperation implements StudentInterface {
     	ArrayList<Integer> courseCart = new ArrayList<>();
         logger.info("================COURSE REGISTRATION================\n");
         while(true) {
-            logger.info("Enter 1 to view available courses");
-            logger.info("Enter 2 to add course");
-            logger.info("Enter 3 to delete course");
-            logger.info("Enter 4 to view course cart");
-            logger.info("Enter 5 to finish registration process");
-            logger.info("Enter 6 to cancel registration process");
+            logger.info("Enter 1 to view available courses.");
+            logger.info("Enter 2 to add course.");
+            logger.info("Enter 3 to delete course.");
+            logger.info("Enter 4 to view course cart.");
+            logger.info("Enter 5 to finish registration process.");
+            logger.info("Enter 6 to cancel registration process.");
             Scanner input = new Scanner(System.in);
             int operation = input.nextInt();
 
@@ -159,7 +159,7 @@ public class StudentOperation implements StudentInterface {
                 int courseID = input.nextInt();
                 //addCourse(student,courseID);
                 if(courseCart.contains(courseID)){
-                    logger.info("Course " + courseID + " already in course cart");
+                    logger.info("Course " + courseID + " already in course cart\n");
                 }
                 else if(coursesDaoOperation.noOfEnrolledStudents(courseID)>=10){
                     logger.info("Course " + courseID + " is full. Please add some other course.\n");
@@ -167,6 +167,7 @@ public class StudentOperation implements StudentInterface {
                 else{
                     courseCart.add(courseID);
                     courseCounter++;
+                    logger.info("Course " + courseID + " added to Course Cart.\n");
                 }
             }
             else if (operation == 3) {
@@ -174,11 +175,12 @@ public class StudentOperation implements StudentInterface {
                 int courseID = input.nextInt();
                 //deleteCourse(student,courseID);
                 if(!courseCart.contains(courseID)){
-                    logger.info("Course " + courseID + " not in cart");
+                    logger.info("Course " + courseID + " not in cart\n");
                 }
                 else {
                     courseCart.remove(Integer.valueOf(courseID));
                     courseCounter--;
+                    logger.info("Course " + courseID + " deleted to Course Cart.\n");
                 }
             }
             else if (operation == 4){
@@ -199,9 +201,9 @@ public class StudentOperation implements StudentInterface {
                     student.setIsRegistered(true);
                     break;
                 } else if (courseCounter < 4) {
-                    logger.info("Less than 4 courses registered. Add more courses.");
+                    logger.info("Less than 4 courses registered. Add more courses.\n");
                 } else if (courseCounter > 6) {
-                    logger.info("More than 6 courses registered. Drop few courses.");
+                    logger.info("More than 6 courses registered. Drop few courses.\n");
                 }
             }
             else if(operation == 6){

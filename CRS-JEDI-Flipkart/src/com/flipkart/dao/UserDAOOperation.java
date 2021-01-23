@@ -2,6 +2,7 @@ package com.flipkart.dao;
 
 import java.sql.*;
 
+import com.flipkart.constant.SQLQueriesConstant;
 import org.apache.log4j.Logger;
 
 import com.flipkart.bean.User;
@@ -19,8 +20,8 @@ public class UserDAOOperation implements UserDAOInterface {
 	public int verifyLoginCredentials(String email, String password) {
 		try {
 			connection = DBConnection.getConnection();
-			String sqlQuery = "SELECT role FROM credentials WHERE email=? AND password=?";
-			ps = connection.prepareStatement(sqlQuery);
+			//String sqlQuery = "SELECT role FROM credentials WHERE email=? AND password=?";
+			ps = connection.prepareStatement(SQLQueriesConstant.VERIFY_LOGIN_CREDENTIALS_QUERY);
 			
 			ps.setString(1, email);
 			ps.setString(2, password);
@@ -41,8 +42,8 @@ public class UserDAOOperation implements UserDAOInterface {
 	public boolean checkEmailAvailability(String email) {
 		try {
 			connection = DBConnection.getConnection();
-			String sqlQuery = "SELECT * FROM credentials WHERE email=?";
-			ps = connection.prepareStatement(sqlQuery);
+			//String sqlQuery = "SELECT * FROM credentials WHERE email=?";
+			ps = connection.prepareStatement(SQLQueriesConstant.CHECK_EMAIL_AVAILABILITY_QUERY);
 			ps.setString(1, email);
 			
 			ResultSet result = ps.executeQuery();
@@ -63,8 +64,9 @@ public class UserDAOOperation implements UserDAOInterface {
 		int id = -1;
 		try {
 			connection = DBConnection.getConnection();
-			String sqlQuery = "INSERT INTO credentials(role, email, password, isApproved, address, age, gender, contact, nationality) values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
-			ps = connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS);
+			//String sqlQuery = "INSERT INTO credentials(role, email, password, isApproved, address, age, gender, contact, nationality) values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			ps = connection.prepareStatement(SQLQueriesConstant.REGISTER_USER_QUERY, Statement.RETURN_GENERATED_KEYS);
+
 			ps.setInt(1, Integer.parseInt(user.getRole()));
 			ps.setString(2,  user.getEmail());
 			ps.setString(3,  password);

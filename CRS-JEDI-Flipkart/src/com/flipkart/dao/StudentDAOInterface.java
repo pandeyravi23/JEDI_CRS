@@ -24,4 +24,8 @@ public interface StudentDAOInterface {
 	public void setPaymentStatus(Student student);
 	
 	public void registerStudent(Student student, int id);
+
+	public void addCourseToGrades(int studentID, int courseID);
+
+	public void deleteCourseFromGrades(int studentID, int courseID);
 }
