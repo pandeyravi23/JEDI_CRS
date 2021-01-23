@@ -108,7 +108,6 @@ public class StudentOperation implements StudentInterface {
 
     // operation to add course to registered courses
     public boolean addCourse(Student student, int courseId){
-
         try{
             studentDaoOperation.addCourse(student,courseId);
         }
@@ -142,43 +141,72 @@ public class StudentOperation implements StudentInterface {
     	int courseCounter = 0;
     	ArrayList<Integer> courseCart = new ArrayList<>();
         logger.info("================COURSE REGISTRATION================\n");
-        while(true){
-            logger.info("Enter 1 to add course");
-            logger.info("Enter 2 to delete course");
-            logger.info("Enter 3 to finish registration process");
+        while(true) {
+            logger.info("Enter 1 to view available courses");
+            logger.info("Enter 2 to add course");
+            logger.info("Enter 3 to delete course");
+            logger.info("Enter 4 to view course cart");
+            logger.info("Enter 5 to finish registration process");
+            logger.info("Enter 6 to cancel registration process");
             Scanner input = new Scanner(System.in);
             int operation = input.nextInt();
 
             if(operation==1){
+                showCourses();
+            }
+            else if (operation == 2) {
                 logger.info("Enter course ID to be added: ");
                 int courseID = input.nextInt();
                 //addCourse(student,courseID);
-                courseCart.add(courseID);
-                courseCounter++;
+                if(courseCart.contains(courseID)){
+                    logger.info("Course " + courseID + " already in course cart");
+                }
+                else if(coursesDaoOperation.noOfEnrolledStudents(courseID)>=10){
+                    logger.info("Course " + courseID + " is full. Please add some other course.\n");
+                }
+                else{
+                    courseCart.add(courseID);
+                    courseCounter++;
+                }
             }
-            else if(operation==2){
+            else if (operation == 3) {
                 logger.info("Enter course ID to be dropped: ");
                 int courseID = input.nextInt();
                 //deleteCourse(student,courseID);
-                courseCart.remove(Integer.valueOf(courseID));
-                courseCounter--;
+                if(!courseCart.contains(courseID)){
+                    logger.info("Course " + courseID + " not in cart");
+                }
+                else {
+                    courseCart.remove(Integer.valueOf(courseID));
+                    courseCounter--;
+                }
             }
-            else if(operation==3){
-                if(courseCounter>=4 && courseCounter<=6){
-                    for(Integer courseID : courseCart){
-                        studentDaoOperation.addCourse(student,courseID);
+            else if (operation == 4){
+                logger.info("============Course Cart============\n");
+                logger.info("Course IDs:");
+                for(Integer courseId : courseCart){
+                    logger.info(courseId);
+                }
+                logger.info("====================================\n");
+            }
+            else if (operation == 5) {
+                if (courseCounter >= 4 && courseCounter <= 6) {
+                    for (Integer courseID : courseCart) {
+                        studentDaoOperation.addCourse(student, courseID);
                     }
                     logger.info("Proceed to make payment\n");
                     setRegistrationStatus(student);
                     student.setIsRegistered(true);
                     break;
-                }
-                else if(courseCounter<4){
+                } else if (courseCounter < 4) {
                     logger.info("Less than 4 courses registered. Add more courses.");
-                }
-                else if(courseCounter>6){
+                } else if (courseCounter > 6) {
                     logger.info("More than 6 courses registered. Drop few courses.");
                 }
+            }
+            else if(operation == 6){
+                logger.info("......... Exiting from Registration Process ...........\n");
+                break;
             }
         }
         logger.info("==============================================\n");
@@ -190,13 +218,18 @@ public class StudentOperation implements StudentInterface {
     public void viewRegisteredCourses(Student student){
 
         try{
-            ArrayList<Course> enrolledCourses = studentDaoOperation.getEnrolledCourses(student);
-            logger.info("================REGISTERED COURSES================\n");
-            logger.info("Course ID\tCourse Name");
-            for(Course course : enrolledCourses){
-                logger.info(course.getCourseID() + "\t\t" + course.getCourseName());
+            if(!student.getIsRegistered()){
+                logger.info("You have not registered any courses yet. Please register courses.\n");
             }
-            logger.info("==================================================\n");
+            else {
+                ArrayList<Course> enrolledCourses = studentDaoOperation.getEnrolledCourses(student);
+                logger.info("================REGISTERED COURSES================\n");
+                logger.info("Course ID\tCourse Name");
+                for (Course course : enrolledCourses) {
+                    logger.info(course.getCourseID() + "\t\t" + course.getCourseName());
+                }
+                logger.info("==================================================\n");
+            }
         }
         catch (Exception e){
             e.printStackTrace();

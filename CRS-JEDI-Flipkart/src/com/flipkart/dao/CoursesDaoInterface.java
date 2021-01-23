@@ -10,4 +10,6 @@ public interface CoursesDaoInterface {
 
 	public Course getCourseByID(int courseID);
 	public ArrayList<Course> getAllCourses();
+
+	public int noOfEnrolledStudents(int courseID);
 }

@@ -64,7 +64,10 @@ public class StudentDaoOperation implements StudentDaoInterface {
 //			logger.info("Cannot add more course. You have already added 6 courses.");
 //		}
 		else if(getCourse(student, courseID)){
-			logger.info("You have already added this course.");
+			logger.info("You have already added this course.\n");
+		}
+		else if(coursesDaoOperation.noOfEnrolledStudents(courseID)>=10){
+			logger.info("Course " + courseID + " is full. Please add some other course.\n");
 		}
 		else{
 			try{
@@ -93,7 +96,7 @@ public class StudentDaoOperation implements StudentDaoInterface {
 			logger.info(">>>>>>>> Invalid Course ID <<<<<<<<<<\n");
 		}
 		else if(!getCourse(student, courseID)){
-			logger.info("You have not registered for this course.");
+			logger.info("You have not registered for this course.\n");
 		}
 //		else if(getNoOfCourses(student)==4){
 //			logger.info("Only 4 courses registered. Cannot drop a course.");
@@ -108,7 +111,7 @@ public class StudentDaoOperation implements StudentDaoInterface {
 				ps.setInt(2, courseID);
 
 				int dropped = ps.executeUpdate();
-				logger.info("Course " + courseID + " deleted successfully");
+				logger.info("Course " + courseID + " deleted successfully\n");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

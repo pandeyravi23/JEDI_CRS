@@ -31,4 +31,9 @@ public class SQLQueriesConstant {
 	public static final String professorUpdateGradesQuery = "update grades set grade=? where courseId =? and studentId=?";
 	public static final String professorShowGradesQuery = "Select grade from grades where studentId = ? and courseId = ?";
 	public static final String professorGetStudentsQuery = "Select studentId from grades where courseId=?";
+
+	// SQL Queries for Course
+	public static final String GET_COURSE_BY_ID_QUERY = "SELECT * FROM course WHERE id=?";
+	public static final String GET_ALL_COURSES_QUERY = "SELECT * FROM courseCatalog";
+	public static final String NO_ENROLLED_STUDENTS_QUERY = "SELECT COUNT(*) FROM RegisteredCourses WHERE courseID=?";
 }

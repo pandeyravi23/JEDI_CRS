@@ -12,6 +12,7 @@ import java.util.*;
 
 import com.flipkart.bean.Course;
 import com.flipkart.bean.Student;
+import com.flipkart.constant.SQLQueriesConstant;
 import com.flipkart.util.DBConnection;
 
 /*
@@ -42,8 +43,8 @@ public class CoursesDaoOperation implements CoursesDaoInterface {
 
 		try{
 			connection = DBConnection.getConnection();
-			String SQLQuery = "SELECT * FROM course WHERE id=?";
-			ps = connection.prepareStatement(SQLQuery);
+			//String SQLQuery = "SELECT * FROM course WHERE id=?";
+			ps = connection.prepareStatement(SQLQueriesConstant.GET_COURSE_BY_ID_QUERY);
 
 			ps.setInt(1,courseID);
 			ResultSet resultSet = ps.executeQuery();
@@ -68,8 +69,8 @@ public class CoursesDaoOperation implements CoursesDaoInterface {
 
 		try{
 			connection = DBConnection.getConnection();
-			String SQLQuery = "SELECT * FROM courseCatalog";
-			ps = connection.prepareStatement(SQLQuery);
+			//String SQLQuery = "SELECT * FROM courseCatalog";
+			ps = connection.prepareStatement(SQLQueriesConstant.GET_ALL_COURSES_QUERY);
 
 			ResultSet resultSet = ps.executeQuery();
 
@@ -86,5 +87,27 @@ public class CoursesDaoOperation implements CoursesDaoInterface {
 		}
 
 		return courses;
+	}
+
+	// to get number of students enrolled in a course based on course ID from DB
+	public int noOfEnrolledStudents(int courseID){
+		int students = 0;
+
+		try{
+			connection = DBConnection.getConnection();
+			//String SQLQuery = "SELECT COUNT(*) FROM RegisteredCourses WHERE courseID=?";
+			ps = connection.prepareStatement(SQLQueriesConstant.NO_ENROLLED_STUDENTS_QUERY);
+
+			ps.setInt(1,courseID);
+			ResultSet resultSet = ps.executeQuery();
+			if(resultSet.next()){
+				students = resultSet.getInt(1);
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+
+		return students;
 	}
 }
