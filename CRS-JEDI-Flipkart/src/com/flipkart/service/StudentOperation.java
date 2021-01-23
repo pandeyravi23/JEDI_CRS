@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import com.flipkart.bean.Student;
 import com.flipkart.dao.CoursesDAOOperation;
 import com.flipkart.dao.StudentDAOOperation;
+import com.flipkart.exception.CommonException;
 import com.flipkart.bean.Course;
 
 import java.util.ArrayList;
@@ -28,7 +29,6 @@ public class StudentOperation implements StudentInterface {
 
 	// operation to show available courses in course catalog
     public void showCourses(){
-
         try{
             ArrayList<Course> courses = coursesDaoOperation.getAllCourses();
             logger.info("================AVAILABLE COURSES================\n");
@@ -37,6 +37,9 @@ public class StudentOperation implements StudentInterface {
                 logger.info(course.getCourseID() + "\t" + course.getCourseName() + "\t" + course.getCredits());
             }
             logger.info("=================================================\n");
+        }
+        catch(CommonException e) {
+        	logger.info(e.getMessage());
         }
         catch (Exception e){
             e.printStackTrace();
