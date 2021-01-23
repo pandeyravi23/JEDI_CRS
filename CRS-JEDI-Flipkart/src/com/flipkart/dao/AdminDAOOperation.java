@@ -271,9 +271,10 @@ public class AdminDAOOperation implements AdminDAOInterface {
 //			}
 			if(rs.next()) {
 				logger.info("Inside update professorID method-------------");
-				str = "update course set professorId = professorID where id=?";
+				str = "update course set professorId = ? where id=?";
 				ps = connection.prepareStatement(str);
-				ps.setInt(1,courseId);
+				ps.setInt(1,professorID);
+				ps.setInt(2, courseId);
 				int status = ps.executeUpdate();
 				if(status>0) {
 					logger.info("Updated Successfully");
@@ -283,7 +284,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 				}
 			}
 			else {
-				str = "select courseName,credits from courseCatalog where id=?";
+				str = "select courseName,credits from courseCatalog where courseId=?";
 				ps = connection.prepareStatement(str);
 				ps.setInt(1,courseId);
 				rs = ps.executeQuery();

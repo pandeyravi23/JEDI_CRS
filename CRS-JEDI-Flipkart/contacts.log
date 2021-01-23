@@ -1,116 +1,139 @@
-23:53:40,324  INFO MainCRSApplication,main:13 - Welcome!!!
-23:53:40,326  INFO MainCRSApplication,main:17 - Login
-23:53:40,341  INFO MainCRSApplication,main:20 - Enter your email: 
-23:53:50,469  INFO MainCRSApplication,main:23 - Enter password: 
-23:53:55,637  INFO AdminMenu,main:17 - Welcome Admin.
-23:53:55,637  INFO AdminMenu,main:78 - Select an operation
-23:53:55,638  INFO AdminMenu,main:79 - Press 1 to generate report card of a student
-23:53:55,638  INFO AdminMenu,main:80 - Press 2 to add professor
-23:53:55,638  INFO AdminMenu,main:81 - Press 3 to add Admin
-23:53:55,638  INFO AdminMenu,main:82 - Press 4 to approve students
-23:53:55,638  INFO AdminMenu,main:83 - Press 5 to add course
-23:53:55,638  INFO AdminMenu,main:84 - Press 6 to delete a course
-23:53:55,638  INFO AdminMenu,main:85 - Press -1 to exit
-23:54:00,395  INFO AdminOperation,main:19 - Please Enter Student ID to Generate Report Card
-23:54:03,376  INFO AdminMenu,main:78 - Select an operation
-23:54:03,376  INFO AdminMenu,main:79 - Press 1 to generate report card of a student
-23:54:03,376  INFO AdminMenu,main:80 - Press 2 to add professor
-23:54:03,376  INFO AdminMenu,main:81 - Press 3 to add Admin
-23:54:03,376  INFO AdminMenu,main:82 - Press 4 to approve students
-23:54:03,376  INFO AdminMenu,main:83 - Press 5 to add course
-23:54:03,377  INFO AdminMenu,main:84 - Press 6 to delete a course
-23:54:03,377  INFO AdminMenu,main:85 - Press -1 to exit
-23:58:53,914  INFO AdminOperation,main:19 - Please Enter Student ID to Generate Report Card
-23:59:01,967  INFO AdminDAOOperation,main:134 - =======================================
-23:59:01,967  INFO AdminDAOOperation,main:135 -         Report Card of Chinmay :
-23:59:01,968  INFO AdminDAOOperation,main:136 - =======================================
-23:59:01,968  INFO AdminDAOOperation,main:137 - CourseID     Course Name     Grade
-23:59:02,086  INFO AdminDAOOperation,main:144 - 158          Course-8         NA
-23:59:02,104  INFO AdminDAOOperation,main:144 - 157          Course-7         NA
-23:59:02,104  INFO AdminDAOOperation,main:146 - =======================================
-23:59:02,104  INFO AdminMenu,main:78 - Select an operation
-23:59:02,104  INFO AdminMenu,main:79 - Press 1 to generate report card of a student
-23:59:02,104  INFO AdminMenu,main:80 - Press 2 to add professor
-23:59:02,104  INFO AdminMenu,main:81 - Press 3 to add Admin
-23:59:02,105  INFO AdminMenu,main:82 - Press 4 to approve students
-23:59:02,105  INFO AdminMenu,main:83 - Press 5 to add course
-23:59:02,105  INFO AdminMenu,main:84 - Press 6 to delete a course
-23:59:02,105  INFO AdminMenu,main:85 - Press -1 to exit
-23:59:06,146  INFO AdminOperation,main:19 - Please Enter Student ID to Generate Report Card
-23:59:09,526  INFO AdminDAOOperation,main:134 - =======================================
-23:59:09,527  INFO AdminDAOOperation,main:135 -         Report Card of Partha :
-23:59:09,527  INFO AdminDAOOperation,main:136 - =======================================
-23:59:09,528  INFO AdminDAOOperation,main:137 - CourseID     Course Name     Grade
-23:59:09,530  INFO AdminDAOOperation,main:144 - 158          Course-8         NA
-23:59:09,530  INFO AdminDAOOperation,main:146 - =======================================
-23:59:09,530  INFO AdminMenu,main:78 - Select an operation
-23:59:09,531  INFO AdminMenu,main:79 - Press 1 to generate report card of a student
-23:59:09,531  INFO AdminMenu,main:80 - Press 2 to add professor
-23:59:09,531  INFO AdminMenu,main:81 - Press 3 to add Admin
-23:59:09,531  INFO AdminMenu,main:82 - Press 4 to approve students
-23:59:09,532  INFO AdminMenu,main:83 - Press 5 to add course
-23:59:09,532  INFO AdminMenu,main:84 - Press 6 to delete a course
-23:59:09,532  INFO AdminMenu,main:85 - Press -1 to exit
-23:59:18,331  INFO AdminMenu,main:65 - Logged Out Successfully
-23:59:52,593  INFO MainCRSApplication,main:13 - Welcome!!!
-23:59:52,595  INFO MainCRSApplication,main:17 - Login
-23:59:52,609  INFO MainCRSApplication,main:20 - Enter your email: 
-23:59:57,846  INFO MainCRSApplication,main:23 - Enter password: 
-23:59:59,975  INFO AdminMenu,main:17 - Welcome Admin.
-23:59:59,976  INFO AdminMenu,main:78 - 
-Select an operation
-23:59:59,976  INFO AdminMenu,main:79 - Press 1 to generate report card of a student
-23:59:59,976  INFO AdminMenu,main:80 - Press 2 to add professor
-23:59:59,976  INFO AdminMenu,main:81 - Press 3 to add Admin
-23:59:59,977  INFO AdminMenu,main:82 - Press 4 to approve students
-23:59:59,977  INFO AdminMenu,main:83 - Press 5 to add course
-23:59:59,977  INFO AdminMenu,main:84 - Press 6 to delete a course
-23:59:59,977  INFO AdminMenu,main:85 - Press -1 to exit
-00:00:08,804  INFO AdminOperation,main:19 - Please Enter Student ID to Generate Report Card
-00:00:11,170  INFO AdminDAOOperation,main:134 - =======================================
-00:00:11,171  INFO AdminDAOOperation,main:135 -         Report Card of Chinmay :
-00:00:11,171  INFO AdminDAOOperation,main:136 - =======================================
-00:00:11,171  INFO AdminDAOOperation,main:137 - CourseID     Course Name     Grade
-00:00:11,172  INFO AdminDAOOperation,main:144 - 158          Course-8         NA
-00:00:11,174  INFO AdminDAOOperation,main:144 - 157          Course-7         NA
-00:00:11,174  INFO AdminDAOOperation,main:146 - =======================================
-00:00:11,174  INFO AdminMenu,main:78 - 
-Select an operation
-00:00:11,174  INFO AdminMenu,main:79 - Press 1 to generate report card of a student
-00:00:11,174  INFO AdminMenu,main:80 - Press 2 to add professor
-00:00:11,175  INFO AdminMenu,main:81 - Press 3 to add Admin
-00:00:11,175  INFO AdminMenu,main:82 - Press 4 to approve students
-00:00:11,175  INFO AdminMenu,main:83 - Press 5 to add course
-00:00:11,175  INFO AdminMenu,main:84 - Press 6 to delete a course
-00:00:11,175  INFO AdminMenu,main:85 - Press -1 to exit
-00:00:21,108  INFO AdminMenu,main:65 - Logged Out Successfully
-00:00:27,729  INFO MainCRSApplication,main:13 - Welcome!!!
-00:00:27,730  INFO MainCRSApplication,main:17 - Login
-00:00:27,749  INFO MainCRSApplication,main:20 - Enter your email: 
-00:00:34,431  INFO MainCRSApplication,main:23 - Enter password: 
-00:00:37,328  INFO AdminMenu,main:17 - Welcome Admin.
-00:00:37,329  INFO AdminMenu,main:78 - Select an operation
-00:00:37,329  INFO AdminMenu,main:79 - Press 1 to generate report card of a student
-00:00:37,329  INFO AdminMenu,main:80 - Press 2 to add professor
-00:00:37,329  INFO AdminMenu,main:81 - Press 3 to add Admin
-00:00:37,329  INFO AdminMenu,main:82 - Press 4 to approve students
-00:00:37,329  INFO AdminMenu,main:83 - Press 5 to add course
-00:00:37,330  INFO AdminMenu,main:84 - Press 6 to delete a course
-00:00:37,330  INFO AdminMenu,main:85 - Press -1 to exit
-00:00:38,709  INFO AdminOperation,main:19 - Please Enter Student ID to Generate Report Card
-00:00:39,842  INFO AdminDAOOperation,main:134 - =======================================
-00:00:39,842  INFO AdminDAOOperation,main:135 -         Report Card of Chinmay :
-00:00:39,842  INFO AdminDAOOperation,main:136 - =======================================
-00:00:39,842  INFO AdminDAOOperation,main:137 - CourseID     Course Name     Grade
-00:00:39,844  INFO AdminDAOOperation,main:144 - 158          Course-8         NA
-00:00:39,844  INFO AdminDAOOperation,main:144 - 157          Course-7         NA
-00:00:39,844  INFO AdminDAOOperation,main:146 - =======================================
-00:00:39,844  INFO AdminMenu,main:78 - Select an operation
-00:00:39,844  INFO AdminMenu,main:79 - Press 1 to generate report card of a student
-00:00:39,845  INFO AdminMenu,main:80 - Press 2 to add professor
-00:00:39,845  INFO AdminMenu,main:81 - Press 3 to add Admin
-00:00:39,845  INFO AdminMenu,main:82 - Press 4 to approve students
-00:00:39,845  INFO AdminMenu,main:83 - Press 5 to add course
-00:00:39,845  INFO AdminMenu,main:84 - Press 6 to delete a course
-00:00:39,845  INFO AdminMenu,main:85 - Press -1 to exit
-00:00:43,049  INFO AdminMenu,main:65 - Logged Out Successfully
+11:43:12,049  INFO MainCRSApplication,main:13 - Welcome!!!
+11:43:12,051  INFO MainCRSApplication,main:17 - Login
+11:43:12,068  INFO MainCRSApplication,main:20 - Enter your email: 
+11:43:19,121  INFO MainCRSApplication,main:23 - Enter password: 
+11:43:21,970  INFO AdminMenu,main:17 - Welcome Admin.
+11:43:21,970  INFO AdminMenu,main:62 - Select an operation
+11:43:21,970  INFO AdminMenu,main:63 - Press 1 to generate report card of a student
+11:43:21,971  INFO AdminMenu,main:64 - Press 2 to add professor
+11:43:21,971  INFO AdminMenu,main:65 - Press 3 to add Admin
+11:43:21,971  INFO AdminMenu,main:66 - Press 4 to approve students
+11:43:21,971  INFO AdminMenu,main:67 - Press 5 to add course
+11:43:21,971  INFO AdminMenu,main:68 - Press 6 to delete a course
+11:43:21,971  INFO AdminMenu,main:69 - Press 7 to allot a course to the professor
+11:43:21,971  INFO AdminMenu,main:70 - Press -1 to exit
+11:43:27,751  INFO AdminOperation,main:197 - Please Enter Professor ID
+11:43:34,855  INFO AdminOperation,main:199 - Please Enter Course ID
+11:43:38,835  INFO AdminDAOOperation,main:261 - Inside Allot courses method-------------
+11:43:38,837  INFO AdminDAOOperation,main:273 - Inside update professorID method-------------
+11:43:38,886  INFO AdminDAOOperation,main:279 - Updated Successfully
+11:43:38,886  INFO AdminMenu,main:62 - Select an operation
+11:43:38,887  INFO AdminMenu,main:63 - Press 1 to generate report card of a student
+11:43:38,887  INFO AdminMenu,main:64 - Press 2 to add professor
+11:43:38,887  INFO AdminMenu,main:65 - Press 3 to add Admin
+11:43:38,887  INFO AdminMenu,main:66 - Press 4 to approve students
+11:43:38,887  INFO AdminMenu,main:67 - Press 5 to add course
+11:43:38,888  INFO AdminMenu,main:68 - Press 6 to delete a course
+11:43:38,888  INFO AdminMenu,main:69 - Press 7 to allot a course to the professor
+11:43:38,888  INFO AdminMenu,main:70 - Press -1 to exit
+11:52:45,435  INFO MainCRSApplication,main:13 - Welcome!!!
+11:52:45,437  INFO MainCRSApplication,main:17 - Login
+11:52:45,452  INFO MainCRSApplication,main:20 - Enter your email: 
+11:52:51,630  INFO MainCRSApplication,main:23 - Enter password: 
+11:52:54,273  INFO AdminMenu,main:17 - Welcome Admin.
+11:52:54,274  INFO AdminMenu,main:62 - Select an operation
+11:52:54,274  INFO AdminMenu,main:63 - Press 1 to generate report card of a student
+11:52:54,274  INFO AdminMenu,main:64 - Press 2 to add professor
+11:52:54,274  INFO AdminMenu,main:65 - Press 3 to add Admin
+11:52:54,274  INFO AdminMenu,main:66 - Press 4 to approve students
+11:52:54,275  INFO AdminMenu,main:67 - Press 5 to add course
+11:52:54,275  INFO AdminMenu,main:68 - Press 6 to delete a course
+11:52:54,275  INFO AdminMenu,main:69 - Press 7 to allot a course to the professor
+11:52:54,275  INFO AdminMenu,main:70 - Press -1 to exit
+11:53:00,185  INFO AdminOperation,main:197 - Please Enter Professor ID
+11:53:07,862  INFO AdminOperation,main:199 - Please Enter Course ID
+11:53:11,221  INFO AdminDAOOperation,main:261 - Inside Allot courses method-------------
+11:53:11,223  INFO AdminDAOOperation,main:273 - Inside update professorID method-------------
+11:53:12,649  INFO AdminDAOOperation,main:280 - Updated Successfully
+11:53:12,649  INFO AdminMenu,main:62 - Select an operation
+11:53:12,650  INFO AdminMenu,main:63 - Press 1 to generate report card of a student
+11:53:12,650  INFO AdminMenu,main:64 - Press 2 to add professor
+11:53:12,650  INFO AdminMenu,main:65 - Press 3 to add Admin
+11:53:12,650  INFO AdminMenu,main:66 - Press 4 to approve students
+11:53:12,650  INFO AdminMenu,main:67 - Press 5 to add course
+11:53:12,650  INFO AdminMenu,main:68 - Press 6 to delete a course
+11:53:12,650  INFO AdminMenu,main:69 - Press 7 to allot a course to the professor
+11:53:12,651  INFO AdminMenu,main:70 - Press -1 to exit
+11:54:27,761  INFO MainCRSApplication,main:13 - Welcome!!!
+11:54:27,763  INFO MainCRSApplication,main:17 - Login
+11:54:27,775  INFO MainCRSApplication,main:20 - Enter your email: 
+11:54:32,924  INFO MainCRSApplication,main:23 - Enter password: 
+11:54:35,242  INFO AdminMenu,main:17 - Welcome Admin.
+11:54:35,242  INFO AdminMenu,main:62 - Select an operation
+11:54:35,243  INFO AdminMenu,main:63 - Press 1 to generate report card of a student
+11:54:35,243  INFO AdminMenu,main:64 - Press 2 to add professor
+11:54:35,243  INFO AdminMenu,main:65 - Press 3 to add Admin
+11:54:35,243  INFO AdminMenu,main:66 - Press 4 to approve students
+11:54:35,244  INFO AdminMenu,main:67 - Press 5 to add course
+11:54:35,244  INFO AdminMenu,main:68 - Press 6 to delete a course
+11:54:35,244  INFO AdminMenu,main:69 - Press 7 to allot a course to the professor
+11:54:35,244  INFO AdminMenu,main:70 - Press -1 to exit
+11:54:39,591  INFO AdminOperation,main:197 - Please Enter Professor ID
+11:54:47,519  INFO AdminOperation,main:199 - Please Enter Course ID
+11:55:10,825  INFO AdminDAOOperation,main:261 - Inside Allot courses method-------------
+11:55:10,828  INFO AdminMenu,main:62 - Select an operation
+11:55:10,828  INFO AdminMenu,main:63 - Press 1 to generate report card of a student
+11:55:10,829  INFO AdminMenu,main:64 - Press 2 to add professor
+11:55:10,829  INFO AdminMenu,main:65 - Press 3 to add Admin
+11:55:10,829  INFO AdminMenu,main:66 - Press 4 to approve students
+11:55:10,829  INFO AdminMenu,main:67 - Press 5 to add course
+11:55:10,830  INFO AdminMenu,main:68 - Press 6 to delete a course
+11:55:10,830  INFO AdminMenu,main:69 - Press 7 to allot a course to the professor
+11:55:10,830  INFO AdminMenu,main:70 - Press -1 to exit
+11:56:17,741  INFO AdminOperation,main:146 - In addCourse method
+11:56:17,742  INFO AdminOperation,main:149 - Enter Course Name
+11:56:27,082  INFO AdminOperation,main:151 - Enter Course Id
+11:56:28,844  INFO AdminOperation,main:153 - Enter Number of Credits
+11:56:30,558  INFO AdminOperation,main:156 - ====================================
+11:56:30,559  INFO AdminOperation,main:157 - Add Course Status : true
+11:56:30,559  INFO AdminOperation,main:158 - ====================================
+11:56:30,559  INFO AdminMenu,main:62 - Select an operation
+11:56:30,559  INFO AdminMenu,main:63 - Press 1 to generate report card of a student
+11:56:30,559  INFO AdminMenu,main:64 - Press 2 to add professor
+11:56:30,559  INFO AdminMenu,main:65 - Press 3 to add Admin
+11:56:30,559  INFO AdminMenu,main:66 - Press 4 to approve students
+11:56:30,559  INFO AdminMenu,main:67 - Press 5 to add course
+11:56:30,559  INFO AdminMenu,main:68 - Press 6 to delete a course
+11:56:30,559  INFO AdminMenu,main:69 - Press 7 to allot a course to the professor
+11:56:30,560  INFO AdminMenu,main:70 - Press -1 to exit
+11:58:04,751  INFO AdminOperation,main:146 - In addCourse method
+11:58:04,751  INFO AdminOperation,main:149 - Enter Course Name
+11:58:09,785  INFO AdminOperation,main:151 - Enter Course Id
+11:58:13,870  INFO AdminOperation,main:153 - Enter Number of Credits
+11:58:16,280  INFO AdminOperation,main:156 - ====================================
+11:58:16,280  INFO AdminOperation,main:157 - Add Course Status : true
+11:58:16,281  INFO AdminOperation,main:158 - ====================================
+11:58:16,281  INFO AdminMenu,main:62 - Select an operation
+11:58:16,281  INFO AdminMenu,main:63 - Press 1 to generate report card of a student
+11:58:16,281  INFO AdminMenu,main:64 - Press 2 to add professor
+11:58:16,281  INFO AdminMenu,main:65 - Press 3 to add Admin
+11:58:16,281  INFO AdminMenu,main:66 - Press 4 to approve students
+11:58:16,281  INFO AdminMenu,main:67 - Press 5 to add course
+11:58:16,281  INFO AdminMenu,main:68 - Press 6 to delete a course
+11:58:16,282  INFO AdminMenu,main:69 - Press 7 to allot a course to the professor
+11:58:16,282  INFO AdminMenu,main:70 - Press -1 to exit
+11:58:43,346  INFO AdminOperation,main:197 - Please Enter Professor ID
+11:58:47,446  INFO AdminOperation,main:199 - Please Enter Course ID
+11:58:53,559  INFO AdminDAOOperation,main:261 - Inside Allot courses method-------------
+11:58:53,789  INFO AdminMenu,main:62 - Select an operation
+11:58:53,789  INFO AdminMenu,main:63 - Press 1 to generate report card of a student
+11:58:53,789  INFO AdminMenu,main:64 - Press 2 to add professor
+11:58:53,790  INFO AdminMenu,main:65 - Press 3 to add Admin
+11:58:53,790  INFO AdminMenu,main:66 - Press 4 to approve students
+11:58:53,790  INFO AdminMenu,main:67 - Press 5 to add course
+11:58:53,790  INFO AdminMenu,main:68 - Press 6 to delete a course
+11:58:53,790  INFO AdminMenu,main:69 - Press 7 to allot a course to the professor
+11:58:53,790  INFO AdminMenu,main:70 - Press -1 to exit
+11:59:08,737  INFO AdminOperation,main:197 - Please Enter Professor ID
+11:59:13,217  INFO AdminOperation,main:199 - Please Enter Course ID
+11:59:16,256  INFO AdminDAOOperation,main:261 - Inside Allot courses method-------------
+11:59:16,347  INFO AdminMenu,main:62 - Select an operation
+11:59:16,348  INFO AdminMenu,main:63 - Press 1 to generate report card of a student
+11:59:16,348  INFO AdminMenu,main:64 - Press 2 to add professor
+11:59:16,348  INFO AdminMenu,main:65 - Press 3 to add Admin
+11:59:16,348  INFO AdminMenu,main:66 - Press 4 to approve students
+11:59:16,349  INFO AdminMenu,main:67 - Press 5 to add course
+11:59:16,349  INFO AdminMenu,main:68 - Press 6 to delete a course
+11:59:16,349  INFO AdminMenu,main:69 - Press 7 to allot a course to the professor
+11:59:16,349  INFO AdminMenu,main:70 - Press -1 to exit
+11:59:31,052  INFO AdminMenu,main:49 - Logged Out Successfully
