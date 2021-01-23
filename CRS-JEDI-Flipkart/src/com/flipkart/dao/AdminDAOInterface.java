@@ -15,4 +15,5 @@ public interface AdminDAOInterface {
 	public boolean verifyEmail(String email);
 	public int addAdmin(String password, Admin admin);
 	public int addProfessor(String password, Professor prof);
+	public void allotCourses(int courseId,int professorId);
 }

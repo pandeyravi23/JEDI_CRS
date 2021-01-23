@@ -206,7 +206,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	
 	public boolean addCourse(Course course) {
 		try {
-			String str = "insert into coursecatalog (courseName,courseId,credits) values (?,?,?)";
+			String str = "insert into courseCatalog (courseName,courseId,credits) values (?,?,?)";
 			ps = connection.prepareStatement(str);
 			ps.setString(1, course.getCourseName());
 			ps.setInt(2,course.getCourseID());
@@ -249,6 +249,58 @@ public class AdminDAOOperation implements AdminDAOInterface {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	/*
+	 * Assign course with particular course ID to the
+	 * professor with ID entered by the admin
+	 */
+	
+	public void allotCourses(int courseId,int professorID) {
+		try {
+			logger.info("Inside Allot courses method-------------");
+			String str = "select name from course where id=?";
+			ps = connection.prepareStatement(str);
+			ps.setInt(1,courseId);
+			ResultSet rs = ps.executeQuery();
+//			if(rs.next()) {
+//				logger.info(rs.getString("name"));
+//			}
+//			else {
+//				logger.info("No course Available");
+//			}
+			if(rs.next()) {
+				logger.info("Inside update professorID method-------------");
+				str = "update course set professorId = ? where id=?";
+				ps = connection.prepareStatement(str);
+				ps.setInt(1,professorID);
+				ps.setInt(2, courseId);
+				int status = ps.executeUpdate();
+				if(status>0) {
+					logger.info("Updated Successfully");
+				}
+				else {
+					logger.info("Failed");
+				}
+			}
+			else {
+				str = "select courseName,credits from courseCatalog where courseId=?";
+				ps = connection.prepareStatement(str);
+				ps.setInt(1,courseId);
+				rs = ps.executeQuery();
+				while(rs.next()) {
+					str = "insert into course(id,name,professorId,credits) values(?,?,?,?)";
+					ps = connection.prepareStatement(str);
+					ps.setInt(1,courseId);
+					ps.setString(2,rs.getString("courseName"));
+					ps.setInt(3,professorID);
+					ps.setInt(4,rs.getInt("credits"));
+					ps.executeUpdate();
+				}
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 	
 	
