@@ -46,7 +46,6 @@ public class StudentOperation implements StudentInterface {
     // operation to view grades assigned by professor
     public void viewGrades(int studentId){
         try{
-            logger.info("Inside viewGrades Method\n");
             ArrayList<Grades> grades = studentDaoOperation.getGrades(studentId);
             logger.info("======================GRADES===================\n");
             logger.info("Coure ID\tCourse Name\t\tGrade");
