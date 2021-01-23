@@ -47,6 +47,11 @@ public class StudentDAOOperation implements StudentDAOInterface {
 			student.setRollNo(result.getInt("rollno"));	
 			student.setApproved(result.getBoolean("isApproved"));
 			student.setPaymentStatus(result.getBoolean("paymentStatus"));
+			student.setAge(result.getInt("age"));
+			student.setContact(result.getString("contact"));
+			student.setNationality(result.getString("nationality"));
+			student.setGender(result.getString("gender"));
+			student.setAddress(result.getString("address"));
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -291,8 +296,9 @@ public class StudentDAOOperation implements StudentDAOInterface {
 	public void registerStudent(Student student, int id) {
 		try {
 			connection = DBConnection.getConnection();
-			String sqlQuery = "INSERT INTO student(id, name, email, rollno, branch, isRegistered, paymentStatus) values(?, ?, ?, ?, ?, ?, ?)";
-			ps = connection.prepareStatement(sqlQuery);
+			//String sqlQuery = "INSERT INTO student(id, name, email, rollno, branch, isRegistered, paymentStatus) values(?, ?, ?, ?, ?, ?, ?)";
+			ps = connection.prepareStatement(SQLQueriesConstant.REGISTER_STUDENT_QUERY);
+
 			ps.setInt(1, id);
 			ps.setString(2,  student.getUserName());
 			ps.setString(3,  student.getEmail());
@@ -311,6 +317,33 @@ public class StudentDAOOperation implements StudentDAOInterface {
 		}
 		finally {
 			// connection.close();
+		}
+	}
+
+	public void updateInfo(Student student){
+		try{
+			connection = DBConnection.getConnection();
+			//String sqlQuery = "UPDATE credentials SET age=?,address=?,contact=?,gender=?,nationality=? WHERE id=?";
+			ps = connection.prepareStatement(SQLQueriesConstant.UPDATE_STUDENT_CREDENTIAL_QUERY);
+
+			ps.setInt(1,student.getAge());
+			ps.setString(2,student.getAddress());
+			ps.setString(3,student.getContact());
+			ps.setString(4,student.getGender());
+			ps.setString(5,student.getNationality());
+			ps.setInt(6,student.getUserId());
+
+			ps.executeUpdate();
+
+
+			ps = connection.prepareStatement(SQLQueriesConstant.UPDATE_STUDENT_QUERY);
+			ps.setString(1, student.getUserName());
+			ps.setInt(2,student.getUserId());
+
+			ps.executeUpdate();
+		}
+		catch (Exception e){
+			e.printStackTrace();
 		}
 	}
 }

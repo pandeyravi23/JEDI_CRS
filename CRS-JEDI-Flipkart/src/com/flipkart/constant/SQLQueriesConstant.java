@@ -18,7 +18,8 @@ public class SQLQueriesConstant {
 
 
 	// SQL Queries for Student
-	public static final String GET_STUDENT_BY_EMAIL_QUERY = "SELECT st.email, st.name, st.rollno, st.branch, st.id, st.isRegistered, cr.isApproved, st.paymentStatus FROM student as st INNER JOIN credentials as cr ON st.id = cr.id AND st.email=?";
+	public static final String GET_STUDENT_BY_EMAIL_QUERY = "SELECT st.email, st.name, st.rollno, st.branch, st.id, st.isRegistered, cr.isApproved, st.paymentStatus, cr.age, cr.address, cr.gender, cr.nationality, cr.contact FROM student as st INNER JOIN credentials as cr ON st.id = cr.id AND st.email=?";
+	public static final String REGISTER_STUDENT_QUERY = "INSERT INTO student(id, name, email, rollno, branch, isRegistered, paymentStatus) values(?, ?, ?, ?, ?, ?, ?)";
 	public static final String ADD_COURSE_STUDENT_QUERY = "INSERT INTO RegisteredCourses(studentID, courseID) values(?,?)";
 	public static final String DROP_COURSE_STUDENT_QUERY = "DELETE FROM RegisteredCourses where studentID = ? and courseID = ?";
 	public static final String GET_NO_OF_COURSES_QUERY = "SELECT COUNT(*) FROM RegisteredCourses WHERE studentID=?";
@@ -29,6 +30,8 @@ public class SQLQueriesConstant {
 	public static final String SET_PAYMENT_STATUS_QUERY = "UPDATE student set paymentStatus = true WHERE id=?";
 	public static final String ADD_COURSE_TO_GRADES_QUERY = "INSERT INTO grades(studentId, courseId) values(?,?)";
 	public static final String DELETE_COURSE_FROM_GRADES_QUERY = "DELETE FROM grades WHERE studentID = ? AND courseID = ?";
+	public static final String UPDATE_STUDENT_CREDENTIAL_QUERY = "UPDATE credentials SET age=?,address=?,contact=?,gender=?,nationality=? WHERE id=?";
+	public static final String UPDATE_STUDENT_QUERY = "UPDATE student SET name=? WHERE id=?";
 
 	// SQL Queries for Professor
 	public static final String professorGetProfessorByEmailQuery = "select * from professor where email=?";

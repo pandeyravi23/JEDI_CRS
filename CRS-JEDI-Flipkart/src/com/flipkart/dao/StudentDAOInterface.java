@@ -28,4 +28,6 @@ public interface StudentDAOInterface {
 	public void addCourseToGrades(int studentID, int courseID);
 
 	public void deleteCourseFromGrades(int studentID, int courseID);
+
+	public void updateInfo(Student student);
 }

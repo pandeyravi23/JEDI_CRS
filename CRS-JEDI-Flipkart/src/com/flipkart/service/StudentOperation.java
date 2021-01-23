@@ -73,36 +73,14 @@ public class StudentOperation implements StudentInterface {
 
     // operation to update student info
     public boolean updateInfo(Student student){
-        logger.info("================UPDATE INFO================\n");
-        // Name, age, address, contact, gender, nationality
 
-        logger.info("Enter 1 to update Name");
-        
-        Scanner sc = new Scanner(System.in);
-        int choice = sc.nextInt();
-        
-        switch(choice)
-        {
-        	case 1:
-        		logger.info("Enter the new email : ");
-        		String email = sc.nextLine();
-        		if(email.equals(""))
-        			email = sc.nextLine();
-        		student.setEmail(email);
-        		logger.info("Email Successully updated");
-        		break;
-        	case 2:
-        		logger.info("Enter the new name : ");
-        		String name = sc.nextLine();
-        		if(name.equals(""))
-        			name = sc.nextLine();
-        		student.setUserName(name);
-        		logger.info("Name Successully updated");
-        		break;
-        	default:
-        		logger.info("Invalid choice----Exiting----");
+        try {
+            studentDaoOperation.updateInfo(student);
         }
-        logger.info("===========================================\n\n");
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
         return false;
     }
 
