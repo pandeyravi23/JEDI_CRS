@@ -1,9 +1,10 @@
 package com.flipkart.exception;
 
-public class StudentNotFoundException extends Exception {
+public class AdminCRSException extends Exception {
+	private static final long serialVersionUID = 1L;
 	private String message;
 	
-	public StudentNotFoundException(String message) {
+	public AdminCRSException(String message) {
 		this.message = message;
 	}
 	

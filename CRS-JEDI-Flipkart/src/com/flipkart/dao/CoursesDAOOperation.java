@@ -13,6 +13,7 @@ import java.util.*;
 import com.flipkart.bean.Course;
 import com.flipkart.bean.Student;
 import com.flipkart.constant.SQLQueriesConstant;
+import com.flipkart.exception.CommonException;
 import com.flipkart.util.DBConnection;
 
 /*
@@ -64,7 +65,7 @@ public class CoursesDAOOperation implements CoursesDAOInterface {
 		return course;
 	}
 
-	public ArrayList<Course> getAllCourses(){
+	public ArrayList<Course> getAllCourses() throws CommonException {
 		ArrayList<Course> courses = new ArrayList<>();
 
 		try{
@@ -83,7 +84,7 @@ public class CoursesDAOOperation implements CoursesDAOInterface {
 			}
 		}
 		catch (Exception e){
-			e.printStackTrace();
+			throw new CommonException("Some Internal Error Occured: " + e.getMessage());
 		}
 
 		return courses;
