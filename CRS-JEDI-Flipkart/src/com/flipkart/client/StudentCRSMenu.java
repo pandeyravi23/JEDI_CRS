@@ -32,29 +32,31 @@ public class StudentCRSMenu {
                     logger.info(".....Logged Out.....\n");
                     break;
                 case 1:
-                    studentOperation.showCourses();
+                    viewStudentDetails();
                     break;
                 case 2:
-                    studentOperation.registerCourses(student);
+                    studentOperation.showCourses();
                     break;
                 case 3:
-                    addCourse();
+                    studentOperation.registerCourses(student);
                     break;
                 case 4:
-                    dropCourse();
+                    addCourse();
                     break;
                 case 5:
-                    studentOperation.viewRegisteredCourses(student);
+                    dropCourse();
                     break;
                 case 6:
-                    studentOperation.viewGrades(student.getUserId());
+                    studentOperation.viewRegisteredCourses(student);
                     break;
                 case 7:
-                    makePayment();
+                    viewGrades();
                     break;
                 case 8:
+                    makePayment();
+                    break;
+                case 9:
                     updateInfo();
-                    //studentOperation.updateInfo(student);
                     break;
                 default:
                     logger.info("Invalid choice.\n");
@@ -78,14 +80,15 @@ public class StudentCRSMenu {
     //showing available choices for student
     public static void showChoices(){
         logger.info("Select an operation: ");
-        logger.info("1. Show courses");
-        logger.info("2. Register courses");
-        logger.info("3. Add a course");
-        logger.info("4. Drop a course");
-        logger.info("5. View registered courses");
-        logger.info("6. View grades");
-        logger.info("7. Make payment");
-        logger.info("8. Update personal info");
+        logger.info("1. View student details");
+        logger.info("2. Show courses");
+        logger.info("3. Register courses");
+        logger.info("4. Add a course");
+        logger.info("5. Drop a course");
+        logger.info("6. View registered courses");
+        logger.info("7. View grades");
+        logger.info("8. Make payment");
+        logger.info("9. Update personal info");
         logger.info("-1 to Logout");
     }
 
@@ -93,7 +96,7 @@ public class StudentCRSMenu {
     // method to add course
     public void addCourse(){
     	if (!student.getIsRegistered()) {
-        	logger.info("Student needs to start registration to add course.\n");
+        	logger.info("Student needs to register courses to add course.\n");
         	return;
         }
     	else if(studentOperation.getNumberOfEnrolledCourses(student) >= 6) {
@@ -110,7 +113,7 @@ public class StudentCRSMenu {
     // method to drop a course
     public void dropCourse(){
     	if (!student.getIsRegistered()) {
-        	logger.info("Student needs to start registration to drop course\n");
+        	logger.info("Student needs to register courses to drop course\n");
         	return;
         }
     	else if(studentOperation.getNumberOfEnrolledCourses(student) == 4) {
@@ -124,6 +127,15 @@ public class StudentCRSMenu {
         studentOperation.deleteCourse(student,courseID);
     }
 
+    public void viewGrades(){
+        if(!student.getIsRegistered()){
+            logger.info("You have not yet registered.\n");
+        }
+        else{
+            studentOperation.viewGrades(student.getUserId());
+        }
+    }
+
     // method to make payment
     public void makePayment(){
     	if(!student.getIsRegistered()) {
@@ -134,9 +146,10 @@ public class StudentCRSMenu {
     	}
     	else {
         	logger.info("Available options: \n");
-        	logger.info("1. To pay via Netbanking");
+        	logger.info("1. To pay via Net banking");
             logger.info("2. To pay via Debit card");
             logger.info("3. To use Scholarship");
+            logger.info("4. To cancel payment");
             Scanner sc = new Scanner(System.in);
             int choice = sc.nextInt();
 
@@ -152,13 +165,18 @@ public class StudentCRSMenu {
             	case 3: // for scholarship
             		logger.info("You have chosen to use Scholarship");
             		break;
+                case 4:
+                    logger.info(">>>>>>> Exiting <<<<<<<\n");
+                    break;
             	default:
             		logger.info("Invalid choice----Exiting----");
             		logger.info("===========================================\n\n");
             }
-            
-            logger.info(">>> Proceed to make payment <<<");
-            studentOperation.makePayment(student);
+
+            if(choice != 4) {
+                logger.info(">>> Proceed to make payment <<<");
+                studentOperation.makePayment(student);
+            }
     	}
     }
 
@@ -170,13 +188,14 @@ public class StudentCRSMenu {
         int choice;
 
         do {
-            logger.info("Enter 1 to update Name.");
-            logger.info("Enter 2 to update Age.");
-            logger.info("Enter 3 to update Address.");
-            logger.info("Enter 4 to update Contact.");
-            logger.info("Enter 5 to update Gender.");
-            logger.info("Enter 6 to update Nationality.");
-            logger.info("Enter 7 to confirm update.");
+            logger.info("Enter 1 to view student details.");
+            logger.info("Enter 2 to update Name.");
+            logger.info("Enter 3 to update Age.");
+            logger.info("Enter 4 to update Address.");
+            logger.info("Enter 5 to update Contact.");
+            logger.info("Enter 6 to update Gender.");
+            logger.info("Enter 7 to update Nationality.");
+            logger.info("Enter 8 to confirm update.");
             logger.info("Enter -1 to exit.");
 
             choice = sc.nextInt();
@@ -187,36 +206,39 @@ public class StudentCRSMenu {
                     logger.info(">>>>> Exiting <<<<<\n");
                     break;
                 case 1:
+                    viewStudentDetails();
+                    break;
+                case 2:
                     logger.info("Enter name:");
                     String name = sc.nextLine();
                     student.setUserName(name);
                     break;
-                case 2:
+                case 3:
                     logger.info("Enter age:");
                     int age = Integer.parseInt(sc.nextLine());
                     student.setAge(age);
                     break;
-                case 3:
+                case 4:
                     logger.info("Enter address:");
                     String address = sc.nextLine();
                     student.setAddress(address);
                     break;
-                case 4:
+                case 5:
                     logger.info("Enter contact:");
                     String contact = sc.nextLine();
                     student.setContact(contact);
                     break;
-                case 5:
+                case 6:
                     logger.info("Enter gender:");
                     String gender = sc.nextLine();
                     student.setGender(gender);
                     break;
-                case 6:
+                case 7:
                     logger.info("Enter nationality:");
                     String nationality = sc.nextLine();
                     student.setNationality(nationality);
                     break;
-                case 7:
+                case 8:
                     studentOperation.updateInfo(student);
                     logger.info(">>>>>>> Student Information Updated. <<<<<<<\n");
                     break;
@@ -225,5 +247,17 @@ public class StudentCRSMenu {
             }
 
         }while(choice != -1);
+    }
+
+    public void viewStudentDetails(){
+        logger.info("============== Student Details ===============");
+        logger.info("Student ID: " + student.getUserId());
+        logger.info("Name: " + student.getUserName());
+        logger.info("Age: " + student.getAge());
+        logger.info("Address: " + student.getAddress());
+        logger.info("Contact: " + student.getContact());
+        logger.info("Gender: " + student.getGender());
+        logger.info("Nationality: " + student.getNationality() + "\n");
+        logger.info("=============================================");
     }
 }
