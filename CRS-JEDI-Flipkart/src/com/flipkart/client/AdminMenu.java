@@ -53,7 +53,7 @@ public class AdminMenu {
 					adminOperation.addAdmin();
 					break;
 				case 4:
-					adminOperation.approveStudent();
+					adminOperation.approveStudents();
 					break;
 				case 5:
 					adminOperation.addCourse();
