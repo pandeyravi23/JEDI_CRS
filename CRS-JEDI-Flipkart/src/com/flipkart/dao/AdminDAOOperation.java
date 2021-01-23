@@ -159,11 +159,13 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	public void approveStudent() {
 		try {
 			Scanner sc = new Scanner(System.in);
-			String str = "select * from credentials where isApproved=0";
+			String str = "select c.*, s.name from credentials as c join student as s on s.id = c.id where c.isApproved = 0";
 			ps = connection.prepareStatement(str);
 			ResultSet rs = ps.executeQuery();
+			logger.info("Student details are as follows - ");
 			logger.info("=======================================");
 			while(rs.next()) {
+				logger.info("Student Name: " + rs.getString("name"));
 				logger.info("Student ID: " + rs.getInt("id"));
 				logger.info("Email: " + rs.getString("email"));
 				logger.info("Address: " + rs.getString("address"));
