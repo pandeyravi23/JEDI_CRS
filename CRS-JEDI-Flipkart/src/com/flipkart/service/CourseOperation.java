@@ -14,7 +14,7 @@ public class CourseOperation implements CourseInterface {
 
     private static Logger logger = Logger.getLogger(CourseOperation.class);
     
-    CoursesDAOOperation coursesDaoOperation = new CoursesDAOOperation();
+    CoursesDAOOperation coursesDaoOperation = CoursesDAOOperation.getInstance();
 
 	private static CourseOperation instance = null;
 

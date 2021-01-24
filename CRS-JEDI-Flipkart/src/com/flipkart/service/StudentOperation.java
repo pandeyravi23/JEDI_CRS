@@ -21,8 +21,8 @@ import java.util.ArrayList;
 public class StudentOperation implements StudentInterface {
 
     private static Logger logger = Logger.getLogger(StudentOperation.class);
-    CoursesDAOOperation coursesDaoOperation = new CoursesDAOOperation();
-    StudentDAOOperation studentDaoOperation = new StudentDAOOperation();
+    CoursesDAOOperation coursesDaoOperation = CoursesDAOOperation.getInstance();
+    StudentDAOOperation studentDaoOperation = StudentDAOOperation.getInstance();
     ProfessorDAOOperation professorDAOOperation = new ProfessorDAOOperation();
 
     private static StudentOperation instance = null;
@@ -250,7 +250,7 @@ public class StudentOperation implements StudentInterface {
      * @return A student object containing all information about a student
      */
     public Student getStudentByEmail(String email) {
-    	StudentDAOOperation studentOperation = new StudentDAOOperation();
+    	StudentDAOOperation studentOperation = StudentDAOOperation.getInstance();
     	Student st = studentOperation.getStudentByEmail(email);
     	return st;
     }

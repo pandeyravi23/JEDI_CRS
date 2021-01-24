@@ -16,8 +16,8 @@ import com.flipkart.dao.UserDAOOperation;
 public class AuthCredentialSystemOperations implements AuthCredentialSystemInterface {
 
 	private Logger logger = Logger.getLogger(AuthCredentialSystemOperations.class);
-	private static UserDAOOperation userDaoOperation = new UserDAOOperation();
-	private static StudentDAOOperation studentDaoOperation = new StudentDAOOperation();
+	private static UserDAOOperation userDaoOperation = UserDAOOperation.getInstance();
+	private static StudentDAOOperation studentDaoOperation = StudentDAOOperation.getInstance();
 
 	private static AuthCredentialSystemOperations instance = null;
 

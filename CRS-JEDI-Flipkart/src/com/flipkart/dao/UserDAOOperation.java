@@ -13,6 +13,22 @@ public class UserDAOOperation implements UserDAOInterface {
 	private static Logger logger = Logger.getLogger(UserDAOOperation.class);
 	Connection connection = null;
 	PreparedStatement ps = null;
+
+	private static UserDAOOperation instance = null;
+
+	private UserDAOOperation()
+	{
+
+	}
+
+	synchronized public static UserDAOOperation getInstance()
+	{
+		if(instance == null)
+		{
+			instance = new UserDAOOperation();
+		}
+		return instance;
+	}
 	
 	/**
 	 * Method to verify login credentials, i.e email and password

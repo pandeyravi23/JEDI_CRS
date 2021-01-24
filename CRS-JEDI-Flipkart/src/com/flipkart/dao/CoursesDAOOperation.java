@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
+import com.flipkart.service.AdminOperation;
 import org.apache.log4j.Logger;
 
 import com.flipkart.bean.Course;
@@ -21,6 +22,22 @@ public class CoursesDAOOperation implements CoursesDAOInterface {
 	private static Logger logger = Logger.getLogger(CoursesDAOOperation.class);
 	Connection connection = null;
 	PreparedStatement ps = null;
+
+	private static CoursesDAOOperation instance = null;
+
+	private CoursesDAOOperation()
+	{
+
+	}
+
+	synchronized public static CoursesDAOOperation getInstance()
+	{
+		if(instance == null)
+		{
+			instance = new CoursesDAOOperation();
+		}
+		return instance;
+	}
 
 	/**
 	 * Method to fetch the Course Object for the given course Id
