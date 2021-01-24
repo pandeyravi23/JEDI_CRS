@@ -8,7 +8,6 @@ import org.apache.log4j.Logger;
 import com.flipkart.bean.Student;
 import com.flipkart.bean.User;
 import com.flipkart.service.AuthCredentialSystemOperations;
-import com.flipkart.service.NotificationSystemOperation;
 
 /**
  * The Main Entry Point of our application and shows choices for Registration or Login
@@ -54,7 +53,8 @@ public class MainCRSApplication {
 			}while(choice != 3);
 		}
 		catch(Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
+			logger.warn(e.getMessage() + "\n");
 		}
 	}
 	
@@ -79,7 +79,8 @@ public class MainCRSApplication {
 			}while(!available);
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 		return str;
 	}
@@ -108,14 +109,15 @@ public class MainCRSApplication {
 			}while(pwd1.compareTo(pwd2) != 0);
 		}
 		catch(Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
+			logger.warn(e.getMessage() + "\n");
 		}
 		return pwd1;
 	}
 	
 	/**
+	 * Function to initiate and go through the student registration process
 	 * 
-	 * Student Registration Dialogues
 	 */
 	public static void studentRegistration() {
 		logger.info("================ Student Registration =============");
@@ -174,13 +176,15 @@ public class MainCRSApplication {
 			logger.info(">>>>>>>>>>>>> Student Registration Successful. Admin will approve you within 24hrs. <<<<<<<<<\n");
 		}
 		catch(Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
+			logger.warn(e.getMessage() + "\n");
 		}
 	}
 	
 	/**
+	 * Function to initiate and go through the login process and then transfer control to respective clients based 
+	 * on role of the user.
 	 * 
-	 * Login Dialogue
 	 */
 	public static void login() {
 		try {
@@ -216,7 +220,8 @@ public class MainCRSApplication {
 			// res.getRole();
 		}
 		catch(Exception e) {
-			logger.warn(e.getMessage());
+//			e.printStackTrace();
+			logger.warn(e.getMessage() + "\n");
 		}
 	}
 }
