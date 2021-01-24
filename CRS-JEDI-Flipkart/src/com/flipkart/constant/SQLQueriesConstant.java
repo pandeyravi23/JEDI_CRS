@@ -47,4 +47,25 @@ public class SQLQueriesConstant {
 	public static final String GET_COURSE_BY_ID_QUERY = "SELECT * FROM course WHERE id=?";
 	public static final String GET_ALL_COURSES_QUERY = "SELECT cc.courseId, cc.courseName, cc.credits, c.professorId FROM courseCatalog AS cc INNER JOIN course AS c ON cc.courseId = c.id";
 	public static final String NO_ENROLLED_STUDENTS_QUERY = "SELECT COUNT(*) FROM RegisteredCourses WHERE courseID=?";
+	
+	// SQL Queries for Admin
+	
+	public static final String GET_STUDENT_ID_BY_EMAIL = "select id from credentials where email=?";
+	public static final String ADD_USER_TO_CREDENTIALS = "insert into credentials(role, email, password, isApproved, address, age, gender, contact, nationality) values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	public static final String GET_STUDENT_NAME_BY_ID = "select name from student where id = ?";
+	public static final String GET_GRADES_BY_STUDENT_ID = "select c.name,g.courseId,g.grade,s.name as sname from ((course as c inner join grades as g on c.id=g.courseId) inner join student as s on g.studentId=s.id) where s.id=?";
+	public static final String ADD_COURSE_IN_CATALOG = "insert into courseCatalog (courseName,courseId,credits) values (?,?,?)";
+	public static final String DELETE_COURSE_IN_CATALOG = "delete from courseCatalog where courseId = ?";
+	public static final String GET_COURSE_NAME_BY_ID = "select name from course where id=?";
+	public static final String UPDATE_PROFESSOR_IN_COURSE = "update course set professorId = ? where id=?";
+	public static final String GET_COURSE_CATALAOG_QUERY = "select courseName,credits from courseCatalog where courseId=?";
+	public static final String ADD_NEWCOURSE_IN_COURSE = "insert into course(id,name,professorId,credits) values(?,?,?,?)";
+	public static final String GET_STUDENT_DETAILS = "select c.*, s.name from credentials as c join student as s on s.id = c.id where c.isApproved = 0";
+	public static final String UPDATE_USER_IN_CREDENTIALS = "update credentials set isApproved=1 where id = ?";
+	public static final String DELETE_USER_FROM_CREDENTIALS = "Delete from credentials where id = ?";
+	public static final String DELETE_STUDENT_BY_ID = "Delete from student where id = ?";
+	public static final String ADD_NEW_ADMIN = "insert into admin values(?, ?, ?)";
+	public static final String ADD_NEW_PROFESSOR = "insert into professor values(?, ?, ?, ?, ?)";
+	
+	
 }

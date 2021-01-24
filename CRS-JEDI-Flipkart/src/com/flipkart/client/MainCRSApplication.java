@@ -24,7 +24,6 @@ public class MainCRSApplication {
 	 * The Main method for MainCRSApplication
 	 * 
 	 * @param args Unused
-	 * @return Nothing
 	 */
 	public static void main(String[] args) {
 		logger.info("Welcome!!!");
