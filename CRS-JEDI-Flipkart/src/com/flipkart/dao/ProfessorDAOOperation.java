@@ -43,7 +43,7 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	/**
 	 * Method creates and returns professor object using email ID from the database
 	 * 
-	 * @param email
+	 * @param email Email Id of professor
 	 * @return Professor Object
 	 */
 	public Professor getProfessorByEmail(String email) {
@@ -75,7 +75,7 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	/**
 	 * Gets Professor Name from the professorId
 	 * 
-	 * @param professorID
+	 * @param professorID Professor Id
 	 * @return Professor Name corresponding to the given id
 	 */
 	
@@ -106,7 +106,7 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	 * Method Displays list of courses alloted to the professor after getting from
 	 * the database
 	 * 
-	 * @param professorId
+	 * @param professorId Professor Id
 	 */
 	public void showCourses(int professorId) {
 		try {
@@ -132,7 +132,7 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	 * Returns list of all student objects associated with the particular course id
 	 * whose grade is Not Available from the database
 	 * 
-	 * @param courseId
+	 * @param courseId Course Id
 	 * @return returns list of enrolled students
 	 */
 	public ArrayList<Student> getEnrolledStudents(int courseId) {
@@ -167,7 +167,7 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	 * grades are currently not available
 	 * 
 	 * @param toGrade  List of students to be graded
-	 * @param courseId
+	 * @param courseId course Id
 	 */
 	public void setGrades(ArrayList<Student> toGrade, int courseId) {
 
@@ -202,9 +202,9 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	/**
 	 * Updates grades of a single student belonging to a particular courseId
 	 * 
-	 * @param courseId
-	 * @param studentId
-	 * @param grades
+	 * @param courseId course id of the course whose grade has to be updated
+	 * @param studentId student id whose grade has to be updated
+	 * @param grades grade to be entered
 	 * @return true if grades updated else false
 	 */
 	public boolean updateStudentGrades(int courseId, int studentId, String grades) {
@@ -231,7 +231,7 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	 * Show Grades of all enrolled students associated with the courseId
 	 * 
 	 * @param enrolledStudent List of enrolled student
-	 * @param courseId
+	 * @param courseId course id
 	 */
 	public void showGrades(ArrayList<Student> enrolledStudent, int courseId) {
 		try {
@@ -261,7 +261,7 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	 * Returns list of all student objects associated with the particular course id
 	 * from the database
 	 * 
-	 * @param courseId
+	 * @param courseId course id
 	 * @return List of students in the course
 	 */
 	public ArrayList<Student> getStudents(int courseId) {
