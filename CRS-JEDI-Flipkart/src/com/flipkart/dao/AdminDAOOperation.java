@@ -15,6 +15,7 @@ import com.flipkart.bean.Course;
 import com.flipkart.bean.Professor;
 import com.flipkart.util.DBConnection;
 import com.flipkart.constant.SQLQueriesConstant;
+import com.flipkart.exception.AdminCRSException;
 
 
 /**
@@ -218,7 +219,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 			if(rs.next())
 				name = rs.getString("sname");
 			else {
-				logger.info("No Student with Student ID: " + studentId + " Exists!!");
+				logger.info("Student with ID " + studentId + " has not registered for any course!");
 				logger.info("=======================================");
 				return ;
 			}
@@ -255,13 +256,17 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	@Override
 	public void approveStudent() {
 		try {
+			boolean status = false;
 			Scanner sc = new Scanner(System.in);
 			String str = SQLQueriesConstant.GET_STUDENT_DETAILS;
 			ps = connection.prepareStatement(str);
 			ResultSet rs = ps.executeQuery();
+			if (rs.next()==false) {
+				throw new AdminCRSException("No student to approve!");
+			}
 			logger.info("Student details are as follows - ");
 			logger.info("=======================================");
-			while(rs.next()) {
+			do {
 				logger.info("Student Name: " + rs.getString("name"));
 				logger.info("Student ID: " + rs.getInt("id"));
 				logger.info("Email: " + rs.getString("email"));
@@ -294,7 +299,11 @@ public class AdminDAOOperation implements AdminDAOInterface {
 					logger.info("=======================================");
 				}
 			}
+			while(rs.next());
 			
+		}
+		catch(AdminCRSException e) {
+			logger.info(e.getMessage());
 		}
 		catch(SQLException e)
 		{
@@ -309,7 +318,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	
 	/**
 	 * Add a new course to the courseCatalog
-	 * only if course id provided by the admin is unique
+	 * only if course id provided by the Admin is unique
 	 * 
 	 * @param course The details of the course encapsulated in the course class attributes.
 	 * 

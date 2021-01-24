@@ -59,7 +59,7 @@ public class ProfessorOperation implements ProfessorInterface {
 				logger.info(
 						"====================================================================================================");
 			} else {
-				throw new ProfessorCRSException("No student is currently ungraded in the course");
+				throw new ProfessorCRSException("No student is currently enrolled in the course");
 			}
 		} catch (ProfessorCRSException e) {
 			logger.info("\n\n");
