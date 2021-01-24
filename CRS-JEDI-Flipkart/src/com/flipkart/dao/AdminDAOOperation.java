@@ -4,6 +4,7 @@ import java.sql.Connection;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 
@@ -14,6 +15,15 @@ import com.flipkart.bean.Course;
 import com.flipkart.bean.Professor;
 import com.flipkart.util.DBConnection;
 import com.flipkart.constant.SQLQueriesConstant;
+
+
+/**
+ * Data Access object for Admin class which is responsible for all the interactions that happen with the
+ * SQL database.
+ * 
+ * @author Jedi04
+ *
+ */
 
 public class AdminDAOOperation implements AdminDAOInterface {
 	
@@ -29,6 +39,12 @@ public class AdminDAOOperation implements AdminDAOInterface {
 		
 	}
 	
+	/**
+	 * Singleton implementation.
+	 * 
+	 * @return Instance of AdminDAOOperatioon class.
+	 */
+	
 	synchronized public static AdminDAOOperation getInstance()
 	{
 		if(instance == null)
@@ -38,12 +54,16 @@ public class AdminDAOOperation implements AdminDAOInterface {
 		return instance;
 	}
 	
-/*
+/**
+ * 
  * Verifies Email Address at the time of registration
- * returns false if it already exists in database
- * else returns true
+ * 
+ * 
+ * @param email Email address of the new user to be added. 
+ * @return False if the email already exists in database else returns true.
+ * 
  */
-	
+	@Override
 	public boolean verifyEmail(String email)
 	{
 		try
@@ -58,18 +78,29 @@ public class AdminDAOOperation implements AdminDAOInterface {
 			{
 				return false;
 			}
-		}catch(Exception e)
+		}
+		catch(SQLException e)
 		{
-			e.printStackTrace();
+			logger.info(e.getMessage());
+		}
+		catch(Exception e)
+		{
+			logger.info(e.getMessage());
 		}	
 		return true;
 	}
 	
 	
 	/**
-	 * addAdmin adds the new Admin in Credentials table 
+	 * addAdmin is used to add the new Admin details in Credentials table 
 	 * and Admin table 
+	 * 
+	 * @param password User provided password for the new Admin to be added.
+	 * @param admin Other details of the admin sent inside Admin bean class by using its attributes.
+	 * 
+	 * @return Returns 1 if new admin is successfully added. Else returns 0.
 	 */
+	@Override
 	public int addAdmin(String password, Admin admin)
 	{
 		try
@@ -101,25 +132,28 @@ public class AdminDAOOperation implements AdminDAOInterface {
 			
 			ps.executeUpdate();
 			return 1;
-		}catch(Exception e)
-		{
-			e.printStackTrace();
 		}
+		catch(SQLException e)
+		{
+			logger.info(e.getMessage());
+		}
+		catch(Exception e)
+		{
+			logger.info(e.getMessage());
+		}	
 		return 0;
 	}
 	
 
 	/**
-	 * It is responsible for adding professor to the database.
-	 * addProfessor adds the new Professor in Credentials table 
+	 * It is responsible for adding the new Professor in Credentials table 
 	 * and Professor table 
 	 * 
-	 * @param password The password provided by user
-	 * @param prof Professor details provided by the user
-	 * 
+	 * @param password New password of the professor.
+	 * @param prof Details of the new professor sent using the Professor bean class' attributes.
 	 * @return Returns 1 if professor is successfully added. Else returns 0.
 	 */
-	
+	@Override
 	public int addProfessor(String password, Professor prof)
 	{
 		try
@@ -153,19 +187,27 @@ public class AdminDAOOperation implements AdminDAOInterface {
 			
 			return 1;
 		}
+		catch(SQLException e)
+		{
+			logger.info(e.getMessage());
+		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
-		}
+			logger.info(e.getMessage());
+		}	
 		return 0;
 	}
 	
 	
-	/*
+	/**
 	 * printGrades Prints the Report of 
-	 * a Particular Student given its
-	 * Student ID
+	 * card of a particular Student given its
+	 * Student ID.
+	 * 
+	 * @param studentId StudentID of the student whose report card is to be generated.
+	 * 
 	 */
+	@Override
 	public void printGrades(int studentId) {
 		try {
 			String str = SQLQueriesConstant.GET_GRADES_BY_STUDENT_ID ; 
@@ -191,17 +233,26 @@ public class AdminDAOOperation implements AdminDAOInterface {
 			}
 			logger.info("=======================================");
 			
-		}catch(Exception e) {
-			e.printStackTrace();
 		}
+		catch(SQLException e)
+		{
+			logger.info(e.getMessage());
+		}
+		catch(Exception e)
+		{
+			logger.info(e.getMessage());
+		}	
 		return ;
 	}
 	
 	
-	/*
-	 * approveStudent Approves the Student Registration
-	 * and Allows them to login and Register Courses
+	/**
+	 * 
+	 * approveStudent Used to approve the newly registered students in order to
+	 * and allow them to login and register for courses.
+	 * 
 	 */
+	@Override
 	public void approveStudent() {
 		try {
 			Scanner sc = new Scanner(System.in);
@@ -244,17 +295,28 @@ public class AdminDAOOperation implements AdminDAOInterface {
 				}
 			}
 			
-		}catch (Exception e) {
-			e.printStackTrace();
 		}
+		catch(SQLException e)
+		{
+			logger.info(e.getMessage());
+		}
+		catch(Exception e)
+		{
+			logger.info(e.getMessage());
+		}	
 	}
 	
 	
-	/*
-	 * Query to add a course to a courseCatalog by Admin
-	 * only if course id provided is unique
+	/**
+	 * Add a new course to the courseCatalog
+	 * only if course id provided by the admin is unique
+	 * 
+	 * @param course The details of the course encapsulated in the course class attributes.
+	 * 
+	 * 
+	 * @return True if the course is successfully added. False otherwise.
 	 */
-	
+	@Override
 	public boolean addCourse(Course course) {
 		try {
 			String str = SQLQueriesConstant.ADD_COURSE_IN_CATALOG;
@@ -267,20 +329,26 @@ public class AdminDAOOperation implements AdminDAOInterface {
 				return true;
 			}
 		}
-		catch(Exception e) {
-			//// Write exception here
-			logger.info("Course ID's cannot be duplicate");
+		catch(SQLException e)
+		{
 			logger.info(e.getMessage());
 		}
+		catch(Exception e)
+		{
+			logger.info(e.getMessage());
+		}	
 		return false;
 	}
 	
 	
-	/*
-	 * Delete course from course catalog and course tables
-	 * where id matches the given courseId;
+	/**
+	 * Deletes a course from course catalog and course tables
+	 * where id matches the given courseId.
+	 * 
+	 * @param courseId Course Id of the course to be deleted.
+	 * @return True if the course is successfully deleted. False otherwise.
 	 */
-	
+	@Override
 	public boolean deleteCourse(int courseId) {
 		try {
 			String str = SQLQueriesConstant.DELETE_COURSE_IN_CATALOG;
@@ -295,27 +363,34 @@ public class AdminDAOOperation implements AdminDAOInterface {
 				return true;
 			}
 		}
-		catch(Exception e) {
+		catch(SQLException e)
+		{
 			logger.info(e.getMessage());
-			e.printStackTrace();
 		}
+		catch(Exception e)
+		{
+			logger.info(e.getMessage());
+		}	
 		return false;
 	}
 	
-	/*
-	 * Assign course with particular course ID to the
-	 * professor with ID entered by the Admin
+	/**
+	 * Assign course with particular course ID to the corresponding
+	 * professor with ID entered by the Admin. In case, already some other professor is assigned
+	 * to the course, it is modified.
+	 * 
+	 * @param courseId Course ID of the course to which the professor is to be assigned/modified.
+	 * @param professorId Professor ID of the course.
+	 * 
 	 */
-	
+	@Override
 	public void allotCourses(int courseId,int professorID) {
 		try {
-//			logger.info("Inside Allot courses method-------------");
 			String str = SQLQueriesConstant.GET_COURSE_NAME_BY_ID;
 			ps = connection.prepareStatement(str);
 			ps.setInt(1,courseId);
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()) {
-//				logger.info("Inside update professorID method-------------");
 				str = SQLQueriesConstant.UPDATE_PROFESSOR_IN_COURSE;
 				ps = connection.prepareStatement(str);
 				ps.setInt(1,professorID);
@@ -352,8 +427,14 @@ public class AdminDAOOperation implements AdminDAOInterface {
 				logger.info("Course Alloted Successfully");
 				logger.info("=======================================");
 			}
-		}catch(Exception e){
-			e.printStackTrace();
 		}
+		catch(SQLException e)
+		{
+			logger.info(e.getMessage());
+		}
+		catch(Exception e)
+		{
+			logger.info(e.getMessage());
+		}	
 	}
 }

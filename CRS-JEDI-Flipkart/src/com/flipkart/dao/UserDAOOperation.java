@@ -21,6 +21,7 @@ public class UserDAOOperation implements UserDAOInterface {
 	 * @param password The password entered corresponding to the email address.
 	 */
 	public int verifyLoginCredentials(String email, String password) {
+		int role = -1;
 		try {
 			connection = DBConnection.getConnection();
 			ps = connection.prepareStatement(SQLQueriesConstant.VERIFY_LOGIN_CREDENTIALS_QUERY);
@@ -29,7 +30,7 @@ public class UserDAOOperation implements UserDAOInterface {
 			ps.setString(2, password);
 			
 			ResultSet result = ps.executeQuery();
-			int role = -1;
+
 			while(result.next()) {
 				role = result.getInt("role");
 			}
@@ -41,7 +42,7 @@ public class UserDAOOperation implements UserDAOInterface {
 		catch(Exception e) {
 			logger.warn(e.getMessage() + "\n");
 		}
-		return -1;
+		return role;
 	}
 	
 	/**

@@ -6,60 +6,82 @@ import org.apache.log4j.Logger;
 import com.flipkart.bean.Student;
 import com.flipkart.dao.CoursesDAOOperation;
 import com.flipkart.dao.StudentDAOOperation;
-import com.flipkart.exception.CommonException;
 import com.flipkart.bean.Course;
 
 import java.util.ArrayList;
-import java.util.Scanner;
+
+/**
+ * Class to handle all student related operations. Accessed by Student CRS Menu
+ *
+ * @author JEDI 04
+ */
 
 public class StudentOperation implements StudentInterface {
     private static Logger logger = Logger.getLogger(StudentOperation.class);
 	CoursesDAOOperation coursesDaoOperation = new CoursesDAOOperation();
     StudentDAOOperation studentDaoOperation = new StudentDAOOperation();
     ProfessorDAOOperation professorDAOOperation = new ProfessorDAOOperation();
-    
+
+
+    /**
+     * Method to get the number of courses a student has registered for.
+     *
+     * @param student Object containing all student information
+     * @return count of courses enrolled by student
+     */
     public int getNumberOfEnrolledCourses(Student student) {
     	int count = 0;
     	try {
     		count = studentDaoOperation.getNoOfCourses(student);
     	}
     	catch (Exception e) {
-    		 e.printStackTrace();
+    		 logger.warn(e.getMessage());
     	}
     	return count;
     }
-    
+
+    /**
+     * Operation to get all the courses that are present in the Course Catalog
+     *
+     * @return List of course objects each containing information about a course
+     */
     public ArrayList<Course> getAllCourses() {
     	ArrayList<Course> courses = null;
     	try{
             courses = coursesDaoOperation.getAllCourses();
-            //return courses;
         }
         catch (Exception e){
-            e.printStackTrace();
+            logger.warn(e.getMessage());
         }
     	return courses;
     }
 
-	// operation to show available courses in course catalog
+    /**
+     * Method to print details of all courses available in course catalog
+     *
+     */
     public void showCourses(){
         try{
             ArrayList<Course> courses = coursesDaoOperation.getAllCourses();
-            String professorAlloted;
+            String professorAllotted;
             logger.info("================AVAILABLE COURSES================\n");
             logger.info("Course ID\tCourse Name\tCredits\tProfessor Allotted");
             for (Course course : courses) {
-                professorAlloted = professorDAOOperation.getProfessorById(course.getProfessorAllotted());
-                logger.info(course.getCourseID() + "\t\t" + course.getCourseName() + "\t" + course.getCredits() + "\t\t" + professorAlloted);
+                professorAllotted = professorDAOOperation.getProfessorById(course.getProfessorAllotted());
+                logger.info(course.getCourseID() + "\t\t" + course.getCourseName() + "\t" + course.getCredits() + "\t\t" + professorAllotted);
             }
             logger.info("=================================================\n");
         }
         catch (Exception e){
-            e.printStackTrace();
+            logger.warn(e.getMessage());
         }
     }
 
-    // operation to view grades assigned by professor
+    /**
+     * Method to print grades attained by student in each of his registered courses
+     *
+     * @param studentId User ID of the student
+     */
     public void viewGrades(int studentId){
         try{
             ArrayList<Grades> grades = studentDaoOperation.getGrades(studentId);
@@ -71,59 +93,90 @@ public class StudentOperation implements StudentInterface {
             logger.info("=================================================\n");
         }
         catch(Exception e){
-            e.printStackTrace();
+            logger.warn(e.getMessage());
         }
     }
 
-    // operation to make payment
+    /**
+     * Method to access the fee payment process
+     *
+     * @param student Object containing all information about a student
+     */
     public void makePayment(Student student){
         try {
         	studentDaoOperation.setPaymentStatus(student);
         	student.setPaymentStatus(true);
         }
         catch(Exception e) {
-        	e.printStackTrace();
+            logger.warn(e.getMessage());
         }
     }
 
-    // operation to update student info
+    /**
+     * Method accessed by student to update personal information
+     *
+     * @param student Object containing all information about a student
+     * @return True when update successful else False
+     */
     public boolean updateInfo(Student student){
 
         try {
             studentDaoOperation.updateInfo(student);
+            return true;
         }
         catch (Exception e){
-            e.printStackTrace();
+            logger.warn(e.getMessage());
         }
 
         return false;
     }
 
-    // operation to add course to registered courses
+    /**
+     * Operation for adding a course to registered courses of a student
+     *
+     * @param student Object containing all information about a student
+     * @param courseId ID of the course to be added
+     * @return True when course added successfully else False
+     */
     public boolean addCourse(Student student, int courseId){
         try{
             studentDaoOperation.addCourse(student,courseId);
+            return true;
         }
         catch(Exception e){
-            e.printStackTrace();
+            logger.warn(e.getMessage());
         }
 
         return false;
     }
 
-    // operation to delete course from registered courses
+    /**
+     * Operation for deleting a course to registered courses of a student
+     *
+     * @param student Object containing all information about a student
+     * @param courseId ID of course to be deleted
+     * @return True when course deleted successfully else False
+     */
     public boolean deleteCourse(Student student, int courseId){
 
         try{
             studentDaoOperation.dropCourse(student,courseId);
+            return true;
         }
         catch(Exception e){
-            e.printStackTrace();
+            logger.warn(e.getMessage());
         }
 
         return false;
     }
-    
+
+    /**
+     * Method to register courses selected by the student
+     *
+     * @param courseCart ArrayList that contains current course selections
+     * @param student Object containing all information about a student
+     * @return True when courses registered successfully else False
+     */
     public boolean registerCourses(ArrayList<Integer> courseCart, Student student) {
     	try {
     		for (Integer courseID : courseCart) {
@@ -136,97 +189,17 @@ public class StudentOperation implements StudentInterface {
             return true;
     	}
     	catch(Exception e) {
-    		e.printStackTrace();
+            logger.warn(e.getMessage());
     	}
     	return false;
     }
 
-    // operation to register for courses
-//    public boolean registerCourses(Student student){
-//    	if(student.getIsRegistered()){
-//    	    logger.info("You have already registered.\n");
-//    	    return true;
-//        }
-//
-//    	int courseCounter = 0;
-//    	ArrayList<Integer> courseCart = new ArrayList<>();
-//        logger.info("================COURSE REGISTRATION================\n");
-//        while(true) {
-//            logger.info("Enter 1 to view available courses.");
-//            logger.info("Enter 2 to add course.");
-//            logger.info("Enter 3 to delete course.");
-//            logger.info("Enter 4 to view course cart.");
-//            logger.info("Enter 5 to finish registration process.");
-//            logger.info("Enter 6 to cancel registration process.");
-//            Scanner input = new Scanner(System.in);
-//            int operation = input.nextInt();
-//
-//            if(operation==1){
-//                showCourses();
-//            }
-//            else if (operation == 2) {
-//                logger.info("Enter course ID to be added: ");
-//                int courseID = input.nextInt();
-//                //addCourse(student,courseID);
-//                if(courseCart.contains(courseID)){
-//                    logger.info("Course " + courseID + " already in course cart\n");
-//                }
-//                else if(coursesDaoOperation.noOfEnrolledStudents(courseID)>=10){
-//                    logger.info("Course " + courseID + " is full. Please add some other course.\n");
-//                }
-//                else{
-//                    courseCart.add(courseID);
-//                    courseCounter++;
-//                    logger.info("Course " + courseID + " added to Course Cart.\n");
-//                }
-//            }
-//            else if (operation == 3) {
-//                logger.info("Enter course ID to be dropped: ");
-//                int courseID = input.nextInt();
-//                //deleteCourse(student,courseID);
-//                if(!courseCart.contains(courseID)){
-//                    logger.info("Course " + courseID + " not in cart\n");
-//                }
-//                else {
-//                    courseCart.remove(Integer.valueOf(courseID));
-//                    courseCounter--;
-//                    logger.info("Course " + courseID + " deleted to Course Cart.\n");
-//                }
-//            }
-//            else if (operation == 4){
-//                logger.info("============Course Cart============\n");
-//                logger.info("Course IDs:");
-//                for(Integer courseId : courseCart){
-//                    logger.info(courseId);
-//                }
-//                logger.info("====================================\n");
-//            }
-//            else if (operation == 5) {
-//                if (courseCounter >= 4 && courseCounter <= 6) {
-//                    for (Integer courseID : courseCart) {
-//                        studentDaoOperation.addCourse(student, courseID);
-//                    }
-//                    logger.info("Proceed to make payment\n");
-//                    setRegistrationStatus(student);
-//                    student.setIsRegistered(true);
-//                    break;
-//                } else if (courseCounter < 4) {
-//                    logger.info("Less than 4 courses registered. Add more courses.\n");
-//                } else if (courseCounter > 6) {
-//                    logger.info("More than 6 courses registered. Drop few courses.\n");
-//                }
-//            }
-//            else if(operation == 6){
-//                logger.info("......... Exiting from Registration Process ...........\n");
-//                break;
-//            }
-//        }
-//        logger.info("==============================================\n");
-//        return false;
-//    }
 
-
-    // operation to show registered courses
+    /**
+     * Method to view all the courses currently registered by the student
+     *
+     * @param student Object containing all information about a student
+     */
     public void viewRegisteredCourses(Student student){
 
         try{
@@ -244,24 +217,35 @@ public class StudentOperation implements StudentInterface {
             }
         }
         catch (Exception e){
-            e.printStackTrace();
+            logger.warn(e.getMessage());
         }
 
     }
-    
+
+
+    /**
+     * Method to get all information of a student as a student object
+     *
+     * @param email String that is the email of the user
+     * @return A student object containing all information about a student
+     */
     public Student getStudentByEmail(String email) {
     	StudentDAOOperation studentOperation = new StudentDAOOperation();
     	Student st = studentOperation.getStudentByEmail(email);
     	return st;
     }
 
-
+    /**
+     * Method to set the registration status of the student as registered
+     *
+     * @param student Object containing all information about a student
+     */
     public void setRegistrationStatus(Student student){
         try{
             studentDaoOperation.setRegistrationStatus(student);
         }
         catch (Exception e){
-            e.printStackTrace();
+            logger.warn(e.getMessage());
         }
     }
 }

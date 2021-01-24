@@ -4,6 +4,7 @@
 package com.flipkart.dao;
 
 import com.flipkart.bean.Admin;
+import com.flipkart.bean.Course;
 import com.flipkart.bean.Professor;
 import com.flipkart.exception.AdminCRSException;
 
@@ -17,4 +18,7 @@ public interface AdminDAOInterface {
 	public int addAdmin(String password, Admin admin);
 	public int addProfessor(String password, Professor prof);
 	public void allotCourses(int courseId,int professorId);
+	public boolean addCourse(Course course); 
+	public boolean deleteCourse(int courseId); 
+	public void approveStudent();
 }
