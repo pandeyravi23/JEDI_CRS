@@ -17,7 +17,11 @@ public class StudentCRSMenu {
     private CourseOperation courseOperation = new CourseOperation();
     private  Student student = new Student();
     //public static ArrayList<Integer> al = new ArrayList<>();
-
+    
+    /**
+	 * 
+	 * Student CRS Menu
+	 */
     public void studentClient(){
         Scanner input = new Scanner(System.in);
 
@@ -65,6 +69,10 @@ public class StudentCRSMenu {
         }while (choice!=-1);
     }
     
+    /**
+	 * 
+	 * Initializes StudentCRSMenu class and calls studentClient to show respective menu.
+	 */
     public void init(String email) {
     	student = studentOperation.getStudentByEmail(email);
     	if(student.isApproved()) {
@@ -75,6 +83,10 @@ public class StudentCRSMenu {
     	}
     }
     
+    /**
+	 * 
+	 * Function to handle registration related dialogue and operations
+	 */
     public void registerCourses() {
     	try {
     		if(student.getIsRegistered()){
@@ -173,8 +185,11 @@ public class StudentCRSMenu {
     		logger.info(e.getMessage());
     	}
     }
-
-    //showing available choices for student
+    
+    /**
+	 * 
+	 * Shows Available Choices for Student
+	 */
     public void showChoices(){
         logger.info("Select an operation: ");
         logger.info("1. View student details");
@@ -190,7 +205,10 @@ public class StudentCRSMenu {
     }
 
 
-    // method to add course
+    /**
+	 * 
+	 * Method to add a course to a students registered courses list.
+	 */
     public void addCourse(){
     	if (!student.getIsRegistered()) {
         	logger.info("Student needs to register courses to add course.\n");
@@ -207,7 +225,10 @@ public class StudentCRSMenu {
         studentOperation.addCourse(student,courseID);
     }
 
-    // method to drop a course
+    /**
+	 * 
+	 * Method to drop a course from a students registered courses list.
+	 */
     public void dropCourse(){
     	if (!student.getIsRegistered()) {
         	logger.info("Student needs to register courses to drop course\n");
@@ -223,7 +244,11 @@ public class StudentCRSMenu {
         int courseID = input.nextInt();
         studentOperation.deleteCourse(student,courseID);
     }
-
+    
+    /**
+	 * 
+	 * Method to view grades for the logged in student
+	 */
     public void viewGrades(){
         if(!student.getIsRegistered()){
             logger.info("You have not yet registered.\n");
@@ -233,7 +258,10 @@ public class StudentCRSMenu {
         }
     }
 
-    // method to make payment
+    /**
+	 * 
+	 * Method to make payment
+	 */
     public void makePayment(){
     	if(!student.getIsRegistered()) {
     		logger.info("Please complete your course registration to make payment\n");
@@ -278,7 +306,11 @@ public class StudentCRSMenu {
             }
     	}
     }
-
+    
+    /**
+	 * 
+	 * Method to update info of student
+	 */
     public void updateInfo(){
         logger.info("================UPDATE INFO================\n");
         // Name, age, address, contact, gender, nationality
@@ -347,7 +379,11 @@ public class StudentCRSMenu {
 
         }while(choice != -1);
     }
-
+    
+    /**
+	 * 
+	 * Showing student details, like ID, Name,  Age, Address and more.
+	 */
     public void viewStudentDetails(){
         logger.info("============== Student Details ===============");
         logger.info("Student ID: " + student.getUserId());
