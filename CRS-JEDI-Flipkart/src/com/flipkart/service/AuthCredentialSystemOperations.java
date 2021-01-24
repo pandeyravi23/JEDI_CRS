@@ -17,8 +17,24 @@ import com.flipkart.exception.CommonException;
 public class AuthCredentialSystemOperations implements AuthCredentialSystemInterface {
 
 	private Logger logger = Logger.getLogger(AuthCredentialSystemOperations.class);
-	private static UserDAOOperation userDaoOperation = new UserDAOOperation();
-	private static StudentDAOOperation studentDaoOperation = new StudentDAOOperation();
+	private static UserDAOOperation userDaoOperation = UserDAOOperation.getInstance();
+	private static StudentDAOOperation studentDaoOperation = StudentDAOOperation.getInstance();
+
+	private static AuthCredentialSystemOperations instance = null;
+
+	private AuthCredentialSystemOperations()
+	{
+
+	}
+
+	synchronized public static AuthCredentialSystemOperations getInstance()
+	{
+		if(instance == null)
+		{
+			instance = new AuthCredentialSystemOperations();
+		}
+		return instance;
+	}
 
 	/**
 	 * Method to login into the application and get the role of the user

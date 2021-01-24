@@ -9,7 +9,7 @@ import com.flipkart.bean.Professor;
 import com.flipkart.exception.AdminCRSException;
 
 /**
- * @author jedi04
+ * @author JEDI04
  *
  */
 public interface AdminDAOInterface {

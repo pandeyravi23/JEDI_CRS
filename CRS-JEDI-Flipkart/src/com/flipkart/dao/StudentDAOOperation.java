@@ -14,16 +14,33 @@ import org.apache.log4j.Logger;
 import com.flipkart.bean.Student;
 import com.flipkart.util.DBConnection;
 
-/*
+/**
  * Primary Class undertaking all database queries related to Student Operations
  * 
  * @author JEDI 04
  */
+
 public class StudentDAOOperation implements StudentDAOInterface {
 	private static Logger logger = Logger.getLogger(StudentDAOOperation.class);
 	Connection connection = null;
 	PreparedStatement ps = null;
-	CoursesDAOOperation coursesDaoOperation = new CoursesDAOOperation();
+	CoursesDAOOperation coursesDaoOperation = CoursesDAOOperation.getInstance();
+
+	private static StudentDAOOperation instance = null;
+
+	private StudentDAOOperation()
+	{
+
+	}
+
+	synchronized public static StudentDAOOperation getInstance()
+	{
+		if(instance == null)
+		{
+			instance = new StudentDAOOperation();
+		}
+		return instance;
+	}
 
 	/**
 	 * Method to fetch Student Object from database given email of student

@@ -1,6 +1,7 @@
 package com.flipkart.service;
 import com.flipkart.bean.*;
 import com.flipkart.dao.ProfessorDAOOperation;
+import com.flipkart.exception.StudentCRSException;
 import org.apache.log4j.Logger;
 
 import com.flipkart.bean.Student;
@@ -10,6 +11,8 @@ import com.flipkart.bean.Course;
 
 import java.util.ArrayList;
 
+
+
 /**
  * Class to handle all student related operations. Accessed by Student CRS Menu
  *
@@ -17,10 +20,28 @@ import java.util.ArrayList;
  */
 
 public class StudentOperation implements StudentInterface {
+
     private static Logger logger = Logger.getLogger(StudentOperation.class);
-	CoursesDAOOperation coursesDaoOperation = new CoursesDAOOperation();
-    StudentDAOOperation studentDaoOperation = new StudentDAOOperation();
+    CoursesDAOOperation coursesDaoOperation = CoursesDAOOperation.getInstance();
+    StudentDAOOperation studentDaoOperation = StudentDAOOperation.getInstance();
     ProfessorDAOOperation professorDAOOperation = new ProfessorDAOOperation();
+
+    private static StudentOperation instance = null;
+
+    private StudentOperation()
+    {
+
+    }
+
+    synchronized public static StudentOperation getInstance()
+    {
+        if(instance == null)
+        {
+            instance = new StudentOperation();
+        }
+        return instance;
+    }
+
 
 
     /**
@@ -33,7 +54,14 @@ public class StudentOperation implements StudentInterface {
     	int count = 0;
     	try {
     		count = studentDaoOperation.getNoOfCourses(student);
+    		if(count == 0){
+    		    throw new StudentCRSException("No courses registered.\n");
+            }
     	}
+    	catch (StudentCRSException e){
+    	    logger.warn(e.getMessage());
+    	    return 0;
+        }
     	catch (Exception e) {
     		 logger.warn(e.getMessage());
     	}
@@ -49,6 +77,12 @@ public class StudentOperation implements StudentInterface {
     	ArrayList<Course> courses = null;
     	try{
             courses = coursesDaoOperation.getAllCourses();
+            if(courses == null){
+                throw new StudentCRSException("No courses available.\n");
+            }
+        }
+    	catch (StudentCRSException e){
+    	    logger.warn(e.getMessage());
         }
         catch (Exception e){
             logger.warn(e.getMessage());
@@ -230,9 +264,22 @@ public class StudentOperation implements StudentInterface {
      * @return A student object containing all information about a student
      */
     public Student getStudentByEmail(String email) {
-    	StudentDAOOperation studentOperation = new StudentDAOOperation();
-    	Student st = studentOperation.getStudentByEmail(email);
-    	return st;
+        Student st = null;
+
+        try {
+            st = studentDaoOperation.getStudentByEmail(email);
+            if(st==null){
+                throw new StudentCRSException("Student Not Found!");
+            }
+        }
+        catch (StudentCRSException e){
+            logger.warn(e.getMessage());
+        }
+        catch (Exception e){
+            logger.warn(e.getMessage());
+        }
+
+        return st;
     }
 
     /**

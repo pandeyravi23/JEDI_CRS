@@ -3,6 +3,7 @@ package com.flipkart.service;
 import com.flipkart.bean.Course;
 import com.flipkart.dao.CoursesDAOOperation;
 
+import com.flipkart.exception.CommonException;
 import org.apache.log4j.Logger;
 
 /**
@@ -14,7 +15,23 @@ public class CourseOperation implements CourseInterface {
 
     private static Logger logger = Logger.getLogger(CourseOperation.class);
     
-    CoursesDAOOperation coursesDaoOperation = new CoursesDAOOperation();
+    CoursesDAOOperation coursesDaoOperation = CoursesDAOOperation.getInstance();
+
+	private static CourseOperation instance = null;
+
+	private CourseOperation()
+	{
+
+	}
+
+	synchronized public static CourseOperation getInstance()
+	{
+		if(instance == null)
+		{
+			instance = new CourseOperation();
+		}
+		return instance;
+	}
 
 	/**
 	 * Method to get the number of students enrolled in a particular course
@@ -24,9 +41,15 @@ public class CourseOperation implements CourseInterface {
 	 */
 	@Override
 	public int noOfEnrolledStudents(int courseID) {
-		int count = -1;
+		int count = 0;
 		try {
 			count = coursesDaoOperation.noOfEnrolledStudents(courseID);
+			if(count == 0){
+				throw new CommonException("No students enrolled");
+			}
+		}
+		catch (CommonException e){
+			logger.warn(e.getMessage());
 		}
 		catch (Exception e) {
 			logger.warn(e.getMessage());
@@ -45,6 +68,12 @@ public class CourseOperation implements CourseInterface {
 		Course course = null;
 		try {
 			course = coursesDaoOperation.getCourseByID(courseID);
+			if(course == null){
+				throw new CommonException("No course with this ID");
+			}
+		}
+		catch (CommonException e){
+			logger.warn(e.getMessage());
 		}
 		catch(Exception e) {
 			logger.warn(e.getMessage());
