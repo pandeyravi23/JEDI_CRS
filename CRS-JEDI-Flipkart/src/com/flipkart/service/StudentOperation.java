@@ -1,5 +1,6 @@
 package com.flipkart.service;
 import com.flipkart.bean.*;
+import com.flipkart.dao.ProfessorDAOOperation;
 import org.apache.log4j.Logger;
 
 import com.flipkart.bean.Student;
@@ -15,6 +16,7 @@ public class StudentOperation implements StudentInterface {
     private static Logger logger = Logger.getLogger(StudentOperation.class);
 	CoursesDAOOperation coursesDaoOperation = new CoursesDAOOperation();
     StudentDAOOperation studentDaoOperation = new StudentDAOOperation();
+    ProfessorDAOOperation professorDAOOperation = new ProfessorDAOOperation();
     
     public int getNumberOfEnrolledCourses(Student student) {
     	int count = 0;
@@ -46,10 +48,12 @@ public class StudentOperation implements StudentInterface {
     public void showCourses(){
         try{
             ArrayList<Course> courses = coursesDaoOperation.getAllCourses();
+            String professorAlloted;
             logger.info("================AVAILABLE COURSES================\n");
-            logger.info("Course ID\tCourse Name\tCredits");
+            logger.info("Course ID\tCourse Name\tCredits\tProfessor Allotted");
             for (Course course : courses) {
-                logger.info(course.getCourseID() + "\t" + course.getCourseName() + "\t" + course.getCredits());
+                professorAlloted = professorDAOOperation.getProfessorById(course.getProfessorAllotted());
+                logger.info(course.getCourseID() + "\t\t" + course.getCourseName() + "\t" + course.getCredits() + "\t\t" + professorAlloted);
             }
             logger.info("=================================================\n");
         }

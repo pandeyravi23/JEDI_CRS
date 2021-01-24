@@ -11,7 +11,6 @@ import java.util.Scanner;
 
 /**
  *  User Interactive menu if user logs in is a professor
- *  
  *  @author JEDI04
  */
 public class ProfessorMenu {
@@ -21,7 +20,6 @@ public class ProfessorMenu {
 	/**
 	 *  Manages the major roles of professor
 	 *  based on user inputs
-	 *  
 	 *  @param professor Professor Object containing information of the logged in professor
 	 */
 	public void professorClient(Professor professor) {
@@ -59,8 +57,7 @@ public class ProfessorMenu {
 	 * Initializes professor object with 
 	 * values in the database
 	 * fetching from the email
-	 * 
-	 * @param email Professor email to be verified
+	 * @param email Professor email
 	 */
 	public void init(String email) {
 		Professor professor = professorOperation.getProfessorByEmail(email);
@@ -150,7 +147,6 @@ public class ProfessorMenu {
 		Scanner sc = new Scanner(System.in);
 		logger.info("Inside View Student Method");
 		try {
-//			ProfessorOperation professorOperation = new ProfessorOperation();
 			logger.info("	Enter courseId");
 			int courseId = sc.nextInt();
 			professorOperation.viewStudentsEnrolled(courseId);

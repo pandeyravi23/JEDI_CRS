@@ -29,7 +29,7 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	
 	private static ProfessorDAOOperation instance = null;
 	
-	private ProfessorDAOOperation() {
+	public ProfessorDAOOperation() {
 		
 	}
 	
@@ -70,6 +70,34 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 		}
 		return professor;
 	}
+
+	/**
+	 * Gets Professor Name from the professorId
+	 * @param professorID
+	 * @return Professor Name corresponding to the given id
+	 */
+	public String getProfessorById(int professorID){
+		String professorName = null;
+
+		try{
+			con = DBConnection.getConnection();
+			//String sqlQuery = "SELECT name FROM professor WHERE id = ?";
+			stmt = con.prepareStatement(SQLQueriesConstant.GET_PROFESSOR_BY_ID_QUERY);
+
+			stmt.setInt(1,professorID);
+
+			ResultSet resultSet = stmt.executeQuery();
+			if(resultSet.next()){
+				professorName = resultSet.getString("name");
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+
+		return professorName;
+	}
+
 
 	/**
 	 * Method Displays list of courses alloted to the 

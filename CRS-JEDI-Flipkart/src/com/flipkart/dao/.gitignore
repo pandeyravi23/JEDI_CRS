@@ -8,3 +8,11 @@
 /ProfessorDaoOperation.class
 /AdminDAOOperation.class
 /AdminDAOInterface.class
+/CoursesDAOInterface.class
+/CoursesDAOOperation.class
+/ProfessorDAOInterface.class
+/ProfessorDAOOperation.class
+/StudentDAOInterface.class
+/StudentDAOOperation.class
+/UserDAOInterface.class
+/UserDAOOperation.class
