@@ -28,9 +28,13 @@ public class ProfessorOperation implements ProfessorInterface {
 		return instance;
 	}
 	
-	/*
+	/**
+	 * @author JEDI04
 	 * Method to get and display enrolled student in a particular course whose
 	 * grades are currently Not Available
+	 * 
+	 * @param courseId(integer)
+	 * @return none
 	 */
 	@Override
 	public void viewStudentsEnrolled(int courseId) {
@@ -61,8 +65,12 @@ public class ProfessorOperation implements ProfessorInterface {
 		}
 	}
 
-	/*
+	/**
+	 * @author JEDI04
 	 * Get and display grades of all students in a course linked with courseId
+	 * 
+	 * @param courseId(integer)
+	 * @return none
 	 */
 	@Override
 	public void viewGrades(int courseId) {
@@ -82,8 +90,12 @@ public class ProfessorOperation implements ProfessorInterface {
 		}
 	}
 
-	/*
+	/**
+	 * @author JEDI04
 	 * Grade Students in a batch with mentioned courseId
+	 * 
+	 * @param courseId(integer)
+	 * @return boolean
 	 */
 	@Override
 	public Boolean gradeStudents(int courseId) {
@@ -105,8 +117,12 @@ public class ProfessorOperation implements ProfessorInterface {
 		return true;
 	}
 
-	/*
+	/**
+	 * @author JEDI04
 	 * Get and display all courses alloted to the professor with given courseId
+	 * 
+	 * @param professorId(integer)
+	 * @return none
 	 */
 	@Override
 	public void showCourses(int professorId) {
@@ -114,16 +130,24 @@ public class ProfessorOperation implements ProfessorInterface {
 		professorDaoOperation.showCourses(professorId);
 	}
 
-	/*
+	/**
+	 * @author JEDI04
 	 * Returns professor object associated with given email
+	 * 
+	 * @param email(String)
+	 * @return Professor(object)
 	 */
 	public Professor getProfessorByEmail(String email) {
 		Professor p = professorDaoOperation.getProfessorByEmail(email);
 		return p;
 	}
 
-	/*
-	 * Updates Student grade and returns upadte status as boolean
+	/**
+	 * @author JEDI04
+	 * Updates Student grade and returns update status as boolean
+	 * 
+	 * @param {courseId(integer),studentId(integer),grade(String)}
+	 * @return boolean
 	 */
 	public boolean updateStudentGrade(int courseId, int studentId, String grade) {
 		return professorDaoOperation.updateStudentGrades(courseId, studentId, grade);

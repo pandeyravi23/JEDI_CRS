@@ -224,6 +224,7 @@ public class StudentDAOOperation implements StudentDAOInterface {
 				Course course = new Course();
 				course.setCourseID(resultSet.getInt("courseID"));
 				course.setCourseName(resultSet.getString("name"));
+				course.setCredits(resultSet.getInt("credits"));
 				enrolledCourses.add(course);
 			}
 		}
@@ -307,10 +308,7 @@ public class StudentDAOOperation implements StudentDAOInterface {
 			ps.setBoolean(6, student.getIsRegistered());
 			ps.setBoolean(7, student.getPaymentStatus());
 			
-			int count = ps.executeUpdate();
-			if(count > 0) {
-				// Registered
-			}
+			ps.executeUpdate();
 		}
 		catch(Exception e) {
 			e.printStackTrace();
