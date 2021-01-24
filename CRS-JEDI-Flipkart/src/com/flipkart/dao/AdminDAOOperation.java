@@ -23,7 +23,12 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	Connection connection = DBConnection.getConnection();
 	PreparedStatement ps = null;
 	
-//	returns false if the email is already present in the database. Returns true otherwise.
+/*
+ * Verifies Email Address at the time of registration
+ * returns false if it already exists in database
+ * else returns true
+ */
+	
 	public boolean verifyEmail(String email)
 	{
 		try
@@ -45,6 +50,11 @@ public class AdminDAOOperation implements AdminDAOInterface {
 		return true;
 	}
 	
+	
+	/*
+	 * addAdmin adds the new Admin in Credentials table 
+	 * and Admin table 
+	 */
 	public int addAdmin(String password, Admin admin)
 	{
 		try
@@ -83,6 +93,11 @@ public class AdminDAOOperation implements AdminDAOInterface {
 		return 0;
 	}
 	
+	
+	/*
+	 * addProfessor adds the new Professor in Credentials table 
+	 * and Professor table 
+	 */
 	public int addProfessor(String password, Professor prof)
 	{
 		try
@@ -123,6 +138,12 @@ public class AdminDAOOperation implements AdminDAOInterface {
 		return 0;
 	}
 	
+	
+	/*
+	 * printGrades Prints the Report of 
+	 * a Particular Student given its
+	 * Student ID
+	 */
 	public void printGrades(int studentId) {
 		try {
 			String str = SQLQueriesConstant.GET_GRADES_BY_STUDENT_ID ; 
@@ -132,6 +153,11 @@ public class AdminDAOOperation implements AdminDAOInterface {
 			String name="";
 			if(rs.next())
 				name = rs.getString("sname");
+			else {
+				logger.info("No Student with Student ID: " + studentId + " Exists!!");
+				logger.info("=======================================");
+				return ;
+			}
 			logger.info("=======================================");
 			logger.info("        Report Card of " + name + " :");
 			logger.info("=======================================");
@@ -149,6 +175,11 @@ public class AdminDAOOperation implements AdminDAOInterface {
 		return ;
 	}
 	
+	
+	/*
+	 * approveStudent Approves the Student Registration
+	 * and Allows them to login and Register Courses
+	 */
 	public void approveStudent() {
 		try {
 			Scanner sc = new Scanner(System.in);
@@ -198,7 +229,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	
 	
 	/*
-	 * Query to add a course to a courseCatalog by admin
+	 * Query to add a course to a courseCatalog by Admin
 	 * only if course id provided is unique
 	 */
 	
@@ -251,21 +282,16 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	
 	/*
 	 * Assign course with particular course ID to the
-	 * professor with ID entered by the admin
+	 * professor with ID entered by the Admin
 	 */
 	
 	public void allotCourses(int courseId,int professorID) {
 		try {
-			logger.info("Inside Allot courses method-------------");
+//			logger.info("Inside Allot courses method-------------");
 			String str = SQLQueriesConstant.GET_COURSE_NAME_BY_ID;
 			ps = connection.prepareStatement(str);
 			ps.setInt(1,courseId);
 			ResultSet rs = ps.executeQuery();
-			if(rs.next()) {
-			}
-			else {
-				logger.info("No course Available");
-			}
 			if(rs.next()) {
 //				logger.info("Inside update professorID method-------------");
 				str = SQLQueriesConstant.UPDATE_PROFESSOR_IN_COURSE;
@@ -274,10 +300,12 @@ public class AdminDAOOperation implements AdminDAOInterface {
 				ps.setInt(2, courseId);
 				int status = ps.executeUpdate();
 				if(status>0) {
-					logger.info("Updated Successfully");
+					logger.info("Course Alloted Successfully");
+					logger.info("=======================================");
 				}
 				else {
 					logger.info("Failed");
+					logger.info("=======================================");
 				}
 			}
 			else {
@@ -285,7 +313,12 @@ public class AdminDAOOperation implements AdminDAOInterface {
 				ps = connection.prepareStatement(str);
 				ps.setInt(1,courseId);
 				rs = ps.executeQuery();
-				while(rs.next()) {
+				if(rs.next()==false) {
+					logger.info("No course with Course ID: " + courseId + " Exists!!");
+					logger.info("=======================================");
+					return ;
+				}
+				 do{
 					str = SQLQueriesConstant.ADD_NEWCOURSE_IN_COURSE;
 					ps = connection.prepareStatement(str);
 					ps.setInt(1,courseId);
@@ -293,12 +326,12 @@ public class AdminDAOOperation implements AdminDAOInterface {
 					ps.setInt(3,professorID);
 					ps.setInt(4,rs.getInt("credits"));
 					ps.executeUpdate();
-				}
+				}while(rs.next());
+				logger.info("Course Alloted Successfully");
+				logger.info("=======================================");
 			}
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
-	
-	
 }
