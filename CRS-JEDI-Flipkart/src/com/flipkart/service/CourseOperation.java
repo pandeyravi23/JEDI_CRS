@@ -5,34 +5,39 @@ import com.flipkart.dao.CoursesDAOOperation;
 
 import org.apache.log4j.Logger;
 
+/**
+ * Class to handle all course related operations.
+ *
+ * @author JEDI 04
+ */
 public class CourseOperation implements CourseInterface {
 
     private static Logger logger = Logger.getLogger(CourseOperation.class);
     
-    CoursesDAOOperation coursesDaoOperation = new CoursesDAOOperation();
+    CoursesDAOOperation coursesDaoOperation = CoursesDAOOperation.getInstance();
 
-    @Override
-    public boolean addCourse(Course course) {
-        logger.debug("In add course method");
-        return true;
-    }
+	private static CourseOperation instance = null;
 
-    @Override
-    public boolean deleteCourse(int courseID) {
-        logger.debug("In delete course method");
-        return true;
-    }
+	private CourseOperation()
+	{
 
-    @Override
-    public void getCourseDetail(int courseID) {
-        logger.debug("In get course detail method");
-    }
+	}
 
-    @Override
-    public void assignProfessor(int courseID) {
-        logger.debug("In assign professor method");
-    }
+	synchronized public static CourseOperation getInstance()
+	{
+		if(instance == null)
+		{
+			instance = new CourseOperation();
+		}
+		return instance;
+	}
 
+	/**
+	 * Method to get the number of students enrolled in a particular course
+	 *
+	 * @param courseID ID of the course
+	 * @return count of students enrolled in the course
+	 */
 	@Override
 	public int noOfEnrolledStudents(int courseID) {
 		int count = -1;
@@ -40,11 +45,17 @@ public class CourseOperation implements CourseInterface {
 			count = coursesDaoOperation.noOfEnrolledStudents(courseID);
 		}
 		catch (Exception e) {
-			
+			logger.warn(e.getMessage());
 		}
 		return count;
 	}
 
+	/**
+	 * Method to get the course object which contains all information about a course
+	 *
+	 * @param courseID ID of the course
+	 * @return Course object containing all information about the course
+	 */
 	@Override
 	public Course getCourseById(int courseID) {
 		Course course = null;
@@ -52,12 +63,9 @@ public class CourseOperation implements CourseInterface {
 			course = coursesDaoOperation.getCourseByID(courseID);
 		}
 		catch(Exception e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 		return course;
 	}
-	
-	
-    
-    
+
 }

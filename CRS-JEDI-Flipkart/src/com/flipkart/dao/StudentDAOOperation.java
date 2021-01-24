@@ -1,8 +1,5 @@
 package com.flipkart.dao;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,21 +15,42 @@ import com.flipkart.bean.Student;
 import com.flipkart.util.DBConnection;
 
 /*
+ * Primary Class undertaking all database queries related to Student Operations
+ * 
  * @author JEDI 04
  */
-
 public class StudentDAOOperation implements StudentDAOInterface {
 	private static Logger logger = Logger.getLogger(StudentDAOOperation.class);
 	Connection connection = null;
 	PreparedStatement ps = null;
-	CoursesDAOOperation coursesDaoOperation = new CoursesDAOOperation();
+	CoursesDAOOperation coursesDaoOperation = CoursesDAOOperation.getInstance();
 
-	// to get the student details from db based on email entered during login
+	private static StudentDAOOperation instance = null;
+
+	private StudentDAOOperation()
+	{
+
+	}
+
+	synchronized public static StudentDAOOperation getInstance()
+	{
+		if(instance == null)
+		{
+			instance = new StudentDAOOperation();
+		}
+		return instance;
+	}
+
+	/**
+	 * Method to fetch Student Object from database given email of student
+	 * 
+	 * @param email String containing the email of the student whose object is to be fetched
+	 * @return The Student Object containing all the information regarding to a student
+	 */
 	public Student getStudentByEmail(String email) {
 		Student student = new Student();
 		try {
 			connection = DBConnection.getConnection();
-			//String sqlQuery = "SELECT * FROM student WHERE email=?";
 			ps = connection.prepareStatement(SQLQueriesConstant.GET_STUDENT_BY_EMAIL_QUERY);
 			
 			ps.setString(1, email);
@@ -54,21 +72,27 @@ public class StudentDAOOperation implements StudentDAOInterface {
 			student.setGender(result.getString("gender"));
 			student.setAddress(result.getString("address"));
 		}
+		catch(SQLException e) {
+			logger.warn(e.getMessage() + "\n");
+		}
 		catch(Exception e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage() + "\n");
 		}
 		return student;
 	}
 
-	// to add course in db based on student ID
+	/**
+	 * Method to add a entry to the RegisteredCourses with the studentID and the courseID, i.e to add 
+	 * a course to a students registered courses list.
+	 * 
+	 * @param student The student object containing the student related information to make an entry
+	 * @param courseID The courseID with which an entry is to be made
+	 */
 	public void addCourse(Student student, int courseID){
 		Course course = coursesDaoOperation.getCourseByID(courseID);
 		if(course == null) {
 			logger.info(">>>>>>>> Invalid Course ID <<<<<<<<<<\n");
 		}
-//		else if(getNoOfCourses(student)>=6){
-//			logger.info("Cannot add more course. You have already added 6 courses.");
-//		}
 		else if(getCourse(student, courseID)){
 			logger.info("You have already added this course.\n");
 		}
@@ -78,7 +102,6 @@ public class StudentDAOOperation implements StudentDAOInterface {
 		else{
 			try{
 				connection = DBConnection.getConnection();
-				//String SQLQuery = "INSERT INTO RegisteredCourses(studentID, courseID) values(?,?)";
 				ps = connection.prepareStatement(SQLQueriesConstant.ADD_COURSE_STUDENT_QUERY);
 
 				ps.setInt(1,student.getUserId());
@@ -92,15 +115,21 @@ public class StudentDAOOperation implements StudentDAOInterface {
 				addCourseToGrades(student.getUserId(),courseID);
 			}
 			catch(SQLException e) {
-				logger.warn("SQL Error: " + e.getMessage());
+				logger.warn(e.getMessage() + "\n");
 			}
-			catch (Exception e){
-				e.printStackTrace();
+			catch(Exception e) {
+				logger.warn(e.getMessage() + "\n");
 			}
 		}
 	}
 
-	// to delete a course from db based on student ID
+	/**
+	 * Method to remove a course from a students registered courses list. Entry is removed from 
+	 * RegisteredCourses table
+	 * 
+	 * @param student Student Object containing information regarding the student
+	 * @param courseID The courseID whose entry is to be removed
+	 */
 	public void dropCourse(Student student, int courseID){
 		Course course = coursesDaoOperation.getCourseByID(courseID);
 		if(course == null) {
@@ -109,13 +138,9 @@ public class StudentDAOOperation implements StudentDAOInterface {
 		else if(!getCourse(student, courseID)){
 			logger.info("You have not registered for this course.\n");
 		}
-		/*else if(getNoOfCourses(student)==4){
-			logger.info("Only 4 courses registered. Cannot drop a course.");
-		}*/
 		else {
 			try {
 				connection = DBConnection.getConnection();
-				//String SQLQuery = "DELETE FROM RegisteredCourses where studentID = ? and courseID = ?";
 				ps = connection.prepareStatement(SQLQueriesConstant.DROP_COURSE_STUDENT_QUERY);
 
 				ps.setInt(1, student.getUserId());
@@ -128,19 +153,25 @@ public class StudentDAOOperation implements StudentDAOInterface {
 
 				deleteCourseFromGrades(student.getUserId(),courseID);
 			}
-			catch (Exception e) {
-				e.printStackTrace();
+			catch(SQLException e) {
+				logger.warn(e.getMessage() + "\n");
+			}
+			catch(Exception e) {
+				logger.warn(e.getMessage() + "\n");
 			}
 		}
 	}
 
-	// to get the no of courses in which a student is enrolled
+	/**
+	 * Method to get the number of courses enrolled by a student
+	 * 
+	 * @param student Student object containing the student information necessary to fetch the number of courses
+	 * @return The number of courses a student is enrolled in
+	 */
 	public int getNoOfCourses(Student student){
 		int count = 0;
-
 		try{
 			connection = DBConnection.getConnection();
-			//String SQLQuery = "SELECT COUNT(*) FROM RegisteredCourses WHERE studentID=?";
 			ps = connection.prepareStatement(SQLQueriesConstant.GET_NO_OF_COURSES_QUERY);
 
 			ps.setInt(1,student.getUserId());
@@ -149,19 +180,27 @@ public class StudentDAOOperation implements StudentDAOInterface {
 				count = resultSet.getInt(1);
 			}
 		}
-		catch(Exception e){
-			e.printStackTrace();
+		catch(SQLException e) {
+			logger.warn(e.getMessage() + "\n");
 		}
-
+		catch(Exception e) {
+			logger.warn(e.getMessage() + "\n");
+		}
 		return count;
 	}
-
+	
+	/**
+	 * Method to fetch the course object for a student given the courseID
+	 * 
+	 * @param student Student object containing the student information
+	 * @param courseID The course ID whose course data is to be fetched
+	 * @return Returns true if such a course if found else false.
+	 */
 	public boolean getCourse(Student student, int courseID){
 		int count = 0;
 
 		try{
 			connection = DBConnection.getConnection();
-			//String SQLQuery = "SELECT COUNT(*) FROM RegisteredCourses WHERE studentID=? AND courseID=?";
 			ps = connection.prepareStatement(SQLQueriesConstant.GET_COURSE_QUERY);
 
 			ps.setInt(1,student.getUserId());
@@ -172,18 +211,25 @@ public class StudentDAOOperation implements StudentDAOInterface {
 				count = resultSet.getInt(1);
 			}
 		}
-		catch(Exception e){
-			e.printStackTrace();
+		catch(SQLException e) {
+			logger.warn(e.getMessage() + "\n");
+		}
+		catch(Exception e) {
+			logger.warn(e.getMessage() + "\n");
 		}
 
 		return count>0;
 	}
 
-	// to add student and its courses to grades table in db
+	/**
+	 * Method to add an entry to the grades table for a student
+	 * 
+	 * @param studentID The id of the student whose entry is to be made
+	 * @param courseID The id of the course whose entry is to be made
+	 */
 	public void addCourseToGrades(int studentID, int courseID){
 		try{
 			connection = DBConnection.getConnection();
-			//String SQLQuery = "INSERT INTO grades(studentId, courseId) values(?,?)";
 			ps = connection.prepareStatement(SQLQueriesConstant.ADD_COURSE_TO_GRADES_QUERY);
 
 			ps.setInt(1,studentID);
@@ -191,15 +237,23 @@ public class StudentDAOOperation implements StudentDAOInterface {
 
 			ps.executeUpdate();
 		}
-		catch(Exception e){
-			e.printStackTrace();
+		catch(SQLException e) {
+			logger.warn(e.getMessage() + "\n");
+		}
+		catch(Exception e) {
+			logger.warn(e.getMessage() + "\n");
 		}
 	}
-
+	
+	/**
+	 * Method to delete an entry to the grades table for a student
+	 * 
+	 * @param studentID The id of the student whose entry is to be deleted
+	 * @param courseID The id of the course whose entry is to be deleted
+	 */
 	public void deleteCourseFromGrades(int studentID, int courseID){
 		try{
 			connection = DBConnection.getConnection();
-			//String SQLQuery = "DELETE FROM grades WHERE studentID = ? AND courseID = ?";
 			ps = connection.prepareStatement(SQLQueriesConstant.DELETE_COURSE_FROM_GRADES_QUERY);
 
 			ps.setInt(1,studentID);
@@ -207,19 +261,26 @@ public class StudentDAOOperation implements StudentDAOInterface {
 
 			ps.executeUpdate();
 		}
-		catch(Exception e){
-			e.printStackTrace();
+		catch(SQLException e) {
+			logger.warn(e.getMessage() + "\n");
+		}
+		catch(Exception e) {
+			logger.warn(e.getMessage() + "\n");
 		}
 	}
 
 
-	// to get all coursed in which a student is enrolled from db
+	/**
+	 * Method to fetch an ArrayList containing the Course objects of courses that a student is enrolled in.
+	 * 
+	 * @param student Student object containing the student information
+	 * @return An ArrayList containing the Course objects of courses that a student is enrolled in.
+	 */
 	public ArrayList<Course> getEnrolledCourses(Student student){
 		ArrayList<Course> enrolledCourses = new ArrayList<>();
 
 		try{
 			connection = DBConnection.getConnection();
-			//String SQLQuery = "SELECT courseID FROM RegisteredCourses WHERE studentID=?";
 			ps = connection.prepareStatement(SQLQueriesConstant.GET_ENROLLED_COURSES_QUERY);
 
 			ps.setInt(1,student.getUserId());
@@ -229,39 +290,51 @@ public class StudentDAOOperation implements StudentDAOInterface {
 				course.setCourseID(resultSet.getInt("courseID"));
 				course.setCourseName(resultSet.getString("name"));
 				course.setCredits(resultSet.getInt("credits"));
-				//course.setProfessorAllotted(resultSet.getInt("professorId"));
 				enrolledCourses.add(course);
 			}
 		}
-		catch(Exception e){
-			e.printStackTrace();
+		catch(SQLException e) {
+			logger.warn(e.getMessage() + "\n");
+		}
+		catch(Exception e) {
+			logger.warn(e.getMessage() + "\n");
 		}
 
 		return enrolledCourses;
 	}
 
-	// to set registration status of a student in db
+	/**
+	 * Method to set the registration status of a student to true.
+	 * 
+	 * @param student Student object containing the student information
+	 */
 	public void setRegistrationStatus(Student student){
 		try{
 			connection = DBConnection.getConnection();
-			//String SQLQuery = "UPDATE student SET isRegistered = 1 where id = ?";
 			ps = connection.prepareStatement(SQLQueriesConstant.SET_REGISTRATION_STATUS_QUERY);
 
 			ps.setInt(1,student.getUserId());
 			ps.executeUpdate();
 		}
-		catch(Exception e){
-			e.printStackTrace();
+		catch(SQLException e) {
+			logger.warn(e.getMessage() + "\n");
+		}
+		catch(Exception e) {
+			logger.warn(e.getMessage() + "\n");
 		}
 	}
 
-	// to fetch grades of a student based on student ID
+	/**
+	 * Method to fetch the Grade objects of given student
+	 * 
+	 * @param studentID The studentId whose grades is to be fetched
+	 * @return returns an ArrayList of Grades containing grade objects corresponding to grades obtained by a student
+	 */
 	public ArrayList<Grades> getGrades(int studentID){
 		ArrayList<Grades> grades = new ArrayList<>();
 
 		try{
 			connection = DBConnection.getConnection();
-			//String SQLQuery = "SELECT grades.courseId, course.name as courseName, grades.grade, grades.studentId FROM grades INNER JOIN course ON grades.courseId = course.id AND grades.studentId=?";
 			ps = connection.prepareStatement(SQLQueriesConstant.GET_GRADES_QUERY);
 
 			ps.setInt(1,studentID);
@@ -275,13 +348,21 @@ public class StudentDAOOperation implements StudentDAOInterface {
 				grades.add(grade);
 			}
 		}
-		catch(Exception e){
-			e.printStackTrace();
+		catch(SQLException e) {
+			logger.warn(e.getMessage() + "\n");
+		}
+		catch(Exception e) {
+			logger.warn(e.getMessage() + "\n");
 		}
 
 		return grades;
 	}
 	
+	/**
+	 * Method to set the payment status of a Student to true
+	 * 
+	 * @param student Student object containing the student information
+	 */
 	public void setPaymentStatus(Student student) {
 		try{
 			connection = DBConnection.getConnection();
@@ -289,20 +370,25 @@ public class StudentDAOOperation implements StudentDAOInterface {
 
 			ps.setInt(1, student.getUserId());
 			ps.executeUpdate();
-//			if(paid > 0) {
-//				logger.info("Payment Successful\n");
-//			}
 		}
-		catch(Exception e){
-			e.printStackTrace();
+		catch(SQLException e) {
+			logger.warn(e.getMessage() + "\n");
+		}
+		catch(Exception e) {
+			logger.warn(e.getMessage() + "\n");
 		}
 	}
 
+	/**
+	 * Method to register a student with a given id
+	 * 
+	 * @param student Student object containing the student information
+	 * @param id The id that the student is to be registered with.
+	 */
 	@Override
 	public void registerStudent(Student student, int id) {
 		try {
 			connection = DBConnection.getConnection();
-			//String sqlQuery = "INSERT INTO student(id, name, email, rollno, branch, isRegistered, paymentStatus) values(?, ?, ?, ?, ?, ?, ?)";
 			ps = connection.prepareStatement(SQLQueriesConstant.REGISTER_STUDENT_QUERY);
 
 			ps.setInt(1, id);
@@ -315,18 +401,25 @@ public class StudentDAOOperation implements StudentDAOInterface {
 			
 			ps.executeUpdate();
 		}
+		catch(SQLException e) {
+			logger.warn(e.getMessage() + "\n");
+		}
 		catch(Exception e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage() + "\n");
 		}
 		finally {
 			// connection.close();
 		}
 	}
-
+	
+	/**
+	 * Method to update the info of a student in the student and user database
+	 * 
+	 * @param student Student object containing the student information
+	 */
 	public void updateInfo(Student student){
 		try{
 			connection = DBConnection.getConnection();
-			//String sqlQuery = "UPDATE credentials SET age=?,address=?,contact=?,gender=?,nationality=? WHERE id=?";
 			ps = connection.prepareStatement(SQLQueriesConstant.UPDATE_STUDENT_CREDENTIAL_QUERY);
 
 			ps.setInt(1,student.getAge());
@@ -345,8 +438,11 @@ public class StudentDAOOperation implements StudentDAOInterface {
 
 			ps.executeUpdate();
 		}
-		catch (Exception e){
-			e.printStackTrace();
+		catch(SQLException e) {
+			logger.warn(e.getMessage() + "\n");
+		}
+		catch(Exception e) {
+			logger.warn(e.getMessage() + "\n");
 		}
 	}
 }
