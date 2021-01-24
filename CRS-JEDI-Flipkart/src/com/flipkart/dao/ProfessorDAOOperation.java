@@ -21,6 +21,19 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	private static Logger logger = Logger.getLogger(ProfessorDAOOperation.class);
 	Connection con;
 	PreparedStatement stmt;
+	
+	private static ProfessorDAOOperation instance = null;
+	
+	private ProfessorDAOOperation() {
+		
+	}
+	
+	synchronized public static ProfessorDAOOperation getInstance() {
+		if (instance==null) {
+			instance = new ProfessorDAOOperation();
+		}
+		return instance;
+	}
 
 	/*
 	 * Method creates and returns professor object using email ID from the database

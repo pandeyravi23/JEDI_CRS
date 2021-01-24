@@ -13,8 +13,21 @@ import com.flipkart.exception.ProfessorCRSException;
 public class ProfessorOperation implements ProfessorInterface {
 
 	private static Logger logger = Logger.getLogger(ProfessorOperation.class);
-	private ProfessorDAOOperation professorDaoOperation = new ProfessorDAOOperation();
-
+	private ProfessorDAOOperation professorDaoOperation = ProfessorDAOOperation.getInstance();
+	
+	private static ProfessorOperation instance = null;
+	
+	private ProfessorOperation() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	synchronized public static ProfessorOperation getInstance() {
+		if (instance == null) {
+			instance = new ProfessorOperation();
+		}
+		return instance;
+	}
+	
 	/*
 	 * Method to get and display enrolled student in a particular course whose
 	 * grades are currently Not Available
