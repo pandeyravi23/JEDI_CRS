@@ -405,7 +405,7 @@ public class StudentCRSMenu {
 		logger.info("Gender: " + student.getGender());
 		logger.info("Nationality: " + student.getNationality());
 		logger.info("Registration status: " + (student.getIsRegistered() == true ? "Complete" : "Pending"));
-		logger.info("Payment status: " + (student.getPaymentStatus() == true ? "Complete" : "Pending") + "\n");
-		logger.info("=============================================");
+		logger.info("Payment status: " + (student.getPaymentStatus() == true ? "Complete" : "Pending"));
+		logger.info("===============================================\n");
 	}
 }
