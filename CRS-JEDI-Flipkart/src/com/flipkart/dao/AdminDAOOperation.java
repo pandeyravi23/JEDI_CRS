@@ -5,6 +5,7 @@ import com.flipkart.bean.Student;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -17,6 +18,13 @@ import com.flipkart.bean.Professor;
 import com.flipkart.util.DBConnection;
 import com.flipkart.constant.SQLQueriesConstant;
 import com.flipkart.service.AdminOperation;
+
+
+/**
+ * @author Jedi04
+ * 
+ * Admin
+ */
 
 public class AdminDAOOperation implements AdminDAOInterface {
 	
@@ -41,10 +49,15 @@ public class AdminDAOOperation implements AdminDAOInterface {
 		return instance;
 	}
 	
-/*
+/**
+ * 
  * Verifies Email Address at the time of registration
  * returns false if it already exists in database
- * else returns true
+ * else returns true.
+ * 
+ * @param 
+ * 
+ * 
  */
 	
 	public boolean verifyEmail(String email)
@@ -61,9 +74,14 @@ public class AdminDAOOperation implements AdminDAOInterface {
 			{
 				return false;
 			}
-		}catch(Exception e)
+		}
+		catch(SQLException e)
 		{
-			e.printStackTrace();
+			logger.info(e.getMessage());
+		}
+		catch(Exception e)
+		{
+			logger.info(e.getMessage());
 		}	
 		return true;
 	}
@@ -72,6 +90,11 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	/**
 	 * addAdmin adds the new Admin in Credentials table 
 	 * and Admin table 
+	 * 
+	 * @param password User provided password
+	 * @param admin Admin details sent inside admin class.
+	 * 
+	 * @return Returns 1 if new admin is successfully added. Else returns 0.
 	 */
 	public int addAdmin(String password, Admin admin)
 	{
@@ -104,10 +127,15 @@ public class AdminDAOOperation implements AdminDAOInterface {
 			
 			ps.executeUpdate();
 			return 1;
-		}catch(Exception e)
-		{
-			e.printStackTrace();
 		}
+		catch(SQLException e)
+		{
+			logger.info(e.getMessage());
+		}
+		catch(Exception e)
+		{
+			logger.info(e.getMessage());
+		}	
 		return 0;
 	}
 	
@@ -156,15 +184,19 @@ public class AdminDAOOperation implements AdminDAOInterface {
 			
 			return 1;
 		}
+		catch(SQLException e)
+		{
+			logger.info(e.getMessage());
+		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
-		}
+			logger.info(e.getMessage());
+		}	
 		return 0;
 	}
 	
 	
-	/*
+	/**
 	 * printGrades Prints the Report of 
 	 * a Particular Student given its
 	 * Student ID
@@ -194,9 +226,15 @@ public class AdminDAOOperation implements AdminDAOInterface {
 			}
 			logger.info("=======================================");
 			
-		}catch(Exception e) {
-			e.printStackTrace();
 		}
+		catch(SQLException e)
+		{
+			logger.info(e.getMessage());
+		}
+		catch(Exception e)
+		{
+			logger.info(e.getMessage());
+		}	
 		return ;
 	}
 	
@@ -247,9 +285,15 @@ public class AdminDAOOperation implements AdminDAOInterface {
 				}
 			}
 			
-		}catch (Exception e) {
-			e.printStackTrace();
 		}
+		catch(SQLException e)
+		{
+			logger.info(e.getMessage());
+		}
+		catch(Exception e)
+		{
+			logger.info(e.getMessage());
+		}	
 	}
 	
 	
@@ -270,11 +314,14 @@ public class AdminDAOOperation implements AdminDAOInterface {
 				return true;
 			}
 		}
-		catch(Exception e) {
-			//// Write exception here
-			logger.info("Course ID's cannot be duplicate");
+		catch(SQLException e)
+		{
 			logger.info(e.getMessage());
 		}
+		catch(Exception e)
+		{
+			logger.info(e.getMessage());
+		}	
 		return false;
 	}
 	
@@ -298,10 +345,14 @@ public class AdminDAOOperation implements AdminDAOInterface {
 				return true;
 			}
 		}
-		catch(Exception e) {
+		catch(SQLException e)
+		{
 			logger.info(e.getMessage());
-			e.printStackTrace();
 		}
+		catch(Exception e)
+		{
+			logger.info(e.getMessage());
+		}	
 		return false;
 	}
 	
@@ -355,8 +406,14 @@ public class AdminDAOOperation implements AdminDAOInterface {
 				logger.info("Course Alloted Successfully");
 				logger.info("=======================================");
 			}
-		}catch(Exception e){
-			e.printStackTrace();
 		}
+		catch(SQLException e)
+		{
+			logger.info(e.getMessage());
+		}
+		catch(Exception e)
+		{
+			logger.info(e.getMessage());
+		}	
 	}
 }
