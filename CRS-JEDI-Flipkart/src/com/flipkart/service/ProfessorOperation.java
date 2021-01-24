@@ -97,7 +97,7 @@ public class ProfessorOperation implements ProfessorInterface {
 	 * Grade Students in a batch with mentioned courseId
 	 * 
 	 * @param courseId
-	 * @return true if grading operation is succesful else false 
+	 * @return true if grading operation is successful else false 
 	 */
 	@Override
 	public Boolean gradeStudents(int courseId) {

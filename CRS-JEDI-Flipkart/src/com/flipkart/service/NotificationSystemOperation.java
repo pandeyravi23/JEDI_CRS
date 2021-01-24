@@ -6,7 +6,7 @@ import org.apache.log4j.Logger;
 // on successful payment
 // course registration complete
 
-public class NotificationSystemOperation {
+public class NotificationSystemOperation{
 	public static Logger logger = Logger.getLogger(NotificationSystemOperation.class);
 	
 	public static void courseRegistrationComplete()

@@ -31,7 +31,6 @@ public class AdminOperation implements AdminInterface {
 		
 	}
 	
-	
 	synchronized public static AdminOperation getInstance()
 	{
 		if(instance == null)
