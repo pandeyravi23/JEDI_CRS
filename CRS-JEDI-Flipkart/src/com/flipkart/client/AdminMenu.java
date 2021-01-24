@@ -2,16 +2,27 @@ package com.flipkart.client;
 
 import java.util.Scanner;
 
+
 import org.apache.log4j.Logger;
 
 import com.flipkart.bean.Admin;
 import com.flipkart.service.AdminOperation;
+
+/**
+ *  User Interactive menu if user logs in is a Admin
+ *  @author JEDI04
+ */
 
 public class AdminMenu {
 	private static Logger logger = Logger.getLogger(AdminMenu.class);
 	private AdminOperation adminOperation = AdminOperation.getInstance();
 	private Admin admin = new Admin();
 	
+	
+	/**
+	 *  Manages the major roles of ADmin
+	 *  based on user inputs
+	 */
 	public void AdminClient()
 	{
 		logger.info("Welcome Admin.");
@@ -57,6 +68,10 @@ public class AdminMenu {
 		
 	}
 	
+	/**
+	 * Displays menu for Admin interaction
+	 * to perform various operations
+	 */
 	public void showChoices()
 	{
 		logger.info("Select an operation");
