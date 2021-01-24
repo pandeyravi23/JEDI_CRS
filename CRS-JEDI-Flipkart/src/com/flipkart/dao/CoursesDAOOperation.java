@@ -84,7 +84,7 @@ public class CoursesDAOOperation implements CoursesDAOInterface {
 			}
 		}
 		catch (Exception e){
-			throw new CommonException("Some Internal Error Occured: " + e.getMessage());
+			throw new CommonException("Some Internal Error Occurred: " + e.getMessage());
 		}
 
 		return courses;
