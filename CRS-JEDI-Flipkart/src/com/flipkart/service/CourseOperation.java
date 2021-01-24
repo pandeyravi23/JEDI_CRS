@@ -3,6 +3,7 @@ package com.flipkart.service;
 import com.flipkart.bean.Course;
 import com.flipkart.dao.CoursesDAOOperation;
 
+import com.flipkart.exception.CommonException;
 import org.apache.log4j.Logger;
 
 /**
@@ -40,9 +41,15 @@ public class CourseOperation implements CourseInterface {
 	 */
 	@Override
 	public int noOfEnrolledStudents(int courseID) {
-		int count = -1;
+		int count = 0;
 		try {
 			count = coursesDaoOperation.noOfEnrolledStudents(courseID);
+			if(count == 0){
+				throw new CommonException("No students enrolled");
+			}
+		}
+		catch (CommonException e){
+			logger.warn(e.getMessage());
 		}
 		catch (Exception e) {
 			logger.warn(e.getMessage());
@@ -61,6 +68,12 @@ public class CourseOperation implements CourseInterface {
 		Course course = null;
 		try {
 			course = coursesDaoOperation.getCourseByID(courseID);
+			if(course == null){
+				throw new CommonException("No course with this ID");
+			}
+		}
+		catch (CommonException e){
+			logger.warn(e.getMessage());
 		}
 		catch(Exception e) {
 			logger.warn(e.getMessage());

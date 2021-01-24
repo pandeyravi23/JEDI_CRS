@@ -8,6 +8,11 @@ import org.apache.log4j.Logger;
 import com.flipkart.bean.User;
 import com.flipkart.util.DBConnection;
 
+/**
+ * Primary Class undertaking all database queries related to User Operations
+ *
+ * @author JEDI 04
+ */
 public class UserDAOOperation implements UserDAOInterface {
 	
 	private static Logger logger = Logger.getLogger(UserDAOOperation.class);
