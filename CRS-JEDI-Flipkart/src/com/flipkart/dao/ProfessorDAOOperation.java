@@ -21,6 +21,19 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	private static Logger logger = Logger.getLogger(ProfessorDAOOperation.class);
 	Connection con;
 	PreparedStatement stmt;
+	
+	private static ProfessorDAOOperation instance = null;
+	
+	private ProfessorDAOOperation() {
+		
+	}
+	
+	synchronized public static ProfessorDAOOperation getInstance() {
+		if (instance==null) {
+			instance = new ProfessorDAOOperation();
+		}
+		return instance;
+	}
 
 	/*
 	 * Method creates and returns professor object using email ID from the database
@@ -30,7 +43,8 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 		try {
 
 			con = DBConnection.getConnection();
-			stmt = con.prepareStatement(SQLQueriesConstant.professorGetProfessorByEmailQuery);
+			String str = SQLQueriesConstant.GET_PROFESSOR_BY_EMAIL;
+			stmt = con.prepareStatement(str);
 			stmt.setString(1, email);
 			ResultSet rs = stmt.executeQuery();
 
@@ -56,7 +70,8 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	public void showCourses(int professorId) {
 		try {
 			con = DBConnection.getConnection();
-			stmt = con.prepareStatement(SQLQueriesConstant.professorShowCoursesQuery);
+			String str = SQLQueriesConstant.SHOW_COURSES_PROFESSOR_QUERY;
+			stmt = con.prepareStatement(str);
 			stmt.setInt(1, professorId);
 			ResultSet rs = stmt.executeQuery();
 			logger.info("===============================================");
@@ -78,36 +93,10 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 		ArrayList<Student> al = new ArrayList<Student>();
 		try {
 			con = DBConnection.getConnection();
-			stmt = con.prepareStatement(SQLQueriesConstant.professorGetEnrolledStudentListQuery);
+			String str = SQLQueriesConstant.GET_ENROLLEDSTUDENTS_PROFESSOR_QUERY;
+			stmt = con.prepareStatement(str);
 			stmt.setInt(1, courseId);
 			ResultSet rs = stmt.executeQuery();
-			ArrayList<Integer> al2 = new ArrayList<Integer>();
-			while (rs.next()) {
-				al2.add(rs.getInt(1));
-			}
-			if (al2.size() == 0) {
-				return al;
-			}
-			String listOfStudentIds = "(";
-			String str2 = "";
-			for (int i = 0; i < al2.size(); i++) {
-				listOfStudentIds += al2.get(i);
-				str2 += "?";
-				if (i != al2.size() - 1) {
-					listOfStudentIds += ",";
-					str2 += ",";
-				}
-			}
-			listOfStudentIds += ")";
-			str2 += ")";
-			String str = "Select id,name,email,branch from student where id in (";
-			str += str2;
-			stmt = con.prepareStatement(str);
-			
-			for (int i = 1; i <= al2.size(); i++) {
-				stmt.setInt(i, al2.get(i-1));
-			}
-			
 			rs = stmt.executeQuery();
 			
 			while (rs.next()) {
@@ -118,7 +107,7 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 				st.setBranch(rs.getString("branch"));
 				al.add(st);
 			}
-			al.size();
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -141,7 +130,7 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 				String grd = sc.next();
 				if(grd=="")
 					grd = sc.next();
-				String str = SQLQueriesConstant.professorSetGradesQuery;
+				String str = SQLQueriesConstant.SET_GRADES_PROFESSOR_QUERY;
 				stmt = con.prepareStatement(str);
 				stmt.setString(1, grd);
 				stmt.setInt(2, st.getUserId());
@@ -167,7 +156,8 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	public boolean updateStudentGrades(int courseId,int studentId, String grades) {
 		try {
 			con = DBConnection.getConnection();
-			stmt = con.prepareStatement(SQLQueriesConstant.professorUpdateGradesQuery);
+			String str = SQLQueriesConstant.UPDATE_GRADES_PROFESSOR_QUERY;
+			stmt = con.prepareStatement(str);
 			stmt.setString(1,grades);
 			stmt.setInt(2,courseId);
 			stmt.setInt(3,studentId);
@@ -192,7 +182,7 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 			logger.info("===================================");
 			logger.info("UserId    UserName    Grade Obtained");
 			for(Student st : enolledStudent) {
-				String str = SQLQueriesConstant.professorShowGradesQuery;
+				String str = SQLQueriesConstant.SHOW_GRADES_PROFESSOR_QUERY;
 				stmt = con.prepareStatement(str);
 				stmt.setInt(1, st.getUserId());
 				stmt.setInt(2, courseId);
@@ -218,36 +208,10 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 		ArrayList<Student> al = new ArrayList<Student>();
 		try {
 			con = DBConnection.getConnection();
-			stmt = con.prepareStatement(SQLQueriesConstant.professorGetStudentsQuery);
+			String str = SQLQueriesConstant.GET_STUDENTS_PROFESSOR_QUERY;
+			stmt = con.prepareStatement(str);
 			stmt.setInt(1, courseId);
 			ResultSet rs = stmt.executeQuery();
-			ArrayList<Integer> al2 = new ArrayList<Integer>();
-			while (rs.next()) {
-				al2.add(rs.getInt(1));
-			}
-			if (al2.size() == 0) {
-				return al;
-			}
-			String listOfStudentIds = "(";
-			String str2 = "";
-			for (int i = 0; i < al2.size(); i++) {
-				listOfStudentIds += al2.get(i);
-				str2 += "?";
-				if (i != al2.size() - 1) {
-					listOfStudentIds += ",";
-					str2 += ",";
-				}
-			}
-			listOfStudentIds += ")";
-			str2 += ")";
-			String str = "Select id,name,email,branch from student where id in (";
-			str += str2;
-			stmt = con.prepareStatement(str);
-			
-			for (int i = 1; i <= al2.size(); i++) {
-				stmt.setInt(i, al2.get(i-1));
-			}
-			
 			rs = stmt.executeQuery();
 			
 			while (rs.next()) {
