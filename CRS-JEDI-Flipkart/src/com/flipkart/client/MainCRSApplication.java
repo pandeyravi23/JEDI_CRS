@@ -19,7 +19,7 @@ public class MainCRSApplication {
 	private static Logger logger = Logger.getLogger(MainCRSApplication.class);
 	private static AuthCredentialSystemOperations auth = new AuthCredentialSystemOperations();
 	private static Scanner sc = null;
-	
+
 	/**
 	 * The Main method for MainCRSApplication
 	 * 

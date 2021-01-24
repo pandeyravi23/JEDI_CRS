@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 /*
  * @author JEDI 04
+ * 
  */
 public class StudentCRSMenu {
     private static Logger logger = Logger.getLogger(StudentCRSMenu.class);
