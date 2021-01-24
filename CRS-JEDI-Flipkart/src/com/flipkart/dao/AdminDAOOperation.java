@@ -82,6 +82,14 @@ public class AdminDAOOperation implements AdminDAOInterface {
 		return 0;
 	}
 	
+	/**
+	 * It is responsible for adding professor to the database.
+	 * 
+	 * @param password The password provided by user
+	 * @param prof Professor details provided by the user
+	 * 
+	 * @return Returns 1 if professor is successfully added. Else returns 0.
+	 */
 	public int addProfessor(String password, Professor prof)
 	{
 		try

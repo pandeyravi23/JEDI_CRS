@@ -10,9 +10,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * @author JEDI04
+ * 
  *  User Interactive menu if user logs in
  *  is a professor
+ *  @author JEDI04
  */
 public class ProfessorMenu {
 	private static Logger logger = Logger.getLogger(ProfessorMenu.class);
@@ -23,8 +24,7 @@ public class ProfessorMenu {
 	 *  Manages the major roles of professor
 	 *  based on user inputs
 	 *  
-	 *  @param Professor(object)
-	 *  @return none
+	 *  @param professor - Professor bean class object
 	 */
 	public void professorClient(Professor professor) {
 		logger.info("Welcome Professor " + professor.getUserName() + "!!");
@@ -64,7 +64,6 @@ public class ProfessorMenu {
 	 * fetching from the email
 	 * 
 	 * @param email(String)
-	 * @return none
 	 */
 	public void init(String email) {
 		Professor professor = professorOperation.getProfessorByEmail(email);
