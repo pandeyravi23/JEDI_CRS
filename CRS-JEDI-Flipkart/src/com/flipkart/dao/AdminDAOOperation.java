@@ -1,13 +1,11 @@
 package com.flipkart.dao;
 
 import java.sql.Connection;
-import com.flipkart.bean.Student;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import org.apache.log4j.Logger;
@@ -17,7 +15,6 @@ import com.flipkart.bean.Course;
 import com.flipkart.bean.Professor;
 import com.flipkart.util.DBConnection;
 import com.flipkart.constant.SQLQueriesConstant;
-import com.flipkart.service.AdminOperation;
 
 
 /**

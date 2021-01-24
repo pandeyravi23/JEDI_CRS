@@ -1,50 +1,38 @@
 package com.flipkart.dao;
 
-import java.io.*;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
-
-
+import java.sql.SQLException;
 import java.util.*;
 
+import org.apache.log4j.Logger;
+
 import com.flipkart.bean.Course;
-import com.flipkart.bean.Student;
 import com.flipkart.constant.SQLQueriesConstant;
-import com.flipkart.exception.CommonException;
 import com.flipkart.util.DBConnection;
 
-/*
+/**
+ * Primary Class undertaking all database queries related to Course Database
+ * 
  * @author JEDI 04
  */
 public class CoursesDAOOperation implements CoursesDAOInterface {
-
+	private static Logger logger = Logger.getLogger(CoursesDAOOperation.class);
 	Connection connection = null;
 	PreparedStatement ps = null;
 
-
-	@Override
-	// get list of enrolled students;
-	public ArrayList<Student> getEnrolledStudents(int courseId) {
-		ArrayList<Student> enrolledStudents = new ArrayList<Student>();
-		/*for(Course course: courses) {
-			if(course.getCourseID() == courseId) {
-				enrolledStudents = course.getListOfEnrolledStudents();
-				break;
-			}
-		}*/
-		return enrolledStudents;
-	}
-
-
+	/**
+	 * Method to fetch the Course Object for the given course Id
+	 * 
+	 * @param courseID The id of the course whose Course object is to be fetched
+	 * @return return the Course Object containing the information of the course
+	 */
 	public Course getCourseByID(int courseID){
 		Course course = null;
 
 		try{
 			connection = DBConnection.getConnection();
-			//String SQLQuery = "SELECT * FROM course WHERE id=?";
 			ps = connection.prepareStatement(SQLQueriesConstant.GET_COURSE_BY_ID_QUERY);
 
 			ps.setInt(1,courseID);
@@ -58,19 +46,27 @@ public class CoursesDAOOperation implements CoursesDAOInterface {
 			}
 
 		}
-		catch(Exception e){
-			e.printStackTrace();
+		catch(SQLException e) {
+			logger.warn(e.getMessage() + "\n");
+		}
+		catch(Exception e) {
+			logger.warn(e.getMessage() + "\n");
 		}
 
 		return course;
 	}
-
-	public ArrayList<Course> getAllCourses() throws CommonException {
+	
+	/**
+	 * Method to get all courses and their details from course and course catalog database
+	 * 
+	 * @return ArrayList of Courses containing all courses and their details fetched 
+	 * from course and course catalog database
+	 */
+	public ArrayList<Course> getAllCourses() {
 		ArrayList<Course> courses = new ArrayList<>();
 
 		try{
 			connection = DBConnection.getConnection();
-			//String SQLQuery = "SELECT cc.courseId, cc.courseName, cc.credits, c.professorId FROM courseCatalog AS cc INNER JOIN course AS c ON cc.courseId = c.id";
 			ps = connection.prepareStatement(SQLQueriesConstant.GET_ALL_COURSES_QUERY);
 
 			ResultSet resultSet = ps.executeQuery();
@@ -84,20 +80,26 @@ public class CoursesDAOOperation implements CoursesDAOInterface {
 				courses.add(course);
 			}
 		}
-		catch (Exception e){
-			throw new CommonException("Some Internal Error Occurred: " + e.getMessage());
+		catch(SQLException e) {
+			logger.warn(e.getMessage() + "\n");
+		}
+		catch(Exception e) {
+			logger.warn(e.getMessage() + "\n");
 		}
 
 		return courses;
 	}
 
-	// to get number of students enrolled in a course based on course ID from DB
+	/**
+	 * Method to get the number of enrolled students in a course with the given course id
+	 * 
+	 * @param courseID The Id of the course whose enrolled student number we want to find out
+	 */
 	public int noOfEnrolledStudents(int courseID){
 		int students = 0;
 
 		try{
 			connection = DBConnection.getConnection();
-			//String SQLQuery = "SELECT COUNT(*) FROM RegisteredCourses WHERE courseID=?";
 			ps = connection.prepareStatement(SQLQueriesConstant.NO_ENROLLED_STUDENTS_QUERY);
 
 			ps.setInt(1,courseID);
@@ -106,8 +108,11 @@ public class CoursesDAOOperation implements CoursesDAOInterface {
 				students = resultSet.getInt(1);
 			}
 		}
-		catch(Exception e){
-			e.printStackTrace();
+		catch(SQLException e) {
+			logger.warn(e.getMessage() + "\n");
+		}
+		catch(Exception e) {
+			logger.warn(e.getMessage() + "\n");
 		}
 
 		return students;
