@@ -8,7 +8,9 @@ import org.apache.log4j.Logger;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-/*
+/**
+ * User Interactive menu for students
+ * 
  * @author JEDI 04
  */
 public class StudentCRSMenu {
@@ -16,62 +18,71 @@ public class StudentCRSMenu {
     private StudentInterface studentOperation = new StudentOperation();
     private CourseOperation courseOperation = new CourseOperation();
     private  Student student = new Student();
-    //public static ArrayList<Integer> al = new ArrayList<>();
-
+    
     /**
-     *
-     * Student CRS Menu
+     * Main Student Client which displays and manages all student related operations
+     * 
      */
     public void studentClient(){
-        Scanner input = new Scanner(System.in);
+        Scanner input = null;
+        
+        try {
+        	input = new Scanner(System.in);
+        	int choice;
+            logger.info("Welcome " + student.getUserName() + "!\n");
+            do{
+                showChoices();
+                choice = input.nextInt();
 
-        int choice;
-        logger.info("Welcome " + student.getUserName() + "!\n");
-        do{
-            showChoices();
-            choice = input.nextInt();
-
-            switch (choice){
-                case -1:
-                    logger.info(".....Logged Out.....\n");
-                    break;
-                case 1:
-                    viewStudentDetails();
-                    break;
-                case 2:
-                    studentOperation.showCourses();
-                    break;
-                case 3:
-                    registerCourses();
-                    break;
-                case 4:
-                    addCourse();
-                    break;
-                case 5:
-                    dropCourse();
-                    break;
-                case 6:
-                    studentOperation.viewRegisteredCourses(student);
-                    break;
-                case 7:
-                    viewGrades();
-                    break;
-                case 8:
-                    makePayment();
-                    break;
-                case 9:
-                    updateInfo();
-                    break;
-                default:
-                    logger.info("Invalid choice.\n");
-                    break;
-            }
-        }while (choice!=-1);
+                switch (choice){
+                    case -1:
+                        logger.info(".....Logged Out.....\n");
+                        break;
+                    case 1:
+                        viewStudentDetails();
+                        break;
+                    case 2:
+                        studentOperation.showCourses();
+                        break;
+                    case 3:
+                        registerCourses();
+                        break;
+                    case 4:
+                        addCourse();
+                        break;
+                    case 5:
+                        dropCourse();
+                        break;
+                    case 6:
+                        studentOperation.viewRegisteredCourses(student);
+                        break;
+                    case 7:
+                        viewGrades();
+                        break;
+                    case 8:
+                        makePayment();
+                        break;
+                    case 9:
+                        updateInfo();
+                        break;
+                    default:
+                        logger.info("Invalid choice.\n");
+                        break;
+                }
+            }while (choice!=-1);
+        }
+        catch(Exception e) {
+        	logger.warn(e.getMessage());
+        }
+        finally {
+        	input.close();
+        }
     }
 
     /**
-     *
      * Initializes StudentCRSMenu class and calls studentClient to show respective menu.
+     * 
+     * @param email The email of the user who tried to login
      */
     public void init(String email) {
         student = studentOperation.getStudentByEmail(email);
@@ -84,10 +95,11 @@ public class StudentCRSMenu {
     }
 
     /**
-     *
-     * Function to handle registration related dialogue and operations
+     * Method to handle registration related dialogue and operations
+     * 
      */
     public void registerCourses() {
+    	Scanner input = null;
         try {
             if(student.getIsRegistered()){
                 logger.info("You have already registered.\n");
@@ -104,7 +116,7 @@ public class StudentCRSMenu {
                 logger.info("Enter 4 to view course cart.");
                 logger.info("Enter 5 to finish registration process.");
                 logger.info("Enter 6 to cancel registration process.");
-                Scanner input = new Scanner(System.in);
+                input = new Scanner(System.in);
                 int operation = Integer.parseInt(input.nextLine());
 
                 if(operation==1){
@@ -184,11 +196,14 @@ public class StudentCRSMenu {
         catch(Exception e) {
             logger.info(e.getMessage());
         }
+        finally {
+        	input.close();
+        }
     }
 
     /**
-     *
-     * Shows Available Choices for Student
+     * Utility Function to Display all student operations
+     * 
      */
     public void showChoices(){
         logger.info("Select an operation: ");
@@ -206,23 +221,32 @@ public class StudentCRSMenu {
 
 
     /**
-     *
      * Method to add a course to a students registered courses list.
+     * 
      */
     public void addCourse(){
-        if (!student.getIsRegistered()) {
-            logger.info("Student needs to register courses to add course.\n");
-            return;
-        }
-        else if(studentOperation.getNumberOfEnrolledCourses(student) >= 6) {
-            logger.info("Cannot add more courses. You already have 6 courses.\n");
-            return;
-        }
+    	Scanner input = null;
+    	try {
+    		if (!student.getIsRegistered()) {
+                logger.info("Student needs to register courses to add course.\n");
+                return;
+            }
+            else if(studentOperation.getNumberOfEnrolledCourses(student) >= 6) {
+                logger.info("Cannot add more courses. You already have 6 courses.\n");
+                return;
+            }
 
-        logger.info("Enter course ID to be added");
-        Scanner input = new Scanner(System.in);
-        int courseID = input.nextInt();
-        studentOperation.addCourse(student,courseID);
+            logger.info("Enter course ID to be added");
+            input = new Scanner(System.in);
+            int courseID = input.nextInt();
+            studentOperation.addCourse(student,courseID);
+    	}
+    	catch(Exception e) {
+    		logger.warn(e.getMessage());
+    	}
+        finally {
+        	input.close();
+        }
     }
 
     /**
@@ -230,24 +254,34 @@ public class StudentCRSMenu {
      * Method to drop a course from a students registered courses list.
      */
     public void dropCourse(){
-        if (!student.getIsRegistered()) {
-            logger.info("Student needs to register courses to drop course\n");
-            return;
-        }
-        else if(studentOperation.getNumberOfEnrolledCourses(student) == 4) {
-            logger.info("Cannot drop the course. You only have 4 courses\n");
-            return;
-        }
+    	Scanner input = null;
+    	try {
+    		if (!student.getIsRegistered()) {
+                logger.info("Student needs to register courses to drop course\n");
+                return;
+            }
+            else if(studentOperation.getNumberOfEnrolledCourses(student) == 4) {
+                logger.info("Cannot drop the course. You only have 4 courses\n");
+                return;
+            }
 
-        logger.info("Enter course ID to be dropped");
-        Scanner input = new Scanner(System.in);
-        int courseID = input.nextInt();
-        studentOperation.deleteCourse(student,courseID);
+            logger.info("Enter course ID to be dropped");
+            input = new Scanner(System.in);
+            int courseID = input.nextInt();
+            studentOperation.deleteCourse(student,courseID);
+    	}
+    	catch(Exception e) {
+    		logger.warn(e.getMessage());
+    	}
+    	finally {
+    		input.close();
+    	}
+        
     }
 
     /**
-     *
      * Method to view grades for the logged in student
+     * 
      */
     public void viewGrades(){
         if(!student.getIsRegistered()){
@@ -259,130 +293,147 @@ public class StudentCRSMenu {
     }
 
     /**
-     *
      * Method to make payment
+     * 
      */
     public void makePayment(){
-        if(!student.getIsRegistered()) {
-            logger.info("Please complete your course registration to make payment\n");
-        }
-        else if(student.getPaymentStatus()) {
-            logger.info("Payment already made");
-        }
-        else {
-            logger.info("Available options: \n");
-            logger.info("1. To pay via Net banking");
-            logger.info("2. To pay via Debit card");
-            logger.info("3. To use Scholarship");
-            logger.info("4. To cancel payment");
-            Scanner sc = new Scanner(System.in);
-            int choice = sc.nextInt();
-
-            // operations based on payment method
-            switch(choice)
-            {
-                case 1:   // for net banking method
-                    logger.info("You have chosen net banking");
-                    break;
-                case 2:   // for credit card method
-                    logger.info("You have chosen debit card");
-                    break;
-                case 3: // for scholarship
-                    logger.info("You have chosen to use Scholarship");
-                    break;
-                case 4:
-                    logger.info(">>>>>>> Exiting <<<<<<<\n");
-                    break;
-                default:
-                    logger.info("Invalid choice----Exiting----");
-                    logger.info("===========================================\n\n");
+    	Scanner sc = null;
+    	try {
+    		if(!student.getIsRegistered()) {
+                logger.info("Please complete your course registration to make payment\n");
             }
-
-            if(choice != 4) {
-                logger.info(">>> Proceed to make payment <<<");
-                studentOperation.makePayment(student);
-
-                NotificationSystemOperation.paymentSuccessful();
+            else if(student.getPaymentStatus()) {
+                logger.info("Payment already made");
             }
-        }
+            else {
+                logger.info("Available options: \n");
+                logger.info("1. To pay via Net banking");
+                logger.info("2. To pay via Debit card");
+                logger.info("3. To use Scholarship");
+                logger.info("4. To cancel payment");
+                sc = new Scanner(System.in);
+                int choice = sc.nextInt();
+
+                // operations based on payment method
+                switch(choice)
+                {
+                    case 1:   // for net banking method
+                        logger.info("You have chosen net banking");
+                        break;
+                    case 2:   // for credit card method
+                        logger.info("You have chosen debit card");
+                        break;
+                    case 3: // for scholarship
+                        logger.info("You have chosen to use Scholarship");
+                        break;
+                    case 4:
+                        logger.info(">>>>>>> Exiting <<<<<<<\n");
+                        break;
+                    default:
+                        logger.info("Invalid choice----Exiting----");
+                        logger.info("===========================================\n\n");
+                }
+
+                if(choice != 4) {
+                    logger.info(">>> Proceed to make payment <<<");
+                    studentOperation.makePayment(student);
+
+                    NotificationSystemOperation.paymentSuccessful();
+                }
+            }
+    	}
+    	catch(Exception e) {
+    		logger.info(e.getMessage());
+    	}
+    	finally {
+    		sc.close();
+    	}
     }
 
     /**
-     *
      * Method to update info of student
+     * 
      */
     public void updateInfo(){
         logger.info("================UPDATE INFO================\n");
-        // Name, age, address, contact, gender, nationality
+        Scanner sc = null;
+        
+        try {
+        	sc = new Scanner(System.in);
+            int choice;
 
-        Scanner sc = new Scanner(System.in);
-        int choice;
+            do {
+                logger.info("Enter 1 to view student details.");
+                logger.info("Enter 2 to update Name.");
+                logger.info("Enter 3 to update Age.");
+                logger.info("Enter 4 to update Address.");
+                logger.info("Enter 5 to update Contact.");
+                logger.info("Enter 6 to update Gender.");
+                logger.info("Enter 7 to update Nationality.");
+                logger.info("Enter 8 to confirm update.");
+                logger.info("Enter -1 to exit.");
 
-        do {
-            logger.info("Enter 1 to view student details.");
-            logger.info("Enter 2 to update Name.");
-            logger.info("Enter 3 to update Age.");
-            logger.info("Enter 4 to update Address.");
-            logger.info("Enter 5 to update Contact.");
-            logger.info("Enter 6 to update Gender.");
-            logger.info("Enter 7 to update Nationality.");
-            logger.info("Enter 8 to confirm update.");
-            logger.info("Enter -1 to exit.");
+                choice = sc.nextInt();
+                sc.nextLine();
 
-            choice = sc.nextInt();
-            sc.nextLine();
+                switch (choice){
+                    case -1:
+                        logger.info(">>>>> Exiting <<<<<\n");
+                        break;
+                    case 1:
+                        viewStudentDetails();
+                        break;
+                    case 2:
+                        logger.info("Enter name:");
+                        String name = sc.nextLine();
+                        student.setUserName(name);
+                        break;
+                    case 3:
+                        logger.info("Enter age:");
+                        int age = Integer.parseInt(sc.nextLine());
+                        student.setAge(age);
+                        break;
+                    case 4:
+                        logger.info("Enter address:");
+                        String address = sc.nextLine();
+                        student.setAddress(address);
+                        break;
+                    case 5:
+                        logger.info("Enter contact:");
+                        String contact = sc.nextLine();
+                        student.setContact(contact);
+                        break;
+                    case 6:
+                        logger.info("Enter gender:");
+                        String gender = sc.nextLine();
+                        student.setGender(gender);
+                        break;
+                    case 7:
+                        logger.info("Enter nationality:");
+                        String nationality = sc.nextLine();
+                        student.setNationality(nationality);
+                        break;
+                    case 8:
+                        studentOperation.updateInfo(student);
+                        logger.info(">>>>>>> Student Information Updated. <<<<<<<\n");
+                        break;
+                    default:
+                        logger.info("Invalid choice.\n");
+                }
 
-            switch (choice){
-                case -1:
-                    logger.info(">>>>> Exiting <<<<<\n");
-                    break;
-                case 1:
-                    viewStudentDetails();
-                    break;
-                case 2:
-                    logger.info("Enter name:");
-                    String name = sc.nextLine();
-                    student.setUserName(name);
-                    break;
-                case 3:
-                    logger.info("Enter age:");
-                    int age = Integer.parseInt(sc.nextLine());
-                    student.setAge(age);
-                    break;
-                case 4:
-                    logger.info("Enter address:");
-                    String address = sc.nextLine();
-                    student.setAddress(address);
-                    break;
-                case 5:
-                    logger.info("Enter contact:");
-                    String contact = sc.nextLine();
-                    student.setContact(contact);
-                    break;
-                case 6:
-                    logger.info("Enter gender:");
-                    String gender = sc.nextLine();
-                    student.setGender(gender);
-                    break;
-                case 7:
-                    logger.info("Enter nationality:");
-                    String nationality = sc.nextLine();
-                    student.setNationality(nationality);
-                    break;
-                case 8:
-                    studentOperation.updateInfo(student);
-                    logger.info(">>>>>>> Student Information Updated. <<<<<<<\n");
-                    break;
-                default:
-                    logger.info("Invalid choice.\n");
-            }
-
-        }while(choice != -1);
+            }while(choice != -1);
+        }
+        catch(Exception e) {
+        	logger.warn(e.getMessage());
+        }
+        finally {
+        	sc.close();
+        }
     }
 
     /**
-     *
      * Showing student details, like ID, Name,  Age, Address and more.
+     * 
      */
     public void viewStudentDetails(){
         logger.info("============== Student Details ===============");

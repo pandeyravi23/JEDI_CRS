@@ -3,60 +3,75 @@ package com.flipkart.client;
 import java.util.Scanner;
 
 import org.apache.log4j.Logger;
-
-import com.flipkart.bean.Admin;
 import com.flipkart.service.AdminOperation;
 
+/**
+ * The Client Side Application for displaying and going forward with Administrator related operations and 
+ * functionalities.
+ * 
+ * @author jedi04
+ */
 public class AdminMenu {
 	private static Logger logger = Logger.getLogger(AdminMenu.class);
 	private AdminOperation adminOperation = AdminOperation.getInstance();
-	private Admin admin = new Admin();
 	
+	/**
+	 * Main Function to display and then choose the Administrator Operations.
+	 */
 	public void AdminClient()
 	{
 		logger.info("Welcome Admin.");
-		Scanner sc = new Scanner(System.in);
-		int choice = -1;
-		do
-		{		
-			showChoices();
-			choice = sc.nextInt();
-			
-			switch(choice)
-			{
-				case 1:
-					adminOperation.generateReportCard();
-					break;
-				case 2:
-					adminOperation.addProfessor();
-					break;
-				case 3:				
-					adminOperation.addAdmin();
-					break;
-				case 4:
-					adminOperation.approveStudents();
-					break;
-				case 5:
-					adminOperation.addCourse();
-					break;
-				case 6:
-					adminOperation.deleteCourse();
-					break;
-				case 7:
-					adminOperation.allotCourse();
-					break;
-				case -1:
-					logger.info("Logged Out Successfully");
-					break;
-				default:
-					logger.info("Invalid Choice");
-					break;
+		Scanner sc = null;
+		try {
+			sc = new Scanner(System.in);
+			int choice = -1;
+			do
+			{		
+				showChoices();
+				choice = sc.nextInt();
+				
+				switch(choice)
+				{
+					case 1:
+						adminOperation.generateReportCard();
+						break;
+					case 2:
+						adminOperation.addProfessor();
+						break;
+					case 3:				
+						adminOperation.addAdmin();
+						break;
+					case 4:
+						adminOperation.approveStudents();
+						break;
+					case 5:
+						adminOperation.addCourse();
+						break;
+					case 6:
+						adminOperation.deleteCourse();
+						break;
+					case 7:
+						adminOperation.allotCourse();
+						break;
+					case -1:
+						logger.info("Logged Out Successfully");
+						break;
+					default:
+						logger.info("Invalid Choice");
+						break;
+				}
 			}
+			while(choice != -1);
 		}
-		while(choice != -1);
-		
+		catch(Exception e) {
+			logger.info(e.getMessage() + "\n");
+		}
 	}
 	
+	
+	/**
+	 * Utility Function to display Administrator operations, which is called from AdminClient
+	 */
 	public void showChoices()
 	{
 		logger.info("Select an operation");
