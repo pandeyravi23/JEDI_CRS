@@ -24,7 +24,7 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	
 	private static ProfessorDAOOperation instance = null;
 	
-	private ProfessorDAOOperation() {
+	public ProfessorDAOOperation() {
 		
 	}
 	
@@ -61,6 +61,28 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 
 		}
 		return professor;
+	}
+
+	public String getProfessorById(int professorID){
+		String professorName = null;
+
+		try{
+			con = DBConnection.getConnection();
+			//String sqlQuery = "SELECT name FROM professor WHERE id = ?";
+			stmt = con.prepareStatement(SQLQueriesConstant.GET_PROFESSOR_BY_ID_QUERY);
+
+			stmt.setInt(1,professorID);
+
+			ResultSet resultSet = stmt.executeQuery();
+			if(resultSet.next()){
+				professorName = resultSet.getString("name");
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+
+		return professorName;
 	}
 
 	/*
@@ -176,12 +198,12 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	 * Show Grades of all enrolled students associated with the 
 	 * courseId
 	 */
-	public void showGrades(ArrayList<Student>enolledStudent,int courseId) {
+	public void showGrades(ArrayList<Student>enrolledStudent,int courseId) {
 		try {
 			con = DBConnection.getConnection();
 			logger.info("===================================");
 			logger.info("UserId    UserName    Grade Obtained");
-			for(Student st : enolledStudent) {
+			for(Student st : enrolledStudent) {
 				String str = SQLQueriesConstant.SHOW_GRADES_PROFESSOR_QUERY;
 				stmt = con.prepareStatement(str);
 				stmt.setInt(1, st.getUserId());

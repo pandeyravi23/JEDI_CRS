@@ -70,7 +70,7 @@ public class CoursesDAOOperation implements CoursesDAOInterface {
 
 		try{
 			connection = DBConnection.getConnection();
-			//String SQLQuery = "SELECT * FROM courseCatalog";
+			//String SQLQuery = "SELECT cc.courseId, cc.courseName, cc.credits, c.professorId FROM courseCatalog AS cc INNER JOIN course AS c ON cc.courseId = c.id";
 			ps = connection.prepareStatement(SQLQueriesConstant.GET_ALL_COURSES_QUERY);
 
 			ResultSet resultSet = ps.executeQuery();
@@ -80,6 +80,7 @@ public class CoursesDAOOperation implements CoursesDAOInterface {
 				course.setCourseID(resultSet.getInt("courseId"));
 				course.setCourseName(resultSet.getString("courseName"));
 				course.setCredits(resultSet.getInt("credits"));
+				course.setProfessorAllotted(resultSet.getInt("professorId"));
 				courses.add(course);
 			}
 		}
