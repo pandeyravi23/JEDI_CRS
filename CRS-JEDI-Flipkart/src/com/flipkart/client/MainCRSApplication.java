@@ -10,11 +10,22 @@ import com.flipkart.bean.User;
 import com.flipkart.service.AuthCredentialSystemOperations;
 import com.flipkart.service.NotificationSystemOperation;
 
+/**
+ * The Main Entry Point of our application and shows choices for Registration or Login
+ * 
+ * @author jedi04
+ */
 public class MainCRSApplication {
 	private static Logger logger = Logger.getLogger(MainCRSApplication.class);
 	private static AuthCredentialSystemOperations auth = new AuthCredentialSystemOperations();
 	private static Scanner sc = null;
 	
+	/**
+	 * The Main method for MainCRSApplication
+	 * 
+	 * @param args Unused
+	 * @return Nothing
+	 */
 	public static void main(String[] args) {
 		logger.info("Welcome!!!");
 		try {
@@ -48,6 +59,11 @@ public class MainCRSApplication {
 		}
 	}
 	
+	/**
+	 * Utility Function to Read Email Input
+	 * 
+	 * @return The email that was read
+	 */
 	public static String readEmail() {
 		String str = "-1";
 		try {
@@ -69,6 +85,11 @@ public class MainCRSApplication {
 		return str;
 	}
 	
+	/**
+	 * Utility Function to Read Password Input
+	 * 
+	 * @return The password that was read
+	 */
 	public static String readPassword() {
 		String pwd1 = "-1", pwd2 = "-1";
 		try {
@@ -93,6 +114,10 @@ public class MainCRSApplication {
 		return pwd1;
 	}
 	
+	/**
+	 * 
+	 * Student Registration Dialogues
+	 */
 	public static void studentRegistration() {
 		logger.info("================ Student Registration =============");
 		try {
@@ -154,6 +179,10 @@ public class MainCRSApplication {
 		}
 	}
 	
+	/**
+	 * 
+	 * Login Dialogue
+	 */
 	public static void login() {
 		try {
 			logger.info("============Login============");

@@ -18,6 +18,10 @@ public class StudentCRSMenu {
     private  Student student = new Student();
     //public static ArrayList<Integer> al = new ArrayList<>();
 
+    /**
+     *
+     * Student CRS Menu
+     */
     public void studentClient(){
         Scanner input = new Scanner(System.in);
 
@@ -64,56 +68,34 @@ public class StudentCRSMenu {
             }
         }while (choice!=-1);
     }
-    
+
+    /**
+     *
+     * Initializes StudentCRSMenu class and calls studentClient to show respective menu.
+     */
     public void init(String email) {
-    	student = studentOperation.getStudentByEmail(email);
-    	if(student.isApproved()) {
-    		studentClient();
-    	}
-    	else {
-    		logger.info("Student not yet approved by Admin.\n");
-    	}
+        student = studentOperation.getStudentByEmail(email);
+        if(student.isApproved()) {
+            studentClient();
+        }
+        else {
+            logger.info("Student not yet approved by Admin.\n");
+        }
     }
 
-    //showing available choices for student
-    public void showChoices(){
-        logger.info("Select an operation: ");
-        logger.info("1. View student details");
-        logger.info("2. Show courses");
-        logger.info("3. Register courses");
-        logger.info("4. Add a course");
-        logger.info("5. Drop a course");
-        logger.info("6. View registered courses");
-        logger.info("7. View grades");
-        logger.info("8. Make payment");
-        logger.info("9. Update personal info");
-        logger.info("-1 to Logout");
-    }
-
-    public void viewStudentDetails(){
-        logger.info("============== Student Details ===============");
-        logger.info("Student ID: " + student.getUserId());
-        logger.info("Name: " + student.getUserName());
-        logger.info("Age: " + student.getAge());
-        logger.info("Address: " + student.getAddress());
-        logger.info("Contact: " + student.getContact());
-        logger.info("Branch: " + student.getBranch());
-        logger.info("Gender: " + student.getGender());
-        logger.info("Nationality: " + student.getNationality());
-        logger.info("Registration status: " + (student.getIsRegistered() == true ? "Complete" : "Pending"));
-        logger.info("Payment status: " + (student.getPaymentStatus() == true ? "Complete" : "Pending") + "\n");
-        logger.info("=============================================");
-    }
-    
+    /**
+     *
+     * Function to handle registration related dialogue and operations
+     */
     public void registerCourses() {
-    	try {
-    		if(student.getIsRegistered()){
-        	    logger.info("You have already registered.\n");
-        	    return;
+        try {
+            if(student.getIsRegistered()){
+                logger.info("You have already registered.\n");
+                return;
             }
 
-        	int courseCounter = 0;
-        	ArrayList<Integer> courseCart = new ArrayList<>();
+            int courseCounter = 0;
+            ArrayList<Integer> courseCart = new ArrayList<>();
             logger.info("================COURSE REGISTRATION================\n");
             while(true) {
                 logger.info("Enter 1 to view available courses.");
@@ -130,14 +112,14 @@ public class StudentCRSMenu {
                     logger.info("================AVAILABLE COURSES================\n");
                     logger.info("Course ID\tCourse Name\tCredits\tStatus");
                     for (Course course : courses) {
-                    	int remaining = 10 - courseOperation.noOfEnrolledStudents(course.getCourseID());
-                    	String status = "Full";
-                    	if(courseCart.contains(course.getCourseID())) {
-                    		status = "Chosen";
-                    	}
-                    	else if(remaining > 0) {
-                    		status = Integer.toString(remaining) + " seats left";
-                    	}
+                        int remaining = 10 - courseOperation.noOfEnrolledStudents(course.getCourseID());
+                        String status = "Full";
+                        if(courseCart.contains(course.getCourseID())) {
+                            status = "Chosen";
+                        }
+                        else if(remaining > 0) {
+                            status = Integer.toString(remaining) + " seats left";
+                        }
                         logger.info(course.getCourseID() + "\t\t" + course.getCourseName() + "\t" + course.getCredits() + "\t" + status);
                     }
                     logger.info("=================================================\n");
@@ -150,7 +132,7 @@ public class StudentCRSMenu {
                         logger.info("Course " + courseID + " already in course cart\n");
                     }
                     else if(courseOperation.getCourseById(courseID) == null) {
-                    	logger.info("Course " + courseID + " doesn't exist\n");
+                        logger.info("Course " + courseID + " doesn't exist\n");
                     }
                     else if(courseOperation.noOfEnrolledStudents(courseID) >= 10){
                         logger.info("Course " + courseID + " is full. Please add some other course.\n");
@@ -198,47 +180,75 @@ public class StudentCRSMenu {
                 }
             }
             logger.info("==============================================\n");
-    	}
-    	catch(Exception e) {
-    		logger.info(e.getMessage());
-    	}
+        }
+        catch(Exception e) {
+            logger.info(e.getMessage());
+        }
+    }
+
+    /**
+     *
+     * Shows Available Choices for Student
+     */
+    public void showChoices(){
+        logger.info("Select an operation: ");
+        logger.info("1. View student details");
+        logger.info("2. Show courses");
+        logger.info("3. Register courses");
+        logger.info("4. Add a course");
+        logger.info("5. Drop a course");
+        logger.info("6. View registered courses");
+        logger.info("7. View grades");
+        logger.info("8. Make payment");
+        logger.info("9. Update personal info");
+        logger.info("-1 to Logout");
     }
 
 
-    // method to add course
+    /**
+     *
+     * Method to add a course to a students registered courses list.
+     */
     public void addCourse(){
-    	if (!student.getIsRegistered()) {
-        	logger.info("Student needs to register courses to add course.\n");
-        	return;
+        if (!student.getIsRegistered()) {
+            logger.info("Student needs to register courses to add course.\n");
+            return;
         }
-    	else if(studentOperation.getNumberOfEnrolledCourses(student) >= 6) {
-    		logger.info("Cannot add more courses. You already have 6 courses.\n");
-    		return;
-    	}
-    	
+        else if(studentOperation.getNumberOfEnrolledCourses(student) >= 6) {
+            logger.info("Cannot add more courses. You already have 6 courses.\n");
+            return;
+        }
+
         logger.info("Enter course ID to be added");
         Scanner input = new Scanner(System.in);
         int courseID = input.nextInt();
         studentOperation.addCourse(student,courseID);
     }
 
-    // method to drop a course
+    /**
+     *
+     * Method to drop a course from a students registered courses list.
+     */
     public void dropCourse(){
-    	if (!student.getIsRegistered()) {
-        	logger.info("Student needs to register courses to drop course\n");
-        	return;
+        if (!student.getIsRegistered()) {
+            logger.info("Student needs to register courses to drop course\n");
+            return;
         }
-    	else if(studentOperation.getNumberOfEnrolledCourses(student) == 4) {
-    		logger.info("Cannot drop the course. You only have 4 courses\n");
-    		return;
-    	}
-    	
+        else if(studentOperation.getNumberOfEnrolledCourses(student) == 4) {
+            logger.info("Cannot drop the course. You only have 4 courses\n");
+            return;
+        }
+
         logger.info("Enter course ID to be dropped");
         Scanner input = new Scanner(System.in);
         int courseID = input.nextInt();
         studentOperation.deleteCourse(student,courseID);
     }
 
+    /**
+     *
+     * Method to view grades for the logged in student
+     */
     public void viewGrades(){
         if(!student.getIsRegistered()){
             logger.info("You have not yet registered.\n");
@@ -248,17 +258,20 @@ public class StudentCRSMenu {
         }
     }
 
-    // method to make payment
+    /**
+     *
+     * Method to make payment
+     */
     public void makePayment(){
-    	if(!student.getIsRegistered()) {
-    		logger.info("Please complete your course registration to make payment\n");
-    	}
-    	else if(student.getPaymentStatus()) {
-    		logger.info("Payment already made");
-    	}
-    	else {
-        	logger.info("Available options: \n");
-        	logger.info("1. To pay via Net banking");
+        if(!student.getIsRegistered()) {
+            logger.info("Please complete your course registration to make payment\n");
+        }
+        else if(student.getPaymentStatus()) {
+            logger.info("Payment already made");
+        }
+        else {
+            logger.info("Available options: \n");
+            logger.info("1. To pay via Net banking");
             logger.info("2. To pay via Debit card");
             logger.info("3. To use Scholarship");
             logger.info("4. To cancel payment");
@@ -268,32 +281,36 @@ public class StudentCRSMenu {
             // operations based on payment method
             switch(choice)
             {
-            	case 1:   // for net banking method
-            		logger.info("You have chosen net banking");
-            		break;
-            	case 2:   // for credit card method
-            		logger.info("You have chosen debit card");
-            		break;
-            	case 3: // for scholarship
-            		logger.info("You have chosen to use Scholarship");
-            		break;
+                case 1:   // for net banking method
+                    logger.info("You have chosen net banking");
+                    break;
+                case 2:   // for credit card method
+                    logger.info("You have chosen debit card");
+                    break;
+                case 3: // for scholarship
+                    logger.info("You have chosen to use Scholarship");
+                    break;
                 case 4:
                     logger.info(">>>>>>> Exiting <<<<<<<\n");
                     break;
-            	default:
-            		logger.info("Invalid choice----Exiting----");
-            		logger.info("===========================================\n\n");
+                default:
+                    logger.info("Invalid choice----Exiting----");
+                    logger.info("===========================================\n\n");
             }
 
             if(choice != 4) {
                 logger.info(">>> Proceed to make payment <<<");
                 studentOperation.makePayment(student);
-                
+
                 NotificationSystemOperation.paymentSuccessful();
             }
-    	}
+        }
     }
 
+    /**
+     *
+     * Method to update info of student
+     */
     public void updateInfo(){
         logger.info("================UPDATE INFO================\n");
         // Name, age, address, contact, gender, nationality
@@ -363,4 +380,22 @@ public class StudentCRSMenu {
         }while(choice != -1);
     }
 
+    /**
+     *
+     * Showing student details, like ID, Name,  Age, Address and more.
+     */
+    public void viewStudentDetails(){
+        logger.info("============== Student Details ===============");
+        logger.info("Student ID: " + student.getUserId());
+        logger.info("Name: " + student.getUserName());
+        logger.info("Age: " + student.getAge());
+        logger.info("Address: " + student.getAddress());
+        logger.info("Contact: " + student.getContact());
+        logger.info("Branch: " + student.getBranch());
+        logger.info("Gender: " + student.getGender());
+        logger.info("Nationality: " + student.getNationality());
+        logger.info("Registration status: " + (student.getIsRegistered() == true ? "Complete" : "Pending"));
+        logger.info("Payment status: " + (student.getPaymentStatus() == true ? "Complete" : "Pending") + "\n");
+        logger.info("=============================================");
+    }
 }
