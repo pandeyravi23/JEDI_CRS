@@ -55,9 +55,7 @@ public class ProfessorMenu {
 		catch(Exception e) {
 			
 		}
-		finally {
-			input.close();
-		}
+	
 	}
 
 	/**
