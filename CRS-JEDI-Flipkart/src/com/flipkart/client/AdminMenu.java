@@ -2,21 +2,25 @@ package com.flipkart.client;
 
 import java.util.Scanner;
 
+
 import org.apache.log4j.Logger;
 import com.flipkart.service.AdminOperation;
+
+
 
 /**
  * The Client Side Application for displaying and going forward with Administrator related operations and 
  * functionalities.
  * 
- * @author jedi04
+ * @author JEDI04
  */
 public class AdminMenu {
 	private static Logger logger = Logger.getLogger(AdminMenu.class);
 	private AdminOperation adminOperation = AdminOperation.getInstance();
 	
+	
 	/**
-	 * Main Function to display and then choose the Administrator Operations.
+	 * Main Function to display, choose and then call the respective Administrator Operations.
 	 */
 	public void AdminClient()
 	{
@@ -70,7 +74,7 @@ public class AdminMenu {
 	
 	
 	/**
-	 * Utility Function to display Administrator operations, which is called from AdminClient
+	 * Utility Function to display Administrator operations, which can then be called from AdminClient
 	 */
 	public void showChoices()
 	{
