@@ -24,7 +24,7 @@ public class SQLQueriesConstant {
 	public static final String DROP_COURSE_STUDENT_QUERY = "DELETE FROM RegisteredCourses where studentID = ? and courseID = ?";
 	public static final String GET_NO_OF_COURSES_QUERY = "SELECT COUNT(*) FROM RegisteredCourses WHERE studentID=?";
 	public static final String GET_COURSE_QUERY = "SELECT COUNT(*) FROM RegisteredCourses WHERE studentID=? AND courseID=?";
-	public static final String GET_ENROLLED_COURSES_QUERY = "SELECT rc.courseID, c.name FROM RegisteredCourses as rc INNER JOIN course as c ON rc.courseID = c.id AND studentID=?";
+	public static final String GET_ENROLLED_COURSES_QUERY = "SELECT rc.courseID, c.name, c.credits FROM RegisteredCourses as rc INNER JOIN course as c ON rc.courseID = c.id AND studentID=?";
 	public static final String SET_REGISTRATION_STATUS_QUERY = "UPDATE student SET isRegistered = 1 where id = ?";
 	public static final String GET_GRADES_QUERY = "SELECT grades.courseId, course.name as courseName, grades.grade, grades.studentId FROM grades INNER JOIN course ON grades.courseId = course.id AND grades.studentId=?";
 	public static final String SET_PAYMENT_STATUS_QUERY = "UPDATE student set paymentStatus = true WHERE id=?";
@@ -36,7 +36,7 @@ public class SQLQueriesConstant {
 	// SQL Queries for Professor
 	public static final String GET_PROFESSOR_BY_EMAIL = "select * from professor where email=?";
 	public static final String SHOW_COURSES_PROFESSOR_QUERY = "Select id,name,credits from course where professorId=?";
-	public static final String GET_ENROLLEDSTUDENTS_PROFESSOR_QUERY = "select id,name,email,branch from student where id in (select studentId from grades where courseId = ? and grade = 'NA')";
+	public static final String GET_ENROLLED_STUDENTS_PROFESSOR_QUERY = "select id,name,email,branch from student where id in (select studentId from grades where courseId = ? and grade = 'NA')";
 	public static final String SET_GRADES_PROFESSOR_QUERY = "update grades set grade = ? where studentId = ? and courseId = ?";
 	public static final String UPDATE_GRADES_PROFESSOR_QUERY = "update grades set grade=? where courseId =? and studentId=?";
 	public static final String SHOW_GRADES_PROFESSOR_QUERY = "Select grade from grades where studentId = ? and courseId = ?";

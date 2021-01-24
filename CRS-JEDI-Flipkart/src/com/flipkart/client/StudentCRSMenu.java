@@ -74,6 +74,36 @@ public class StudentCRSMenu {
     		logger.info("Student not yet approved by Admin.\n");
     	}
     }
+
+    //showing available choices for student
+    public void showChoices(){
+        logger.info("Select an operation: ");
+        logger.info("1. View student details");
+        logger.info("2. Show courses");
+        logger.info("3. Register courses");
+        logger.info("4. Add a course");
+        logger.info("5. Drop a course");
+        logger.info("6. View registered courses");
+        logger.info("7. View grades");
+        logger.info("8. Make payment");
+        logger.info("9. Update personal info");
+        logger.info("-1 to Logout");
+    }
+
+    public void viewStudentDetails(){
+        logger.info("============== Student Details ===============");
+        logger.info("Student ID: " + student.getUserId());
+        logger.info("Name: " + student.getUserName());
+        logger.info("Age: " + student.getAge());
+        logger.info("Address: " + student.getAddress());
+        logger.info("Contact: " + student.getContact());
+        logger.info("Branch: " + student.getBranch());
+        logger.info("Gender: " + student.getGender());
+        logger.info("Nationality: " + student.getNationality());
+        logger.info("Registration status: " + (student.getIsRegistered() == true ? "Complete" : "Pending"));
+        logger.info("Payment status: " + (student.getPaymentStatus() == true ? "Complete" : "Pending") + "\n");
+        logger.info("=============================================");
+    }
     
     public void registerCourses() {
     	try {
@@ -172,21 +202,6 @@ public class StudentCRSMenu {
     	catch(Exception e) {
     		logger.info(e.getMessage());
     	}
-    }
-
-    //showing available choices for student
-    public void showChoices(){
-        logger.info("Select an operation: ");
-        logger.info("1. View student details");
-        logger.info("2. Show courses");
-        logger.info("3. Register courses");
-        logger.info("4. Add a course");
-        logger.info("5. Drop a course");
-        logger.info("6. View registered courses");
-        logger.info("7. View grades");
-        logger.info("8. Make payment");
-        logger.info("9. Update personal info");
-        logger.info("-1 to Logout");
     }
 
 
@@ -348,18 +363,4 @@ public class StudentCRSMenu {
         }while(choice != -1);
     }
 
-    public void viewStudentDetails(){
-        logger.info("============== Student Details ===============");
-        logger.info("Student ID: " + student.getUserId());
-        logger.info("Name: " + student.getUserName());
-        logger.info("Age: " + student.getAge());
-        logger.info("Address: " + student.getAddress());
-        logger.info("Contact: " + student.getContact());
-        logger.info("Branch: " + student.getBranch());
-        logger.info("Gender: " + student.getGender());
-        logger.info("Nationality: " + student.getNationality());
-        logger.info("Registration status: " + (student.getIsRegistered() == true ? "Complete" : "Pending"));
-        logger.info("Payment status: " + (student.getPaymentStatus() == true ? "Complete" : "Pending") + "\n");
-        logger.info("=============================================");
-    }
 }

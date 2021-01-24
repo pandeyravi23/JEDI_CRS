@@ -93,7 +93,7 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 		ArrayList<Student> al = new ArrayList<Student>();
 		try {
 			con = DBConnection.getConnection();
-			String str = SQLQueriesConstant.GET_ENROLLEDSTUDENTS_PROFESSOR_QUERY;
+			String str = SQLQueriesConstant.GET_ENROLLED_STUDENTS_PROFESSOR_QUERY;
 			stmt = con.prepareStatement(str);
 			stmt.setInt(1, courseId);
 			ResultSet rs = stmt.executeQuery();
