@@ -39,7 +39,7 @@ public class ProfessorOperation implements ProfessorInterface {
 	 * Method to get and display enrolled student in a particular course whose
 	 * grades are currently Not Available
 	 * 
-	 * @param courseId
+	 * @param courseId Course Id 
 	 */
 	@Override
 	public void viewStudentsEnrolled(int courseId) {
@@ -73,7 +73,7 @@ public class ProfessorOperation implements ProfessorInterface {
 	/**
 	 * Get and display grades of all students in a course linked with courseId
 	 * 
-	 * @param courseId
+	 * @param courseId Course Id
 	 */
 	@Override
 	public void viewGrades(int courseId) {
@@ -122,7 +122,7 @@ public class ProfessorOperation implements ProfessorInterface {
 	/**
 	 * Get and display all courses alloted to the professor with given courseId
 	 * 
-	 * @param professorId
+	 * @param professorId Professor Id
 	 */
 	@Override
 	public void showCourses(int professorId) {
@@ -147,7 +147,7 @@ public class ProfessorOperation implements ProfessorInterface {
 	 * @param courseId
 	 * @param studentId
 	 * @param grade Grade that has to be allotted
-	 * @return boolean
+	 * @return boolean Returns true if update grade operation successful else returns false
 	 */
 	public boolean updateStudentGrade(int courseId, int studentId, String grade) {
 		return professorDaoOperation.updateStudentGrades(courseId, studentId, grade);

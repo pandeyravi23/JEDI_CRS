@@ -107,7 +107,7 @@ public class ProfessorMenu {
 	 * Displays List of all courses that are allotted
 	 * to the professor carrying a particular professorId
 	 * 
-	 * @param professorId
+	 * @param professorId professor id
 	 */
 	public void allotedCourse(int professorId) {
 		professorOperation.showCourses(professorId);
