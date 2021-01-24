@@ -16,12 +16,30 @@ import com.flipkart.bean.Course;
 import com.flipkart.bean.Professor;
 import com.flipkart.util.DBConnection;
 import com.flipkart.constant.SQLQueriesConstant;
+import com.flipkart.service.AdminOperation;
 
 public class AdminDAOOperation implements AdminDAOInterface {
 	
 	private static Logger logger = Logger.getLogger(AdminDAOOperation.class);
 	Connection connection = DBConnection.getConnection();
 	PreparedStatement ps = null;
+	
+//	code for lazy loading
+	private static AdminDAOOperation instance = null;
+	
+	private AdminDAOOperation()
+	{
+		
+	}
+	
+	synchronized public static AdminDAOOperation getInstance()
+	{
+		if(instance == null)
+		{
+			instance = new AdminDAOOperation();
+		}
+		return instance;
+	}
 	
 /*
  * Verifies Email Address at the time of registration

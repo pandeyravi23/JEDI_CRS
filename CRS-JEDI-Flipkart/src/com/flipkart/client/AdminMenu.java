@@ -9,7 +9,7 @@ import com.flipkart.service.AdminOperation;
 
 public class AdminMenu {
 	private static Logger logger = Logger.getLogger(AdminMenu.class);
-	private AdminOperation adminOperation = new AdminOperation();
+	private AdminOperation adminOperation = AdminOperation.getInstance();
 	private Admin admin = new Admin();
 	
 	public void AdminClient()
