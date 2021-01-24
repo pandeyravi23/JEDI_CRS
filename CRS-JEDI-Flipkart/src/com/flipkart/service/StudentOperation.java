@@ -35,9 +35,6 @@ public class StudentOperation implements StudentInterface {
             courses = coursesDaoOperation.getAllCourses();
             //return courses;
         }
-        catch(CommonException e) {
-        	logger.info(e.getMessage());
-        }
         catch (Exception e){
             e.printStackTrace();
         }
@@ -56,9 +53,6 @@ public class StudentOperation implements StudentInterface {
                 logger.info(course.getCourseID() + "\t\t" + course.getCourseName() + "\t" + course.getCredits() + "\t\t" + professorAlloted);
             }
             logger.info("=================================================\n");
-        }
-        catch(CommonException e) {
-        	logger.info(e.getMessage());
         }
         catch (Exception e){
             e.printStackTrace();

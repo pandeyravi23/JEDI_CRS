@@ -13,14 +13,16 @@ public class UserDAOOperation implements UserDAOInterface {
 	private static Logger logger = Logger.getLogger(UserDAOOperation.class);
 	Connection connection = null;
 	PreparedStatement ps = null;
-	/*
-	 * Gets db connection, verifies login credentials,
-	 * returns RoleId if login verified else Return -1;
+	
+	/**
+	 * Method to verify login credentials, i.e email and password
+	 * 
+	 * @param email The email address for which verification is needed
+	 * @param password The password entered corresponding to the email address.
 	 */
 	public int verifyLoginCredentials(String email, String password) {
 		try {
 			connection = DBConnection.getConnection();
-			//String sqlQuery = "SELECT role FROM credentials WHERE email=? AND password=?";
 			ps = connection.prepareStatement(SQLQueriesConstant.VERIFY_LOGIN_CREDENTIALS_QUERY);
 			
 			ps.setString(1, email);
@@ -32,17 +34,25 @@ public class UserDAOOperation implements UserDAOInterface {
 				role = result.getInt("role");
 			}
 			return role;
-		} catch (Exception e) {
-			logger.info(e.getMessage());
+		} 
+		catch(SQLException e) {
+			logger.warn(e.getMessage() + "\n");
+		}
+		catch(Exception e) {
+			logger.warn(e.getMessage() + "\n");
 		}
 		return -1;
 	}
 	
+	/**
+	 * Method to check whether or not an email address is present.
+	 * 
+	 * @param email The email address whose presence is to be verified.
+	 */
 	@Override
 	public boolean checkEmailAvailability(String email) {
 		try {
 			connection = DBConnection.getConnection();
-			//String sqlQuery = "SELECT * FROM credentials WHERE email=?";
 			ps = connection.prepareStatement(SQLQueriesConstant.CHECK_EMAIL_AVAILABILITY_QUERY);
 			ps.setString(1, email);
 			
@@ -50,21 +60,26 @@ public class UserDAOOperation implements UserDAOInterface {
 			if(result.next())
 				return false;
 		}
-		catch(Exception e) {
-			e.printStackTrace();
+		catch(SQLException e) {
+			logger.warn(e.getMessage() + "\n");
 		}
-		finally {
-			// connection.close();
+		catch(Exception e) {
+			logger.warn(e.getMessage() + "\n");
 		}
 		return true;
 	}
 	
+	/**
+	 * Method to make an entry into credentials table for given User Object
+	 * 
+	 * @param user User Object containing the necessary information of the user whose entry is to made.
+	 * @param password The password with which the entry is to be made.
+	 */
 	@Override
 	public int registerUser(User user, String password) {
 		int id = -1;
 		try {
 			connection = DBConnection.getConnection();
-			//String sqlQuery = "INSERT INTO credentials(role, email, password, isApproved, address, age, gender, contact, nationality) values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			ps = connection.prepareStatement(SQLQueriesConstant.REGISTER_USER_QUERY, Statement.RETURN_GENERATED_KEYS);
 
 			ps.setInt(1, Integer.parseInt(user.getRole()));
@@ -84,11 +99,11 @@ public class UserDAOOperation implements UserDAOInterface {
 			id = resultSet.getInt(1);
 			return id;
 		}
-		catch(Exception e) {
-			e.printStackTrace();
+		catch(SQLException e) {
+			logger.warn(e.getMessage() + "\n");
 		}
-		finally {
-			// connection.close();
+		catch(Exception e) {
+			logger.warn(e.getMessage() + "\n");
 		}
 		return id;
 	}
