@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 
 import com.flipkart.bean.Course;
@@ -89,6 +90,9 @@ public class StudentDAOOperation implements StudentDAOInterface {
 				}
 
 				addCourseToGrades(student.getUserId(),courseID);
+			}
+			catch(SQLException e) {
+				logger.warn("SQL Error: " + e.getMessage());
 			}
 			catch (Exception e){
 				e.printStackTrace();

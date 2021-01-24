@@ -17,8 +17,8 @@ import com.flipkart.util.DBConnection;
 import com.mysql.cj.protocol.Resultset;
 
 /**
- * Lazy singleton class synchronized for multi-threading
- * interacts with professor related tables 
+ * Lazy singleton class synchronized for multi-threading interacts with
+ * professor related tables
  * 
  * @author JEDI04
  */
@@ -26,15 +26,15 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	private static Logger logger = Logger.getLogger(ProfessorDAOOperation.class);
 	Connection con;
 	PreparedStatement stmt;
-	
+
 	private static ProfessorDAOOperation instance = null;
-	
+
 	public ProfessorDAOOperation() {
-		
+
 	}
-	
+
 	synchronized public static ProfessorDAOOperation getInstance() {
-		if (instance==null) {
+		if (instance == null) {
 			instance = new ProfessorDAOOperation();
 		}
 		return instance;
@@ -64,46 +64,48 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 				professor.setRole(rs.getString("role"));
 				professor.setDepartment(rs.getString(5));
 			}
+		} catch (SQLException e) {
+			logger.info(e.getMessage());
 		} catch (Exception e) {
-			e.printStackTrace();
-
+			logger.info(e.getMessage());
 		}
 		return professor;
 	}
 
 	/**
 	 * Gets Professor Name from the professorId
+	 * 
 	 * @param professorID
 	 * @return Professor Name corresponding to the given id
 	 */
-	public String getProfessorById(int professorID){
+	public String getProfessorById(int professorID) {
 		String professorName = null;
 
-		try{
+		try {
 			con = DBConnection.getConnection();
-			//String sqlQuery = "SELECT name FROM professor WHERE id = ?";
+			// String sqlQuery = "SELECT name FROM professor WHERE id = ?";
 			stmt = con.prepareStatement(SQLQueriesConstant.GET_PROFESSOR_BY_ID_QUERY);
 
-			stmt.setInt(1,professorID);
+			stmt.setInt(1, professorID);
 
 			ResultSet resultSet = stmt.executeQuery();
-			if(resultSet.next()){
+			if (resultSet.next()) {
 				professorName = resultSet.getString("name");
 			}
-		}
-		catch(Exception e){
-			e.printStackTrace();
+		} catch (SQLException e) {
+			logger.info(e.getMessage());
+		} catch (Exception e) {
+			logger.info(e.getMessage());
 		}
 
 		return professorName;
 	}
 
-
 	/**
-	 * Method Displays list of courses alloted to the 
-	 * professor after getting from the database
+	 * Method Displays list of courses alloted to the professor after getting from
+	 * the database
 	 * 
-	 * @param professorId 
+	 * @param professorId
 	 */
 	public void showCourses(int professorId) {
 		try {
@@ -118,14 +120,16 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 				logger.info(rs.getInt(1) + "		" + rs.getString(2) + "		" + rs.getInt(3));
 			}
 			logger.info("================================================\n\n");
+		} catch (SQLException e) {
+			logger.info(e.getMessage());
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.info(e.getMessage());
 		}
 	}
 
 	/**
-	 * Returns list of all student objects associated with the particular
-	 * course id whose grade is Not Available from the database
+	 * Returns list of all student objects associated with the particular course id
+	 * whose grade is Not Available from the database
 	 * 
 	 * @param courseId
 	 * @return returns list of enrolled students
@@ -139,7 +143,7 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 			stmt.setInt(1, courseId);
 			ResultSet rs = stmt.executeQuery();
 			rs = stmt.executeQuery();
-			
+
 			while (rs.next()) {
 				Student st = new Student();
 				st.setUserId(rs.getInt("id"));
@@ -148,31 +152,31 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 				st.setBranch(rs.getString("branch"));
 				al.add(st);
 			}
-			
 
+		} catch (SQLException e) {
+			logger.info(e.getMessage());
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.info(e.getMessage());
 		}
 		return al;
 	}
 
 	/**
-	 * Updates grades of multiple student belonging
-	 * to a particular courseId whose grades are currently
-	 * not available
+	 * Updates grades of multiple student belonging to a particular courseId whose
+	 * grades are currently not available
 	 * 
-	 * @param toGrade List of students to be graded
+	 * @param toGrade  List of students to be graded
 	 * @param courseId
 	 */
-	public void setGrades(ArrayList<Student>toGrade,int courseId) {
+	public void setGrades(ArrayList<Student> toGrade, int courseId) {
 
 		Scanner sc = new Scanner(System.in);
 		try {
 			con = DBConnection.getConnection();
-			for(Student st : toGrade) {
+			for (Student st : toGrade) {
 				logger.info("Please Enter Grade for " + st.getUserName());
 				String grd = sc.next();
-				if(grd=="")
+				if (grd == "")
 					grd = sc.next();
 				String str = SQLQueriesConstant.SET_GRADES_PROFESSOR_QUERY;
 				stmt = con.prepareStatement(str);
@@ -180,60 +184,60 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 				stmt.setInt(2, st.getUserId());
 				stmt.setInt(3, courseId);
 				int isUpdated = stmt.executeUpdate();
-				if(isUpdated > 0) {
+				if (isUpdated > 0) {
 					logger.info("Uploaded grade");
-				}
-				else {
+				} else {
 					logger.info("Couldn't upload try again");
 				}
 			}
-		} catch (Exception e){
-			e.printStackTrace();
+		} catch (SQLException e) {
+			logger.info(e.getMessage());
+		} catch (Exception e) {
+			logger.info(e.getMessage());
 		}
-		return ;
+		return;
 	}
-	
+
 	/**
-	 * Updates grades of a single student belonging
-	 * to a particular courseId
+	 * Updates grades of a single student belonging to a particular courseId
 	 * 
-	 * @param courseId 
-	 * @param studentId 
-	 * @param grades 
+	 * @param courseId
+	 * @param studentId
+	 * @param grades
 	 * @return true if grades updated else false
 	 */
-	public boolean updateStudentGrades(int courseId,int studentId, String grades) {
+	public boolean updateStudentGrades(int courseId, int studentId, String grades) {
 		try {
 			con = DBConnection.getConnection();
 			String str = SQLQueriesConstant.UPDATE_GRADES_PROFESSOR_QUERY;
 			stmt = con.prepareStatement(str);
-			stmt.setString(1,grades);
-			stmt.setInt(2,courseId);
-			stmt.setInt(3,studentId);
+			stmt.setString(1, grades);
+			stmt.setInt(2, courseId);
+			stmt.setInt(3, studentId);
 			int status = stmt.executeUpdate();
-			if (status>0) {
+			if (status > 0) {
 				return true;
 			}
-		}
-		catch(Exception e) {
-			e.printStackTrace();
+		} catch (SQLException e) {
+			logger.info(e.getMessage());
+		} catch (Exception e) {
+			logger.info(e.getMessage());
 		}
 		return false;
 	}
-	
+
 	/**
-	 * Show Grades of all enrolled students associated with the 
-	 * courseId
+	 * Show Grades of all enrolled students associated with the courseId
 	 * 
 	 * @param enrolledStudent List of enrolled student
-	 * @param courseId 
+	 * @param courseId
 	 */
-	public void showGrades(ArrayList<Student>enrolledStudent,int courseId) {
+	public void showGrades(ArrayList<Student> enrolledStudent, int courseId) {
 		try {
 			con = DBConnection.getConnection();
 			logger.info("===================================");
 			logger.info("UserId    UserName    Grade Obtained");
-			for(Student st : enrolledStudent) {
+			for (Student st : enrolledStudent) {
 				String str = SQLQueriesConstant.SHOW_GRADES_PROFESSOR_QUERY;
 				stmt = con.prepareStatement(str);
 				stmt.setInt(1, st.getUserId());
@@ -244,17 +248,17 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 				}
 			}
 			logger.info("===================================");
-		} catch (Exception e){
-			e.printStackTrace();
+		} catch (SQLException e) {
+			logger.info(e.getMessage());
+		} catch (Exception e) {
+			logger.info(e.getMessage());
 		}
-		return ;
+		return;
 	}
-	
-	
-	
+
 	/**
-	 * Returns list of all student objects associated with the particular
-	 * course id from the database
+	 * Returns list of all student objects associated with the particular course id
+	 * from the database
 	 * 
 	 * @param courseId
 	 * @return List of students in the course
@@ -268,7 +272,7 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 			stmt.setInt(1, courseId);
 			ResultSet rs = stmt.executeQuery();
 			rs = stmt.executeQuery();
-			
+
 			while (rs.next()) {
 				Student st = new Student();
 				st.setUserId(rs.getInt("id"));
@@ -278,10 +282,12 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 				al.add(st);
 			}
 
+		} catch (SQLException e) {
+			logger.info(e.getMessage());
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.info(e.getMessage());
 		}
 		return al;
 	}
-	
+
 }
