@@ -10,6 +10,13 @@ import com.flipkart.bean.Student;
 import com.flipkart.dao.ProfessorDAOOperation;
 import com.flipkart.exception.ProfessorCRSException;
 
+/**
+ * 
+ * Handles professor related actions in the backend
+ * @author JEDI04
+ *
+ */
+
 public class ProfessorOperation implements ProfessorInterface {
 
 	private static Logger logger = Logger.getLogger(ProfessorOperation.class);
@@ -29,12 +36,10 @@ public class ProfessorOperation implements ProfessorInterface {
 	}
 	
 	/**
-	 * @author JEDI04
 	 * Method to get and display enrolled student in a particular course whose
 	 * grades are currently Not Available
 	 * 
-	 * @param courseId(integer)
-	 * @return none
+	 * @param courseId
 	 */
 	@Override
 	public void viewStudentsEnrolled(int courseId) {
@@ -66,11 +71,9 @@ public class ProfessorOperation implements ProfessorInterface {
 	}
 
 	/**
-	 * @author JEDI04
 	 * Get and display grades of all students in a course linked with courseId
 	 * 
-	 * @param courseId(integer)
-	 * @return none
+	 * @param courseId
 	 */
 	@Override
 	public void viewGrades(int courseId) {
@@ -91,11 +94,10 @@ public class ProfessorOperation implements ProfessorInterface {
 	}
 
 	/**
-	 * @author JEDI04
 	 * Grade Students in a batch with mentioned courseId
 	 * 
-	 * @param courseId(integer)
-	 * @return boolean
+	 * @param courseId
+	 * @return true if grading operation is succesful else false 
 	 */
 	@Override
 	public Boolean gradeStudents(int courseId) {
@@ -118,11 +120,9 @@ public class ProfessorOperation implements ProfessorInterface {
 	}
 
 	/**
-	 * @author JEDI04
 	 * Get and display all courses alloted to the professor with given courseId
 	 * 
-	 * @param professorId(integer)
-	 * @return none
+	 * @param professorId
 	 */
 	@Override
 	public void showCourses(int professorId) {
@@ -131,11 +131,10 @@ public class ProfessorOperation implements ProfessorInterface {
 	}
 
 	/**
-	 * @author JEDI04
 	 * Returns professor object associated with given email
 	 * 
-	 * @param email(String)
-	 * @return Professor(object)
+	 * @param email professor email to be verified
+	 * @return Professor object containing information of the professor
 	 */
 	public Professor getProfessorByEmail(String email) {
 		Professor p = professorDaoOperation.getProfessorByEmail(email);
@@ -143,10 +142,11 @@ public class ProfessorOperation implements ProfessorInterface {
 	}
 
 	/**
-	 * @author JEDI04
 	 * Updates Student grade and returns update status as boolean
 	 * 
-	 * @param {courseId(integer),studentId(integer),grade(String)}
+	 * @param courseId
+	 * @param studentId
+	 * @param grade Grade that has to be allotted
 	 * @return boolean
 	 */
 	public boolean updateStudentGrade(int courseId, int studentId, String grade) {

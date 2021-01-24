@@ -17,10 +17,10 @@ import com.flipkart.util.DBConnection;
 import com.mysql.cj.protocol.Resultset;
 
 /**
- * @author JEDI04
  * Lazy singleton class synchronized for multi-threading
  * interacts with professor related tables 
- *
+ * 
+ * @author JEDI04
  */
 public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	private static Logger logger = Logger.getLogger(ProfessorDAOOperation.class);
@@ -29,7 +29,7 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	
 	private static ProfessorDAOOperation instance = null;
 	
-	private ProfessorDAOOperation() {
+	public ProfessorDAOOperation() {
 		
 	}
 	
@@ -41,11 +41,10 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	}
 
 	/**
-	 * @author JEDI04
 	 * Method creates and returns professor object using email ID from the database
 	 * 
-	 * @param email(String)
-	 * @return Professor(object)
+	 * @param email
+	 * @return Professor Object
 	 */
 	public Professor getProfessorByEmail(String email) {
 		Professor professor = new Professor();
@@ -73,12 +72,38 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	}
 
 	/**
-	 * @author JEDI04
+	 * Gets Professor Name from the professorId
+	 * @param professorID
+	 * @return Professor Name corresponding to the given id
+	 */
+	public String getProfessorById(int professorID){
+		String professorName = null;
+
+		try{
+			con = DBConnection.getConnection();
+			//String sqlQuery = "SELECT name FROM professor WHERE id = ?";
+			stmt = con.prepareStatement(SQLQueriesConstant.GET_PROFESSOR_BY_ID_QUERY);
+
+			stmt.setInt(1,professorID);
+
+			ResultSet resultSet = stmt.executeQuery();
+			if(resultSet.next()){
+				professorName = resultSet.getString("name");
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+
+		return professorName;
+	}
+
+
+	/**
 	 * Method Displays list of courses alloted to the 
 	 * professor after getting from the database
 	 * 
-	 * @param professorId(integer)
-	 * @return none
+	 * @param professorId 
 	 */
 	public void showCourses(int professorId) {
 		try {
@@ -99,12 +124,11 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	}
 
 	/**
-	 * @author JEDI04
 	 * Returns list of all student objects associated with the particular
 	 * course id whose grade is Not Available from the database
 	 * 
-	 * @param courseId(integer)
-	 * @return Arraylist(Student(Object))
+	 * @param courseId
+	 * @return returns list of enrolled students
 	 */
 	public ArrayList<Student> getEnrolledStudents(int courseId) {
 		ArrayList<Student> al = new ArrayList<Student>();
@@ -133,13 +157,12 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	}
 
 	/**
-	 * @author JEDI04
 	 * Updates grades of multiple student belonging
 	 * to a particular courseId whose grades are currently
 	 * not available
 	 * 
-	 * @param {ArrayList(Student(object)),grade(integer)}
-	 * @return none
+	 * @param toGrade List of students to be graded
+	 * @param courseId
 	 */
 	public void setGrades(ArrayList<Student>toGrade,int courseId) {
 
@@ -171,12 +194,13 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	}
 	
 	/**
-	 * @author JEDI04
 	 * Updates grades of a single student belonging
 	 * to a particular courseId
 	 * 
-	 * @param {courseId(integer),studentId(integer),grade(String)}
-	 * @return boolean
+	 * @param courseId 
+	 * @param studentId 
+	 * @param grades 
+	 * @return true if grades updated else false
 	 */
 	public boolean updateStudentGrades(int courseId,int studentId, String grades) {
 		try {
@@ -198,19 +222,18 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	}
 	
 	/**
-	 * @author JEDI04
 	 * Show Grades of all enrolled students associated with the 
 	 * courseId
 	 * 
-	 * @param {ArrayList(Student(object)),integer}
-	 * @return none
+	 * @param enrolledStudent List of enrolled student
+	 * @param courseId 
 	 */
-	public void showGrades(ArrayList<Student>enolledStudent,int courseId) {
+	public void showGrades(ArrayList<Student>enrolledStudent,int courseId) {
 		try {
 			con = DBConnection.getConnection();
 			logger.info("===================================");
 			logger.info("UserId    UserName    Grade Obtained");
-			for(Student st : enolledStudent) {
+			for(Student st : enrolledStudent) {
 				String str = SQLQueriesConstant.SHOW_GRADES_PROFESSOR_QUERY;
 				stmt = con.prepareStatement(str);
 				stmt.setInt(1, st.getUserId());
@@ -230,12 +253,11 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	
 	
 	/**
-	 * @author JEDI04
 	 * Returns list of all student objects associated with the particular
 	 * course id from the database
 	 * 
-	 * @param courseId(integer)
-	 * @return ArrayList(Student(object))
+	 * @param courseId
+	 * @return List of students in the course
 	 */
 	public ArrayList<Student> getStudents(int courseId) {
 		ArrayList<Student> al = new ArrayList<Student>();

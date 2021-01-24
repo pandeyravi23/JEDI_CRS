@@ -16,12 +16,30 @@ import com.flipkart.bean.Course;
 import com.flipkart.bean.Professor;
 import com.flipkart.util.DBConnection;
 import com.flipkart.constant.SQLQueriesConstant;
+import com.flipkart.service.AdminOperation;
 
 public class AdminDAOOperation implements AdminDAOInterface {
 	
 	private static Logger logger = Logger.getLogger(AdminDAOOperation.class);
 	Connection connection = DBConnection.getConnection();
 	PreparedStatement ps = null;
+	
+//	code for lazy loading
+	private static AdminDAOOperation instance = null;
+	
+	private AdminDAOOperation()
+	{
+		
+	}
+	
+	synchronized public static AdminDAOOperation getInstance()
+	{
+		if(instance == null)
+		{
+			instance = new AdminDAOOperation();
+		}
+		return instance;
+	}
 	
 /*
  * Verifies Email Address at the time of registration
@@ -51,7 +69,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	}
 	
 	
-	/*
+	/**
 	 * addAdmin adds the new Admin in Credentials table 
 	 * and Admin table 
 	 */
@@ -93,11 +111,18 @@ public class AdminDAOOperation implements AdminDAOInterface {
 		return 0;
 	}
 	
-	
-	/*
+
+	/**
+	 * It is responsible for adding professor to the database.
 	 * addProfessor adds the new Professor in Credentials table 
 	 * and Professor table 
+	 * 
+	 * @param password The password provided by user
+	 * @param prof Professor details provided by the user
+	 * 
+	 * @return Returns 1 if professor is successfully added. Else returns 0.
 	 */
+	
 	public int addProfessor(String password, Professor prof)
 	{
 		try

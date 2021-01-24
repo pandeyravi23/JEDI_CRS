@@ -8,6 +8,7 @@ public class Course {
     private int professorAllotted;
     private int credits;
     private ArrayList<Student> listOfEnrolledStudents = new ArrayList<>();
+    private String prerequisites;
 
     public void setCourseID(int courseID){
         this.courseID = courseID;
@@ -47,5 +48,13 @@ public class Course {
 
     public ArrayList<Student> getListOfEnrolledStudents(){
         return listOfEnrolledStudents;
+    }
+
+    public void setPrerequisites(String prerequisites){
+        this.prerequisites = prerequisites;
+    }
+
+    public String getPrerequisites(){
+        return prerequisites;
     }
 }

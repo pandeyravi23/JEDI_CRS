@@ -229,6 +229,7 @@ public class StudentDAOOperation implements StudentDAOInterface {
 				course.setCourseID(resultSet.getInt("courseID"));
 				course.setCourseName(resultSet.getString("name"));
 				course.setCredits(resultSet.getInt("credits"));
+				//course.setProfessorAllotted(resultSet.getInt("professorId"));
 				enrolledCourses.add(course);
 			}
 		}

@@ -12,7 +12,25 @@ import com.flipkart.dao.AdminDAOOperation;
 public class AdminOperation implements AdminInterface {
 
 	public static Logger logger = Logger.getLogger(AdminOperation.class);
-	AdminDAOOperation adminDAO = new AdminDAOOperation();
+	AdminDAOOperation adminDAO = AdminDAOOperation.getInstance();
+	
+	
+//	code for lazy loading
+	private static AdminOperation instance = null;
+	
+	private AdminOperation()
+	{
+		
+	}
+	
+	synchronized public static AdminOperation getInstance()
+	{
+		if(instance == null)
+		{
+			instance = new AdminOperation();
+		}
+		return instance;
+	}
 
 	@Override
 	public void generateReportCard() {
