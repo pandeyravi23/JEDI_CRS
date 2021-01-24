@@ -1,5 +1,13 @@
 package com.flipkart.exception;
 
+/**
+ * 
+ * @author jedi04
+ * 
+ * Exception class designed to handle errors corresponding to Administrator related
+ * issues
+ *
+ */
 public class AdminCRSException extends Exception {
 	private static final long serialVersionUID = 1L;
 	private String message;

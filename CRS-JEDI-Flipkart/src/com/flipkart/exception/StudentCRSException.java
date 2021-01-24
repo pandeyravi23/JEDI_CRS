@@ -1,9 +1,15 @@
 package com.flipkart.exception;
 
+
+/**
+ * 
+ * @author jedi04
+ * 
+ * Exception class designed to handle errors corresponding to Student related
+ * issues
+ *
+ */
 public class StudentCRSException extends Exception {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 4L;
 	private String message;
 	
