@@ -16,7 +16,7 @@ import com.flipkart.service.AuthCredentialSystemOperations;
  */
 public class MainCRSApplication {
 	private static Logger logger = Logger.getLogger(MainCRSApplication.class);
-	private static AuthCredentialSystemOperations auth = new AuthCredentialSystemOperations();
+	private static AuthCredentialSystemOperations auth = AuthCredentialSystemOperations.getInstance();
 	private static Scanner sc = null;
 
 	/**

@@ -383,7 +383,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	 * to the course, it is modified.
 	 * 
 	 * @param courseId Course ID of the course to which the professor is to be assigned/modified.
-	 * @param professorId Professor ID of the course.
+	 * @param professorID Professor ID of the course.
 	 * 
 	 */
 	@Override

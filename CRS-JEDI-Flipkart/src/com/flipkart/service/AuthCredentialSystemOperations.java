@@ -19,6 +19,22 @@ public class AuthCredentialSystemOperations implements AuthCredentialSystemInter
 	private static UserDAOOperation userDaoOperation = new UserDAOOperation();
 	private static StudentDAOOperation studentDaoOperation = new StudentDAOOperation();
 
+	private static AuthCredentialSystemOperations instance = null;
+
+	private AuthCredentialSystemOperations()
+	{
+
+	}
+
+	synchronized public static AuthCredentialSystemOperations getInstance()
+	{
+		if(instance == null)
+		{
+			instance = new AuthCredentialSystemOperations();
+		}
+		return instance;
+	}
+
 	/**
 	 * Method to login into the application and get the role of the user
 	 *

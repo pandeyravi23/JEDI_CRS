@@ -16,6 +16,22 @@ public class CourseOperation implements CourseInterface {
     
     CoursesDAOOperation coursesDaoOperation = new CoursesDAOOperation();
 
+	private static CourseOperation instance = null;
+
+	private CourseOperation()
+	{
+
+	}
+
+	synchronized public static CourseOperation getInstance()
+	{
+		if(instance == null)
+		{
+			instance = new CourseOperation();
+		}
+		return instance;
+	}
+
 	/**
 	 * Method to get the number of students enrolled in a particular course
 	 *

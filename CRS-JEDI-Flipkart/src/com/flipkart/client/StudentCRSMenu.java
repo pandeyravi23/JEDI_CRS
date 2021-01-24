@@ -15,8 +15,8 @@ import java.util.Scanner;
  */
 public class StudentCRSMenu {
     private static Logger logger = Logger.getLogger(StudentCRSMenu.class);
-    private StudentInterface studentOperation = new StudentOperation();
-    private CourseOperation courseOperation = new CourseOperation();
+    private StudentInterface studentOperation = StudentOperation.getInstance();
+    private CourseOperation courseOperation = CourseOperation.getInstance();
     private  Student student = new Student();
     
     /**

@@ -11,6 +11,8 @@ import com.flipkart.bean.Course;
 
 import java.util.ArrayList;
 
+
+
 /**
  * Class to handle all student related operations. Accessed by Student CRS Menu
  *
@@ -18,10 +20,28 @@ import java.util.ArrayList;
  */
 
 public class StudentOperation implements StudentInterface {
+
     private static Logger logger = Logger.getLogger(StudentOperation.class);
-	CoursesDAOOperation coursesDaoOperation = new CoursesDAOOperation();
+    CoursesDAOOperation coursesDaoOperation = new CoursesDAOOperation();
     StudentDAOOperation studentDaoOperation = new StudentDAOOperation();
     ProfessorDAOOperation professorDAOOperation = new ProfessorDAOOperation();
+
+    private static StudentOperation instance = null;
+
+    private StudentOperation()
+    {
+
+    }
+
+    synchronized public static StudentOperation getInstance()
+    {
+        if(instance == null)
+        {
+            instance = new StudentOperation();
+        }
+        return instance;
+    }
+
 
 
     /**
