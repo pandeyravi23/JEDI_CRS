@@ -9,18 +9,18 @@ import org.apache.log4j.Logger;
 public class NotificationSystemOperation {
 	public static Logger logger = Logger.getLogger(NotificationSystemOperation.class);
 	
-	public void courseRegistrationComplete()
+	public static void courseRegistrationComplete()
 	{
-		logger.info("Course registration successful. Please proceed to make payment.\n");
+		logger.info("Notification: Course registration successful. Please proceed to make payment.\n");
 	}
 	
-	public void paymentSuccessful()
+	public static void paymentSuccessful()
 	{
-		logger.info("Payment successful.");
+		logger.info("Notification: Payment successful.");
 	}
 	
-	public void studentApproved()
+	public static void studentApproved()
 	{
-		logger.info("Congratulations! You have been approved.");
+		logger.info("Notification: Congratulations! You have been approved.");
 	}
 }
