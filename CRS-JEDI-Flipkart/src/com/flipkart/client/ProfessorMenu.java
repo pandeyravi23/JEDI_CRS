@@ -15,7 +15,7 @@ import java.util.Scanner;
  */
 public class ProfessorMenu {
 	private static Logger logger = Logger.getLogger(ProfessorMenu.class);
-	private ProfessorInterface professorOperation = new ProfessorOperation();
+	private ProfessorInterface professorOperation = ProfessorOperation.getInstance();
 
 	/*
 	 *  Manages the major roles of professor
@@ -78,7 +78,6 @@ public class ProfessorMenu {
 		} 
 		else {
 			try {
-				ProfessorOperation professorOperation = new ProfessorOperation();
 				logger.info("Enter courseId");
 				int courseId = sc.nextInt();
 				professorOperation.gradeStudents(courseId);
@@ -93,7 +92,6 @@ public class ProfessorMenu {
 	 * to the professor carrying a particular professorId
 	 */
 	public void allotedCourse(int professorId) {
-		ProfessorOperation professorOperation = new ProfessorOperation();
 		professorOperation.showCourses(professorId);
 	}
 
@@ -126,7 +124,6 @@ public class ProfessorMenu {
 			logger.info("Enter Grade");
 			String grade = sc.next();
 
-			ProfessorOperation professorOperation = new ProfessorOperation();
 			boolean status = professorOperation.updateStudentGrade(courseId, studentId, grade);
 			logger.info("Update Grade Status : " + status + "\n\n");
 
@@ -143,7 +140,7 @@ public class ProfessorMenu {
 		Scanner sc = new Scanner(System.in);
 		logger.info("Inside View Student Method");
 		try {
-			ProfessorOperation professorOperation = new ProfessorOperation();
+//			ProfessorOperation professorOperation = new ProfessorOperation();
 			logger.info("	Enter courseId");
 			int courseId = sc.nextInt();
 			professorOperation.viewStudentsEnrolled(courseId);
@@ -160,7 +157,6 @@ public class ProfessorMenu {
 		Scanner sc = new Scanner(System.in);
 		logger.info("Inside View Student Method");
 		try {
-			ProfessorOperation professorOperation = new ProfessorOperation();
 			logger.info("Enter courseId");
 			int courseId = sc.nextInt();
 			professorOperation.viewGrades(courseId);

@@ -282,10 +282,10 @@ public class StudentDAOOperation implements StudentDAOInterface {
 			ps = connection.prepareStatement(SQLQueriesConstant.SET_PAYMENT_STATUS_QUERY);
 
 			ps.setInt(1, student.getUserId());
-			int paid = ps.executeUpdate();
-			if(paid > 0) {
-				logger.info("Payment Successful\n");
-			}
+			ps.executeUpdate();
+//			if(paid > 0) {
+//				logger.info("Payment Successful\n");
+//			}
 		}
 		catch(Exception e){
 			e.printStackTrace();
