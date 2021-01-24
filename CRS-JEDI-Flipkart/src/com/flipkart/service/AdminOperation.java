@@ -13,7 +13,7 @@ import com.flipkart.exception.AdminCRSException;
 
 /**
  * Performs All the Admin Operations
- * @author JEDI 04
+ * @author JEDI04
  *
  */
 
@@ -259,7 +259,6 @@ public class AdminOperation implements AdminInterface {
 	 * by Admin
 	 */
 	@Override
-
 	public void allotCourse() {
 		Scanner sc = new Scanner(System.in);
 		try {

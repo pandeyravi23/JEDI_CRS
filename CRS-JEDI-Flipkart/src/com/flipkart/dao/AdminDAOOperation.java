@@ -24,7 +24,7 @@ import com.flipkart.service.AdminOperation;
  * Data Access object for Admin class which is responsible for all the interactions that happen with the
  * SQL database.
  * 
- * @author Jedi04
+ * @author JEDI04
  *
  */
 
@@ -389,10 +389,19 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	@Override
 	public void allotCourses(int courseId,int professorID) {
 		try {
-			String str = SQLQueriesConstant.GET_COURSE_NAME_BY_ID;
+			String str = SQLQueriesConstant.GET_PROFESSOR_NAME_BY_ID;
+			ps = connection.prepareStatement(str);
+			ps.setInt(1,professorID);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()==false) {
+				logger.info("No Professor with ID: " + professorID + " Exists!!");
+				logger.info("=======================================");
+				return ;
+			}
+			str = SQLQueriesConstant.GET_COURSE_NAME_BY_ID;
 			ps = connection.prepareStatement(str);
 			ps.setInt(1,courseId);
-			ResultSet rs = ps.executeQuery();
+			rs = ps.executeQuery();
 			if(rs.next()) {
 				str = SQLQueriesConstant.UPDATE_PROFESSOR_IN_COURSE;
 				ps = connection.prepareStatement(str);
