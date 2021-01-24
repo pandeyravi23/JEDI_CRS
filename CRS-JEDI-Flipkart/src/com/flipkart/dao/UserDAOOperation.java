@@ -18,6 +18,7 @@ public class UserDAOOperation implements UserDAOInterface {
 	 * returns RoleId if login verified else Return -1;
 	 */
 	public int verifyLoginCredentials(String email, String password) {
+		int role = -1;
 		try {
 			connection = DBConnection.getConnection();
 			//String sqlQuery = "SELECT role FROM credentials WHERE email=? AND password=?";
@@ -27,7 +28,7 @@ public class UserDAOOperation implements UserDAOInterface {
 			ps.setString(2, password);
 			
 			ResultSet result = ps.executeQuery();
-			int role = -1;
+
 			while(result.next()) {
 				role = result.getInt("role");
 			}
@@ -35,7 +36,7 @@ public class UserDAOOperation implements UserDAOInterface {
 		} catch (Exception e) {
 			logger.info(e.getMessage());
 		}
-		return -1;
+		return role;
 	}
 	
 	@Override
