@@ -1,6 +1,7 @@
 package com.flipkart.service;
 
 import com.flipkart.bean.Professor;
+import com.flipkart.exception.ProfessorCRSException;
 
 
 public interface ProfessorInterface {
