@@ -259,13 +259,13 @@ public class AdminDAOOperation implements AdminDAOInterface {
 			boolean status = false;
 			Scanner sc = new Scanner(System.in);
 			String str = SQLQueriesConstant.GET_STUDENT_DETAILS;
-			ps = connection.prepareStatement(str);
+			ps = connection.prepareStatement(str,ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()==false) {
 				throw new AdminCRSException("No student to approve!");
 			}
 			logger.info("Student details are as follows - ");
-			logger.info("=======================================");
+			logger.info("=============================================================");
 			do {
 				logger.info("Student Name: " + rs.getString("name"));
 				logger.info("Student ID: " + rs.getInt("id"));
@@ -275,18 +275,18 @@ public class AdminDAOOperation implements AdminDAOInterface {
 				logger.info("Gender: " + rs.getString("gender"));
 				logger.info("Contact Number: " + rs.getString("contact"));
 				logger.info("Nationality: " + rs.getString("nationality"));
-				logger.info("=======================================");
-				logger.info("Enter 'yes' to Approve, 'no' to Reject");
+				logger.info("=============================================================");
+				logger.info("Enter 'yes' to Approve, 'no' to Reject and 'skip' otherwise");
 				String choice = sc.next();
-				if(choice.equals("yes")) {
+				if(choice.equalsIgnoreCase("yes")) {
 					String res = SQLQueriesConstant.UPDATE_USER_IN_CREDENTIALS;
 					ps = connection.prepareStatement(res);
 					ps.setInt(1, rs.getInt("id"));
 					ps.executeUpdate();
 					logger.info("Student Approved !!");
-					logger.info("=======================================");
+					logger.info("=============================================================");
 				}
-				else{
+				else if(choice.equalsIgnoreCase("no")){
 					String res = SQLQueriesConstant.DELETE_USER_FROM_CREDENTIALS;
 					ps = connection.prepareStatement(res);
 					ps.setInt(1, rs.getInt("id"));
@@ -296,7 +296,15 @@ public class AdminDAOOperation implements AdminDAOInterface {
 					ps.setInt(1, rs.getInt("id"));
 					ps.executeUpdate();
 					logger.info("Student Rejected !!");
-					logger.info("=======================================");
+					logger.info("=============================================================");
+				}
+				else if(choice.equalsIgnoreCase("skip")) {
+					
+				}
+				else {
+					logger.info("Enter Valid Input!");
+					logger.info("=============================================================");
+					rs.previous();
 				}
 			}
 			while(rs.next());
@@ -364,7 +372,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 			ps = connection.prepareStatement(str);
 			ps.setInt(1, courseId);
 			int val = ps.executeUpdate();
-			str = "delete from course where id = ?";
+			str = SQLQueriesConstant.DELETE_COURSE_BY_ID;
 			ps = connection.prepareStatement(str);
 			ps.setInt(1, courseId);
 			int val2 = ps.executeUpdate();

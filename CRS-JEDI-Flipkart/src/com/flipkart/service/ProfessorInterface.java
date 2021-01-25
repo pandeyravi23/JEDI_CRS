@@ -4,6 +4,11 @@ import com.flipkart.bean.Professor;
 import com.flipkart.exception.ProfessorCRSException;
 
 
+/**
+ * Interface to Show the structure of
+ * Professor operation Class
+ * @author JEDI04
+ */
 public interface ProfessorInterface {
 	public void viewGrades(int courseId);
 	public Boolean gradeStudents(int courseId);

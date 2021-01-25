@@ -17,8 +17,8 @@ import com.flipkart.util.DBConnection;
 import com.mysql.cj.protocol.Resultset;
 
 /**
- * Lazy singleton class synchronized for multi-threading interacts with
- * professor related tables
+ * Undertakes all operations for professor related 
+ * queries to the database
  * 
  * @author JEDI04
  */
@@ -29,7 +29,7 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 
 	private static ProfessorDAOOperation instance = null;
 
-	public ProfessorDAOOperation() {
+	private ProfessorDAOOperation() {
 
 	}
 

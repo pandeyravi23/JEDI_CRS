@@ -16,7 +16,7 @@ import com.flipkart.service.AuthCredentialSystemOperations;
  */
 public class MainCRSApplication {
 	private static Logger logger = Logger.getLogger(MainCRSApplication.class);
-	private static AuthCredentialSystemOperations auth = AuthCredentialSystemOperations.getInstance();
+	private static AuthCredentialSystemOperations authentication = AuthCredentialSystemOperations.getInstance();
 	private static Scanner sc = null;
 
 	/**
@@ -72,7 +72,7 @@ public class MainCRSApplication {
 				if(str.compareTo("-1") == 0) 
 					break;
 				
-				available = auth.checkEmailAvailability(str);
+				available = authentication.checkEmailAvailability(str);
 				if(!available) {
 					logger.info(">>>> Enter a new email or -1 to exit. <<<<<<<");
 				}
@@ -109,7 +109,6 @@ public class MainCRSApplication {
 			}while(pwd1.compareTo(pwd2) != 0);
 		}
 		catch(Exception e) {
-//			e.printStackTrace();
 			logger.warn(e.getMessage() + "\n");
 		}
 		return pwd1;
@@ -171,7 +170,7 @@ public class MainCRSApplication {
 			student.setIsRegistered(false);
 			student.setPaymentStatus(false);
 			
-			auth.registerStudent(user, student, password);
+			authentication.registerStudent(user, student, password);
 			
 			logger.info(">>>>>>>>>>>>> Student Registration Successful. Admin will approve you within 24hrs. <<<<<<<<<\n");
 		}
@@ -196,7 +195,7 @@ public class MainCRSApplication {
 			logger.info("Enter password: ");
 			String pass = sc.nextLine();
 			
-			int res = auth.login(email, pass);
+			int res = authentication.login(email, pass);
 			
 			switch(res) {
 				case 1: // Student

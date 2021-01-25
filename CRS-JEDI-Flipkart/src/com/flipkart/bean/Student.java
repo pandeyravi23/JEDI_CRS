@@ -1,8 +1,20 @@
 package com.flipkart.bean;
 import java.util.ArrayList;
 
+/**
+ * Class to interact with variables present in Student Class
+ * using Getters and Setters Methods
+ * @author JEDI04
+ */
+
 public class Student extends User{
 	
+	/**
+	 * Manages the setting, retrieving and updating the attributes
+	 * of a Student
+	 * @author JEDI04
+	 *
+	 */
 	private int rollNo;
 	private boolean isRegistered;
 	private ArrayList<Integer> enrolledCourses = new ArrayList<>();

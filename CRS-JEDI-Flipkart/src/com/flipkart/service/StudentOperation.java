@@ -24,7 +24,7 @@ public class StudentOperation implements StudentInterface {
     private static Logger logger = Logger.getLogger(StudentOperation.class);
     CoursesDAOOperation coursesDaoOperation = CoursesDAOOperation.getInstance();
     StudentDAOOperation studentDaoOperation = StudentDAOOperation.getInstance();
-    ProfessorDAOOperation professorDAOOperation = new ProfessorDAOOperation();
+    ProfessorDAOOperation professorDAOOperation = ProfessorDAOOperation.getInstance();
 
     private static StudentOperation instance = null;
 

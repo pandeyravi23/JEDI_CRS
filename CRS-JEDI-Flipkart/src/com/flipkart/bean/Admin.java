@@ -1,7 +1,18 @@
 package com.flipkart.bean;
 
+/**
+ * Class to interact with variables present in Admin Class
+ * using Getters and Setters Methods
+ * @author JEDI04
+ */
 import com.flipkart.bean.User;
 
+/**
+ * Manages the setting, retrieving and updating the attributes
+ * of an Admin
+ * @author JEDI04
+ *
+ */
 public class Admin extends User {
 	private int adminId;
 	private String adminName;
