@@ -11,8 +11,8 @@ import java.util.Scanner;
  *  
  *  @author JEDI04
  */
-public class ProfessorMenu {
-	private static Logger logger = Logger.getLogger(ProfessorMenu.class);
+public class ProfessorCRSMenu {
+	private static Logger logger = Logger.getLogger(ProfessorCRSMenu.class);
 	private ProfessorInterface professorOperation = ProfessorOperation.getInstance();
 
 	/**
