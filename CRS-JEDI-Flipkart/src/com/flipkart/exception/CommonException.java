@@ -1,10 +1,13 @@
 package com.flipkart.exception;
 
+/**
+ * 
+ * @author jedi04
+ * 
+ * Exception class designed to handle errors corresponding to Common issues
+ *
+ */
 public class CommonException extends Exception {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 2L;
 	private String message;
 	

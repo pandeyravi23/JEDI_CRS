@@ -8,6 +8,7 @@ import java.security.PublicKey;
 /**
  * @author jedi04
  *
+ * SQL Constants used for DAO Operations
  */
 public class SQLQueriesConstant {
 

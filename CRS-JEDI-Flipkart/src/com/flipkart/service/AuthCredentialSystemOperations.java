@@ -6,6 +6,7 @@ import com.flipkart.bean.Student;
 import com.flipkart.bean.User;
 import com.flipkart.dao.StudentDAOOperation;
 import com.flipkart.dao.UserDAOOperation;
+import com.flipkart.exception.CommonException;
 
 /**
  * Class to handle all authentication processes.
@@ -47,6 +48,12 @@ public class AuthCredentialSystemOperations implements AuthCredentialSystemInter
 
 		try{
 			role = userDaoOperation.verifyLoginCredentials(username, password);
+			if(role != 1 && role != 2 && role != 3) {
+				throw new CommonException(">>>>>>>>> Invalid Credentials <<<<<<<<<");
+			}
+		}
+		catch(CommonException e) {
+			logger.warn(e.getMessage() + "\n");
 		}
 		catch (Exception e){
 			logger.warn(e.getMessage());
@@ -65,6 +72,12 @@ public class AuthCredentialSystemOperations implements AuthCredentialSystemInter
 		boolean available = false;
 		try {
 			available = userDaoOperation.checkEmailAvailability(email);
+			if(!available) {
+				throw new CommonException(">>>>> Email is not available <<<<<<");
+			}
+		}
+		catch(CommonException e) {
+			logger.warn(e.getMessage() + "\n");
 		}
 		catch(Exception e) {
 			logger.warn(e.getMessage());
@@ -82,7 +95,13 @@ public class AuthCredentialSystemOperations implements AuthCredentialSystemInter
 	public void registerStudent(User user, Student student, String password) {
 		try {
 			int id = registerUser(user, password);
+			if(id == -1) {
+				throw new CommonException(">>>>>>>>> Entry could not be added. <<<<<<<<<");
+			}
 			studentDaoOperation.registerStudent(student, id);
+		}
+		catch(CommonException e) {
+			logger.warn(e.getMessage());
 		}
 		catch(Exception e) {
 			logger.warn(e.getMessage());
@@ -90,7 +109,7 @@ public class AuthCredentialSystemOperations implements AuthCredentialSystemInter
 	}
 
 	/**
-	 * Method to register a new professor or admin into the system
+	 * Method to register a new professor or administrator into the system
 	 *
 	 * @param user Object containing all information about user
 	 * @param password Password of the user
