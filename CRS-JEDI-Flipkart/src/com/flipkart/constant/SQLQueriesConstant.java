@@ -3,9 +3,9 @@ package com.flipkart.constant;
 import java.security.PublicKey;
 
 /**
+ * SQL Constants used for DAO Operations
  * @author jedi04
  *
- * SQL Constants used for DAO Operations
  */
 public class SQLQueriesConstant {
 
