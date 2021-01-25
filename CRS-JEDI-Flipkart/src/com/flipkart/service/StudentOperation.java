@@ -295,6 +295,23 @@ public class StudentOperation implements StudentInterface {
             logger.warn(e.getMessage());
         }
     }
+
+    /**
+     * To get the status of the registration window as open or closed
+     *
+     * @return True if registration window is open else False
+     */
+    public boolean getRegistrationSystemStatus(){
+        boolean status = false;
+
+        try{
+            status = studentDaoOperation.getRegistrationSystemStatus();
+        }
+        catch (Exception e){
+            logger.warn(e.getMessage());
+        }
+        return status;
+    }
 }
 
 

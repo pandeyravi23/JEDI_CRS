@@ -59,9 +59,11 @@ public class AdminMenu {
 						break;
 					case 8:
 						adminOperation.startRegistrationWindow();
+						logger.info("Registration Window has been opened.\n");
 						break;
 					case 9:
 						adminOperation.closeRegistrationWindow();
+						logger.info("Registration Window has been closed.\n");
 						break;
 					case -1:
 						logger.info("Logged Out Successfully");
