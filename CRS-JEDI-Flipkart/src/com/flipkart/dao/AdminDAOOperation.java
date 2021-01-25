@@ -465,7 +465,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 			ps = connection.prepareStatement(SQLQueriesConstant.OPEN_REGISTRATION_WINDOW);
 			ps.executeUpdate();
 			
-			logger.info("Registration Window Started.");
+			logger.info("Registration Window Started.\n");
 		}
 		catch(SQLException e)
 		{
@@ -486,7 +486,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 		try {
 			ps = connection.prepareStatement(SQLQueriesConstant.CLOSE_REGISTRATION_WINDOW);
 			ps.executeUpdate();
-			logger.info("Registration Window Closed.");
+			logger.info("Registration Window Closed.\n");
 		}
 		catch(SQLException e)
 		{
