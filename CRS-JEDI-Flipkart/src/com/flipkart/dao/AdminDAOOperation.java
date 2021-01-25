@@ -265,7 +265,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 				throw new AdminCRSException("No student to approve!");
 			}
 			logger.info("Student details are as follows - ");
-			logger.info("=======================================");
+			logger.info("=============================================================");
 			do {
 				logger.info("Student Name: " + rs.getString("name"));
 				logger.info("Student ID: " + rs.getInt("id"));
@@ -275,7 +275,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 				logger.info("Gender: " + rs.getString("gender"));
 				logger.info("Contact Number: " + rs.getString("contact"));
 				logger.info("Nationality: " + rs.getString("nationality"));
-				logger.info("=======================================");
+				logger.info("=============================================================");
 				logger.info("Enter 'yes' to Approve, 'no' to Reject and 'skip' otherwise");
 				String choice = sc.next();
 				if(choice.equalsIgnoreCase("yes")) {
@@ -284,7 +284,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 					ps.setInt(1, rs.getInt("id"));
 					ps.executeUpdate();
 					logger.info("Student Approved !!");
-					logger.info("=======================================");
+					logger.info("=============================================================");
 				}
 				else if(choice.equalsIgnoreCase("no")){
 					String res = SQLQueriesConstant.DELETE_USER_FROM_CREDENTIALS;
@@ -296,14 +296,14 @@ public class AdminDAOOperation implements AdminDAOInterface {
 					ps.setInt(1, rs.getInt("id"));
 					ps.executeUpdate();
 					logger.info("Student Rejected !!");
-					logger.info("=======================================");
+					logger.info("=============================================================");
 				}
 				else if(choice.equalsIgnoreCase("skip")) {
 					
 				}
 				else {
 					logger.info("Enter Valid Input!");
-					logger.info("=======================================");
+					logger.info("=============================================================");
 					rs.previous();
 				}
 			}
