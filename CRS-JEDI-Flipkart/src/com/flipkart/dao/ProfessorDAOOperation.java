@@ -29,7 +29,7 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 
 	private static ProfessorDAOOperation instance = null;
 
-	public ProfessorDAOOperation() {
+	private ProfessorDAOOperation() {
 
 	}
 
