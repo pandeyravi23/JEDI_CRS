@@ -131,7 +131,6 @@ public class ProfessorMenu {
 	 * 
 	 */
 	public void updateStudentGrades() {
-		logger.info("Inside Grade Student Method");
 		Scanner sc = null;
 		try {
 			sc = new Scanner(System.in);
@@ -156,7 +155,6 @@ public class ProfessorMenu {
 	 */
 	public void viewStudents() {
 		Scanner sc = null;
-		logger.info("Inside View Student Method");
 		try {
 			sc = new Scanner(System.in);
 			logger.info("	Enter courseId");
@@ -173,7 +171,6 @@ public class ProfessorMenu {
 	 */
 	public void viewGrades() {
 		Scanner sc = null;
-		logger.info("Inside View Student Method");
 		try {
 			sc = new Scanner(System.in);
 			logger.info("Enter courseId");

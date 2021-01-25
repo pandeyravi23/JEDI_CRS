@@ -42,8 +42,7 @@ public class ProfessorOperation implements ProfessorInterface {
 	 * @param courseId Course Id 
 	 */
 	@Override
-	public void viewStudentsEnrolled(int courseId) {
-		logger.info("Inside viewStudentEnrolled");
+	public void viewStudentsEnrolled(int courseId) {		
 		try {
 			ArrayList<Student> studentsEnrolled = professorDaoOperation.getEnrolledStudents(courseId);
 			if (studentsEnrolled.size() > 0) {
@@ -126,7 +125,6 @@ public class ProfessorOperation implements ProfessorInterface {
 	 */
 	@Override
 	public void showCourses(int professorId) {
-		logger.info("Inside showCourses");
 		professorDaoOperation.showCourses(professorId);
 	}
 

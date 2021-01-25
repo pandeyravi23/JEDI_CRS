@@ -273,7 +273,7 @@ public class StudentCRSMenu {
 			studentOperation.viewGrades(student.getUserId());
 		}
 	}
-
+	
 	/**
 	 * Method to make payment
 	 * 
@@ -395,8 +395,9 @@ public class StudentCRSMenu {
 				default:
 					logger.info("Invalid choice.\n");
 				}
-
 			} while (choice != -1);
+			
+			student = studentOperation.getStudentByEmail(student.getEmail());
 		} catch (Exception e) {
 			logger.warn(e.getMessage());
 		}

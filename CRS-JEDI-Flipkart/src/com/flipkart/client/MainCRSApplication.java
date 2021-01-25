@@ -74,7 +74,7 @@ public class MainCRSApplication {
 				
 				available = auth.checkEmailAvailability(str);
 				if(!available) {
-					logger.info(">>>> Email in use. Enter a new email or -1 to exit. <<<<<<<");
+					logger.info(">>>> Enter a new email or -1 to exit. <<<<<<<");
 				}
 			}while(!available);
 		}
