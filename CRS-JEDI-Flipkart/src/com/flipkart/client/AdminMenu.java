@@ -57,6 +57,12 @@ public class AdminMenu {
 					case 7:
 						adminOperation.allotCourse();
 						break;
+					case 8:
+						adminOperation.startRegistrationWindow();
+						break;
+					case 9:
+						adminOperation.closeRegistrationWindow();
+						break;
 					case -1:
 						logger.info("Logged Out Successfully");
 						break;
@@ -86,6 +92,8 @@ public class AdminMenu {
 		logger.info("Press 5 to add course");
 		logger.info("Press 6 to delete a course");
 		logger.info("Press 7 to allot a course to the professor");
+		logger.info("Press 8 to open registration window");
+		logger.info("Press 9 to close registration window");
 		logger.info("Press -1 to exit");
 	}
 }
