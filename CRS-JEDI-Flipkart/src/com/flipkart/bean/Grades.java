@@ -2,6 +2,12 @@ package com.flipkart.bean;
 
 import java.util.ArrayList;
 
+/**
+ * Manages the setting, retrieving and updating the attributes
+ * of a grade
+ * @author JEDI04
+ *
+ */
 public class Grades {
 	private int studentId;
 	private int courseID;

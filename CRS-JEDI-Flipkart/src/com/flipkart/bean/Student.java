@@ -3,6 +3,12 @@ import java.util.ArrayList;
 
 public class Student extends User{
 	
+	/**
+	 * Manages the setting, retrieving and updating the attributes
+	 * of a Student
+	 * @author JEDI04
+	 *
+	 */
 	private int rollNo;
 	private boolean isRegistered;
 	private ArrayList<Integer> enrolledCourses = new ArrayList<>();

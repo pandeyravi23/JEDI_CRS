@@ -2,6 +2,12 @@ package com.flipkart.bean;
 
 import java.util.ArrayList;
 
+/**
+ * Manages the setting, retrieving and updating the attributes
+ * of a Professor
+ * @author JEDI04
+ *
+ */
 public class Professor extends User {
 	private String department;
 	private ArrayList<String> listOfCourseAssigned = new ArrayList<>();

@@ -2,6 +2,12 @@ package com.flipkart.bean;
 
 import java.util.ArrayList;
 
+/**
+ * Manages the setting, retrieving and updating the attributes
+ * of a course
+ * @author JEDI04
+ *
+ */
 public class Course {
     private int courseID;
     private String courseName;

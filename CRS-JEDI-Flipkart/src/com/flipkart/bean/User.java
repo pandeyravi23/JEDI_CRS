@@ -1,5 +1,11 @@
 package com.flipkart.bean;
 
+/**
+ * Manages the setting, retrieving and updating the attributes
+ * of a User
+ * @author JEDI04
+ *
+ */
 public class User {
 	protected int userId;
 	protected String userName;

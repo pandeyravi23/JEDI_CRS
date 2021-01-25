@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.flipkart.constant;
 
 import java.security.PublicKey;
