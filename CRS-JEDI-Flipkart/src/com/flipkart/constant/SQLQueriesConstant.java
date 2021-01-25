@@ -67,5 +67,6 @@ public class SQLQueriesConstant {
 	public static final String ADD_NEW_ADMIN = "insert into admin values(?, ?, ?)";
 	public static final String ADD_NEW_PROFESSOR = "insert into professor values(?, ?, ?, ?, ?)";
 	public static final String GET_PROFESSOR_NAME_BY_ID = "select name from professor where id=?";
+	public static final String DELETE_COURSE_BY_ID = "delete from course where id = ?";
 	
 }
