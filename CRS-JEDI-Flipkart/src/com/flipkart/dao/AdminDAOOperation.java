@@ -455,4 +455,45 @@ public class AdminDAOOperation implements AdminDAOInterface {
 			logger.info(e.getMessage());
 		}	
 	}
+	
+	/**
+	 * Opens registration window.
+	 */
+	public void startRegistrationWindow()
+	{
+		try {
+			String str = "update registrationDetails set isOpen=true";
+			ps = connection.prepareStatement(str);
+			ps.executeUpdate();
+		}
+		catch(SQLException e)
+		{
+			logger.info(e.getMessage());
+		}
+		catch(Exception e)
+		{
+			logger.info(e.getMessage());
+		}	
+	}
+	
+	
+	/**
+	 * Closes registration window.
+	 */
+	public void closeRegistrationWindow()
+	{
+		try {
+			String str = "update registrationDetails set isOpen=false";
+			ps = connection.prepareStatement(str);
+			ps.executeUpdate();
+		}
+		catch(SQLException e)
+		{
+			logger.info(e.getMessage());
+		}
+		catch(Exception e)
+		{
+			logger.info(e.getMessage());
+		}
+	}
 }

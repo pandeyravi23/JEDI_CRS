@@ -223,7 +223,7 @@ public class AdminOperation implements AdminInterface {
 		}
 	}
 
-	/*
+	/**
 	 * Deletes course from course catalog and 
 	 * course tables with the entered course id 
 	 * by admin
@@ -252,7 +252,7 @@ public class AdminOperation implements AdminInterface {
 	
 	
 	
-	/*
+	/**
 	 * Allot course to professor with the entered 
 	 * course ID and Professor ID
 	 * by Admin
@@ -270,5 +270,33 @@ public class AdminOperation implements AdminInterface {
 			logger.info(e.getMessage());
 		}
 	}
-
+	
+	/**
+	 * Opens registration window.
+	 */
+	public void startRegistrationWindow()
+	{
+		try {
+			adminDAO.startRegistrationWindow();
+		}
+		catch(Exception e)
+		{
+			logger.info(e.getMessage());
+		}
+	}
+	
+	
+	/**
+	 * Closes registration window.
+	 */
+	public void closeRegistrationWindow()
+	{
+		try {
+			adminDAO.closeRegistrationWindow();
+		}
+		catch(Exception e)
+		{
+			logger.info(e.getMessage());
+		}
+	}
 }
