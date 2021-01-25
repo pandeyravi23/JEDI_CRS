@@ -1,5 +1,11 @@
 package com.flipkart.bean;
 
+
+/**
+ * Class to interact with variables present in User Class
+ * using Getters and Setters Methods
+ * @author JEDI04
+ */
 public class User {
 	protected int userId;
 	protected String userName;

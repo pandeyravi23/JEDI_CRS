@@ -2,6 +2,11 @@ package com.flipkart.bean;
 
 import java.util.ArrayList;
 
+/**
+ * Class to interact with variables present in Course Class
+ * using Getters and Setters Methods
+ * @author JEDI04
+ */
 public class Course {
     private int courseID;
     private String courseName;

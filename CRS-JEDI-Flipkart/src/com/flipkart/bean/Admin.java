@@ -1,5 +1,10 @@
 package com.flipkart.bean;
 
+/**
+ * Class to interact with variables present in Admin Class
+ * using Getters and Setters Methods
+ * @author JEDI04
+ */
 import com.flipkart.bean.User;
 
 public class Admin extends User {

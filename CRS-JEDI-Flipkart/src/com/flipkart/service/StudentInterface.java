@@ -1,9 +1,16 @@
 package com.flipkart.service;
 
 import com.flipkart.bean.Course;
+
 import com.flipkart.bean.Student;
 
 import java.util.ArrayList;
+
+/**
+ * Interface to Show the structure of
+ * Student Operation Class 
+ * @author JEDI04
+ */
 
 public interface StudentInterface {
 

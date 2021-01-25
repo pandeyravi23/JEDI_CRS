@@ -2,6 +2,13 @@ package com.flipkart.bean;
 
 import java.util.ArrayList;
 
+
+/**
+ * Class to interact with variables present in Grades Class
+ * using Getters and Setters Methods
+ * @author JEDI04
+ */
+
 public class Grades {
 	private int studentId;
 	private int courseID;
