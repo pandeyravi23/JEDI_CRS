@@ -465,6 +465,8 @@ public class AdminDAOOperation implements AdminDAOInterface {
 			String str = "update registrationDetails set isOpen=true";
 			ps = connection.prepareStatement(str);
 			ps.executeUpdate();
+			
+			logger.info("Registration Window Started.");
 		}
 		catch(SQLException e)
 		{
@@ -486,6 +488,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 			String str = "update registrationDetails set isOpen=false";
 			ps = connection.prepareStatement(str);
 			ps.executeUpdate();
+			logger.info("Registration Window Closed.");
 		}
 		catch(SQLException e)
 		{
