@@ -44,12 +44,6 @@ public class CourseOperation implements CourseInterface {
 		int count = 0;
 		try {
 			count = coursesDaoOperation.noOfEnrolledStudents(courseID);
-			if(count == 0){
-				throw new CommonException("No students enrolled");
-			}
-		}
-		catch (CommonException e){
-			logger.warn(e.getMessage());
 		}
 		catch (Exception e) {
 			logger.warn(e.getMessage());

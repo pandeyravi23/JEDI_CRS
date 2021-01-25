@@ -101,6 +101,10 @@ public class StudentCRSMenu {
 				logger.info("You have already registered.\n");
 				return;
 			}
+			else if(studentOperation.getRegistrationSystemStatus() == false){
+				logger.info("Registration Window is closed.\n");
+				return;
+			}
 
 			int courseCounter = 0;
 			ArrayList<Integer> courseCart = new ArrayList<>();
@@ -216,6 +220,10 @@ public class StudentCRSMenu {
 				logger.info("Cannot add more courses. You already have 6 courses.\n");
 				return;
 			}
+			else if(studentOperation.getRegistrationSystemStatus() == false){
+				logger.info("Registration Window is closed.\n");
+				return;
+			}
 
 			logger.info("Enter course ID to be added");
 			input = new Scanner(System.in);
@@ -238,6 +246,10 @@ public class StudentCRSMenu {
 				return;
 			} else if (studentOperation.getNumberOfEnrolledCourses(student) == 4) {
 				logger.info("Cannot drop the course. You only have 4 courses\n");
+				return;
+			}
+			else if(studentOperation.getRegistrationSystemStatus() == false){
+				logger.info("Registration Window is closed.\n");
 				return;
 			}
 

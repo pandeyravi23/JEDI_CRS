@@ -27,8 +27,6 @@ public interface StudentInterface {
     public boolean addCourse(Student student,int courseId);
 
     public boolean deleteCourse(Student student,int courseId);
-
-//    public boolean registerCourses(Student student);
     
     public boolean registerCourses(ArrayList<Integer> courseCart, Student student);
 
@@ -39,5 +37,7 @@ public interface StudentInterface {
     public void setRegistrationStatus(Student student);
     
     public int getNumberOfEnrolledCourses(Student student);
+
+    public boolean getRegistrationSystemStatus();
 
 }

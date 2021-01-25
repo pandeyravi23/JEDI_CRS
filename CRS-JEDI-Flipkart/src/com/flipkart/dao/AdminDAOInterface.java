@@ -22,4 +22,6 @@ public interface AdminDAOInterface {
 	public boolean addCourse(Course course); 
 	public boolean deleteCourse(int courseId); 
 	public void approveStudent();
+	public void startRegistrationWindow();
+	public void closeRegistrationWindow();
 }

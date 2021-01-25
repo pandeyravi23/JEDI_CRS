@@ -462,11 +462,10 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	public void startRegistrationWindow()
 	{
 		try {
-			String str = "update registrationDetails set isOpen=true";
-			ps = connection.prepareStatement(str);
+			ps = connection.prepareStatement(SQLQueriesConstant.OPEN_REGISTRATION_WINDOW);
 			ps.executeUpdate();
 			
-			logger.info("Registration Window Started.");
+			logger.info("Registration Window Started.\n");
 		}
 		catch(SQLException e)
 		{
@@ -485,10 +484,9 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	public void closeRegistrationWindow()
 	{
 		try {
-			String str = "update registrationDetails set isOpen=false";
-			ps = connection.prepareStatement(str);
+			ps = connection.prepareStatement(SQLQueriesConstant.CLOSE_REGISTRATION_WINDOW);
 			ps.executeUpdate();
-			logger.info("Registration Window Closed.");
+			logger.info("Registration Window Closed.\n");
 		}
 		catch(SQLException e)
 		{
