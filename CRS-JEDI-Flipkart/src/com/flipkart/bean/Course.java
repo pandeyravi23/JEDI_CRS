@@ -3,10 +3,9 @@ package com.flipkart.bean;
 import java.util.ArrayList;
 
 /**
- * Manages the setting, retrieving and updating the attributes
- * of a course
+ * Class to interact with variables present in Course Class
+ * using Getters and Setters Methods
  * @author JEDI04
- *
  */
 public class Course {
     private int courseID;

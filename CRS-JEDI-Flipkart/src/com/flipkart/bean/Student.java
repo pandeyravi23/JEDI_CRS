@@ -1,6 +1,12 @@
 package com.flipkart.bean;
 import java.util.ArrayList;
 
+/**
+ * Class to interact with variables present in Student Class
+ * using Getters and Setters Methods
+ * @author JEDI04
+ */
+
 public class Student extends User{
 	
 	/**

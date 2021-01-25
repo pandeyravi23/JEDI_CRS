@@ -1,10 +1,11 @@
 package com.flipkart.bean;
 
+
+
 /**
- * Manages the setting, retrieving and updating the attributes
- * of a User
+ * Class to interact with variables present in User Class
+ * using Getters and Setters Methods
  * @author JEDI04
- *
  */
 public class User {
 	protected int userId;

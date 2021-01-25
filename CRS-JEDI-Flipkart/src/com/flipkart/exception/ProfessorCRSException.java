@@ -2,7 +2,7 @@ package com.flipkart.exception;
 
 /**
  * 
- * @author jedi04
+ * @author JEDI04
  * 
  * Exception class designed to handle errors corresponding to Professor related
  * issues

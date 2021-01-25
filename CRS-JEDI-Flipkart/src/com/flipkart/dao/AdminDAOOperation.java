@@ -364,7 +364,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 			ps = connection.prepareStatement(str);
 			ps.setInt(1, courseId);
 			int val = ps.executeUpdate();
-			str = "delete from course where id = ?";
+			str = SQLQueriesConstant.DELETE_COURSE_BY_ID;
 			ps = connection.prepareStatement(str);
 			ps.setInt(1, courseId);
 			int val2 = ps.executeUpdate();

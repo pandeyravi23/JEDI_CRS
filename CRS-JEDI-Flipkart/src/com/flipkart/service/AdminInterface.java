@@ -1,5 +1,11 @@
 package com.flipkart.service;
 
+/**
+ * Interface to Show the structure of
+ * Admin Operation Class
+ * @author JEDI04
+ */
+
 public interface AdminInterface {
 	
 	public void generateReportCard();

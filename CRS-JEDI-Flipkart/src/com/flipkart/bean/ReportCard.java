@@ -3,10 +3,9 @@ package com.flipkart.bean;
 import java.util.ArrayList;
 
 /**
- * Manages the setting, retrieving and updating the attributes
- * of the ReportCard
+ * Class to interact with variables present in Report Class
+ * using Getters and Setters Methods
  * @author JEDI04
- *
  */
 public class ReportCard {
 	private int studentId;

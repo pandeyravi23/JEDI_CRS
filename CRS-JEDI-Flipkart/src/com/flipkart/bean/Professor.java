@@ -3,11 +3,11 @@ package com.flipkart.bean;
 import java.util.ArrayList;
 
 /**
- * Manages the setting, retrieving and updating the attributes
- * of a Professor
+ * Class to interact with variables present in Professor Class
+ * using Getters and Setters Methods
  * @author JEDI04
- *
  */
+
 public class Professor extends User {
 	private String department;
 	private ArrayList<String> listOfCourseAssigned = new ArrayList<>();

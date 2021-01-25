@@ -9,8 +9,9 @@ import com.flipkart.bean.Professor;
 import com.flipkart.exception.AdminCRSException;
 
 /**
+ * Interface to Show the structure of
+ * AdminDAO Operation Class
  * @author JEDI04
- *
  */
 public interface AdminDAOInterface {
 	public void printGrades(int studentId);
