@@ -10,6 +10,7 @@ import com.flipkart.bean.Course;
 import com.flipkart.bean.Professor;
 import com.flipkart.dao.AdminDAOOperation;
 import com.flipkart.exception.AdminCRSException;
+import com.flipkart.util.ValidationOperation;
 
 /**
  * Performs All the Admin Operations
@@ -22,7 +23,6 @@ public class AdminOperation implements AdminInterface {
 
 	public static Logger logger = Logger.getLogger(AdminOperation.class);
 	AdminDAOOperation adminDAO = AdminDAOOperation.getInstance();
-	
 	
 	// Method for lazy loading
 	private static AdminOperation instance = null;
@@ -66,25 +66,12 @@ public class AdminOperation implements AdminInterface {
 			Scanner sc = new Scanner(System.in);
 	
 			logger.info("Enter the new email : ");
-	
-			String email = sc.nextLine();
-	
-			if (adminDAO.verifyEmail(email) == false) {
-				throw new AdminCRSException("Email already exists.Please retry.");
+			
+			String email = ValidationOperation.readEmail();
+			if (email.equals("-1")){
+				throw new AdminCRSException("Professor Not Added\n");
 			}
-	
-			String pwd1 = "abc";
-			String pwd2 = "xyz";
-	
-			while (!pwd1.equals(pwd2)) {
-				logger.info("Enter password : ");
-				pwd1 = sc.nextLine();
-				logger.info("Re-enter password : ");
-				pwd2 = sc.nextLine();
-				if (!pwd1.equals(pwd2)) {
-					logger.info("Passwords do not match. Please re-enter.");
-				}
-			}
+			String pwd1 = ValidationOperation.readPassword();
 	
 			logger.info("Please enter name : ");
 			Professor prof = new Professor();
@@ -112,10 +99,10 @@ public class AdminOperation implements AdminInterface {
 				logger.info("Unable to add professor.");
 			}
 		}catch(AdminCRSException e) {
-			logger.info(e.getMessage());
+			logger.warn(e.getMessage());
 		}
 		catch(Exception e) {
-			logger.info(e.getMessage());
+			logger.warn(e.getMessage());
 		}
 	}
 
@@ -131,24 +118,12 @@ public class AdminOperation implements AdminInterface {
 			Scanner sc = new Scanner(System.in);
 			logger.info("Enter the new email : ");
 	
-			String email = sc.nextLine();
-			if (adminDAO.verifyEmail(email) == false) {
-				logger.info("Email already exists.Please retry.");
-				return;
+			
+			String email = ValidationOperation.readEmail();
+			if (email.equals("-1")){
+				throw new AdminCRSException("Admin Not Added\n");
 			}
-	
-			String pwd1 = "abc";
-			String pwd2 = "xyz";
-	
-			while (!pwd1.equals(pwd2)) {
-				logger.info("Enter password : ");
-				pwd1 = sc.nextLine();
-				logger.info("Re-enter password : ");
-				pwd2 = sc.nextLine();
-				if (!pwd1.equals(pwd2)) {
-					logger.info("Passwords do not match. Please re-enter.");
-				}
-			}
+			String pwd1 = ValidationOperation.readPassword();
 	
 			Admin admin = new Admin();
 			admin.setEmail(email);
@@ -173,11 +148,11 @@ public class AdminOperation implements AdminInterface {
 			}
 		}catch(AdminCRSException e)
 		{
-			logger.info(e.getMessage());
+			logger.warn(e.getMessage());
 		}
 		catch(Exception e)
 		{
-			logger.info(e.getMessage());
+			logger.warn(e.getMessage());
 		}
 	}
 
