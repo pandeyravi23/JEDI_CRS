@@ -273,7 +273,7 @@ public class StudentCRSMenu {
 			studentOperation.viewGrades(student.getUserId());
 		}
 	}
-
+	
 	/**
 	 * Method to make payment
 	 * 
@@ -344,7 +344,7 @@ public class StudentCRSMenu {
 				logger.info("Enter 5 to update Contact.");
 				logger.info("Enter 6 to update Gender.");
 				logger.info("Enter 7 to update Nationality.");
-				logger.info("Enter 8 to CONFIRM UPDATE.");
+				logger.info("Enter 8 to confirm update.");
 				logger.info("Enter -1 to exit.");
 
 				choice = sc.nextInt();
@@ -395,8 +395,9 @@ public class StudentCRSMenu {
 				default:
 					logger.info("Invalid choice.\n");
 				}
-
 			} while (choice != -1);
+			
+			student = studentOperation.getStudentByEmail(student.getEmail());
 		} catch (Exception e) {
 			logger.warn(e.getMessage());
 		}

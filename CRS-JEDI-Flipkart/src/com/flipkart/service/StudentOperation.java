@@ -122,7 +122,7 @@ public class StudentOperation implements StudentInterface {
             logger.info("======================GRADES===================\n");
             logger.info("Coure ID\tCourse Name\t\tGrade");
             for(Grades grade : grades){
-                logger.info(grade.getCourseId() + "\t\t" + grade.getCourseName() + "\t\t" + grade.getGrade());
+                logger.info(grade.getCourseId() + "\t" + grade.getCourseName() + "\t\t" + grade.getGrade());
             }
             logger.info("=================================================\n");
         }
@@ -245,7 +245,7 @@ public class StudentOperation implements StudentInterface {
                 logger.info("================REGISTERED COURSES================\n");
                 logger.info("Course ID\tCourse Name\t\tCredits");
                 for (Course course : enrolledCourses) {
-                    logger.info(course.getCourseID() + "\t\t" + course.getCourseName() + "\t\t" + course.getCredits());
+                    logger.info(course.getCourseID() + "\t" + course.getCourseName() + "\t\t" + course.getCredits());
                 }
                 logger.info("==================================================\n");
             }
