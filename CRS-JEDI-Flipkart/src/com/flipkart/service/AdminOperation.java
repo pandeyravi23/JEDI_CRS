@@ -208,13 +208,13 @@ public class AdminOperation implements AdminInterface {
 	public void deleteCourse() {
 		// TODO Auto-generated method stub
 		try {
-			logger.info("In delete course method\n\n");
+			adminDAO.showcourses();
 			Scanner sc = new Scanner(System.in);
-			logger.info("Enter CourseId of course to be deleted");
+			logger.info("Please enter CourseId to be deleted from the above list");
 			int x = sc.nextInt();
 			boolean res = adminDAO.deleteCourse(x);
 			if(res==false)
-				throw new AdminCRSException("Failed to Add New Course");
+				throw new AdminCRSException("Failed to Delete Course");
 			logger.info("====================================");
 			logger.info("Delete Course Status : " + res);
 			logger.info("====================================");
@@ -237,9 +237,11 @@ public class AdminOperation implements AdminInterface {
 	public void allotCourse() {
 		Scanner sc = new Scanner(System.in);
 		try {
-			logger.info("Please Enter Professor ID");
+			adminDAO.showcourses();
+			adminDAO.showprofessor();
+			logger.info("Please enter Professor ID from the above list");
 			int professorId = sc.nextInt();
-			logger.info("Please Enter Course ID");
+			logger.info("Please enter Course ID from the above list");
 			int courseId = sc.nextInt();
 			adminDAO.allotCourses(courseId,professorId);
 		} catch(Exception e) {
