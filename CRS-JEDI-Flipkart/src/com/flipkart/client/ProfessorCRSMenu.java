@@ -35,15 +35,17 @@ public class ProfessorCRSMenu {
 					logger.info(".....Logging Out.....\n");
 					break;
 				case 1:
-					gradeStudents();
+					gradeStudents(professor.getUserId());
 					break;
 				case 2:
 					allotedCourse(professor.getUserId());
 					break;
 				case 3:
+					allotedCourse(professor.getUserId());
 					viewStudents();
 					break;
 				case 4:
+					allotedCourse(professor.getUserId());
 					viewGrades();
 					break;
 				default:
@@ -75,7 +77,7 @@ public class ProfessorCRSMenu {
 	 * 2) Update student grades by providing courseId and studentId
 	 * 
 	 */
-	public void gradeStudents() {
+	public void gradeStudents(int professorId) {
 		Scanner sc = null;
 		try {
 			sc = new Scanner(System.in);
@@ -83,7 +85,9 @@ public class ProfessorCRSMenu {
 			logger.info("1. Grade Students by CourseId");
 			logger.info("2. Update Grade of Particular Student");
 			int choice = sc.nextInt();
+			allotedCourse(professorId);
 			if (choice == 2) {
+				viewStudents();
 				updateStudentGrades();
 			} 
 			else {
