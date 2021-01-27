@@ -116,9 +116,9 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 			stmt.setInt(1, professorId);
 			ResultSet rs = stmt.executeQuery();
 			logger.info("===============================================");
-			logger.info("ID		CourseName		Credits");
+			logger.info(String.format("%-8s\t%-15s\t%-15s", "ID","CourseName","Credits"));
 			while (rs.next()) {
-				logger.info(rs.getInt(1) + "		" + rs.getString(2) + "		" + rs.getInt(3));
+				logger.info(String.format("%-8s\t%-15s\t%-15s", rs.getInt(1),rs.getString(2),rs.getString(3)));
 			}
 			logger.info("================================================\n\n");
 		} catch (SQLException e) {
@@ -236,8 +236,8 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	public void showGrades(ArrayList<Student> enrolledStudent, int courseId) {
 		try {
 			con = DBConnection.getConnection();
-			logger.info("===================================");
-			logger.info("UserId    UserName    Grade Obtained");
+			logger.info("=======================================================");
+			logger.info(String.format("%-8s\t%-15s\t%-15s", "UserID","StudentName","Grade Obtained"));
 			for (Student st : enrolledStudent) {
 				String str = SQLQueriesConstant.SHOW_GRADES_PROFESSOR_QUERY;
 				stmt = con.prepareStatement(str);
@@ -245,10 +245,10 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 				stmt.setInt(2, courseId);
 				ResultSet rs = stmt.executeQuery();
 				while (rs.next()) {
-					logger.info(st.getUserId() + "        " + st.getUserName() + "        " + rs.getString("grade"));
+					logger.info(String.format("%-8s\t%-15s\t%-15s", st.getUserId(),st.getUserName(),rs.getString("grade")));
 				}
 			}
-			logger.info("===================================");
+			logger.info("=======================================================");
 		} catch (SQLException e) {
 			logger.info(e.getMessage());
 		} catch (Exception e) {

@@ -1,5 +1,6 @@
 package com.flipkart.client;
 
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 
@@ -24,7 +25,11 @@ public class AdminCRSMenu {
 	 */
 	public void AdminClient()
 	{
-		logger.info("Welcome Admin.");
+		logger.info("\n");
+		logger.info("=========================================");
+		logger.info("Login Time : " + LocalDateTime.now());
+		logger.info("Welcome Admin!!");
+		logger.info("=========================================");
 		Scanner sc = null;
 		try {
 			sc = new Scanner(System.in);
@@ -37,6 +42,7 @@ public class AdminCRSMenu {
 				switch(choice)
 				{
 					case 1:
+//						adminOperation.showStudents();
 						adminOperation.generateReportCard();
 						break;
 					case 2:
@@ -94,6 +100,6 @@ public class AdminCRSMenu {
 		logger.info("Enter 7 to allot a course to the professor");
 		logger.info("Enter 8 to open registration window");
 		logger.info("Enter 9 to close registration window");
-		logger.info("Enter -1 to exit");
+		logger.info("Enter -1 to logout");
 	}
 }

@@ -47,16 +47,13 @@ public class ProfessorOperation implements ProfessorInterface {
 			ArrayList<Student> studentsEnrolled = professorDaoOperation.getEnrolledStudents(courseId);
 			if (studentsEnrolled.size() > 0) {
 				logger.info("\n\n");
-				logger.info(
-						"====================================================================================================");
+				logger.info("=============================================================================");
 
-				logger.info("StudentID		StudentName		StudentEmail			Branch");
-				for (Student st : studentsEnrolled) {
-					logger.info(st.getUserId() + "			" + st.getUserName() + "			" + st.getEmail()
-							+ "		" + st.getBranch());
-				}
-				logger.info(
-						"====================================================================================================");
+				logger.info(String.format("%-15s\t%-15s\t%-15s", "StudentID","Student Name","Branch"));
+				
+				studentsEnrolled.forEach(student->logger.info(String.format("%-15s\t%-15s\t%-15s",student.getUserId(),student.getUserName(),student.getBranch())));
+				
+				logger.info("=============================================================================");
 			} else {
 				throw new ProfessorCRSException("No student is currently enrolled in the course");
 			}
