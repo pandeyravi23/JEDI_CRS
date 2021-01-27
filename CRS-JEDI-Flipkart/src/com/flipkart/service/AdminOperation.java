@@ -48,6 +48,10 @@ public class AdminOperation implements AdminInterface {
 	@Override
 	public void generateReportCard() {
 		// TODO Auto-generated method stub
+		if(adminDAO.getStudents()==false) {
+			logger.info("   =======================================");
+			return ;
+		}
 		logger.info("Please Enter Student ID to Generate Report Card");
 		Scanner sc = new Scanner(System.in);
 		int sid = sc.nextInt();
@@ -281,7 +285,4 @@ public class AdminOperation implements AdminInterface {
 	/**
 	 * Displays list of registered students
 	 */
-	public void showStudents() {
-		adminDAO.getStudents();
-	}
 }
