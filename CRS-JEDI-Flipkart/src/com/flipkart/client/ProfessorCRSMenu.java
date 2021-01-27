@@ -4,6 +4,9 @@ import com.flipkart.bean.*;
 import com.flipkart.service.*;
 
 import org.apache.log4j.Logger;
+
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Scanner;
 
 /**
@@ -67,6 +70,8 @@ public class ProfessorCRSMenu {
 	 * @param email Professor email
 	 */
 	public void init(String email) {
+		logger.info("\n");
+		logger.info("Login Time : " + LocalDateTime.now());
 		Professor professor = professorOperation.getProfessorByEmail(email);
 		professorClient(professor);
 	}
@@ -76,6 +81,7 @@ public class ProfessorCRSMenu {
 	 * 1) Grade Students with a particular courseId
 	 * 2) Update student grades by providing courseId and studentId
 	 * 
+	 * @param professorId Id of Professor
 	 */
 	public void gradeStudents(int professorId) {
 		Scanner sc = null;
