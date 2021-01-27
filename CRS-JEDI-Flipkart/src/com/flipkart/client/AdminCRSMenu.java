@@ -37,6 +37,7 @@ public class AdminCRSMenu {
 				switch(choice)
 				{
 					case 1:
+						adminOperation.showStudents();
 						adminOperation.generateReportCard();
 						break;
 					case 2:

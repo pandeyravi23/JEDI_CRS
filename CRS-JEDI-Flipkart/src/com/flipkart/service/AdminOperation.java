@@ -277,4 +277,11 @@ public class AdminOperation implements AdminInterface {
 			logger.info(e.getMessage());
 		}
 	}
+	
+	/**
+	 * Displays list of registered students
+	 */
+	public void showStudents() {
+		adminDAO.getStudents();
+	}
 }
