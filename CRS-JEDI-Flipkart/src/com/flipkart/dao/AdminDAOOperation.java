@@ -505,4 +505,56 @@ public class AdminDAOOperation implements AdminDAOInterface {
 			logger.info(e.getMessage());
 		}
 	}
+	
+	public void showcourses() {
+		try {
+			logger.info("=======================================");
+			String  s = SQLQueriesConstant.GET_COURSE_INFO_BY_ID;
+			ps = connection.prepareStatement(s);
+			ResultSet  courl = ps.executeQuery();
+			if(courl.next()==false) {
+				logger.info("No Course Exists!!");
+				logger.info("=======================================");
+			}
+			else {
+				logger.info("CourseID           CourseName");
+				do {
+					logger.info(courl.getInt("courseId") + "                " + courl.getString("courseName"));
+				}while(courl.next());
+				logger.info("=======================================");
+			}
+		}catch(SQLException e)
+		{
+			logger.info(e.getMessage());
+		}
+		catch(Exception e)
+		{
+			logger.info(e.getMessage());
+		}
+	}
+	public void showprofessor() {
+		try {
+			String  s = SQLQueriesConstant.GET_PROFESSOR_INFO_BY_ID;
+			ps = connection.prepareStatement(s);
+			ResultSet  profl = ps.executeQuery();
+			if(profl.next()==false) {
+				logger.info("No Professor Exists!!");
+				logger.info("=======================================");
+			}
+			else {
+				logger.info("ProfessorID        ProfessorName");
+				do {
+					logger.info(profl.getInt("id") + "                " + profl.getString("name"));
+				}while(profl.next());
+				logger.info("=======================================");
+			}
+		}catch(SQLException e)
+		{
+			logger.info(e.getMessage());
+		}
+		catch(Exception e)
+		{
+			logger.info(e.getMessage());
+		}
+	}
 }

@@ -69,5 +69,6 @@ public class SQLQueriesConstant {
 	public static final String DELETE_COURSE_BY_ID = "delete from course where id = ?";
 	public static final String OPEN_REGISTRATION_WINDOW = "update registrationDetails set isOpen=true";
 	public static final String CLOSE_REGISTRATION_WINDOW = "update registrationDetails set isOpen=false";
-
+	public static final String GET_COURSE_INFO_BY_ID = "select courseId,courseName from courseCatalog";
+	public static final String GET_PROFESSOR_INFO_BY_ID = "select id,name from professor";
 }
