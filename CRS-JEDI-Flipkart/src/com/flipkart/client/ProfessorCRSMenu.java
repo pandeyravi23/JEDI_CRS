@@ -4,6 +4,9 @@ import com.flipkart.bean.*;
 import com.flipkart.service.*;
 
 import org.apache.log4j.Logger;
+
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Scanner;
 
 /**
@@ -11,8 +14,8 @@ import java.util.Scanner;
  *  
  *  @author JEDI04
  */
-public class ProfessorMenu {
-	private static Logger logger = Logger.getLogger(ProfessorMenu.class);
+public class ProfessorCRSMenu {
+	private static Logger logger = Logger.getLogger(ProfessorCRSMenu.class);
 	private ProfessorInterface professorOperation = ProfessorOperation.getInstance();
 
 	/**
@@ -35,15 +38,17 @@ public class ProfessorMenu {
 					logger.info(".....Logging Out.....\n");
 					break;
 				case 1:
-					gradeStudents();
+					gradeStudents(professor.getUserId());
 					break;
 				case 2:
 					allotedCourse(professor.getUserId());
 					break;
 				case 3:
+					allotedCourse(professor.getUserId());
 					viewStudents();
 					break;
 				case 4:
+					allotedCourse(professor.getUserId());
 					viewGrades();
 					break;
 				default:
@@ -65,6 +70,8 @@ public class ProfessorMenu {
 	 * @param email Professor email
 	 */
 	public void init(String email) {
+		logger.info("\n");
+		logger.info("Login Time : " + LocalDateTime.now());
 		Professor professor = professorOperation.getProfessorByEmail(email);
 		professorClient(professor);
 	}
@@ -74,8 +81,9 @@ public class ProfessorMenu {
 	 * 1) Grade Students with a particular courseId
 	 * 2) Update student grades by providing courseId and studentId
 	 * 
+	 * @param professorId Id of Professor
 	 */
-	public void gradeStudents() {
+	public void gradeStudents(int professorId) {
 		Scanner sc = null;
 		try {
 			sc = new Scanner(System.in);
@@ -83,7 +91,9 @@ public class ProfessorMenu {
 			logger.info("1. Grade Students by CourseId");
 			logger.info("2. Update Grade of Particular Student");
 			int choice = sc.nextInt();
+			allotedCourse(professorId);
 			if (choice == 2) {
+				viewStudents();
 				updateStudentGrades();
 			} 
 			else {
@@ -131,7 +141,6 @@ public class ProfessorMenu {
 	 * 
 	 */
 	public void updateStudentGrades() {
-		logger.info("Inside Grade Student Method");
 		Scanner sc = null;
 		try {
 			sc = new Scanner(System.in);
@@ -156,7 +165,6 @@ public class ProfessorMenu {
 	 */
 	public void viewStudents() {
 		Scanner sc = null;
-		logger.info("Inside View Student Method");
 		try {
 			sc = new Scanner(System.in);
 			logger.info("	Enter courseId");
@@ -173,7 +181,6 @@ public class ProfessorMenu {
 	 */
 	public void viewGrades() {
 		Scanner sc = null;
-		logger.info("Inside View Student Method");
 		try {
 			sc = new Scanner(System.in);
 			logger.info("Enter courseId");

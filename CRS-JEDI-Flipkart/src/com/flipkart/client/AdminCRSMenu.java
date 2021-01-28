@@ -1,5 +1,6 @@
 package com.flipkart.client;
 
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 
@@ -14,8 +15,8 @@ import com.flipkart.service.AdminOperation;
  * 
  * @author JEDI04
  */
-public class AdminMenu {
-	private static Logger logger = Logger.getLogger(AdminMenu.class);
+public class AdminCRSMenu {
+	private static Logger logger = Logger.getLogger(AdminCRSMenu.class);
 	private AdminOperation adminOperation = AdminOperation.getInstance();
 	
 	
@@ -24,7 +25,11 @@ public class AdminMenu {
 	 */
 	public void AdminClient()
 	{
-		logger.info("Welcome Admin.");
+		logger.info("\n");
+		logger.info("=========================================");
+		logger.info("Login Time : " + LocalDateTime.now());
+		logger.info("Welcome Admin!!");
+		logger.info("=========================================");
 		Scanner sc = null;
 		try {
 			sc = new Scanner(System.in);
@@ -37,6 +42,7 @@ public class AdminMenu {
 				switch(choice)
 				{
 					case 1:
+//						adminOperation.showStudents();
 						adminOperation.generateReportCard();
 						break;
 					case 2:
@@ -85,15 +91,15 @@ public class AdminMenu {
 	public void showChoices()
 	{
 		logger.info("Select an operation");
-		logger.info("Press 1 to generate report card of a student");
-		logger.info("Press 2 to add professor");
-		logger.info("Press 3 to add Admin");
-		logger.info("Press 4 to approve students");
-		logger.info("Press 5 to add course");
-		logger.info("Press 6 to delete a course");
-		logger.info("Press 7 to allot a course to the professor");
-		logger.info("Press 8 to open registration window");
-		logger.info("Press 9 to close registration window");
-		logger.info("Press -1 to exit");
+		logger.info("Enter 1 to generate report card of a student");
+		logger.info("Enter 2 to add professor");
+		logger.info("Enter 3 to add Admin");
+		logger.info("Enter 4 to approve students");
+		logger.info("Enter 5 to add course");
+		logger.info("Enter 6 to delete a course");
+		logger.info("Enter 7 to allot a course to the professor");
+		logger.info("Enter 8 to open registration window");
+		logger.info("Enter 9 to close registration window");
+		logger.info("Enter -1 to logout");
 	}
 }

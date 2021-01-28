@@ -24,7 +24,7 @@ public class StudentOperation implements StudentInterface {
     private static Logger logger = Logger.getLogger(StudentOperation.class);
     CoursesDAOOperation coursesDaoOperation = CoursesDAOOperation.getInstance();
     StudentDAOOperation studentDaoOperation = StudentDAOOperation.getInstance();
-    ProfessorDAOOperation professorDAOOperation = new ProfessorDAOOperation();
+    ProfessorDAOOperation professorDAOOperation = ProfessorDAOOperation.getInstance();
 
     private static StudentOperation instance = null;
 
@@ -97,13 +97,15 @@ public class StudentOperation implements StudentInterface {
     public void showCourses(){
         try{
             ArrayList<Course> courses = coursesDaoOperation.getAllCourses();
-            String professorAllotted;
             logger.info("================AVAILABLE COURSES================\n");
-            logger.info("Course ID\tCourse Name\tCredits\tProfessor Allotted");
-            for (Course course : courses) {
-                professorAllotted = professorDAOOperation.getProfessorById(course.getProfessorAllotted());
-                logger.info(course.getCourseID() + "\t\t" + course.getCourseName() + "\t" + course.getCredits() + "\t\t" + professorAllotted);
-            }
+            logger.info("Course ID    Course Name    Credits    Professor Allotted");
+            courses.forEach((course) ->{
+            	String professorAllotted = professorDAOOperation.getProfessorById(course.getProfessorAllotted());
+            	if(professorAllotted == null) {
+            		professorAllotted = "Not yet alloted";
+            	}
+            	logger.info(String.format("%9d    %11s    %7d    %18s", course.getCourseID(), course.getCourseName(), course.getCredits(), professorAllotted));
+            });
             logger.info("=================================================\n");
         }
         catch (Exception e){
@@ -120,10 +122,10 @@ public class StudentOperation implements StudentInterface {
         try{
             ArrayList<Grades> grades = studentDaoOperation.getGrades(studentId);
             logger.info("======================GRADES===================\n");
-            logger.info("Coure ID\tCourse Name\t\tGrade");
-            for(Grades grade : grades){
-                logger.info(grade.getCourseId() + "\t\t" + grade.getCourseName() + "\t\t" + grade.getGrade());
-            }
+            logger.info("Course ID    Course Name    Grade");
+            grades.forEach(grade -> {
+            	logger.info(String.format("%9d    %11s    %5s", grade.getCourseId(), grade.getCourseName(), grade.getGrade()));
+            });
             logger.info("=================================================\n");
         }
         catch(Exception e){
@@ -213,9 +215,9 @@ public class StudentOperation implements StudentInterface {
      */
     public boolean registerCourses(ArrayList<Integer> courseCart, Student student) {
     	try {
-    		for (Integer courseID : courseCart) {
-                studentDaoOperation.addCourse(student, courseID);
-            }
+    		courseCart.forEach(courseID -> {
+    			studentDaoOperation.addCourse(student, courseID);
+    		});
             logger.info("Proceed to make payment\n");
             setRegistrationStatus(student);
             student.setIsRegistered(true);
@@ -243,10 +245,10 @@ public class StudentOperation implements StudentInterface {
             else {
                 ArrayList<Course> enrolledCourses = studentDaoOperation.getEnrolledCourses(student);
                 logger.info("================REGISTERED COURSES================\n");
-                logger.info("Course ID\tCourse Name\t\tCredits");
-                for (Course course : enrolledCourses) {
-                    logger.info(course.getCourseID() + "\t\t" + course.getCourseName() + "\t\t" + course.getCredits());
-                }
+                logger.info("Course ID    Course Name    Credits");
+                enrolledCourses.forEach(course -> {
+                	logger.info(String.format("%9d    %11s    %7d", course.getCourseID(), course.getCourseName(), course.getCredits()));
+                });
                 logger.info("==================================================\n");
             }
         }
@@ -294,6 +296,23 @@ public class StudentOperation implements StudentInterface {
         catch (Exception e){
             logger.warn(e.getMessage());
         }
+    }
+
+    /**
+     * To get the status of the registration window as open or closed
+     *
+     * @return True if registration window is open else False
+     */
+    public boolean getRegistrationSystemStatus(){
+        boolean status = false;
+
+        try{
+            status = studentDaoOperation.getRegistrationSystemStatus();
+        }
+        catch (Exception e){
+            logger.warn(e.getMessage());
+        }
+        return status;
     }
 }
 

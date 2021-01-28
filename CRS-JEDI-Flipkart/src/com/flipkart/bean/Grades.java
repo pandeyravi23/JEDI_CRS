@@ -2,12 +2,18 @@ package com.flipkart.bean;
 
 import java.util.ArrayList;
 
+
+/**
+ * Class to interact with variables present in Grades Class
+ * using Getters and Setters Methods
+ * @author JEDI04
+ */
+
 public class Grades {
 	private int studentId;
 	private int courseID;
 	private String courseName;
 	private String grade;
-	//private ArrayList<String> recordedGrades = new ArrayList<>();
 	
 	
 	public int getStudentId() {
@@ -41,14 +47,5 @@ public class Grades {
 	public void setGrade(String grade){
 		this.grade = grade;
 	}
-
-	/*public ArrayList<String> getRecordedGrades() {
-		return recordedGrades;
-	}
-
-	public void setRecordedGrades(ArrayList<String> recordedGrades) {
-		this.recordedGrades = recordedGrades;
-	}*/
-	
 	
 }

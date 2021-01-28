@@ -1,14 +1,11 @@
-/**
- * 
- */
 package com.flipkart.constant;
 
 import java.security.PublicKey;
 
 /**
+ * SQL Constants used for DAO Operations
  * @author jedi04
  *
- * SQL Constants used for DAO Operations
  */
 public class SQLQueriesConstant {
 
@@ -33,6 +30,7 @@ public class SQLQueriesConstant {
 	public static final String DELETE_COURSE_FROM_GRADES_QUERY = "DELETE FROM grades WHERE studentID = ? AND courseID = ?";
 	public static final String UPDATE_STUDENT_CREDENTIAL_QUERY = "UPDATE credentials SET age=?,address=?,contact=?,gender=?,nationality=? WHERE id=?";
 	public static final String UPDATE_STUDENT_QUERY = "UPDATE student SET name=? WHERE id=?";
+	public static final String GET_REGISTRATION_WINDOW_STATUS_QUERY = "SELECT isOpen FROM registrationDetails";
 
 	// SQL Queries for Professor
 	public static final String GET_PROFESSOR_BY_EMAIL = "select * from professor where email=?";
@@ -68,5 +66,10 @@ public class SQLQueriesConstant {
 	public static final String ADD_NEW_ADMIN = "insert into admin values(?, ?, ?)";
 	public static final String ADD_NEW_PROFESSOR = "insert into professor values(?, ?, ?, ?, ?)";
 	public static final String GET_PROFESSOR_NAME_BY_ID = "select name from professor where id=?";
-	
+	public static final String DELETE_COURSE_BY_ID = "delete from course where id = ?";
+	public static final String OPEN_REGISTRATION_WINDOW = "update registrationDetails set isOpen=true";
+	public static final String CLOSE_REGISTRATION_WINDOW = "update registrationDetails set isOpen=false";
+	public static final String GET_COURSE_INFO_BY_ID = "select courseId,courseName from courseCatalog";
+	public static final String GET_PROFESSOR_INFO_BY_ID = "select id,name from professor";
+	public static final String GET_REGISTERED_STUDENTS = "select id,name from student where isRegistered=1";
 }

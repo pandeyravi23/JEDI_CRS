@@ -5,6 +5,7 @@ import com.flipkart.service.*;
 
 import org.apache.log4j.Logger;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -83,7 +84,9 @@ public class StudentCRSMenu {
 	 */
 	public void init(String email) {
 		student = studentOperation.getStudentByEmail(email);
+		LocalDateTime ldt = LocalDateTime.now();
 		if (student.isApproved()) {
+			logger.info("Login Time : " + ldt.getDayOfMonth() + "/" + ldt.getMonthValue() + "/" + ldt.getYear() + " " + ldt.getHour() + ":" + ldt.getMinute() + "\n");
 			studentClient();
 		} else {
 			logger.info("Student not yet approved by Admin.\n");
@@ -101,6 +104,10 @@ public class StudentCRSMenu {
 				logger.info("You have already registered.\n");
 				return;
 			}
+			else if(studentOperation.getRegistrationSystemStatus() == false){
+				logger.info("Registration Window is closed.\n");
+				return;
+			}
 
 			int courseCounter = 0;
 			ArrayList<Integer> courseCart = new ArrayList<>();
@@ -114,12 +121,11 @@ public class StudentCRSMenu {
 				logger.info("Enter 6 to cancel registration process.");
 				input = new Scanner(System.in);
 				int operation = Integer.parseInt(input.nextLine());
-
 				if (operation == 1) {
 					ArrayList<Course> courses = studentOperation.getAllCourses();
 					logger.info("================AVAILABLE COURSES================\n");
-					logger.info("Course ID\tCourse Name\tCredits\tStatus");
-					for (Course course : courses) {
+					logger.info("Course ID    Course Name    Credits    Status");
+					courses.forEach(course -> {
 						int remaining = 10 - courseOperation.noOfEnrolledStudents(course.getCourseID());
 						String status = "Full";
 						if (courseCart.contains(course.getCourseID())) {
@@ -127,9 +133,9 @@ public class StudentCRSMenu {
 						} else if (remaining > 0) {
 							status = Integer.toString(remaining) + " seats left";
 						}
-						logger.info(course.getCourseID() + "\t\t" + course.getCourseName() + "\t" + course.getCredits()
-								+ "\t" + status);
-					}
+						logger.info(String.format("%9d    %11s    %7d    %6s", course.getCourseID(), course.getCourseName(), course.getCredits(), status));
+					});
+					
 					logger.info("=================================================\n");
 				} else if (operation == 2) {
 					logger.info("Enter course ID to be added: ");
@@ -160,9 +166,7 @@ public class StudentCRSMenu {
 				} else if (operation == 4) {
 					logger.info("============Course Cart============\n");
 					logger.info("Course IDs:");
-					for (Integer courseId : courseCart) {
-						logger.info(courseId);
-					}
+					courseCart.forEach(courseId -> logger.info(courseId));
 					logger.info("====================================\n");
 				} else if (operation == 5) {
 					if (courseCounter >= 4 && courseCounter <= 6) {
@@ -216,6 +220,10 @@ public class StudentCRSMenu {
 				logger.info("Cannot add more courses. You already have 6 courses.\n");
 				return;
 			}
+			else if(studentOperation.getRegistrationSystemStatus() == false){
+				logger.info("Registration Window is closed.\n");
+				return;
+			}
 
 			logger.info("Enter course ID to be added");
 			input = new Scanner(System.in);
@@ -240,6 +248,10 @@ public class StudentCRSMenu {
 				logger.info("Cannot drop the course. You only have 4 courses\n");
 				return;
 			}
+			else if(studentOperation.getRegistrationSystemStatus() == false){
+				logger.info("Registration Window is closed.\n");
+				return;
+			}
 
 			logger.info("Enter course ID to be dropped");
 			input = new Scanner(System.in);
@@ -261,7 +273,7 @@ public class StudentCRSMenu {
 			studentOperation.viewGrades(student.getUserId());
 		}
 	}
-
+	
 	/**
 	 * Method to make payment
 	 * 
@@ -332,7 +344,7 @@ public class StudentCRSMenu {
 				logger.info("Enter 5 to update Contact.");
 				logger.info("Enter 6 to update Gender.");
 				logger.info("Enter 7 to update Nationality.");
-				logger.info("Enter 8 to CONFIRM UPDATE.");
+				logger.info("Enter 8 to confirm update.");
 				logger.info("Enter -1 to exit.");
 
 				choice = sc.nextInt();
@@ -383,8 +395,9 @@ public class StudentCRSMenu {
 				default:
 					logger.info("Invalid choice.\n");
 				}
-
 			} while (choice != -1);
+			
+			student = studentOperation.getStudentByEmail(student.getEmail());
 		} catch (Exception e) {
 			logger.warn(e.getMessage());
 		}

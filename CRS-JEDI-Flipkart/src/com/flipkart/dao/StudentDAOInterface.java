@@ -6,7 +6,11 @@ import com.flipkart.bean.Course;
 import com.flipkart.bean.Grades;
 import com.flipkart.bean.Student;
 
-
+/**
+ * Interface to Show the structure of
+ * StudentDAO Operation Class
+ * @author JEDI04
+ */
 public interface StudentDAOInterface {
 	public Student getStudentByEmail(String email);
 	public void addCourse(Student student, int courseID);
@@ -30,4 +34,6 @@ public interface StudentDAOInterface {
 	public void deleteCourseFromGrades(int studentID, int courseID);
 
 	public void updateInfo(Student student);
+
+	public boolean getRegistrationSystemStatus();
 }

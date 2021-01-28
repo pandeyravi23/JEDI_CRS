@@ -42,22 +42,18 @@ public class ProfessorOperation implements ProfessorInterface {
 	 * @param courseId Course Id 
 	 */
 	@Override
-	public void viewStudentsEnrolled(int courseId) {
-		logger.info("Inside viewStudentEnrolled");
+	public void viewStudentsEnrolled(int courseId) {		
 		try {
 			ArrayList<Student> studentsEnrolled = professorDaoOperation.getEnrolledStudents(courseId);
 			if (studentsEnrolled.size() > 0) {
 				logger.info("\n\n");
-				logger.info(
-						"====================================================================================================");
+				logger.info("=============================================================================");
 
-				logger.info("StudentID		StudentName		StudentEmail			Branch");
-				for (Student st : studentsEnrolled) {
-					logger.info(st.getUserId() + "			" + st.getUserName() + "			" + st.getEmail()
-							+ "		" + st.getBranch());
-				}
-				logger.info(
-						"====================================================================================================");
+				logger.info(String.format("%-15s\t%-15s\t%-15s", "StudentID","Student Name","Branch"));
+				
+				studentsEnrolled.forEach(student->logger.info(String.format("%-15s\t%-15s\t%-15s",student.getUserId(),student.getUserName(),student.getBranch())));
+				
+				logger.info("=============================================================================");
 			} else {
 				throw new ProfessorCRSException("No student is currently enrolled in the course");
 			}
@@ -126,7 +122,6 @@ public class ProfessorOperation implements ProfessorInterface {
 	 */
 	@Override
 	public void showCourses(int professorId) {
-		logger.info("Inside showCourses");
 		professorDaoOperation.showCourses(professorId);
 	}
 

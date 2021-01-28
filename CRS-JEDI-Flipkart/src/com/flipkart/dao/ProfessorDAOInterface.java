@@ -5,6 +5,11 @@ import com.flipkart.bean.Student;
 
 import java.util.ArrayList;
 
+/**
+ * Interface to Show the structure of
+ * ProfessorDAO Operation Class
+ * @author JEDI04
+ */
 public interface ProfessorDAOInterface {
 	public Professor getProfessorByEmail(String email);
 	public String getProfessorById(int professorID);

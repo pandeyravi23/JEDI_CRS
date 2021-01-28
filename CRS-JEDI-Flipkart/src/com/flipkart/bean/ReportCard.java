@@ -2,6 +2,11 @@ package com.flipkart.bean;
 
 import java.util.ArrayList;
 
+/**
+ * Class to interact with variables present in Report Class
+ * using Getters and Setters Methods
+ * @author JEDI04
+ */
 public class ReportCard {
 	private int studentId;
 	private ArrayList<String> grades = new ArrayList<>();

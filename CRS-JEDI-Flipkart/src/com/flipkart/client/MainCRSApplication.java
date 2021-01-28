@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import com.flipkart.bean.Student;
 import com.flipkart.bean.User;
 import com.flipkart.service.AuthCredentialSystemOperations;
+import com.flipkart.util.ValidationOperation;
 
 /**
  * The Main Entry Point of our application and shows choices for Registration or Login
@@ -16,7 +17,7 @@ import com.flipkart.service.AuthCredentialSystemOperations;
  */
 public class MainCRSApplication {
 	private static Logger logger = Logger.getLogger(MainCRSApplication.class);
-	private static AuthCredentialSystemOperations auth = AuthCredentialSystemOperations.getInstance();
+	private static AuthCredentialSystemOperations authentication = AuthCredentialSystemOperations.getInstance();
 	private static Scanner sc = null;
 
 	/**
@@ -53,66 +54,8 @@ public class MainCRSApplication {
 			}while(choice != 3);
 		}
 		catch(Exception e) {
-//			e.printStackTrace();
 			logger.warn(e.getMessage() + "\n");
 		}
-	}
-	
-	/**
-	 * Utility Function to Read Email Input
-	 * 
-	 * @return The email that was read
-	 */
-	public static String readEmail() {
-		String str = "-1";
-		try {
-			boolean available = false;
-			do {
-				str = sc.nextLine();
-				if(str.compareTo("-1") == 0) 
-					break;
-				
-				available = auth.checkEmailAvailability(str);
-				if(!available) {
-					logger.info(">>>> Email in use. Enter a new email or -1 to exit. <<<<<<<");
-				}
-			}while(!available);
-		}
-		catch (Exception e) {
-//			e.printStackTrace();
-			logger.warn(e.getMessage());
-		}
-		return str;
-	}
-	
-	/**
-	 * Utility Function to Read Password Input
-	 * 
-	 * @return The password that was read
-	 */
-	public static String readPassword() {
-		String pwd1 = "-1", pwd2 = "-1";
-		try {
-			do {
-				logger.info("Enter password: ");
-				pwd1 = sc.nextLine();
-				
-//				if(pwd1 == "-1") 
-//					break;
-				
-				logger.info("Re enter password: ");
-				pwd2 = sc.nextLine();
-				
-				if(pwd1.compareTo(pwd2) != 0) {
-					logger.info("Passwords dont match.\n\n");
-				}
-			}while(pwd1.compareTo(pwd2) != 0);
-		}
-		catch(Exception e) {
-//			e.printStackTrace();
-			logger.warn(e.getMessage() + "\n");
-		}
-		return pwd1;
 	}
 	
 	/**
@@ -124,11 +67,11 @@ public class MainCRSApplication {
 		try {
 			
 			logger.info("Enter email: ");
-			String email = readEmail();
+			String email = ValidationOperation.readEmail();
 			if(email.compareTo("-1") == 0)
 				return;
 			
-			String password = readPassword();
+			String password = ValidationOperation.readPassword();
 			
 			User user = new User();
 			Student student = new Student();
@@ -171,12 +114,11 @@ public class MainCRSApplication {
 			student.setIsRegistered(false);
 			student.setPaymentStatus(false);
 			
-			auth.registerStudent(user, student, password);
+			authentication.registerStudent(user, student, password);
 			
 			logger.info(">>>>>>>>>>>>> Student Registration Successful. Admin will approve you within 24hrs. <<<<<<<<<\n");
 		}
 		catch(Exception e) {
-//			e.printStackTrace();
 			logger.warn(e.getMessage() + "\n");
 		}
 	}
@@ -196,7 +138,7 @@ public class MainCRSApplication {
 			logger.info("Enter password: ");
 			String pass = sc.nextLine();
 			
-			int res = auth.login(email, pass);
+			int res = authentication.login(email, pass);
 			
 			switch(res) {
 				case 1: // Student
@@ -204,11 +146,11 @@ public class MainCRSApplication {
 					studentClient.init(email);
 					break;
 				case 2: // Professor
-					ProfessorMenu professorClient = new ProfessorMenu();
+					ProfessorCRSMenu professorClient = new ProfessorCRSMenu();
 					professorClient.init(email);
 					break;
 				case 3: // Admin
-					AdminMenu adminClient = new AdminMenu();
+					AdminCRSMenu adminClient = new AdminCRSMenu();
 					adminClient.AdminClient();
 					break;
 					

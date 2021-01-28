@@ -446,4 +446,32 @@ public class StudentDAOOperation implements StudentDAOInterface {
 			logger.warn(e.getMessage() + "\n");
 		}
 	}
+
+	/**
+	 * To retrieve the status of registration window from database
+	 *
+	 * @return True if registration window is open else False
+ 	 */
+	public boolean getRegistrationSystemStatus(){
+		boolean status = false;
+
+		try{
+			connection = DBConnection.getConnection();
+			ps = connection.prepareStatement(SQLQueriesConstant.GET_REGISTRATION_WINDOW_STATUS_QUERY);
+
+			ResultSet resultSet = ps.executeQuery();
+
+			if(resultSet.next()){
+				status = resultSet.getBoolean("isOpen");
+			}
+		}
+		catch (SQLException e){
+			logger.warn(e.getMessage() + '\n');
+		}
+		catch (Exception e){
+			logger.warn(e.getMessage() + '\n');
+		}
+
+		return status;
+	}
 }

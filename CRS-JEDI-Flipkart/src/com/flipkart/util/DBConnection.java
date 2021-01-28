@@ -11,21 +11,25 @@ import java.util.Properties;
 import org.apache.log4j.Logger;
 
 /**
- * @author jedi04
- *
+ * Manages the connection with MySQL server
+ * @author JEDI04
  */
 public class DBConnection {
 	public static Connection connection = null;
 	private static Logger logger = Logger.getLogger(DBConnection.class);
 
-
+	/**
+	 * Fetches and establishes a connection with MySQL server
+	 * with the mentioned database and login credentials
+	 * @return Connection which is used to fire queries to the connected database 
+	 */
 	public static Connection getConnection() {
 		if (connection != null)
             return connection;
         else {
             try {
             	Properties prop = new Properties();
-                InputStream inputStream = DBConnection.class.getClassLoader().getResourceAsStream("./config.properties");
+                InputStream inputStream = DBConnection.class.getClassLoader().getResourceAsStream("./configs.properties");
                 prop.load(inputStream);
                 String driver = prop.getProperty("driver");
                 String url = prop.getProperty("url");
@@ -40,6 +44,10 @@ public class DBConnection {
        }
 	}
 
+	/**
+	 * Terminates connection with the database if instance 
+	 * of connection is not null
+	 */
 	public static void closeConnection() {
 		if(connection != null) {
 			try {
