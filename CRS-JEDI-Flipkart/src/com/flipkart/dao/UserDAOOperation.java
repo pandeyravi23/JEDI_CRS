@@ -17,7 +17,7 @@ public class UserDAOOperation implements UserDAOInterface {
 	
 	private static Logger logger = Logger.getLogger(UserDAOOperation.class);
 	Connection connection = null;
-	PreparedStatement ps = null;
+	PreparedStatement ps = null; 
 
 	private static UserDAOOperation instance = null;
 

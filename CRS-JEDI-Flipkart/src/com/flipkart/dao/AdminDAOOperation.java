@@ -493,20 +493,21 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	/**
 	 * Displays List of registered students
 	 */
-	public void getStudents() {
+	public boolean getStudents() {
 		try {
 			String  s = SQLQueriesConstant.GET_REGISTERED_STUDENTS;
 			ps = connection.prepareStatement(s);
 			ResultSet stl = ps.executeQuery();
+			logger.info("=======================================");
 			if (stl.next() == false) {
 				throw new StudentCRSException("No Student Exists!!");
 			} else {
-				logger.info("=======================================");
 				logger.info(String.format("%-10s\t%-15s", "StudentID", "Student Name"));
 				do {
 					logger.info(String.format("%-10d\t%-15s", stl.getInt("id"), stl.getString("name")));
 				} while (stl.next());
 				logger.info("=======================================");
+				return true;
 			}
 		} catch (StudentCRSException e) {
 			logger.info(e.getMessage());
@@ -515,5 +516,6 @@ public class AdminDAOOperation implements AdminDAOInterface {
 		} catch (Exception e) {
 			logger.info(e.getMessage());
 		}
+		return false;
 	}
 }

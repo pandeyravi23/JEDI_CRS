@@ -5,6 +5,7 @@ import com.flipkart.service.*;
 
 import org.apache.log4j.Logger;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -83,7 +84,9 @@ public class StudentCRSMenu {
 	 */
 	public void init(String email) {
 		student = studentOperation.getStudentByEmail(email);
+		LocalDateTime ldt = LocalDateTime.now();
 		if (student.isApproved()) {
+			logger.info("Login Time : " + ldt.getDayOfMonth() + "/" + ldt.getMonthValue() + "/" + ldt.getYear() + " " + ldt.getHour() + ":" + ldt.getMinute() + "\n");
 			studentClient();
 		} else {
 			logger.info("Student not yet approved by Admin.\n");
@@ -118,12 +121,11 @@ public class StudentCRSMenu {
 				logger.info("Enter 6 to cancel registration process.");
 				input = new Scanner(System.in);
 				int operation = Integer.parseInt(input.nextLine());
-
 				if (operation == 1) {
 					ArrayList<Course> courses = studentOperation.getAllCourses();
 					logger.info("================AVAILABLE COURSES================\n");
-					logger.info("Course ID\tCourse Name\tCredits\tStatus");
-					for (Course course : courses) {
+					logger.info("Course ID    Course Name    Credits    Status");
+					courses.forEach(course -> {
 						int remaining = 10 - courseOperation.noOfEnrolledStudents(course.getCourseID());
 						String status = "Full";
 						if (courseCart.contains(course.getCourseID())) {
@@ -131,9 +133,9 @@ public class StudentCRSMenu {
 						} else if (remaining > 0) {
 							status = Integer.toString(remaining) + " seats left";
 						}
-						logger.info(course.getCourseID() + "\t\t" + course.getCourseName() + "\t" + course.getCredits()
-								+ "\t" + status);
-					}
+						logger.info(String.format("%9d    %11s    %7d    %6s", course.getCourseID(), course.getCourseName(), course.getCredits(), status));
+					});
+					
 					logger.info("=================================================\n");
 				} else if (operation == 2) {
 					logger.info("Enter course ID to be added: ");
@@ -164,9 +166,7 @@ public class StudentCRSMenu {
 				} else if (operation == 4) {
 					logger.info("============Course Cart============\n");
 					logger.info("Course IDs:");
-					for (Integer courseId : courseCart) {
-						logger.info(courseId);
-					}
+					courseCart.forEach(courseId -> logger.info(courseId));
 					logger.info("====================================\n");
 				} else if (operation == 5) {
 					if (courseCounter >= 4 && courseCounter <= 6) {
