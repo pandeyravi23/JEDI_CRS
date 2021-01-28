@@ -1,6 +1,5 @@
 package com.flipkart.bean;
 
-import java.util.ArrayList;
 
 
 /**
