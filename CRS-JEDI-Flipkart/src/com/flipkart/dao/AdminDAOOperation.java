@@ -499,7 +499,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 			ps = connection.prepareStatement(s);
 			ResultSet stl = ps.executeQuery();
 			if (stl.next() == false) {
-				throw new StudentCRSException("No Student Exits!!");
+				throw new StudentCRSException("No Student Exists!!");
 			} else {
 				logger.info("=======================================");
 				logger.info(String.format("%-10s\t%-15s", "StudentID", "Student Name"));
