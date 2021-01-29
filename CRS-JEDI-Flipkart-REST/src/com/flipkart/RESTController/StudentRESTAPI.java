@@ -27,7 +27,7 @@ public class StudentRESTAPI {
 	@GET
 	@Path("/allCourses")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<Course> getAllCourses() { 
+	public ArrayList<Course> getAllCourses(@QueryParam("id") Integer id) { 
 		ArrayList<Course> al = studentOperation.getAllCourses();
 		return al;
 	}
