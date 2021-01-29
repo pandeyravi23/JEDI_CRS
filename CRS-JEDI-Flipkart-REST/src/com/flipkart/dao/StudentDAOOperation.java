@@ -42,6 +42,46 @@ public class StudentDAOOperation implements StudentDAOInterface {
 		return instance;
 	}
 
+	
+	
+	
+	public Student getStudentByID(int studentID) {
+		Student student = null;
+		try {
+			connection = DBConnection.getConnection();
+			ps = connection.prepareStatement(SQLQueriesConstant.GET_STUDENT_BY_ID_QUERY);
+			
+			ps.setInt(1, studentID);
+			
+			ResultSet result = ps.executeQuery();
+			result.next();
+			student = new Student();
+			student.setEmail(result.getString("email"));
+			student.setBranch(result.getString("branch"));
+			student.setUserId(result.getInt("id"));
+			boolean bool = result.getInt("isRegistered") == 1 ? true : false;
+			student.setIsRegistered(bool);
+			student.setUserName(result.getString("name"));
+			student.setRollNo(result.getInt("rollno"));	
+			student.setApproved(result.getBoolean("isApproved"));
+			student.setPaymentStatus(result.getBoolean("paymentStatus"));
+			student.setAge(result.getInt("age"));
+			student.setContact(result.getString("contact"));
+			student.setNationality(result.getString("nationality"));
+			student.setGender(result.getString("gender"));
+			student.setAddress(result.getString("address"));
+		}
+		catch(SQLException e) {
+			logger.warn(e.getMessage() + "\n");
+		}
+		catch(Exception e) {
+			logger.warn(e.getMessage() + "\n");
+		}
+		return student;
+	}
+	
+	
+	
 	/**
 	 * Method to fetch Student Object from database given email of student
 	 * 
