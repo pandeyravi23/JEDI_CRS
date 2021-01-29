@@ -7,6 +7,7 @@ import java.util.*;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
 
@@ -61,4 +62,23 @@ public class StudentRESTAPI {
 	}
 	
 	
+	
+	@PUT
+	@Path("/updateInfo")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updateInfo(@FormParam("studentID") Integer studentID, @FormParam("name") String name, @FormParam("age") Integer age, 
+							   @FormParam("address") String address, @FormParam("contact") String contact, @FormParam("gender") String gender,
+							   @FormParam("nationality") String nationality) {
+		
+		student = studentOperation.getStudentByID(studentID);
+		student.setUserName(name);
+		student.setAge(age);
+		student.setAddress(address);
+		student.setContact(contact);
+		student.setGender(gender);
+		student.setNationality(nationality);
+		
+		studentOperation.updateInfo(student);
+		return Response.status(200).entity("Success").build();
+	}
 }
