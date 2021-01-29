@@ -75,8 +75,6 @@ public class StudentRESTAPI {
 		return Response.status(201).entity(message).build();
 	}
 	
-<<<<<<< HEAD
-=======
 	@POST
 	@Path("/deleteCourse")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -143,21 +141,14 @@ public class StudentRESTAPI {
 		studentOperation.updateInfo(student);
 		return Response.status(200).entity("Success").build();
 	}
->>>>>>> d3d6460367399824f81384f64073a80cadc06d54
+
 	
 	@PUT
 	@Path("/updateInfo")
 	@Produces(MediaType.APPLICATION_JSON)
-<<<<<<< HEAD
 	public Response updateInfo(@FormParam("studentID") Integer studentID, @FormParam("name") String name, @FormParam("age") Integer age, 
 							   @FormParam("address") String address, @FormParam("contact") String contact, @FormParam("gender") String gender,
 							   @FormParam("nationality") String nationality) {
-=======
-	public Response updateInfo(
-			@FormParam("studentID") Integer studentID, @FormParam("name") String name, @FormParam("age") Integer age, 
-			@FormParam("address") String address, @FormParam("contact") String contact, @FormParam("gender") String gender,
-			@FormParam("nationality") String nationality) {
->>>>>>> d3d6460367399824f81384f64073a80cadc06d54
 		
 		student = studentOperation.getStudentByID(studentID);
 		student.setUserName(name);
