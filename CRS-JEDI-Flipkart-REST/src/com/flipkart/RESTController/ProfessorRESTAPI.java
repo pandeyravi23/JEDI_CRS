@@ -44,8 +44,12 @@ public class ProfessorRESTAPI {
 	@GET
 	@Path("/enrolledStudents")
 	@Produces(MediaType.APPLICATION_JSON)
-	public void getEnrolledStudents(@QueryParam("courseID") Integer courseID) { 
-		professorOperation.viewStudentsEnrolled(courseID);
+	public Response getEnrolledStudents(@QueryParam("courseID") Integer courseID) { 
+		ArrayList<JSONObject> arr = professorOperation.viewStudentsEnrolled(courseID);
+		if(arr.size()==0) {
+			return Response.status(400).entity("No Students Enrolled in this Course".toString()).build();
+		}
+		return Response.status(200).entity(arr.toString()).build();
 	}
 	
 	

@@ -145,8 +145,8 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	 * @param courseId Course Id
 	 * @return returns list of enrolled students
 	 */
-	public ArrayList<Student> getEnrolledStudents(int courseId) {
-		ArrayList<Student> al = new ArrayList<Student>();
+	public ArrayList<JSONObject> getEnrolledStudents(int courseId) {
+		ArrayList<JSONObject> arr = new ArrayList<JSONObject>();
 		try {
 			con = DBConnection.getConnection();
 			String str = SQLQueriesConstant.GET_ENROLLED_STUDENTS_PROFESSOR_QUERY;
@@ -154,14 +154,14 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 			stmt.setInt(1, courseId);
 			ResultSet rs = stmt.executeQuery();
 			rs = stmt.executeQuery();
-
 			while (rs.next()) {
 				Student st = new Student();
-				st.setUserId(rs.getInt("id"));
-				st.setUserName(rs.getString("name"));
-				st.setEmail(rs.getString("email"));
-				st.setBranch(rs.getString("branch"));
-				al.add(st);
+				JSONObject obj = new JSONObject();
+				obj.put("id",rs.getInt("id"));
+				obj.put("name",rs.getString("name"));
+				obj.put("email",rs.getString("email"));
+				obj.put("branch",rs.getString("branch"));
+				arr.add(obj);
 			}
 
 		} catch (SQLException e) {
@@ -169,7 +169,7 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 		} catch (Exception e) {
 			logger.info(e.getMessage());
 		}
-		return al;
+		return arr;
 	}
 
 	/**
