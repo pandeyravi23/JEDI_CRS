@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 
 import com.flipkart.bean.Course;
 import com.flipkart.bean.Grades;
+import com.flipkart.bean.Student;
 import com.flipkart.client.StudentCRSMenu;
 import com.flipkart.service.StudentOperation;
 
@@ -27,11 +28,6 @@ public class StudentRESTAPI {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Course> getAllCourses() { 
 		ArrayList<Course> al = studentOperation.getAllCourses();
-//		Grades g = new Grades();
-//		g.setCourseID(1);
-//		g.setCourseName("gg");
-//		g.setGrade("ggg");
-//		g.setStudentId(1);
 		return al;
 	}
 }
