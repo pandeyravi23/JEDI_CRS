@@ -7,6 +7,9 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.flipkart.dao.AdminDAOOperation;
+
+import java.util.ArrayList;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
@@ -16,24 +19,41 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.json.JSONObject;
+
 import com.flipkart.bean.Course;
 import com.flipkart.service.AdminOperation;
 
 
 @Path("/admin")
 public class AdminRESTAPI {
-	
+	AdminOperation adminOperation = AdminOperation.getInstance();
 	
 	@GET
 	@Path("/getReportCard")
 	@Produces(MediaType.APPLICATION_JSON)
-	public void getReportCard(@QueryParam("id") Integer id)
+	public Response getReportCard(@QueryParam("id") Integer id)
 	{
-		AdminDAOOperation adminDAO = AdminDAOOperation.getInstance();
-		adminDAO.printGrades(id);
+		ArrayList<JSONObject> reportCard = adminOperation.generateReportCard(id);
+		if(reportCard.size() == 0)
+			return Response.status(400).entity("No students found.").build();
+		return Response.status(200).entity(reportCard.toString()).build();
+		
 	}
-
-	AdminOperation adminOperation = AdminOperation.getInstance();
+	
+	@GET
+	@Path("/getAllStudents")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllStudents()
+	{
+		ArrayList<JSONObject> students =  adminOperation.getRegisteredStudents();
+		if(students.size() == 0)
+		{
+			return Response.status(400).entity("No students found").build();
+		}
+		return Response.status(200).entity(students.toString()).build();
+	}
+	
 
 	@PUT
 	@Path("/openRegistration")

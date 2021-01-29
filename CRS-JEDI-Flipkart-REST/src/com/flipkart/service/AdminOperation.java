@@ -1,9 +1,11 @@
 package com.flipkart.service;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
 import org.apache.log4j.Logger;
+import org.json.JSONObject;
 
 import com.flipkart.bean.Admin;
 import com.flipkart.bean.Course;
@@ -46,17 +48,22 @@ public class AdminOperation implements AdminInterface {
 	 * 
 	 */
 	@Override
-	public void generateReportCard() {
-		// TODO Auto-generated method stub
-		if(adminDAO.getStudents()==false) {
-			logger.info("   =======================================");
-			return ;
-		}
+	public ArrayList<JSONObject> generateReportCard(int sid) {
+//		if(adminDAO.getRegisteredStudents().size() == 0) {
+//			logger.info("   =======================================");
+//			return ;
+//		}
 		logger.info("Please Enter Student ID to Generate Report Card");
-		Scanner sc = new Scanner(System.in);
-		int sid = sc.nextInt();
-		adminDAO.printGrades(sid);
-		return;
+//		Scanner sc = new Scanner(System.in);
+//		int sid = sc.nextInt();
+		ArrayList<JSONObject> al =  adminDAO.printGrades(sid);
+		System.out.println(al.size());
+		return al;
+	}
+	
+	public ArrayList<JSONObject> getRegisteredStudents()
+	{
+		return adminDAO.getRegisteredStudents();
 	}
 
 	/**
