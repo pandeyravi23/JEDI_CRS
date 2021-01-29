@@ -467,7 +467,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 			logger.info(e.getMessage());
 		}
 	}
-
+	
 	public void showprofessor() {
 		try {
 			String s = SQLQueriesConstant.GET_PROFESSOR_INFO_BY_ID;
