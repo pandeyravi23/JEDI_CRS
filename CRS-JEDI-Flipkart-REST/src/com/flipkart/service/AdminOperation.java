@@ -285,4 +285,22 @@ public class AdminOperation implements AdminInterface {
 	/**
 	 * Displays list of registered students
 	 */
+	
+	public void addCourse2(Course course) {
+		// TODO Auto-generated method stub
+		//// Exception related to existing course ID
+		try {
+			boolean res = adminDAO.addCourse(course);
+			if(res==false)
+				throw new AdminCRSException("Failed to Add New Course");
+			logger.info("====================================");
+			logger.info("Add Course Status : " + res);
+			logger.info("====================================");
+		} catch (AdminCRSException e) {
+			logger.info(e.getMessage());
+		}
+		catch (Exception e) {
+			logger.info(e.getMessage());
+		}
+	}
 }

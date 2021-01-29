@@ -41,14 +41,13 @@ public class AdminRESTAPI {
 		return Response.status(201).entity("Window Closed").build();
 	}
 	
-	
+
 	@POST
 	@Path("/addCourse")
 	@Consumes("application/json")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addCourse(Course course) {
-		
-		adminOperation.closeRegistrationWindow();
-		return Response.status(201).entity("Window Closed").build();
+		adminOperation.addCourse2(course);
+		return Response.status(201).entity("Course Added").build();
 	}
 }
