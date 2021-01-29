@@ -124,6 +124,22 @@ public class ProfessorOperation implements ProfessorInterface {
 	public void showCourses(int professorId) {
 		professorDaoOperation.showCourses(professorId);
 	}
+	
+	/**
+	 * Method to return the professor name whose ID is provided
+	 * @param id The ID of the professor whose name is to be fetched
+	 * @return The name of the professor whose ID was passed
+	 */
+	public String getProfessorById(int id) {
+		String profName = null;
+		try {
+			profName = professorDaoOperation.getProfessorById(id);
+		}
+		catch(Exception e) {
+			logger.warn(e.getMessage());
+		}
+		return profName;
+	}
 
 	/**
 	 * Returns professor object associated with given email
