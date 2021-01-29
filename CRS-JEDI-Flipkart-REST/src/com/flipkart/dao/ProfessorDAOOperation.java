@@ -9,12 +9,15 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import org.apache.log4j.Logger;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.flipkart.bean.Professor;
 import com.flipkart.bean.Student;
 import com.flipkart.constant.SQLQueriesConstant;
 import com.flipkart.util.DBConnection;
 import com.mysql.cj.protocol.Resultset;
+
 
 /**
  * Undertakes all operations for professor related 
@@ -108,7 +111,8 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	 * 
 	 * @param professorId Professor Id
 	 */
-	public void showCourses(int professorId) {
+	public ArrayList<JSONObject> showCourses(int professorId) {
+		ArrayList <JSONObject> arr = new ArrayList<JSONObject>();
 		try {
 			con = DBConnection.getConnection();
 			String str = SQLQueriesConstant.SHOW_COURSES_PROFESSOR_QUERY;
@@ -118,7 +122,12 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 			logger.info("===============================================");
 			logger.info(String.format("%-8s\t%-15s\t%-15s", "ID","CourseName","Credits"));
 			while (rs.next()) {
+				JSONObject obj = new JSONObject();
 				logger.info(String.format("%-8s\t%-15s\t%-15s", rs.getInt(1),rs.getString(2),rs.getString(3)));
+				obj.put("id",rs.getInt(1));
+				obj.put("CourseName",rs.getString(2));
+				obj.put("Credits",rs.getInt(3));
+				arr.add(obj);
 			}
 			logger.info("================================================\n\n");
 		} catch (SQLException e) {
@@ -126,6 +135,7 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 		} catch (Exception e) {
 			logger.info(e.getMessage());
 		}
+		return arr;
 	}
 
 	/**

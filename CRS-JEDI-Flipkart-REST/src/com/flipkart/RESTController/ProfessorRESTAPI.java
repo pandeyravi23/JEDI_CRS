@@ -14,6 +14,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import org.json.JSONObject;
 
 import com.flipkart.bean.Course;
 import com.flipkart.service.ProfessorOperation;
@@ -30,8 +33,9 @@ public class ProfessorRESTAPI {
 	@GET
 	@Path("/allottedCourses")
 	@Produces(MediaType.APPLICATION_JSON)
-	public void getAllottedCourses(@QueryParam("id") Integer id) { 
-		professorOperation.showCourses(id);
+	public Response getAllottedCourses(@QueryParam("id") Integer id) { 
+		ArrayList<JSONObject> al = professorOperation.showCourses(id);
+		return Response.status(200).entity(al.toString()).build();
 	}
 	
 	@GET

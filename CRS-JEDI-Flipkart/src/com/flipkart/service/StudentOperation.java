@@ -118,9 +118,11 @@ public class StudentOperation implements StudentInterface {
      *
      * @param studentId User ID of the student
      */
-    public void viewGrades(int studentId){
-        try{
-            ArrayList<Grades> grades = studentDaoOperation.getGrades(studentId);
+    public ArrayList<Grades> viewGrades(int studentId){
+    	ArrayList<Grades> grades = null;
+    	
+    	try{
+            grades = studentDaoOperation.getGrades(studentId);
             logger.info("======================GRADES===================\n");
             logger.info("Course ID    Course Name    Grade");
             grades.forEach(grade -> {
@@ -131,6 +133,8 @@ public class StudentOperation implements StudentInterface {
         catch(Exception e){
             logger.warn(e.getMessage());
         }
+    	
+    	return grades;
     }
 
     /**

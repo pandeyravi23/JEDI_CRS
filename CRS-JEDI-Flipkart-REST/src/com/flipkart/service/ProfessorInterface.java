@@ -10,11 +10,11 @@ import com.flipkart.exception.ProfessorCRSException;
  * @author JEDI04
  */
 public interface ProfessorInterface {
-	public void viewGrades(int courseId);
-	public Boolean gradeStudents(int courseId);
-	public void showCourses(int professorId);
-	public Professor getProfessorByEmail(String email);
-	public void viewStudentsEnrolled(int courseId);
-	public boolean updateStudentGrade(int courseId,int studentId, String grade);
-	public String getProfessorById(int id);
+//	public void viewGrades(int courseId);
+//	public Boolean gradeStudents(int courseId);
+//	public void showCourses(int professorId);
+//	public Professor getProfessorByEmail(String email);
+//	public void viewStudentsEnrolled(int courseId);
+//	public boolean updateStudentGrade(int courseId,int studentId, String grade);
+//	public String getProfessorById(int id);
 }

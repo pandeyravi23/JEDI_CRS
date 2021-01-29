@@ -36,4 +36,6 @@ public interface StudentDAOInterface {
 	public void updateInfo(Student student);
 
 	public boolean getRegistrationSystemStatus();
+	
+	public Student getStudentByID(int studentID);
 }
