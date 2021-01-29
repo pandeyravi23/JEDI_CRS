@@ -42,9 +42,9 @@ public class AdminRESTAPI {
 	}
 	
 	@GET
-	@Path("/getAllStudents")
+	@Path("/getRegisteredStudents")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllStudents()
+	public Response getRegisteredStudents()
 	{
 		ArrayList<JSONObject> students =  adminOperation.getRegisteredStudents();
 		if(students.size() == 0)
