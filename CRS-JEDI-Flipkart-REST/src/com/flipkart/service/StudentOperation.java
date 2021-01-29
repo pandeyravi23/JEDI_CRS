@@ -4,10 +4,8 @@ import com.flipkart.dao.ProfessorDAOOperation;
 import com.flipkart.exception.StudentCRSException;
 import org.apache.log4j.Logger;
 
-import com.flipkart.bean.Student;
 import com.flipkart.dao.CoursesDAOOperation;
 import com.flipkart.dao.StudentDAOOperation;
-import com.flipkart.bean.Course;
 
 import java.util.ArrayList;
 
@@ -44,6 +42,19 @@ public class StudentOperation implements StudentInterface {
 
 
 
+    public Student getStudentByID(int studentID) {
+    	Student student = null;
+    	
+    	try {
+    		student = studentDaoOperation.getStudentByID(studentID);
+    	}
+    	catch(Exception e) {
+    		logger.warn(e.getMessage());
+    	}
+    	
+    	return student;
+    }
+    
     /**
      * Method to get the number of courses a student has registered for.
      *
@@ -117,10 +128,13 @@ public class StudentOperation implements StudentInterface {
      * Method to print grades attained by student in each of his registered courses
      *
      * @param studentId User ID of the student
+     * @return 
      */
-    public void viewGrades(int studentId){
-        try{
-            ArrayList<Grades> grades = studentDaoOperation.getGrades(studentId);
+    public ArrayList<Grades> viewGrades(int studentId){
+    	ArrayList<Grades> grades = null;
+    	
+    	try{
+    		grades = studentDaoOperation.getGrades(studentId);
             logger.info("======================GRADES===================\n");
             logger.info("Course ID    Course Name    Grade");
             grades.forEach(grade -> {
@@ -131,6 +145,8 @@ public class StudentOperation implements StudentInterface {
         catch(Exception e){
             logger.warn(e.getMessage());
         }
+    	
+    	return grades;
     }
 
     /**
