@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import org.apache.log4j.Logger;
+import org.json.JSONObject;
 
 import com.flipkart.bean.Professor;
 import com.flipkart.bean.Student;
@@ -41,7 +42,7 @@ public class ProfessorOperation implements ProfessorInterface {
 	 * 
 	 * @param courseId Course Id 
 	 */
-	@Override
+	
 	public void viewStudentsEnrolled(int courseId) {		
 		try {
 			ArrayList<Student> studentsEnrolled = professorDaoOperation.getEnrolledStudents(courseId);
@@ -71,12 +72,12 @@ public class ProfessorOperation implements ProfessorInterface {
 	 * 
 	 * @param courseId Course Id
 	 */
-	@Override
-	public void viewGrades(int courseId) {
+	public ArrayList<JSONObject> viewGrades(int courseId) {
+		ArrayList<JSONObject> al = new ArrayList<JSONObject>();
 		try {
-			ArrayList<Student> studentsEnrolled = professorDaoOperation.getStudents(courseId);
+			ArrayList<Student>studentsEnrolled = professorDaoOperation.getStudents(courseId);
 			if (studentsEnrolled.size() > 0) {
-				professorDaoOperation.showGrades(studentsEnrolled, courseId);
+				al = professorDaoOperation.showGrades(studentsEnrolled, courseId);
 			} else {
 				throw new ProfessorCRSException("No Student Present!!!");
 			}
@@ -87,6 +88,7 @@ public class ProfessorOperation implements ProfessorInterface {
 		} catch (Exception e) {
 			logger.info(e.getMessage());
 		}
+		return al;
 	}
 
 	/**
@@ -95,7 +97,6 @@ public class ProfessorOperation implements ProfessorInterface {
 	 * @param courseId
 	 * @return true if grading operation is successful else false 
 	 */
-	@Override
 	public Boolean gradeStudents(int courseId) {
 		try {
 			ArrayList<Student> studentsEnrolled = professorDaoOperation.getEnrolledStudents(courseId);
@@ -120,9 +121,9 @@ public class ProfessorOperation implements ProfessorInterface {
 	 * 
 	 * @param professorId Professor Id
 	 */
-	@Override
-	public void showCourses(int professorId) {
-		professorDaoOperation.showCourses(professorId);
+	public ArrayList<JSONObject> showCourses(int professorId) {
+		ArrayList<JSONObject> ar = professorDaoOperation.showCourses(professorId);
+		return ar;
 	}
 	
 	/**

@@ -14,14 +14,14 @@ import com.flipkart.exception.AdminCRSException;
  * @author JEDI04
  */
 public interface AdminDAOInterface {
-	public void printGrades(int studentId);
-	public boolean verifyEmail(String email) throws AdminCRSException;
-	public int addAdmin(String password, Admin admin);
-	public int addProfessor(String password, Professor prof);
-	public void allotCourses(int courseId,int professorId);
-	public boolean addCourse(Course course); 
-	public boolean deleteCourse(int courseId); 
-	public void approveStudent();
-	public void startRegistrationWindow();
-	public void closeRegistrationWindow();
+//	public void printGrades(int studentId);
+//	public boolean verifyEmail(String email) throws AdminCRSException;
+//	public int addAdmin(String password, Admin admin);
+//	public int addProfessor(String password, Professor prof);
+//	public void allotCourses(int courseId,int professorId);
+//	public boolean addCourse(Course course); 
+//	public boolean deleteCourse(int courseId); 
+//	public void approveStudent();
+//	public void startRegistrationWindow();
+//	public void closeRegistrationWindow();
 }

@@ -61,7 +61,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	 * @return False if the email already exists in database else returns true.
 	 * 
 	 */
-	@Override
+	
 	public boolean verifyEmail(String email) {
 		try {
 			String sqlQuery = SQLQueriesConstant.GET_STUDENT_ID_BY_EMAIL;
@@ -91,7 +91,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	 * 
 	 * @return Returns 1 if new admin is successfully added. Else returns 0.
 	 */
-	@Override
+	
 	public int addAdmin(String password, Admin admin) {
 		try {
 			String sqlQuery = SQLQueriesConstant.ADD_USER_TO_CREDENTIALS;
@@ -138,7 +138,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	 *                 class' attributes.
 	 * @return Returns 1 if professor is successfully added. Else returns 0.
 	 */
-	@Override
+	
 	public int addProfessor(String password, Professor prof) {
 		try {
 			String credQuery = SQLQueriesConstant.ADD_USER_TO_CREDENTIALS;
@@ -185,7 +185,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	 *                  generated.
 	 * 
 	 */
-	@Override
+	
 	public void printGrades(int studentId) {
 		try {
 			String str = SQLQueriesConstant.GET_GRADES_BY_STUDENT_ID;
@@ -226,7 +226,6 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	 * allow them to login and register for courses.
 	 * 
 	 */
-	@Override
 	public void approveStudent() {
 		try {
 			boolean status = false;
@@ -297,7 +296,6 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	 * 
 	 * @return True if the course is successfully added. False otherwise.
 	 */
-	@Override
 	public boolean addCourse(Course course) {
 		try {
 			String str = SQLQueriesConstant.ADD_COURSE_IN_CATALOG;
@@ -324,7 +322,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	 * @param courseId Course Id of the course to be deleted.
 	 * @return True if the course is successfully deleted. False otherwise.
 	 */
-	@Override
+	
 	public boolean deleteCourse(int courseId) {
 		try {
 			String str = SQLQueriesConstant.DELETE_COURSE_IN_CATALOG;
@@ -356,7 +354,6 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	 * @param professorID Professor ID of the course.
 	 * 
 	 */
-	@Override
 	public void allotCourses(int courseId, int professorID) {
 		try {
 			String str = SQLQueriesConstant.GET_PROFESSOR_NAME_BY_ID;
