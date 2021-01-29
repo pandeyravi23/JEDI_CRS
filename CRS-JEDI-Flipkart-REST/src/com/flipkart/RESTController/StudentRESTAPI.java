@@ -21,6 +21,9 @@ import com.flipkart.service.StudentOperation;
  */
 @Path("/StudentRESTAPI")
 public class StudentRESTAPI {
+	
+	StudentOperation studentOperation = StudentOperation.getInstance();
+	
 	@GET
 	@Path("/getAllCourses")
 	@Produces(MediaType.APPLICATION_JSON)
