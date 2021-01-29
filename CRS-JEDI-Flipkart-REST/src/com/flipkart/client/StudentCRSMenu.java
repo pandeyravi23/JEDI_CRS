@@ -18,6 +18,7 @@ public class StudentCRSMenu {
 	private static Logger logger = Logger.getLogger(StudentCRSMenu.class);
 	private StudentInterface studentOperation = StudentOperation.getInstance();
 	private CourseOperation courseOperation = CourseOperation.getInstance();
+	private ProfessorOperation professorOperation = ProfessorOperation.getInstance();
 	private Student student = new Student();
 
 	/**
@@ -43,7 +44,7 @@ public class StudentCRSMenu {
 					viewStudentDetails();
 					break;
 				case 2:
-					studentOperation.showCourses();
+					showCourses();
 					break;
 				case 3:
 					registerCourses();
@@ -55,7 +56,7 @@ public class StudentCRSMenu {
 					dropCourse();
 					break;
 				case 6:
-					studentOperation.viewRegisteredCourses(student);
+					viewRegisteredCourses();
 					break;
 				case 7:
 					viewGrades();
@@ -74,6 +75,41 @@ public class StudentCRSMenu {
 		} catch (Exception e) {
 			logger.warn(e.getMessage());
 		}
+	}
+	
+	public void viewRegisteredCourses() {
+		ArrayList<Course> courses = null;
+		try {
+			courses = studentOperation.getRegisteredCourses(student);
+			logger.info("================REGISTERED COURSES================\n");
+            logger.info("Course ID    Course Name    Credits");
+            courses.forEach(course -> {
+            	logger.info(String.format("%9d    %11s    %7d", course.getCourseID(), course.getCourseName(), course.getCredits()));
+            });
+            logger.info("==================================================\n");
+		}
+		catch(Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
+	
+	public void showCourses() {
+		try{
+            ArrayList<Course> courses = studentOperation.getAllCourses();
+            logger.info("================AVAILABLE COURSES================\n");
+            logger.info("Course ID    Course Name    Credits    Professor Allotted");
+            courses.forEach((course) ->{
+            	String professorAllotted = professorOperation.getProfessorById(course.getProfessorAllotted());
+            	if(professorAllotted == null) {
+            		professorAllotted = "Not yet alloted";
+            	}
+            	logger.info(String.format("%9d    %11s    %7d    %18s", course.getCourseID(), course.getCourseName(), course.getCredits(), professorAllotted));
+            });
+            logger.info("=================================================\n");
+        }
+        catch (Exception e){
+            logger.warn(e.getMessage());
+        }
 	}
 
 	/**

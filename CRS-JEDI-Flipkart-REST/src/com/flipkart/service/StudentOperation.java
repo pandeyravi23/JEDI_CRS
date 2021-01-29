@@ -229,6 +229,35 @@ public class StudentOperation implements StudentInterface {
     	}
     	return false;
     }
+    /**
+     * Method to fetch the registered courses for a student
+     * @param student Student object containing data about the student
+     * @return Returns the list of registered courses
+     */
+    public ArrayList<Course> getRegisteredCourses(Student student) {
+    	ArrayList<Course> courses = null;
+    	try {
+    		if(!student.getIsRegistered()){
+                throw new StudentCRSException("You have not registered any courses yet. Please register courses.\n");
+            }
+            else {
+                courses = studentDaoOperation.getEnrolledCourses(student);
+                logger.info("================REGISTERED COURSES================\n");
+                logger.info("Course ID    Course Name    Credits");
+                courses.forEach(course -> {
+                	logger.info(String.format("%9d    %11s    %7d", course.getCourseID(), course.getCourseName(), course.getCredits()));
+                });
+                logger.info("==================================================\n");
+            } 
+    	}
+    	catch(StudentCRSException e) {
+    		logger.warn(e.getMessage());
+    	}
+    	catch(Exception e) {
+    		logger.warn(e.getMessage());
+    	}
+    	return courses;
+    }
 
 
     /**
@@ -237,7 +266,7 @@ public class StudentOperation implements StudentInterface {
      * @param student Object containing all information about a student
      */
     public void viewRegisteredCourses(Student student){
-
+    	
         try{
             if(!student.getIsRegistered()){
                 logger.info("You have not registered any courses yet. Please register courses.\n");

@@ -16,4 +16,5 @@ public interface ProfessorInterface {
 	public Professor getProfessorByEmail(String email);
 	public void viewStudentsEnrolled(int courseId);
 	public boolean updateStudentGrade(int courseId,int studentId, String grade);
+	public String getProfessorById(int id);
 }
