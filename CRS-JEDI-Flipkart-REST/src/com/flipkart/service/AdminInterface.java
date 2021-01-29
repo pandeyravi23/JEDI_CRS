@@ -1,5 +1,9 @@
 package com.flipkart.service;
 
+import java.util.ArrayList;
+
+import org.json.JSONObject;
+
 /**
  * Interface to Show the structure of
  * Admin Operation Class
@@ -8,7 +12,7 @@ package com.flipkart.service;
 
 public interface AdminInterface {
 	
-	public void generateReportCard();
+	public ArrayList<JSONObject> generateReportCard(int sid);
 	public void allotCourse();
 	public void addProfessor();
 	public void addAdmin();

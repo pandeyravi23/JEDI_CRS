@@ -147,7 +147,7 @@ public class MainCRSApplication {
 					break;
 				case 2: // Professor
 					ProfessorCRSMenu professorClient = new ProfessorCRSMenu();
-					professorClient.init(email);
+//					professorClient.init(email);
 					break;
 				case 3: // Admin
 					AdminCRSMenu adminClient = new AdminCRSMenu();
