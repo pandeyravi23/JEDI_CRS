@@ -17,6 +17,7 @@ public class SQLQueriesConstant {
 
 	// SQL Queries for Student
 	public static final String GET_STUDENT_BY_EMAIL_QUERY = "SELECT st.email, st.name, st.rollno, st.branch, st.id, st.isRegistered, cr.isApproved, st.paymentStatus, cr.age, cr.address, cr.gender, cr.nationality, cr.contact FROM student as st INNER JOIN credentials as cr ON st.id = cr.id AND st.email=?";
+	public static final String GET_STUDENT_BY_ID_QUERY = "SELECT st.email, st.name, st.rollno, st.branch, st.id, st.isRegistered, cr.isApproved, st.paymentStatus, cr.age, cr.address, cr.gender, cr.nationality, cr.contact FROM student as st INNER JOIN credentials as cr ON st.id = cr.id AND st.id=?";
 	public static final String REGISTER_STUDENT_QUERY = "INSERT INTO student(id, name, email, rollno, branch, isRegistered, paymentStatus) values(?, ?, ?, ?, ?, ?, ?)";
 	public static final String ADD_COURSE_STUDENT_QUERY = "INSERT INTO RegisteredCourses(studentID, courseID) values(?,?)";
 	public static final String DROP_COURSE_STUDENT_QUERY = "DELETE FROM RegisteredCourses where studentID = ? and courseID = ?";

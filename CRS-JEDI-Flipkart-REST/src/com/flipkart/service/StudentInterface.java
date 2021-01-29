@@ -33,6 +33,8 @@ public interface StudentInterface {
     public void viewRegisteredCourses(Student student);
     
     public Student getStudentByEmail(String email);
+    
+    public Student getStudentByID(int studentID);
 
     public void setRegistrationStatus(Student student);
     

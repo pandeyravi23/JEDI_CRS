@@ -1,7 +1,7 @@
 package com.flipkart.service;
 
 import com.flipkart.bean.Course;
-
+import com.flipkart.bean.Grades;
 import com.flipkart.bean.Student;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public interface StudentInterface {
     
     public ArrayList<Course> getAllCourses();
 
-    public void viewGrades(int studentId);
+    public ArrayList<Grades> viewGrades(int studentId);
 
     public void makePayment(Student student);
 
