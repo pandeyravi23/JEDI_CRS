@@ -6,9 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import org.apache.log4j.Logger;
+import org.json.JSONObject;
 
 import com.flipkart.bean.Admin;
 import com.flipkart.bean.Course;
@@ -186,19 +188,21 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	 * 
 	 */
 	
-	public void printGrades(int studentId) {
+	public ArrayList<JSONObject> printGrades(int studentId) {
+		ArrayList<JSONObject> grades = new ArrayList<JSONObject>();
 		try {
 			String str = SQLQueriesConstant.GET_GRADES_BY_STUDENT_ID;
 			ps = connection.prepareStatement(str);
 			ps.setInt(1, studentId);
 			ResultSet rs = ps.executeQuery();
+			
 			String name = "";
 			if (rs.next())
 				name = rs.getString("sname");
 			else {
 				logger.info("Student with ID " + studentId + " has not registered for any course!");
 				logger.info("=======================================");
-				return;
+				return grades;
 			}
 			logger.info("=======================================");
 			logger.info("        Report Card of " + name + " :");
@@ -208,16 +212,33 @@ public class AdminDAOOperation implements AdminDAOInterface {
 				do {
 					logger.info(rs.getInt("courseId") + "          " + rs.getString("name") + "         "
 							+ rs.getString("grade"));
+					
+					JSONObject grade = new JSONObject();
+					grade.put("courseId", rs.getInt("courseId"));
+					grade.put("name", rs.getString("name"));
+					grade.put("grade",  rs.getString("grade"));
+					
+					grades.add(grade);
 				} while (rs.next());
 			}
 			logger.info("=======================================");
+			
+//			while(rs.next())
+//			{
+//				JSONObject grade = new JSONObject();
+//				grade.put("courseId", rs.getInt("courseId"));
+//				grade.put("name", rs.getString("name"));
+//				grade.put("grade",  rs.getString("grade"));
+//				
+//				grades.add(grade);
+//			}
 
 		} catch (SQLException e) {
 			logger.info(e.getMessage());
 		} catch (Exception e) {
 			logger.info(e.getMessage());
 		}
-		return;
+		return grades;
 	}
 
 	/**
@@ -488,9 +509,10 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	}
 
 	/**
-	 * Displays List of registered students
+	 * Displays List of all registered students
 	 */
-	public boolean getStudents() {
+	public ArrayList<JSONObject> getRegisteredStudents() {
+		ArrayList<JSONObject> students = new ArrayList<JSONObject>();
 		try {
 			String  s = SQLQueriesConstant.GET_REGISTERED_STUDENTS;
 			ps = connection.prepareStatement(s);
@@ -502,10 +524,15 @@ public class AdminDAOOperation implements AdminDAOInterface {
 				logger.info(String.format("%-10s\t%-15s", "StudentID", "Student Name"));
 				do {
 					logger.info(String.format("%-10d\t%-15s", stl.getInt("id"), stl.getString("name")));
+					JSONObject student = new JSONObject();
+					student.put("studentId", stl.getInt("id"));
+					student.put("name", stl.getString("name"));
+					
+					students.add(student);
 				} while (stl.next());
 				logger.info("=======================================");
-				return true;
-			}
+				return students;
+			}		
 		} catch (StudentCRSException e) {
 			logger.info(e.getMessage());
 		} catch (SQLException e) {
@@ -513,6 +540,6 @@ public class AdminDAOOperation implements AdminDAOInterface {
 		} catch (Exception e) {
 			logger.info(e.getMessage());
 		}
-		return false;
+		return students;
 	}
 }
