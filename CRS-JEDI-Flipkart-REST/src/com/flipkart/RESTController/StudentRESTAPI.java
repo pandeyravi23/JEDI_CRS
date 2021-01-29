@@ -19,14 +19,15 @@ import com.flipkart.service.StudentOperation;
  * @author JEDI04
  *
  */
-@Path("/StudentRESTAPI")
+@Path("/student")
 public class StudentRESTAPI {
-	StudentOperation student = StudentOperation.getInstance();
+
+	StudentOperation studentOperation = StudentOperation.getInstance();
 	@GET
-	@Path("/getAllCourses")
+	@Path("/allCourses")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Course> getAllCourses() { 
-		ArrayList<Course> al = student.getAllCourses();
+		ArrayList<Course> al = studentOperation.getAllCourses();
 //		Grades g = new Grades();
 //		g.setCourseID(1);
 //		g.setCourseName("gg");

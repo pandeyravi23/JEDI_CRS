@@ -9,7 +9,11 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/home/ravi/Downloads/log4j-1.2.11.jar"/>
+	<classpathentry kind="lib" path="/home/ravi/Downloads/log4j-1.2.11.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="/home/ravi/Downloads/mysql-connector-java-8.0.23.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
