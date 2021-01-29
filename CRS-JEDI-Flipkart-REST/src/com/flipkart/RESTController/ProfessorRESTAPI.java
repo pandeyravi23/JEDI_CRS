@@ -35,7 +35,10 @@ public class ProfessorRESTAPI {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllottedCourses(@QueryParam("id") Integer id) { 
 		ArrayList<JSONObject> al = professorOperation.showCourses(id);
-		return Response.status(200).entity(al.toString()).build();
+		if (al.size()>0) {
+			return Response.status(200).entity(al.toString()).build();
+		}
+		return Response.status(400).entity("No Alooted Courses").build();
 	}
 	
 	@GET
@@ -49,16 +52,27 @@ public class ProfessorRESTAPI {
 	@GET
 	@Path("/viewGrades")
 	@Produces(MediaType.APPLICATION_JSON)
-	public void viewGrades(@QueryParam("courseID") Integer courseID) { 
-		professorOperation.viewGrades(courseID);
+	public Response viewGrades(@QueryParam("courseID") Integer courseID) { 
+		ArrayList<JSONObject> al = professorOperation.viewGrades(courseID);
+		JSONObject obj = new JSONObject();
+		if (al.size()>0) {
+			obj.put("Status",true);
+			obj.put("Values",al);
+			return Response.status(200).entity(obj.toString()).build();
+		}
+		return Response.status(400).entity("No students to view").build();
 	}
 	
 	
 	@PUT
 	@Path("/updateGrade")
 	@Produces(MediaType.APPLICATION_JSON)
-	public void updateGrade(@FormParam("courseID") Integer courseID,@FormParam("studentID") Integer studentID,@FormParam("grade") String grade) {
-		System.out.print(grade);
-		professorOperation.updateStudentGrade(courseID,studentID,grade);
+	public Response updateGrade(@FormParam("courseID") Integer courseID,@FormParam("studentID") Integer studentID,@FormParam("grade") String grade) {
+		boolean res = professorOperation.updateStudentGrade(courseID,studentID,grade);
+		if (res) {
+			return Response.status(200).entity("Grade updated").build();
+		}
+		return Response.status(400).entity("Grade Update failed").build();
+
 	}
 }
