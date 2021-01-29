@@ -27,11 +27,6 @@ public class StudentRESTAPI {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Course> getAllCourses() { 
 		ArrayList<Course> al = studentOperation.getAllCourses();
-//		Grades g = new Grades();
-//		g.setCourseID(1);
-//		g.setCourseName("gg");
-//		g.setGrade("ggg");
-//		g.setStudentId(1);
 		return al;
 	}
 }

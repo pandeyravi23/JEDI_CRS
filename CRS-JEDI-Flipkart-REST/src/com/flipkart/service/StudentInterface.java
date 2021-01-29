@@ -39,5 +39,6 @@ public interface StudentInterface {
     public int getNumberOfEnrolledCourses(Student student);
 
     public boolean getRegistrationSystemStatus();
-
+    
+    public ArrayList<Course> getRegisteredCourses(Student student);
 }

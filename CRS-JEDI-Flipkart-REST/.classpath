@@ -8,12 +8,12 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/Users/bhavya/Desktop/jar/log4j-1.2.11.jar">
+	<classpathentry kind="lib" path="D:/JEDI/Reference Libraries/mysql-connector-java-8.0.22/mysql-connector-java-8.0.22.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/Users/bhavya/Desktop/jar/mysql-connector-java-8.0.22.jar">
+	<classpathentry kind="lib" path="D:/JEDI/Reference Libraries/log4j-1.2.11.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
