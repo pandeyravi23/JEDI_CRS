@@ -72,11 +72,12 @@ public class ProfessorOperation implements ProfessorInterface {
 	 * 
 	 * @param courseId Course Id
 	 */
-	public void viewGrades(int courseId) {
+	public ArrayList<JSONObject> viewGrades(int courseId) {
+		ArrayList<JSONObject> al = new ArrayList<JSONObject>();
 		try {
-			ArrayList<Student> studentsEnrolled = professorDaoOperation.getStudents(courseId);
+			ArrayList<Student>studentsEnrolled = professorDaoOperation.getStudents(courseId);
 			if (studentsEnrolled.size() > 0) {
-				professorDaoOperation.showGrades(studentsEnrolled, courseId);
+				al = professorDaoOperation.showGrades(studentsEnrolled, courseId);
 			} else {
 				throw new ProfessorCRSException("No Student Present!!!");
 			}
@@ -87,6 +88,7 @@ public class ProfessorOperation implements ProfessorInterface {
 		} catch (Exception e) {
 			logger.info(e.getMessage());
 		}
+		return al;
 	}
 
 	/**
