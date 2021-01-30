@@ -13,12 +13,12 @@ import org.json.JSONObject;
 public interface AdminInterface {
 	
 	public ArrayList<JSONObject> generateReportCard(int sid);
-	public void allotCourse();
+//	public void allotCourse();
 	public void addProfessor();
 	public void addAdmin();
-	public void approveStudents();
+//	public void approveStudents();
 	public void addCourse();
-	public void deleteCourse();
+//	public void deleteCourse();
 	public void startRegistrationWindow();
 	public void closeRegistrationWindow();
 }

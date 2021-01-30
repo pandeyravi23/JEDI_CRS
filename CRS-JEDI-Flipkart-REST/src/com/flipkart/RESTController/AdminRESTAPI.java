@@ -11,6 +11,7 @@ import com.flipkart.dao.AdminDAOOperation;
 import java.util.ArrayList;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -81,6 +82,53 @@ public class AdminRESTAPI {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addCourse(Course course) {
 		adminOperation.addCourse2(course);
-		return Response.status(201).entity("Course Added").build();
+		return Response.status(201).entity("Course Added Successfully").build();
+	}
+	
+	
+	@DELETE
+	@Path("/deleteCourse")
+	@Consumes("application/json")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteCourse(@QueryParam("courseId") Integer courseId) {
+		boolean res = adminOperation.deleteCourse(courseId);
+		JSONObject msg = new JSONObject();
+		if(res==false) {
+			msg.put("Error","CourseID Not Found");
+			return Response.status(404).entity(msg.toString()).build();
+		}
+		msg.put("Success","Course Deleted Successfully");
+		return Response.status(200).entity(msg.toString()).build();
+	}
+	
+	
+	@PUT 
+	@Path("/allotProfessor")
+	@Consumes("application/json")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response allotProfessor(@QueryParam("courseID") Integer courseID,@QueryParam("professorID") Integer professorID) {
+		boolean res = adminOperation.allotCourse(courseID,professorID);
+		JSONObject msg = new JSONObject();
+		if(res==false) {
+			msg.put("Error","Course Allocation Failed");
+			return Response.status(404).entity(msg.toString()).build();
+		}
+		msg.put("Success","Course Alloted Successfully");
+		return Response.status(200).entity(msg.toString()).build();
+	}
+	
+	@PUT
+	@Path("/approveStudent")
+	@Consumes("application/json")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response approveStudent(@QueryParam("studentID") Integer studentID) {
+		boolean res = adminOperation.approveStudents(studentID);
+		JSONObject msg = new JSONObject();
+		if(res==false) {
+			msg.put("Error","Some Error Occured");
+			return Response.status(401).entity(msg.toString()).build();
+		}
+		msg.put("Success","Student Approved!");
+		return Response.status(200).entity(msg.toString()).build();
 	}
 }

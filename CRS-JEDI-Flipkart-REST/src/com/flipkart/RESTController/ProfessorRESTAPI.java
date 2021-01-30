@@ -47,7 +47,9 @@ public class ProfessorRESTAPI {
 	public Response getEnrolledStudents(@QueryParam("courseID") Integer courseID) { 
 		ArrayList<JSONObject> arr = professorOperation.viewStudentsEnrolled(courseID);
 		if(arr.size()==0) {
-			return Response.status(400).entity("No Students Enrolled in this Course".toString()).build();
+			JSONObject err = new JSONObject();
+			err.put("Error","No Students Enrolled in this Course");
+			return Response.status(400).entity(err.toString()).build();
 		}
 		return Response.status(200).entity(arr.toString()).build();
 	}
