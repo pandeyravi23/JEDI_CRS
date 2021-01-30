@@ -5,6 +5,7 @@ import java.util.*;
 import com.flipkart.bean.Course;
 import com.flipkart.bean.Grades;
 import com.flipkart.bean.Student;
+import com.flipkart.exception.StudentCRSException;
 
 /**
  * Interface to Show the structure of
@@ -37,5 +38,5 @@ public interface StudentDAOInterface {
 
 	public boolean getRegistrationSystemStatus();
 	
-	public Student getStudentByID(int studentID);
+	public Student getStudentByID(int studentID) throws StudentCRSException;
 }
