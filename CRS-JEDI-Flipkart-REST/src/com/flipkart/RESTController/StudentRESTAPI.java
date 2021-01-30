@@ -43,6 +43,7 @@ public class StudentRESTAPI {
 		return ResponseHelpers.success(student, "Success");
 	}
 	
+	
 	@GET
 	@Path("/allCourses")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -53,6 +54,7 @@ public class StudentRESTAPI {
 		}
 		return ResponseHelpers.success(allCourses, "Success");
 	}
+	
 	
 	@GET
 	@Path("/registeredCourses/{id}")
@@ -72,6 +74,7 @@ public class StudentRESTAPI {
 		return ResponseHelpers.success(registeredCourses, "Success");
 	}
 	
+	
 	@GET
 	@Path("/grades/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -82,6 +85,7 @@ public class StudentRESTAPI {
 		}
 		return ResponseHelpers.success(grades, "Success");
 	}
+	
 	
 	@POST
 	@Path("/addCourse")
@@ -95,6 +99,7 @@ public class StudentRESTAPI {
 		return ResponseHelpers.success(courseID, "Course with ID " + courseID + " succesfully added");
 	}
 	
+	
 	@POST
 	@Path("/deleteCourse")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -106,6 +111,7 @@ public class StudentRESTAPI {
 		studentOperation.deleteCourse(student, courseID);
 		return ResponseHelpers.success(courseID, "Course with ID " + courseID + " succesfully deleted");
 	}
+	
 	
 	@POST
 	@Path("/registerCourses/{studentID}")
@@ -119,6 +125,7 @@ public class StudentRESTAPI {
 		studentOperation.registerCourses(courseCart, student);
 		return ResponseHelpers.success(courseCart, "Successfully registered for courses");
 	}
+	
 	
 	@POST
 	@Path("/registerStudent")
@@ -195,6 +202,9 @@ public class StudentRESTAPI {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response makePayment(@PathParam("id") int studentID, @FormParam("method") String method) {
 		student = studentOperation.getStudentByID(studentID);
+		if(student == null) {
+			return ResponseHelpers.badRequest(null, "Studentt with id: " + studentID + " doesn't exist");
+		}
 		studentOperation.makePayment(student,method);
 		return ResponseHelpers.success(studentID, "Payment Successful");
 	}
