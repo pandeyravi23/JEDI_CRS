@@ -100,7 +100,7 @@ public class StudentRESTAPI {
 	}
 	
 	
-	@POST
+	@DELETE
 	@Path("/deleteCourse")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteCourse(@FormParam("courseID") int courseID, @FormParam("studentID") int studentID) {
