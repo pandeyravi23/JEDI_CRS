@@ -44,14 +44,15 @@ public class StudentOperation implements StudentInterface {
 
     public Student getStudentByID(int studentID) {
     	Student student = null;
-    	
     	try {
     		student = studentDaoOperation.getStudentByID(studentID);
+    	}
+    	catch(StudentCRSException e) {
+    		logger.error(e.getMessage());
     	}
     	catch(Exception e) {
     		logger.warn(e.getMessage());
     	}
-    	
     	return student;
     }
     
@@ -88,13 +89,13 @@ public class StudentOperation implements StudentInterface {
     	ArrayList<Course> courses = null;
     	try{
             courses = coursesDaoOperation.getAllCourses();
-            if(courses == null){
-                throw new StudentCRSException("No courses available.\n");
-            }
+//            if(courses == null){
+//                throw new StudentCRSException("No courses available.\n");
+//            }
         }
-    	catch (StudentCRSException e){
-    	    logger.warn(e.getMessage());
-        }
+//    	catch (StudentCRSException e){
+//    	    logger.warn(e.getMessage());
+//        }
         catch (Exception e){
             logger.warn(e.getMessage());
         }
@@ -154,9 +155,9 @@ public class StudentOperation implements StudentInterface {
      *
      * @param student Object containing all information about a student
      */
-    public void makePayment(Student student){
+    public void makePayment(Student student, String method){
         try {
-        	studentDaoOperation.setPaymentStatus(student);
+        	studentDaoOperation.setPaymentStatus(student,method);
         	student.setPaymentStatus(true);
         }
         catch(Exception e) {

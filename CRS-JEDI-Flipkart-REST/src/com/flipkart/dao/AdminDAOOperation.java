@@ -250,12 +250,11 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	
 	public boolean approveStudent(int studentID) {
 		try {
-			String str = "update credentials set isApproved=1 where id=?";
+			String str = SQLQueriesConstant.UPDATE_USER_IN_CREDENTIALS;
 			ps = connection.prepareStatement(str);
 			ps.setInt(1,studentID);
 			ps.executeUpdate();
 			return true;
-			
 		}catch (SQLException e) {
 			logger.info(e.getMessage());
 		} catch (Exception e) {
@@ -263,65 +262,6 @@ public class AdminDAOOperation implements AdminDAOInterface {
 		}
 		return false;
 	}
-//	public boolean approveStudent(int studentID) {
-//		try {
-//			boolean status = false;
-//			Scanner sc = new Scanner(System.in);
-//			String str = SQLQueriesConstant.GET_STUDENT_DETAILS;
-//			ps = connection.prepareStatement(str, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-//			ResultSet rs = ps.executeQuery();
-//			if (rs.next() == false) {
-//				throw new AdminCRSException("No student to approve!");
-//			}
-//			logger.info("Student details are as follows - ");
-//			logger.info("=============================================================");
-//			do {
-//				logger.info("Student Name: " + rs.getString("name"));
-//				logger.info("Student ID: " + rs.getInt("id"));
-//				logger.info("Email: " + rs.getString("email"));
-//				logger.info("Address: " + rs.getString("address"));
-//				logger.info("Age: " + rs.getInt("age"));
-//				logger.info("Gender: " + rs.getString("gender"));
-//				logger.info("Contact Number: " + rs.getString("contact"));
-//				logger.info("Nationality: " + rs.getString("nationality"));
-//				logger.info("=============================================================");
-//				logger.info("Enter 'yes' to Approve, 'no' to Reject and 'skip' otherwise");
-//				String choice = sc.next();
-//				if (choice.equalsIgnoreCase("yes")) {
-//					String res = SQLQueriesConstant.UPDATE_USER_IN_CREDENTIALS;
-//					ps = connection.prepareStatement(res);
-//					ps.setInt(1, rs.getInt("id"));
-//					ps.executeUpdate();
-//					logger.info("Student Approved !!");
-//					logger.info("=============================================================");
-//				} else if (choice.equalsIgnoreCase("no")) {
-//					String res = SQLQueriesConstant.DELETE_USER_FROM_CREDENTIALS;
-//					ps = connection.prepareStatement(res);
-//					ps.setInt(1, rs.getInt("id"));
-//					ps.executeUpdate();
-//					res = SQLQueriesConstant.DELETE_STUDENT_BY_ID;
-//					ps = connection.prepareStatement(res);
-//					ps.setInt(1, rs.getInt("id"));
-//					ps.executeUpdate();
-//					logger.info("Student Rejected !!");
-//					logger.info("=============================================================");
-//				} else if (choice.equalsIgnoreCase("skip")) {
-//
-//				} else {
-//					logger.info("Enter Valid Input!");
-//					logger.info("=============================================================");
-//					rs.previous();
-//				}
-//			} while (rs.next());
-//
-//		} catch (AdminCRSException e) {
-//			logger.info(e.getMessage());
-//		} catch (SQLException e) {
-//			logger.info(e.getMessage());
-//		} catch (Exception e) {
-//			logger.info(e.getMessage());
-//		}
-//	}
 
 	/**
 	 * Add a new course to the courseCatalog only if course id provided by the Admin
@@ -369,7 +309,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 			str = SQLQueriesConstant.DELETE_COURSE_BY_ID;
 			ps = connection.prepareStatement(str);
 			ps.setInt(1, courseId);
-			int val2 = ps.executeUpdate();
+			ps.executeUpdate();
 			if (val > 0) {
 				return true;
 			}
@@ -398,8 +338,6 @@ public class AdminDAOOperation implements AdminDAOInterface {
 			ps.setInt(1, professorID);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next() == false) {
-//				logger.info("No Professor with ID: " + professorID + " Exists!!");
-//				logger.info("=======================================");
 				return false;
 			}
 			str = SQLQueriesConstant.GET_COURSE_NAME_BY_ID;
@@ -414,12 +352,8 @@ public class AdminDAOOperation implements AdminDAOInterface {
 				int status = ps.executeUpdate();
 				if (status > 0) {
 					return true;
-//					logger.info("Course Alloted Successfully");
-//					logger.info("=======================================");
 				} else {
 					return false;
-//					logger.info("Failed");
-//					logger.info("=======================================");
 				}
 			} else {
 				str = SQLQueriesConstant.GET_COURSE_CATALAOG_QUERY;
@@ -427,8 +361,6 @@ public class AdminDAOOperation implements AdminDAOInterface {
 				ps.setInt(1, courseId);
 				rs = ps.executeQuery();
 				if (rs.next() == false) {
-//					logger.info("No course with Course ID: " + courseId + " Exists!!");
-//					logger.info("=======================================");
 					return false;
 				}
 				do {
@@ -440,8 +372,6 @@ public class AdminDAOOperation implements AdminDAOInterface {
 					ps.setInt(4, rs.getInt("credits"));
 					ps.executeUpdate();
 				} while (rs.next());
-//				logger.info("Course Alloted Successfully");
-//				logger.info("=======================================");
 				return true;
 			}
 		} catch (SQLException e) {
@@ -455,34 +385,46 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	/**
 	 * Opens registration window.
 	 */
-	public void startRegistrationWindow() {
+	public boolean startRegistrationWindow() {
+		;
+		boolean res = false;
 		try {
 			ps = connection.prepareStatement(SQLQueriesConstant.OPEN_REGISTRATION_WINDOW);
-			ps.executeUpdate();
-
-			logger.info("Registration Window Started.\n");
+			if (ps.executeUpdate() > 0) {
+				res = true;
+				logger.info("Registration Window Started.\n");
+			}
 		} catch (SQLException e) {
 			logger.info(e.getMessage());
 		} catch (Exception e) {
 			logger.info(e.getMessage());
 		}
+		return res;
 	}
 
 	/**
 	 * Closes registration window.
 	 */
-	public void closeRegistrationWindow() {
+	public boolean closeRegistrationWindow() {
+		boolean res = false;
 		try {
 			ps = connection.prepareStatement(SQLQueriesConstant.CLOSE_REGISTRATION_WINDOW);
-			ps.executeUpdate();
-			logger.info("Registration Window Closed.\n");
+			if (ps.executeUpdate() > 0) {
+				res = true;
+				logger.info("Registration Window Closed.\n");
+			}
 		} catch (SQLException e) {
 			logger.info(e.getMessage());
 		} catch (Exception e) {
 			logger.info(e.getMessage());
 		}
+		return res;
 	}
+	
 
+	/**
+	 * shows All available courses
+	 */
 	public void showcourses() {
 		try {
 			logger.info("=======================================");
@@ -506,6 +448,10 @@ public class AdminDAOOperation implements AdminDAOInterface {
 		}
 	}
 
+	/**
+	 * shows All available professors
+	 */
+	
 	public void showprofessor() {
 		try {
 			String s = SQLQueriesConstant.GET_PROFESSOR_INFO_BY_ID;

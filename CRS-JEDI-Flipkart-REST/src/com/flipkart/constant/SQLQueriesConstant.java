@@ -26,7 +26,7 @@ public class SQLQueriesConstant {
 	public static final String GET_ENROLLED_COURSES_QUERY = "SELECT rc.courseID, c.name, c.credits FROM RegisteredCourses as rc INNER JOIN course as c ON rc.courseID = c.id AND studentID=?";
 	public static final String SET_REGISTRATION_STATUS_QUERY = "UPDATE student SET isRegistered = 1 where id = ?";
 	public static final String GET_GRADES_QUERY = "SELECT grades.courseId, course.name as courseName, grades.grade, grades.studentId FROM grades INNER JOIN course ON grades.courseId = course.id AND grades.studentId=?";
-	public static final String SET_PAYMENT_STATUS_QUERY = "UPDATE student set paymentStatus = true WHERE id=?";
+	public static final String SET_PAYMENT_STATUS_QUERY = "UPDATE student SET paymentStatus=true, paymentDate=now(), paymentMethod=? WHERE id=?";
 	public static final String ADD_COURSE_TO_GRADES_QUERY = "INSERT INTO grades(studentId, courseId) values(?,?)";
 	public static final String DELETE_COURSE_FROM_GRADES_QUERY = "DELETE FROM grades WHERE studentID = ? AND courseID = ?";
 	public static final String UPDATE_STUDENT_CREDENTIAL_QUERY = "UPDATE credentials SET age=?,address=?,contact=?,gender=?,nationality=? WHERE id=?";
