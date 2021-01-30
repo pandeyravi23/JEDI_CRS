@@ -43,7 +43,7 @@ public class AdminCRSMenu {
 				{
 					case 1:
 //						adminOperation.showStudents();
-						adminOperation.generateReportCard();
+						// adminOperation.generateReportCard();
 						break;
 					case 2:
 						adminOperation.addProfessor();
