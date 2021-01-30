@@ -404,12 +404,13 @@ public class StudentDAOOperation implements StudentDAOInterface {
 	 * 
 	 * @param student Student object containing the student information
 	 */
-	public void setPaymentStatus(Student student) {
+	public void setPaymentStatus(Student student, String method) {
 		try{
 			connection = DBConnection.getConnection();
 			ps = connection.prepareStatement(SQLQueriesConstant.SET_PAYMENT_STATUS_QUERY);
 
-			ps.setInt(1, student.getUserId());
+			ps.setString(1, method);
+			ps.setInt(2, student.getUserId());
 			ps.executeUpdate();
 		}
 		catch(SQLException e) {

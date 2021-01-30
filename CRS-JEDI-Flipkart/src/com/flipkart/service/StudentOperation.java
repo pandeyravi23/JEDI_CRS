@@ -142,9 +142,9 @@ public class StudentOperation implements StudentInterface {
      *
      * @param student Object containing all information about a student
      */
-    public void makePayment(Student student){
+    public void makePayment(Student student, String method){
         try {
-        	studentDaoOperation.setPaymentStatus(student);
+        	studentDaoOperation.setPaymentStatus(student,method);
         	student.setPaymentStatus(true);
         }
         catch(Exception e) {

@@ -160,5 +160,16 @@ public class StudentRESTAPI {
 		
 		studentOperation.updateInfo(student);
 		return Response.status(200).entity("Success").build();
+	}	
+	
+	
+	@PUT
+	@Path("/payment/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response makePayment(@PathParam("id") int studentID, @FormParam("method") String method) {
+		student = studentOperation.getStudentByID(studentID);
+		studentOperation.makePayment(student,method);
+		return Response.status(200).entity("Success").build();
 	}
+		
 }

@@ -25,7 +25,7 @@ public interface StudentDAOInterface {
 
 	public boolean getCourse(Student student, int courseID);
 	
-	public void setPaymentStatus(Student student);
+	public void setPaymentStatus(Student student, String method);
 	
 	public void registerStudent(Student student, int id);
 

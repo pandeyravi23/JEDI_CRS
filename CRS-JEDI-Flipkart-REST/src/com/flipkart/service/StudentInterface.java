@@ -20,7 +20,7 @@ public interface StudentInterface {
 
     public ArrayList<Grades> viewGrades(int studentId);
 
-    public void makePayment(Student student);
+    public void makePayment(Student student, String method);
 
     public boolean updateInfo(Student student);
 
