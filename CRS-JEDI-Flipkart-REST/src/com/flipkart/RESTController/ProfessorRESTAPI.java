@@ -61,9 +61,7 @@ public class ProfessorRESTAPI {
 		ArrayList<JSONObject> al = professorOperation.viewGrades(courseID);
 		JSONObject obj = new JSONObject();
 		if (al.size()>0) {
-			obj.put("Status",true);
-			obj.put("Values",al);
-			return ResponseHelpers.success(obj, "Success");
+			return ResponseHelpers.success(al, "Success");
 		}
 		return ResponseHelpers.badRequest(null, "No student to view grades");
 	}
@@ -72,7 +70,9 @@ public class ProfessorRESTAPI {
 	@PUT
 	@Path("/updateGrade")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateGrade(@FormParam("courseID") Integer courseID,@FormParam("studentID") Integer studentID,@FormParam("grade") String grade) {
+	public Response updateGrade(@FormParam("courseID") Integer courseID,
+			@FormParam("studentID") Integer studentID,
+			@FormParam("grade") String grade) {
 		boolean res = professorOperation.updateStudentGrade(courseID,studentID,grade);
 		if (res) {
 			return ResponseHelpers.success("Grade Updated", "Success");
