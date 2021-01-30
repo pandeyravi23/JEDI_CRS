@@ -11,6 +11,7 @@ import com.flipkart.dao.AdminDAOOperation;
 import java.util.ArrayList;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -23,6 +24,8 @@ import org.json.JSONObject;
 
 import com.flipkart.bean.Course;
 import com.flipkart.service.AdminOperation;
+import com.flipkart.util.ResponseHelpers;
+import com.flipkart.util.ValidationOperation;
 
 
 @Path("/admin")
@@ -59,9 +62,11 @@ public class AdminRESTAPI {
 	@Path("/openRegistration")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response openRegistration() {
-
-		adminOperation.startRegistrationWindow();
-		return Response.status(201).entity("Window Opened").build();
+		boolean res = adminOperation.startRegistrationWindow();
+		if(res){
+			return ResponseHelpers.success(null, "Registration Closed");
+		}
+		return ResponseHelpers.badRequest(null, "Request to close registration failed");
 
 	}
 
@@ -69,18 +74,63 @@ public class AdminRESTAPI {
 	@Path("/closeRegistration")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response closeRegistration() {
-		
-		adminOperation.closeRegistrationWindow();
-		return Response.status(201).entity("Window Closed").build();
+		boolean res = adminOperation.closeRegistrationWindow();
+		if(res){
+			return ResponseHelpers.success(null, "Registration Closed");
+		}
+		return ResponseHelpers.badRequest(null, "Request to close registration failed");
 	}
 	
 
+	
 	@POST
 	@Path("/addCourse")
 	@Consumes("application/json")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addCourse(Course course) {
-		adminOperation.addCourse2(course);
-		return Response.status(201).entity("Course Added").build();
+		boolean res = adminOperation.addCourse2(course);
+		if(res){
+			return ResponseHelpers.successPost(course, "Course Added Successfully");
+		}
+		return ResponseHelpers.badRequestPost(null, "Course Add Failed");
+	}
+	
+	
+	@DELETE
+	@Path("/deleteCourse")
+	@Consumes("application/json")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteCourse(@QueryParam("courseID") Integer courseID) {
+		boolean res = adminOperation.deleteCourse(courseID);
+		if(res==false) {
+			return ResponseHelpers.badRequest(null, "Failed to delete Course ");
+		}
+		return ResponseHelpers.success(null, "Course Deleted Successfully");
+	}
+	
+	
+	@PUT 
+	@Path("/allotProfessor")
+	@Consumes("application/json")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response allotProfessor(@QueryParam("courseID") Integer courseID,@QueryParam("professorID") Integer professorID) {
+		boolean res = adminOperation.allotCourse(courseID,professorID);
+		if(res==false) {
+			return ResponseHelpers.badRequest(null, "Failed to Allocate Course");
+		}
+		return ResponseHelpers.success(null, "Course Alloted Successfully");
+	}
+	
+	@PUT
+	@Path("/approveStudent")
+	@Consumes("application/json")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response approveStudent(@QueryParam("studentID") Integer studentID) {
+		boolean res = adminOperation.approveStudents(studentID);
+		JSONObject msg = new JSONObject();
+		if(res==false) {
+			return ResponseHelpers.badRequest(null, "Some Error Occured");
+		}
+		return ResponseHelpers.success(null, "Student Approved!!");
 	}
 }

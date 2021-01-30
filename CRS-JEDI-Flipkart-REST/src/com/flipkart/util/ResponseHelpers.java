@@ -22,17 +22,27 @@ public class ResponseHelpers {
 	}
 	
 	public static Response success(Object payload, String msg) {
-		JsonElement res = new Gson().toJsonTree(mapify(true, "Success", payload));
+		JsonElement res = new Gson().toJsonTree(mapify(true, msg, payload));
 		return Response.status(200).entity(res.toString()).build();
 	}
 	
 	public static Response badRequest(Object payload, String msg) {
 		JsonElement res = new Gson().toJsonTree(mapify(false, msg, payload));
-		return Response.status(200).entity(res.toString()).build();
+		return Response.status(400).entity(res.toString()).build();
 	}
 	
 	public static Response somethingWentWrong(Object payload) {
 		JsonElement res = new Gson().toJsonTree(mapify(false, "Some Internal Error Occured", payload));
 		return Response.status(500).entity(res.toString()).build();
+	}
+	
+	public static Response successPost(Object payload, String msg) {
+		JsonElement res = new Gson().toJsonTree(mapify(true, "Success", payload));
+		return Response.status(201).entity(res.toString()).build();
+	}
+	
+	public static Response badRequestPost(Object payload, String msg) {
+		JsonElement res = new Gson().toJsonTree(mapify(false, msg, payload));
+		return Response.status(401).entity(res.toString()).build();
 	}
 }

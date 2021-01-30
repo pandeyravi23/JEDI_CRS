@@ -474,4 +474,10 @@ public class StudentDAOOperation implements StudentDAOInterface {
 
 		return status;
 	}
+
+	@Override
+	public void setPaymentStatus(Student student) {
+		// TODO Auto-generated method stub
+		
+	}
 }
