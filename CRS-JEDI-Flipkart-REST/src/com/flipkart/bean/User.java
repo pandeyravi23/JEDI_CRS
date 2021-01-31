@@ -18,13 +18,15 @@ public class User {
 	@NotNull
 	protected int userId;
 	
+	@NotNull
     @Size(min = 2, max = 30, message = "The length of Username should be between 2 to 25")
 	protected String userName;
     
+	@NotNull
     @Size(min = 2, max = 30, message = "The length of role should be between 2 to 25")
 	protected String role;
     
-
+    @NotNull
     @Pattern(message = "Invalid Email Address->" +
             "Valid emails:user@gmail.com or my.user@domain.com etc.",
             regexp = "^[a-zA-Z0-9_!#$%&�*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
@@ -33,9 +35,11 @@ public class User {
 	protected boolean isLoggedIn;
 	protected boolean isApproved;
 	
+	@NotNull
     @Size(min = 2, max = 30, message = "The length of Address should be between 2 to 25")
 	protected String address;
     
+    @NotNull
     @DecimalMin(value = "10", message = "Age shall be minimum of 10 years")
     @DecimalMax(value = "40", message = "Age should not be more than 40 years")
 	protected int age;
@@ -44,9 +48,11 @@ public class User {
     @Size(min = 2, max = 30, message = "The length of Gender should be between 2 to 25")
 	protected String gender;
 	
+	@NotNull
     @Size(min = 10, max = 30, message = "The length of Contact should be between 10 to 12")
 	protected String contact;
     
+	@NotNull
     @Size(min = 2, max = 30, message = "The length of Nationality should be between 2 to 25")
 	protected String nationality;
 
