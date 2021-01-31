@@ -1,6 +1,8 @@
 package com.flipkart.bean;
 
-import java.util.ArrayList;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 
 
 /**
@@ -9,10 +11,22 @@ import java.util.ArrayList;
  * @author JEDI04
  */
 
+
+@XmlRootElement(name = "grades")
 public class Grades {
+	
+	@NotNull 
 	private int studentId;
+	
+	@NotNull 
 	private int courseID;
+	
+	@NotNull 
+	@Size(min = 2, max = 30, message = "The length of Course Name should be between 2 to 25")
 	private String courseName;
+	
+	@NotNull 
+	@Size(min = 2, max = 30, message = "The length of Grade should be between 2 to 25")
 	private String grade;
 	
 	
