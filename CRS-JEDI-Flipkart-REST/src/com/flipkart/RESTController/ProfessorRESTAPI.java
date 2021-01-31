@@ -5,6 +5,9 @@ package com.flipkart.RESTController;
 
 import java.util.ArrayList;
 
+import javax.validation.ValidationException;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -34,8 +37,10 @@ public class ProfessorRESTAPI {
 	@GET
 	@Path("/allottedCourses")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllottedCourses(@QueryParam("id") Integer id) { 
-		ArrayList<JSONObject> al = professorOperation.showCourses(id);
+	public Response getAllottedCourses(
+			@NotNull
+			@QueryParam("professorId") Integer professorId) throws ValidationException{ 
+		ArrayList<JSONObject> al = professorOperation.showCourses(professorId);
 		if (al.size()>0) {
 			return ResponseHelpers.success(al,"Success");
 		}
@@ -45,7 +50,9 @@ public class ProfessorRESTAPI {
 	@GET
 	@Path("/enrolledStudents")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getEnrolledStudents(@QueryParam("courseID") Integer courseID) { 
+	public Response getEnrolledStudents(
+			@NotNull
+			@QueryParam("courseID") Integer courseID) throws ValidationException{ 
 		ArrayList<JSONObject> arr = professorOperation.viewStudentsEnrolled(courseID);
 		if(arr.size()==0) {
 			return ResponseHelpers.badRequest(arr, "No Enrolled Students Found in course id " + courseID);
@@ -57,7 +64,9 @@ public class ProfessorRESTAPI {
 	@GET
 	@Path("/viewGrades")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response viewGrades(@QueryParam("courseID") Integer courseID) { 
+	public Response viewGrades(
+			@NotNull
+			@QueryParam("courseID") Integer courseID) throws ValidationException{ 
 		ArrayList<JSONObject> al = professorOperation.viewGrades(courseID);
 		JSONObject obj = new JSONObject();
 		if (al.size()>0) {
@@ -70,9 +79,14 @@ public class ProfessorRESTAPI {
 	@PUT
 	@Path("/updateGrade")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateGrade(@FormParam("courseID") Integer courseID,
+	public Response updateGrade(
+			@NotNull
+			@FormParam("courseID") Integer courseID,
+			@NotNull
 			@FormParam("studentID") Integer studentID,
-			@FormParam("grade") String grade) {
+			@NotNull
+		    @Size(min = 1, max = 2, message = "The length of Grade should be between 1 to 2")
+			@FormParam("grade") String grade) throws ValidationException{
 		boolean res = professorOperation.updateStudentGrade(courseID,studentID,grade);
 		if (res) {
 			return ResponseHelpers.success("Grade Updated", "Success");

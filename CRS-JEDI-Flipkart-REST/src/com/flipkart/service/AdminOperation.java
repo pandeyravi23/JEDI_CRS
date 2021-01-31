@@ -56,9 +56,8 @@ public class AdminOperation implements AdminInterface {
 		logger.info("Please Enter Student ID to Generate Report Card");
 //		Scanner sc = new Scanner(System.in);
 //		int sid = sc.nextInt();
-		ArrayList<JSONObject> al =  adminDAO.printGrades(sid);
-		System.out.println(al.size());
-		return al;
+		ArrayList<JSONObject> reportCard =  adminDAO.printGrades(sid);
+		return reportCard;
 	}
 	
 	public ArrayList<JSONObject> getRegisteredStudents()
@@ -70,51 +69,54 @@ public class AdminOperation implements AdminInterface {
 	 * Adds New Professor to the table and throws Exception 
 	 * if Failed to Add
 	 */
-	@Override
-	public void addProfessor() {
+	public int addProfessor(String password, Professor prof) {
 		// TODO Auto-generated method stub
+		
+		int res = 0;
 		try {
-			Scanner sc = new Scanner(System.in);
+//			Scanner sc = new Scanner(System.in);
+//	
+//			logger.info("Enter the new email : ");
+//			
+//			String email = ValidationOperation.readEmail();
+//			if (email.equals("-1")){
+//				throw new AdminCRSException("Professor Not Added\n");
+//			}
+//			String pwd1 = ValidationOperation.readPassword();
+//	
+//			logger.info("Please enter name : ");
+//			Professor prof = new Professor();
+//			prof.setEmail(email);
+//			prof.setUserName(sc.nextLine());
+//			logger.info("Enter designation : ");
+//			prof.setRole(sc.nextLine());
+//			logger.info("Enter department : ");
+//			prof.setDepartment(sc.nextLine());
+//			logger.info("Enter address : ");
+//			prof.setAddress(sc.nextLine());
+//			logger.info("Enter Age : ");
+//			prof.setAge(Integer.parseInt(sc.nextLine()));
+//			logger.info("Enter Gender : (male/female) : ");
+//			prof.setGender(sc.nextLine());
+//			logger.info("Enter contact number : ");
+//			prof.setContact(sc.nextLine());
+//			logger.info("Enter nationality : ");
+//			prof.setNationality(sc.nextLine());
 	
-			logger.info("Enter the new email : ");
-			
-			String email = ValidationOperation.readEmail();
-			if (email.equals("-1")){
-				throw new AdminCRSException("Professor Not Added\n");
-			}
-			String pwd1 = ValidationOperation.readPassword();
-	
-			logger.info("Please enter name : ");
-			Professor prof = new Professor();
-			prof.setEmail(email);
-			prof.setUserName(sc.nextLine());
-			logger.info("Enter designation : ");
-			prof.setRole(sc.nextLine());
-			logger.info("Enter department : ");
-			prof.setDepartment(sc.nextLine());
-			logger.info("Enter address : ");
-			prof.setAddress(sc.nextLine());
-			logger.info("Enter Age : ");
-			prof.setAge(Integer.parseInt(sc.nextLine()));
-			logger.info("Enter Gender : (male/female) : ");
-			prof.setGender(sc.nextLine());
-			logger.info("Enter contact number : ");
-			prof.setContact(sc.nextLine());
-			logger.info("Enter nationality : ");
-			prof.setNationality(sc.nextLine());
-	
-			int res = adminDAO.addProfessor(pwd1, prof);
+			res = adminDAO.addProfessor(password, prof);
 			if (res == 1) {
 				logger.info("Professor successfully added.");
 			} else {
 				logger.info("Unable to add professor.");
 			}
-		}catch(AdminCRSException e) {
-			logger.warn(e.getMessage());
+//		}catch(AdminCRSException e) {
+//			logger.warn(e.getMessage());
 		}
 		catch(Exception e) {
 			logger.warn(e.getMessage());
 		}
+		
+		return res;
 	}
 
 	/**

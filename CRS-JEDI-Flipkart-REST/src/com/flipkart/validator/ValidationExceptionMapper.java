@@ -1,15 +1,20 @@
 package com.flipkart.validator;
 
-/**
- * @author JEDI04
- *
- */
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import javax.ws.rs.core.Application;
+
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
+
+/**
+ * @author JEDI04
+ *
+ */
  
 @Provider
 public class ValidationExceptionMapper implements ExceptionMapper<javax.validation.ValidationException> {
