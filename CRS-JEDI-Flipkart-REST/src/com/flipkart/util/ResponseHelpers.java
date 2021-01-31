@@ -41,8 +41,4 @@ public class ResponseHelpers {
 		return Response.status(201).entity(res.toString()).build();
 	}
 	
-	public static Response badRequestPost(Object payload, String msg) {
-		JsonElement res = new Gson().toJsonTree(mapify(false, msg, payload));
-		return Response.status(401).entity(res.toString()).build();
-	}
 }

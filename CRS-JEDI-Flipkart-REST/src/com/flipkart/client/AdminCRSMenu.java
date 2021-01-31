@@ -41,37 +41,37 @@ public class AdminCRSMenu {
 				
 				switch(choice)
 				{
-					case 1:
-//						adminOperation.showStudents();
-//						adminOperation.generateReportCard();
-						break;
-					case 2:
-						adminOperation.addProfessor();
-						break;
-					case 3:				
-						adminOperation.addAdmin();
-						break;
-					case 4:
-						adminOperation.approveStudents();
-						break;
-					case 5:
-						adminOperation.addCourse();
-						break;
-					case 6:
-						adminOperation.deleteCourse();
-						break;
-					case 7:
-						adminOperation.allotCourse();
-						break;
-					case 8:
-						adminOperation.startRegistrationWindow();
-						break;
-					case 9:
-						adminOperation.closeRegistrationWindow();
-						break;
-					case -1:
-						logger.info("Logged Out Successfully");
-						break;
+//					case 1:
+////						adminOperation.showStudents();
+////						adminOperation.generateReportCard();
+//						break;
+//					case 2:
+//						adminOperation.addProfessor();
+//						break;
+//					case 3:				
+//						adminOperation.addAdmin();
+//						break;
+//					case 4:
+//						adminOperation.approveStudents();
+//						break;
+//					case 5:
+//						adminOperation.addCourse();
+//						break;
+//					case 6:
+//						adminOperation.deleteCourse();
+//						break;
+//					case 7:
+//						adminOperation.allotCourse();
+//						break;
+//					case 8:
+//						adminOperation.startRegistrationWindow();
+//						break;
+//					case 9:
+//						adminOperation.closeRegistrationWindow();
+//						break;
+//					case -1:
+//						logger.info("Logged Out Successfully");
+//						break;
 					default:
 						logger.info("Invalid Choice");
 						break;
