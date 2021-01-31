@@ -1,23 +1,64 @@
 package com.flipkart.bean;
 
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Class to interact with variables present in User Class
  * using Getters and Setters Methods
  * @author JEDI04
  */
+
+@XmlRootElement(name = "user")
 public class User {
+	@NotNull
 	protected int userId;
+	
+	@NotNull
+    @Size(min = 2, max = 30, message = "The length of Username should be between 2 to 25")
 	protected String userName;
+    
+	@NotNull
+    @Size(min = 2, max = 30, message = "The length of role should be between 2 to 25")
 	protected String role;
+    
+    @NotNull
+    @Pattern(message = "Invalid Email Address->" +
+            "Valid emails:user@gmail.com or my.user@domain.com etc.",
+            regexp = "^[a-zA-Z0-9_!#$%&�*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
 	protected String email;
+    
 	protected boolean isLoggedIn;
 	protected boolean isApproved;
+	
+	@NotNull
+    @Size(min = 2, max = 30, message = "The length of Address should be between 2 to 25")
 	protected String address;
+    
+    @NotNull
+    @DecimalMin(value = "10", message = "Age shall be minimum of 10 years")
+    @DecimalMax(value = "40", message = "Age should not be more than 40 years")
 	protected int age;
+    
+	@NotNull
+    @Size(min = 2, max = 30, message = "The length of Gender should be between 2 to 25")
 	protected String gender;
+	
+	@NotNull
+    @Size(min = 10, max = 30, message = "The length of Contact should be between 10 to 12")
 	protected String contact;
+    
+	@NotNull
+    @Size(min = 2, max = 30, message = "The length of Nationality should be between 2 to 25")
 	protected String nationality;
 
+    
+    
+    
 	public boolean isLoggedIn() {
 		return isLoggedIn;
 	}

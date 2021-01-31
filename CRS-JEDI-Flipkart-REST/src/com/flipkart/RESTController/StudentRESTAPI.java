@@ -5,6 +5,9 @@ package com.flipkart.RESTController;
 
 import java.util.*;
 
+import javax.validation.Valid;
+import javax.validation.ValidationException;
+import javax.validation.constraints.*;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -32,11 +35,14 @@ public class StudentRESTAPI {
 	private Student student = null;
 	private User user = null;
 	
-	
 	@GET
 	@Path("/details/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getStudentDetails(@PathParam("id") int id) {
+	public Response getStudentDetails(
+			@NotNull
+			@DecimalMin(value = "100", message = "studentID value has to be of 3 digits")
+			@Digits(fraction = 0, integer = 3)
+			@PathParam("id") int id) throws ValidationException {
 		student = studentOperation.getStudentByID(id);
 		if(student == null) {
 			return ResponseHelpers.badRequest(null, "Student with id: " + id + " doesn't exist");
@@ -53,14 +59,17 @@ public class StudentRESTAPI {
 		if(allCourses == null) {
 			return ResponseHelpers.badRequest(null, "No courses available");
 		}
-		return ResponseHelpers.success(allCourses, "Success");
+		return ResponseHelpers.success(allCourses, "Success Updated");
 	}
-	
 	
 	@GET
 	@Path("/registeredCourses/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getRegisteredCourses(@PathParam("id") int id){
+	public Response getRegisteredCourses(
+			@NotNull
+			@DecimalMin(value = "100", message = "studentID value has to be of 3 digits")
+			@Digits(fraction = 0, integer = 3)
+			@PathParam("id") int id) throws ValidationException {
 		student = studentOperation.getStudentByID(id);
 		if(student == null) {
 			return ResponseHelpers.badRequest(null, "Studentt with id: " + id + " doesn't exist");
@@ -79,7 +88,11 @@ public class StudentRESTAPI {
 	@GET
 	@Path("/grades/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getGrades(@PathParam("id") int id){
+	public Response getGrades(
+			@NotNull
+			@DecimalMin(value = "100", message = "studentID value has to be of 3 digits")
+			@Digits(fraction = 0, integer = 3)
+			@PathParam("id") int id) throws ValidationException {
 		ArrayList<Grades> grades = studentOperation.viewGrades(id);
 		if(grades == null) {
 			return ResponseHelpers.badRequest(null, "Student has not registered courses yet.");
@@ -91,20 +104,37 @@ public class StudentRESTAPI {
 	@POST
 	@Path("/addCourse")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addCourse(@FormParam("courseID") int courseID,@FormParam("studentID") int studentID) {
+	public Response addCourse(
+			@NotNull
+			@DecimalMin(value = "100", message = "courseID value has to be of 3 digits")
+			@Digits(fraction = 0, integer = 3)
+			@FormParam("courseID") int courseID,
+			
+			@NotNull
+			@DecimalMin(value = "100", message = "studentID value has to be of 3 digits")
+			@Digits(fraction = 0, integer = 3)
+			@FormParam("studentID") int studentID) throws ValidationException {
 		student = studentOperation.getStudentByID(studentID);
 		if(student == null) {
 			return ResponseHelpers.badRequest(null, "Studentt with id: " + studentID + " doesn't exist");
 		}
 		studentOperation.addCourse(student, courseID);
-		return ResponseHelpers.success(courseID, "Course with ID " + courseID + " succesfully added");
+		return ResponseHelpers.successPost(courseID, "Course with ID " + courseID + " succesfully added");
 	}
 	
-	
-	@POST
+	@DELETE
 	@Path("/deleteCourse")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteCourse(@FormParam("courseID") int courseID, @FormParam("studentID") int studentID) {
+	public Response deleteCourse(
+			@NotNull
+			@DecimalMin(value = "100", message = "courseID value has to be of 3 digits")
+			@Digits(fraction = 0, integer = 3)
+			@FormParam("courseID") int courseID, 
+			
+			@NotNull
+			@DecimalMin(value = "100", message = "studentID value has to be of 3 digits")
+			@Digits(fraction = 0, integer = 3)
+			@FormParam("studentID") int studentID) throws ValidationException {
 		student = studentOperation.getStudentByID(studentID);
 		if(student == null) {
 			return ResponseHelpers.badRequest(null, "Studentt with id: " + studentID + " doesn't exist");
@@ -114,17 +144,28 @@ public class StudentRESTAPI {
 	}
 	
 	
+	
+	// TODO: Make sure validation with ArrayList works
 	@POST
 	@Path("/registerCourses/{studentID}")
 	@Consumes("application/json")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response registerCourses(ArrayList<Integer> courseCart, @PathParam("studentID") int studentID) {
+	public Response registerCourses(
+			@NotNull
+			@DecimalMin(value = "100", message = "courseId value in courseCart has to be of 3 digits")
+			@Digits(fraction = 0, integer = 3)
+			ArrayList<Integer> courseCart,
+			
+			@NotNull
+			@DecimalMin(value = "100", message = "studentID value has to be of 3 digits")
+			@Digits(fraction = 0, integer = 3)
+			@PathParam("studentID") int studentID) throws ValidationException {
 		student = studentOperation.getStudentByID(studentID);
 		if(student == null) {
 			return ResponseHelpers.badRequest(null, "Studentt with id: " + studentID + " doesn't exist");
 		}
 		studentOperation.registerCourses(courseCart, student);
-		return ResponseHelpers.success(courseCart, "Successfully registered for courses");
+		return ResponseHelpers.successPost(courseCart, "Successfully registered for courses");
 	}
 	
 	
@@ -132,10 +173,41 @@ public class StudentRESTAPI {
 	@Path("/registerStudent")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response registerStudent(
-			@FormParam("email") String email, @FormParam("password") String password,
-			@FormParam("name") String name, @FormParam("age") Integer age, 
-			@FormParam("address") String address, @FormParam("contact") String contact, @FormParam("gender") String gender,
-			@FormParam("nationality") String nationality, @FormParam("branch") String branch, @FormParam("rollno") int rollno) {
+			@Pattern(message = "Invalid Email Address->" + "Valid emails:user@gmail.com or my.user@domain.com etc.",
+		            regexp = "^[a-zA-Z0-9_!#$%&*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
+			@Size(min = 5, max = 30, message = "The length of email should be between 5 to 30")
+			@FormParam("email") String email, 
+			
+			@Size(min = 5, max = 30, message = "The length of password should be between 5 to 30")
+			@FormParam("password") String password,
+			
+			@Size(min = 5, max = 30, message = "The length of name should be between 5 to 30")
+			@FormParam("name") String name, 
+			
+			@DecimalMin(value = "15", message = "Student shall be minimum of age 15 yr")
+		    @DecimalMax(value = "30", message = "Student can not have age more than 30 yr")
+			@FormParam("age") Integer age, 
+			
+			@Size(min = 5, max = 30, message = "The length of address should be between 5 to 30")
+			@FormParam("address") String address, 
+			
+			@Size(min = 5, max = 30, message = "The length of contact should be between 5 to 30")
+			@FormParam("contact") String contact, 
+			
+			@Pattern(message = "Please either enter male/female",
+            regexp = "^male$|^female$")
+			@FormParam("gender") String gender,
+			
+			@Size(min = 5, max = 30, message = "The length of nationality should be between 5 to 30")
+			@FormParam("nationality") String nationality, 
+			
+			@Size(min = 5, max = 30, message = "The length of branch should be between 5 to 30")
+			@FormParam("branch") String branch, 
+			
+			@NotNull
+			@DecimalMin(value = "1000", message = "Roll value has to be of 4 digits")
+			@Digits(fraction = 0, integer = 4)
+			@FormParam("rollno") int rollno) throws ValidationException {
 		student = new Student();
 		user = new User();
 		
@@ -170,16 +242,38 @@ public class StudentRESTAPI {
 		student.setPaymentStatus(false);
 		
 		authentication.registerStudent(user, student, password);
-		return ResponseHelpers.success(student, "Successfully registered");
+		return ResponseHelpers.successPost(student, "Successfully registered");
 	}
 
 	
 	@PUT
 	@Path("/updateInfo")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateInfo(@FormParam("studentID") Integer studentID, @FormParam("name") String name, @FormParam("age") Integer age, 
-							   @FormParam("address") String address, @FormParam("contact") String contact, @FormParam("gender") String gender,
-							   @FormParam("nationality") String nationality) {
+	public Response updateInfo(
+			@NotNull
+			@DecimalMin(value = "100", message = "studentID value has to be of 3 digits")
+			@Digits(fraction = 0, integer = 3)
+			@FormParam("studentID") Integer studentID, 
+			
+			@Size(min = 5, max = 30, message = "The length of name should be between 5 to 30")
+			@FormParam("name") String name, 
+			
+			@DecimalMin(value = "15", message = "Student shall be minimum of age 15 yr")
+		    @DecimalMax(value = "30", message = "Student can not have age more than 30 yr")
+			@FormParam("age") Integer age,
+			
+			@Size(min = 5, max = 30, message = "The length of address should be between 5 to 30")
+			@FormParam("address") String address,
+			
+			@Size(min = 5, max = 30, message = "The length of contact should be between 5 to 30")
+			@FormParam("contact") String contact,
+			
+			@Pattern(message = "Please either enter male/female",
+            regexp = "^male$|^female$")
+			@FormParam("gender") String gender,
+			
+			@Size(min = 5, max = 30, message = "The length of nationality should be between 5 to 30")
+			@FormParam("nationality") String nationality) throws ValidationException {
 		
 		student = studentOperation.getStudentByID(studentID);
 		if(student == null) {
@@ -201,7 +295,14 @@ public class StudentRESTAPI {
 	@PUT
 	@Path("/payment/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response makePayment(@PathParam("id") int studentID, @FormParam("method") String method) {
+	public Response makePayment(
+			@NotNull
+			@DecimalMin(value = "100", message = "studentID value has to be of 3 digits")
+			@Digits(fraction = 0, integer = 3)
+			@PathParam("id") int studentID, 
+			
+			@Size(min = 5, max = 30, message = "The length of method of payment should be between 5 to 30")
+			@FormParam("method") String method) {
 		student = studentOperation.getStudentByID(studentID);
 		if(student == null) {
 			return ResponseHelpers.badRequest(null, "Studentt with id: " + studentID + " doesn't exist");

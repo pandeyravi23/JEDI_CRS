@@ -9,7 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
 /**
- * @author parth
+ * @author JEDI04
  *
  */
 public class ResponseHelpers {
@@ -41,8 +41,4 @@ public class ResponseHelpers {
 		return Response.status(201).entity(res.toString()).build();
 	}
 	
-	public static Response badRequestPost(Object payload, String msg) {
-		JsonElement res = new Gson().toJsonTree(mapify(false, msg, payload));
-		return Response.status(401).entity(res.toString()).build();
-	}
 }

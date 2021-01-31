@@ -2,16 +2,35 @@ package com.flipkart.bean;
 
 import java.util.ArrayList;
 
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Class to interact with variables present in Course Class
  * using Getters and Setters Methods
  * @author JEDI04
  */
+
+@XmlRootElement(name = "course")
 public class Course {
+	
+	@NotNull
     private int courseID;
+    
+	@NotNull
+    @Size(min = 2, max = 30, message = "The length of Course Name should be between 1 to 25")
     private String courseName;
+    
     private int professorAllotted;
+    
+    @NotNull
+    @DecimalMin(value = "2", message = "Credits shall be minimum of 2 unit")
+    @DecimalMax(value = "10", message = "Credits should not be more than 10 units")
     private int credits;
+    
     private ArrayList<Student> listOfEnrolledStudents = new ArrayList<>();
     private String prerequisites;
 
