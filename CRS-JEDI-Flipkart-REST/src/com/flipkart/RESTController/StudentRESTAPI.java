@@ -47,6 +47,7 @@ public class StudentRESTAPI {
 		return ResponseHelpers.success(student, "Success");
 	}
 	
+	
 	@GET
 	@Path("/allCourses")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -57,6 +58,7 @@ public class StudentRESTAPI {
 		}
 		return ResponseHelpers.success(allCourses, "Success");
 	}
+	
 	
 	@GET
 	@Path("/registeredCourses/{id}")
@@ -76,6 +78,7 @@ public class StudentRESTAPI {
 		return ResponseHelpers.success(registeredCourses, "Success");
 	}
 	
+	
 	@GET
 	@Path("/grades/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -87,6 +90,7 @@ public class StudentRESTAPI {
 		return ResponseHelpers.success(grades, "Success");
 	}
 	
+	
 	@POST
 	@Path("/addCourse")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -96,7 +100,7 @@ public class StudentRESTAPI {
 			return ResponseHelpers.badRequest(null, "Studentt with id: " + studentID + " doesn't exist");
 		}
 		studentOperation.addCourse(student, courseID);
-		return ResponseHelpers.success(courseID, "Course with ID " + courseID + " succesfully added");
+		return ResponseHelpers.successPost(courseID, "Course with ID " + courseID + " succesfully added");
 	}
 	
 	@DELETE
@@ -111,6 +115,7 @@ public class StudentRESTAPI {
 		return ResponseHelpers.success(courseID, "Course with ID " + courseID + " succesfully deleted");
 	}
 	
+	
 	@POST
 	@Path("/registerCourses/{studentID}")
 	@Consumes("application/json")
@@ -121,8 +126,9 @@ public class StudentRESTAPI {
 			return ResponseHelpers.badRequest(null, "Studentt with id: " + studentID + " doesn't exist");
 		}
 		studentOperation.registerCourses(courseCart, student);
-		return ResponseHelpers.success(courseCart, "Successfully registered for courses");
+		return ResponseHelpers.successPost(courseCart, "Successfully registered for courses");
 	}
+	
 	
 	@POST
 	@Path("/registerStudent")
@@ -166,7 +172,7 @@ public class StudentRESTAPI {
 		student.setPaymentStatus(false);
 		
 		authentication.registerStudent(user, student, password);
-		return ResponseHelpers.success(student, "Successfully registered");
+		return ResponseHelpers.successPost(student, "Successfully registered");
 	}
 
 	

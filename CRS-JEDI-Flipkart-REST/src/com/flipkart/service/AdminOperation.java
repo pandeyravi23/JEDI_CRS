@@ -172,9 +172,9 @@ public class AdminOperation implements AdminInterface {
 	 * the details 
 	 */
 	@Override
-	public void approveStudents() {
+	public boolean approveStudents(int studentID) {
 		// TODO Auto-generated method stub
-		adminDAO.approveStudent();
+		return adminDAO.approveStudent(studentID);
 	}
 
 	/**
@@ -215,26 +215,16 @@ public class AdminOperation implements AdminInterface {
 	 * course tables with the entered course id 
 	 * by admin
 	 */
-	@Override
-	public void deleteCourse() {
+//	@Override
+	public boolean deleteCourse(int courseID) {
 		// TODO Auto-generated method stub
 		try {
-			adminDAO.showcourses();
-			Scanner sc = new Scanner(System.in);
-			logger.info("Please enter CourseId to be deleted from the above list");
-			int x = sc.nextInt();
-			boolean res = adminDAO.deleteCourse(x);
-			if(res==false)
-				throw new AdminCRSException("Failed to Delete Course");
-			logger.info("====================================");
-			logger.info("Delete Course Status : " + res);
-			logger.info("====================================");
-		} catch (AdminCRSException e) {
+			boolean res = adminDAO.deleteCourse(courseID);
+			return res;
+		} catch (Exception e) {
 			logger.info(e.getMessage());
 		}
-		catch (Exception e) {
-			logger.info(e.getMessage());
-		}
+		return false;
 	}
 	
 	
@@ -244,60 +234,61 @@ public class AdminOperation implements AdminInterface {
 	 * course ID and Professor ID
 	 * by Admin
 	 */
-	@Override
-	public void allotCourse() {
-		Scanner sc = new Scanner(System.in);
+//	@Override
+	public boolean allotCourse(int courseID, int professorID) {
 		try {
 			adminDAO.showcourses();
 			adminDAO.showprofessor();
-			logger.info("Please enter Professor ID from the above list");
-			int professorId = sc.nextInt();
-			logger.info("Please enter Course ID from the above list");
-			int courseId = sc.nextInt();
-			adminDAO.allotCourses(courseId,professorId);
+			return adminDAO.allotCourses(courseID,professorID);
 		} catch(Exception e) {
 			logger.info(e.getMessage());
 		}
+		return false;
 	}
 	
 	/**
 	 * Opens registration window.
 	 */
-	public void startRegistrationWindow()
+	public boolean startRegistrationWindow()
 	{
+		boolean res = false;
 		try {
-			adminDAO.startRegistrationWindow();
+			res = adminDAO.startRegistrationWindow();
 		}
 		catch(Exception e)
 		{
 			logger.info(e.getMessage());
 		}
+		return res;
 	}
 	
 	
 	/**
 	 * Closes registration window.
 	 */
-	public void closeRegistrationWindow()
+	public boolean closeRegistrationWindow()
 	{
+		boolean res = false;
 		try {
-			adminDAO.closeRegistrationWindow();
+			res = adminDAO.closeRegistrationWindow();
 		}
 		catch(Exception e)
 		{
 			logger.info(e.getMessage());
 		}
+		return res;
 	}
 	
 	/**
 	 * Displays list of registered students
 	 */
 	
-	public void addCourse2(Course course) {
+	public boolean addCourse2(Course course) {
 		// TODO Auto-generated method stub
 		//// Exception related to existing course ID
+		boolean res = false;
 		try {
-			boolean res = adminDAO.addCourse(course);
+			res = adminDAO.addCourse(course);
 			if(res==false)
 				throw new AdminCRSException("Failed to Add New Course");
 			logger.info("====================================");
@@ -309,5 +300,6 @@ public class AdminOperation implements AdminInterface {
 		catch (Exception e) {
 			logger.info(e.getMessage());
 		}
+		return res;
 	}
 }
