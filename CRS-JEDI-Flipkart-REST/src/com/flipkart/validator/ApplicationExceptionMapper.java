@@ -21,3 +21,4 @@ public class ApplicationExceptionMapper implements ExceptionMapper<Exception> {
                 .build();
     }
 }
+
