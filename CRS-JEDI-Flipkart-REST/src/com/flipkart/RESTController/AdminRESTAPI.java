@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import javax.validation.Valid;
 import javax.validation.ValidationException;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
@@ -159,7 +160,7 @@ public class AdminRESTAPI {
 	@Path("/deleteCourse")
 	@Consumes("application/json")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteCourse(@QueryParam("courseID") Integer courseID) {
+	public Response deleteCourse(@NotNull @QueryParam("courseID") Integer courseID) {
 		boolean res = adminOperation.deleteCourse(courseID);
 		if(res==false) {
 			return ResponseHelpers.badRequest(null, "Failed to delete Course ");
@@ -172,7 +173,7 @@ public class AdminRESTAPI {
 	@Path("/allotProfessor")
 	@Consumes("application/json")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response allotProfessor(@QueryParam("courseID") Integer courseID,@QueryParam("professorID") Integer professorID) {
+	public Response allotProfessor(@NotNull @QueryParam("courseID") Integer courseID,@NotNull @QueryParam("professorID") Integer professorID) {
 		boolean res = adminOperation.allotCourse(courseID,professorID);
 		if(res==false) {
 			return ResponseHelpers.badRequest(null, "Failed to Allocate Course");
@@ -184,7 +185,7 @@ public class AdminRESTAPI {
 	@Path("/approveStudent")
 	@Consumes("application/json")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response approveStudent(@QueryParam("studentID") Integer studentID) {
+	public Response approveStudent(@NotNull @QueryParam("studentID") Integer studentID) {
 		boolean res = adminOperation.approveStudents(studentID);
 		JSONObject msg = new JSONObject();
 		if(res==false) {
