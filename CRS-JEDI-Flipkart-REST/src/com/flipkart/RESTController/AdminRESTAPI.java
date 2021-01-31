@@ -26,6 +26,8 @@ import com.flipkart.bean.Course;
 import com.flipkart.bean.Professor;
 import com.flipkart.service.AdminOperation;
 import com.google.gson.Gson;
+import com.flipkart.util.ResponseHelpers;
+import com.flipkart.util.ValidationOperation;
 
 
 @Path("/admin")
@@ -103,9 +105,11 @@ public class AdminRESTAPI {
 	@Path("/openRegistration")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response openRegistration() {
-
-		adminOperation.startRegistrationWindow();
-		return Response.status(201).entity("Window Opened").build();
+		boolean res = adminOperation.startRegistrationWindow();
+		if(res){
+			return ResponseHelpers.success(null, "Registration Closed");
+		}
+		return ResponseHelpers.badRequest(null, "Request to close registration failed");
 
 	}
 
@@ -113,9 +117,11 @@ public class AdminRESTAPI {
 	@Path("/closeRegistration")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response closeRegistration() {
-		
-		adminOperation.closeRegistrationWindow();
-		return Response.status(201).entity("Window Closed").build();
+		boolean res = adminOperation.closeRegistrationWindow();
+		if(res){
+			return ResponseHelpers.success(null, "Registration Closed");
+		}
+		return ResponseHelpers.badRequest(null, "Request to close registration failed");
 	}
 	
 
@@ -124,7 +130,10 @@ public class AdminRESTAPI {
 	@Consumes("application/json")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addCourse(Course course) {
-		adminOperation.addCourse2(course);
-		return Response.status(201).entity("Course Added").build();
+		boolean res = adminOperation.addCourse2(course);
+		if(res){
+			return ResponseHelpers.successPost(course, "Course added successfully");
+		}
+		return ResponseHelpers.badRequestPost(null, "Course Add Failed");
 	}
 }

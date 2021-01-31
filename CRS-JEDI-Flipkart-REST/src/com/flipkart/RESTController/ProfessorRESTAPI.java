@@ -20,6 +20,7 @@ import org.json.JSONObject;
 
 import com.flipkart.bean.Course;
 import com.flipkart.service.ProfessorOperation;
+import com.flipkart.util.ResponseHelpers;
 
 /**
  * @author JEDI04
@@ -36,16 +37,20 @@ public class ProfessorRESTAPI {
 	public Response getAllottedCourses(@QueryParam("id") Integer id) { 
 		ArrayList<JSONObject> al = professorOperation.showCourses(id);
 		if (al.size()>0) {
-			return Response.status(200).entity(al.toString()).build();
+			return ResponseHelpers.success(al,"Success");
 		}
-		return Response.status(400).entity("No Alooted Courses").build();
+		return ResponseHelpers.badRequest(null, "No Allotted Courses");
 	}
 	
 	@GET
 	@Path("/enrolledStudents")
 	@Produces(MediaType.APPLICATION_JSON)
-	public void getEnrolledStudents(@QueryParam("courseID") Integer courseID) { 
-		professorOperation.viewStudentsEnrolled(courseID);
+	public Response getEnrolledStudents(@QueryParam("courseID") Integer courseID) { 
+		ArrayList<JSONObject> arr = professorOperation.viewStudentsEnrolled(courseID);
+		if(arr.size()==0) {
+			return ResponseHelpers.badRequest(arr, "No Enrolled Students Found in course id " + courseID);
+		}
+		return ResponseHelpers.success(arr, "Success");
 	}
 	
 	
@@ -58,9 +63,9 @@ public class ProfessorRESTAPI {
 		if (al.size()>0) {
 			obj.put("Status",true);
 			obj.put("Values",al);
-			return Response.status(200).entity(obj.toString()).build();
+			return ResponseHelpers.success(obj, "Success");
 		}
-		return Response.status(400).entity("No students to view").build();
+		return ResponseHelpers.badRequest(null, "No student to view grades");
 	}
 	
 	
@@ -70,9 +75,9 @@ public class ProfessorRESTAPI {
 	public Response updateGrade(@FormParam("courseID") Integer courseID,@FormParam("studentID") Integer studentID,@FormParam("grade") String grade) {
 		boolean res = professorOperation.updateStudentGrade(courseID,studentID,grade);
 		if (res) {
-			return Response.status(200).entity("Grade updated").build();
+			return ResponseHelpers.success("Grade Updated", "Success");
 		}
-		return Response.status(400).entity("Grade Update failed").build();
+		return ResponseHelpers.badRequest(null, "Update Grade Failed");
 
 	}
 }

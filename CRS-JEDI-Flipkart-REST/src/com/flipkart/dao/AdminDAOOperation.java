@@ -63,7 +63,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	 * @return False if the email already exists in database else returns true.
 	 * 
 	 */
-	
+
 	public boolean verifyEmail(String email) {
 		try {
 			String sqlQuery = SQLQueriesConstant.GET_STUDENT_ID_BY_EMAIL;
@@ -93,7 +93,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	 * 
 	 * @return Returns 1 if new admin is successfully added. Else returns 0.
 	 */
-	
+
 	public int addAdmin(String password, Admin admin) {
 		try {
 			String sqlQuery = SQLQueriesConstant.ADD_USER_TO_CREDENTIALS;
@@ -140,7 +140,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	 *                 class' attributes.
 	 * @return Returns 1 if professor is successfully added. Else returns 0.
 	 */
-	
+
 	public int addProfessor(String password, Professor prof) {
 		try {
 			String credQuery = SQLQueriesConstant.ADD_USER_TO_CREDENTIALS;
@@ -187,7 +187,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	 *                  generated.
 	 * 
 	 */
-	
+
 	public ArrayList<JSONObject> printGrades(int studentId) {
 		ArrayList<JSONObject> grades = new ArrayList<JSONObject>();
 		try {
@@ -195,7 +195,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 			ps = connection.prepareStatement(str);
 			ps.setInt(1, studentId);
 			ResultSet rs = ps.executeQuery();
-			
+
 			String name = "";
 			if (rs.next())
 				name = rs.getString("sname");
@@ -212,17 +212,17 @@ public class AdminDAOOperation implements AdminDAOInterface {
 				do {
 					logger.info(rs.getInt("courseId") + "          " + rs.getString("name") + "         "
 							+ rs.getString("grade"));
-					
+
 					JSONObject grade = new JSONObject();
 					grade.put("courseId", rs.getInt("courseId"));
 					grade.put("name", rs.getString("name"));
-					grade.put("grade",  rs.getString("grade"));
-					
+					grade.put("grade", rs.getString("grade"));
+
 					grades.add(grade);
 				} while (rs.next());
 			}
 			logger.info("=======================================");
-			
+
 //			while(rs.next())
 //			{
 //				JSONObject grade = new JSONObject();
@@ -343,7 +343,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	 * @param courseId Course Id of the course to be deleted.
 	 * @return True if the course is successfully deleted. False otherwise.
 	 */
-	
+
 	public boolean deleteCourse(int courseId) {
 		try {
 			String str = SQLQueriesConstant.DELETE_COURSE_IN_CATALOG;
@@ -435,32 +435,40 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	/**
 	 * Opens registration window.
 	 */
-	public void startRegistrationWindow() {
+	public boolean startRegistrationWindow() {
+		;
+		boolean res = false;
 		try {
 			ps = connection.prepareStatement(SQLQueriesConstant.OPEN_REGISTRATION_WINDOW);
-			ps.executeUpdate();
-
-			logger.info("Registration Window Started.\n");
+			if (ps.executeUpdate() > 0) {
+				res = true;
+				logger.info("Registration Window Started.\n");
+			}
 		} catch (SQLException e) {
 			logger.info(e.getMessage());
 		} catch (Exception e) {
 			logger.info(e.getMessage());
 		}
+		return res;
 	}
 
 	/**
 	 * Closes registration window.
 	 */
-	public void closeRegistrationWindow() {
+	public boolean closeRegistrationWindow() {
+		boolean res = false;
 		try {
 			ps = connection.prepareStatement(SQLQueriesConstant.CLOSE_REGISTRATION_WINDOW);
-			ps.executeUpdate();
-			logger.info("Registration Window Closed.\n");
+			if (ps.executeUpdate() > 0) {
+				res = true;
+				logger.info("Registration Window Closed.\n");
+			}
 		} catch (SQLException e) {
 			logger.info(e.getMessage());
 		} catch (Exception e) {
 			logger.info(e.getMessage());
 		}
+		return res;
 	}
 
 	public void showcourses() {
@@ -514,7 +522,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	public ArrayList<JSONObject> getRegisteredStudents() {
 		ArrayList<JSONObject> students = new ArrayList<JSONObject>();
 		try {
-			String  s = SQLQueriesConstant.GET_REGISTERED_STUDENTS;
+			String s = SQLQueriesConstant.GET_REGISTERED_STUDENTS;
 			ps = connection.prepareStatement(s);
 			ResultSet stl = ps.executeQuery();
 			logger.info("=======================================");
@@ -527,12 +535,12 @@ public class AdminDAOOperation implements AdminDAOInterface {
 					JSONObject student = new JSONObject();
 					student.put("studentId", stl.getInt("id"));
 					student.put("name", stl.getString("name"));
-					
+
 					students.add(student);
 				} while (stl.next());
 				logger.info("=======================================");
 				return students;
-			}		
+			}
 		} catch (StudentCRSException e) {
 			logger.info(e.getMessage());
 		} catch (SQLException e) {

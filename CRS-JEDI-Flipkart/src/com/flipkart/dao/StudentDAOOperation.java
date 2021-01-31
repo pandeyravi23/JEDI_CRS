@@ -364,7 +364,7 @@ public class StudentDAOOperation implements StudentDAOInterface {
 	 * 
 	 * @param student Student object containing the student information
 	 */
-	public void setPaymentStatus(Student student) {
+	public void setPaymentStatus(Student student, String method) {
 		try{
 			connection = DBConnection.getConnection();
 			ps = connection.prepareStatement(SQLQueriesConstant.SET_PAYMENT_STATUS_QUERY);
@@ -473,5 +473,11 @@ public class StudentDAOOperation implements StudentDAOInterface {
 		}
 
 		return status;
+	}
+
+	@Override
+	public void setPaymentStatus(Student student) {
+		// TODO Auto-generated method stub
+		
 	}
 }

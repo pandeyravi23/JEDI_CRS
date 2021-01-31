@@ -9,6 +9,8 @@ import java.util.*;
 import com.flipkart.bean.Course;
 import com.flipkart.bean.Grades;
 import com.flipkart.constant.SQLQueriesConstant;
+import com.flipkart.exception.StudentCRSException;
+
 import org.apache.log4j.Logger;
 
 import com.flipkart.bean.Student;
@@ -45,7 +47,7 @@ public class StudentDAOOperation implements StudentDAOInterface {
 	
 	
 	
-	public Student getStudentByID(int studentID) {
+	public Student getStudentByID(int studentID) throws StudentCRSException {
 		Student student = null;
 		try {
 			connection = DBConnection.getConnection();
@@ -54,7 +56,9 @@ public class StudentDAOOperation implements StudentDAOInterface {
 			ps.setInt(1, studentID);
 			
 			ResultSet result = ps.executeQuery();
-			result.next();
+			if(!result.next()) {
+				throw new StudentCRSException("Student with id: " + studentID + " doesn't exist");
+			}
 			student = new Student();
 			student.setEmail(result.getString("email"));
 			student.setBranch(result.getString("branch"));
@@ -404,12 +408,13 @@ public class StudentDAOOperation implements StudentDAOInterface {
 	 * 
 	 * @param student Student object containing the student information
 	 */
-	public void setPaymentStatus(Student student) {
+	public void setPaymentStatus(Student student, String method) {
 		try{
 			connection = DBConnection.getConnection();
 			ps = connection.prepareStatement(SQLQueriesConstant.SET_PAYMENT_STATUS_QUERY);
 
-			ps.setInt(1, student.getUserId());
+			ps.setString(1, method);
+			ps.setInt(2, student.getUserId());
 			ps.executeUpdate();
 		}
 		catch(SQLException e) {

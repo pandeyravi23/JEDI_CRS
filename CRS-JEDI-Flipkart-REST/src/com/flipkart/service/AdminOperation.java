@@ -265,41 +265,46 @@ public class AdminOperation implements AdminInterface {
 	/**
 	 * Opens registration window.
 	 */
-	public void startRegistrationWindow()
+	public boolean startRegistrationWindow()
 	{
+		boolean res = false;
 		try {
-			adminDAO.startRegistrationWindow();
+			res = adminDAO.startRegistrationWindow();
 		}
 		catch(Exception e)
 		{
 			logger.info(e.getMessage());
 		}
+		return res;
 	}
 	
 	
 	/**
 	 * Closes registration window.
 	 */
-	public void closeRegistrationWindow()
+	public boolean closeRegistrationWindow()
 	{
+		boolean res = false;
 		try {
-			adminDAO.closeRegistrationWindow();
+			res = adminDAO.closeRegistrationWindow();
 		}
 		catch(Exception e)
 		{
 			logger.info(e.getMessage());
 		}
+		return res;
 	}
 	
 	/**
 	 * Displays list of registered students
 	 */
 	
-	public void addCourse2(Course course) {
+	public boolean addCourse2(Course course) {
 		// TODO Auto-generated method stub
 		//// Exception related to existing course ID
+		boolean res = false;
 		try {
-			boolean res = adminDAO.addCourse(course);
+			res = adminDAO.addCourse(course);
 			if(res==false)
 				throw new AdminCRSException("Failed to Add New Course");
 			logger.info("====================================");
@@ -311,5 +316,6 @@ public class AdminOperation implements AdminInterface {
 		catch (Exception e) {
 			logger.info(e.getMessage());
 		}
+		return res;
 	}
 }

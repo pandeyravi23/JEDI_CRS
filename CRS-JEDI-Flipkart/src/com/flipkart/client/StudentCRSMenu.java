@@ -293,17 +293,21 @@ public class StudentCRSMenu {
 				logger.info("4. To cancel payment");
 				sc = new Scanner(System.in);
 				int choice = sc.nextInt();
-
+				String method = null;
+				
 				// operations based on payment method
 				switch (choice) {
 				case 1: // for net banking method
 					logger.info("You have chosen net banking");
+					method = "Netbanking";
 					break;
 				case 2: // for credit card method
 					logger.info("You have chosen debit card");
+					method = "Debit Card";
 					break;
 				case 3: // for scholarship
 					logger.info("You have chosen to use Scholarship");
+					method = "Scholarship";
 					break;
 				case 4:
 					logger.info(">>>>>>> Exiting <<<<<<<\n");
@@ -315,7 +319,7 @@ public class StudentCRSMenu {
 
 				if (choice != 4) {
 					logger.info(">>> Proceed to make payment <<<");
-					studentOperation.makePayment(student);
+					studentOperation.makePayment(student,method);
 
 					NotificationSystemOperation.paymentSuccessful();
 				}

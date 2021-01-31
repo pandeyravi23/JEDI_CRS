@@ -43,28 +43,8 @@ public class ProfessorOperation implements ProfessorInterface {
 	 * @param courseId Course Id 
 	 */
 	
-	public void viewStudentsEnrolled(int courseId) {		
-		try {
-			ArrayList<Student> studentsEnrolled = professorDaoOperation.getEnrolledStudents(courseId);
-			if (studentsEnrolled.size() > 0) {
-				logger.info("\n\n");
-				logger.info("=============================================================================");
-
-				logger.info(String.format("%-15s\t%-15s\t%-15s", "StudentID","Student Name","Branch"));
-				
-				studentsEnrolled.forEach(student->logger.info(String.format("%-15s\t%-15s\t%-15s",student.getUserId(),student.getUserName(),student.getBranch())));
-				
-				logger.info("=============================================================================");
-			} else {
-				throw new ProfessorCRSException("No student is currently enrolled in the course");
-			}
-		} catch (ProfessorCRSException e) {
-			logger.info("\n\n");
-			logger.error(e.getMessage());
-			logger.info("\n\n");
-		} catch (Exception e) {
-			logger.info(e.getMessage());
-		}
+	public ArrayList<JSONObject> viewStudentsEnrolled(int courseId) {		
+		return professorDaoOperation.getEnrolledStudents(courseId);
 	}
 
 	/**
@@ -97,24 +77,24 @@ public class ProfessorOperation implements ProfessorInterface {
 	 * @param courseId
 	 * @return true if grading operation is successful else false 
 	 */
-	public Boolean gradeStudents(int courseId) {
-		try {
-			ArrayList<Student> studentsEnrolled = professorDaoOperation.getEnrolledStudents(courseId);
-			if (studentsEnrolled.size() > 0) {
-				professorDaoOperation.setGrades(studentsEnrolled, courseId);
-			} else {
-				throw new ProfessorCRSException("No Student to Grade!!!");
-			}
-		} catch (ProfessorCRSException e) {
-			logger.info("\n\n");
-			logger.error(e.getMessage());
-			logger.info("\n\n");
-		} catch (Exception e) {
-			logger.info(e.getMessage());
-		}
-
-		return true;
-	}
+//	public Boolean gradeStudents(int courseId) {
+//		try {
+//			ArrayList<JSONObject> studentsEnrolled = professorDaoOperation.getEnrolledStudents(courseId);
+//			if (studentsEnrolled.size() > 0) {
+//				professorDaoOperation.setGrades(studentsEnrolled, courseId);
+//			} else {
+//				throw new ProfessorCRSException("No Student to Grade!!!");
+//			}
+//		} catch (ProfessorCRSException e) {
+//			logger.info("\n\n");
+//			logger.error(e.getMessage());
+//			logger.info("\n\n");
+//		} catch (Exception e) {
+//			logger.info(e.getMessage());
+//		}
+//
+//		return true;
+//	}
 
 	/**
 	 * Get and display all courses alloted to the professor with given courseId

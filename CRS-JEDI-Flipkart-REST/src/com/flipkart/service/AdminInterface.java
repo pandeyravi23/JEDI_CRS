@@ -21,6 +21,6 @@ public interface AdminInterface {
 	public void approveStudents();
 	public void addCourse();
 	public void deleteCourse();
-	public void startRegistrationWindow();
-	public void closeRegistrationWindow();
+	public boolean startRegistrationWindow();
+	public boolean closeRegistrationWindow();
 }
