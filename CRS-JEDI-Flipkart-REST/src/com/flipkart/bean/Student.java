@@ -1,5 +1,8 @@
 package com.flipkart.bean;
-import java.util.ArrayList;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Class to interact with variables present in Student Class
@@ -7,6 +10,7 @@ import java.util.ArrayList;
  * @author JEDI04
  */
 
+@XmlRootElement(name = "student")
 public class Student extends User{
 	
 	/**
@@ -15,10 +19,17 @@ public class Student extends User{
 	 * @author JEDI04
 	 *
 	 */
+	
+	@NotNull 
 	private int rollNo;
+	
 	private boolean isRegistered;
-	private ArrayList<Integer> enrolledCourses = new ArrayList<>();
+	
+	@NotNull 
+	@Size(min = 2, max = 30, message = "The length of Branch should be between 2 to 25")
 	private String branch;
+	
+	
 	private boolean paymentStatus;
 	
 	public boolean getPaymentStatus() {
@@ -45,13 +56,6 @@ public class Student extends User{
 		this.isRegistered = isRegistered;
 	}
 	
-	public ArrayList<Integer> getEnrolledCourses() {
-		return enrolledCourses;
-	}
-	
-	public void setEnrolledCourses(ArrayList<Integer> enrolledCourses) {
-		this.enrolledCourses = enrolledCourses;
-	}
 	
 	public String getBranch() {
 		return branch;
