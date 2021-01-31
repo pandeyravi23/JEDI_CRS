@@ -16,31 +16,31 @@ import com.flipkart.service.AdminOperation;
  * @author JEDI04
  */
 public class AdminCRSMenu {
-	private static Logger logger = Logger.getLogger(AdminCRSMenu.class);
-	private AdminOperation adminOperation = AdminOperation.getInstance();
-	
-	
-	/**
-	 * Main Function to display, choose and then call the respective Administrator Operations.
-	 */
-	public void AdminClient()
-	{
-		logger.info("\n");
-		logger.info("=========================================");
-		logger.info("Login Time : " + LocalDateTime.now());
-		logger.info("Welcome Admin!!");
-		logger.info("=========================================");
-		Scanner sc = null;
-		try {
-			sc = new Scanner(System.in);
-			int choice = -1;
-			do
-			{		
-				showChoices();
-				choice = sc.nextInt();
-				
-				switch(choice)
-				{
+//	private static Logger logger = Logger.getLogger(AdminCRSMenu.class);
+//	private AdminOperation adminOperation = AdminOperation.getInstance();
+//	
+//	
+//	/**
+//	 * Main Function to display, choose and then call the respective Administrator Operations.
+//	 */
+//	public void AdminClient()
+//	{
+//		logger.info("\n");
+//		logger.info("=========================================");
+//		logger.info("Login Time : " + LocalDateTime.now());
+//		logger.info("Welcome Admin!!");
+//		logger.info("=========================================");
+//		Scanner sc = null;
+//		try {
+//			sc = new Scanner(System.in);
+//			int choice = -1;
+//			do
+//			{		
+//				showChoices();
+//				choice = sc.nextInt();
+//				
+//				switch(choice)
+//				{
 //					case 1:
 ////						adminOperation.showStudents();
 ////						adminOperation.generateReportCard();
@@ -72,34 +72,35 @@ public class AdminCRSMenu {
 //					case -1:
 //						logger.info("Logged Out Successfully");
 //						break;
-					default:
-						logger.info("Invalid Choice");
-						break;
-				}
-			}
-			while(choice != -1);
-		}
-		catch(Exception e) {
-			logger.info(e.getMessage() + "\n");
-		}
-	}
-	
-	
-	/**
-	 * Utility Function to display Administrator operations, which can then be called from AdminClient
-	 */
-	public void showChoices()
-	{
-		logger.info("Select an operation");
-		logger.info("Enter 1 to generate report card of a student");
-		logger.info("Enter 2 to add professor");
-		logger.info("Enter 3 to add Admin");
-		logger.info("Enter 4 to approve students");
-		logger.info("Enter 5 to add course");
-		logger.info("Enter 6 to delete a course");
-		logger.info("Enter 7 to allot a course to the professor");
-		logger.info("Enter 8 to open registration window");
-		logger.info("Enter 9 to close registration window");
-		logger.info("Enter -1 to logout");
-	}
+//					default:
+//						logger.info("Invalid Choice");
+//						break;
+//				}
+//			}
+//			while(choice != -1);
+//		}
+//		catch(Exception e) {
+//			logger.info(e.getMessage() + "\n");
+//		}
+//	}
+//	
+//	
+//	/**
+//	 * Utility Function to display Administrator operations, which can then be called from AdminClient
+//	 */
+//	public void showChoices()
+//	{
+//		logger.info("Select an operation");
+//		logger.info("Enter 1 to generate report card of a student");
+//		logger.info("Enter 2 to add professor");
+//		logger.info("Enter 3 to add Admin");
+//		logger.info("Enter 4 to approve students");
+//		logger.info("Enter 5 to add course");
+//		logger.info("Enter 6 to delete a course");
+//		logger.info("Enter 7 to allot a course to the professor");
+//		logger.info("Enter 8 to open registration window");
+//		logger.info("Enter 9 to close registration window");
+//		logger.info("Enter -1 to logout");
+//	}
+//
 }

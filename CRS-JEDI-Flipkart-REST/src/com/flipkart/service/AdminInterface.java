@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import org.json.JSONObject;
 
+import com.flipkart.bean.Professor;
+
 /**
  * Interface to Show the structure of
  * Admin Operation Class
@@ -14,7 +16,7 @@ public interface AdminInterface {
 	
 	public ArrayList<JSONObject> generateReportCard(int sid);
 	public boolean allotCourse(int courseID, int professorID);
-	public void addProfessor();
+	public int addProfessor(String password, Professor prof);
 	public void addAdmin();
 	public boolean approveStudents(int studentID);
 	public void addCourse();
