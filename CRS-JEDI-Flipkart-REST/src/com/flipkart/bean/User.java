@@ -1,7 +1,5 @@
 package com.flipkart.bean;
 
-
-
 /**
  * Class to interact with variables present in User Class
  * using Getters and Setters Methods
