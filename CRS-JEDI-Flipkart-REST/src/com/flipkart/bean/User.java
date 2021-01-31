@@ -44,10 +44,10 @@ public class User {
     @Size(min = 2, max = 30, message = "The length of Gender should be between 2 to 25")
 	protected String gender;
 	
-    @Size(min = 10, max = 30, message = "The length of contact should be between 10 to 12")
+    @Size(min = 10, max = 30, message = "The length of Contact should be between 10 to 12")
 	protected String contact;
     
-    @Size(min = 2, max = 30, message = "The length of contact should be between 10 to 12")
+    @Size(min = 2, max = 30, message = "The length of Nationality should be between 2 to 25")
 	protected String nationality;
 
     
