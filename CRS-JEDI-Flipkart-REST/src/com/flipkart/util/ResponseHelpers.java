@@ -41,10 +41,4 @@ public class ResponseHelpers {
 		return Response.status(201).entity(res.toString()).build();
 	}
 	
-	
-	// TODO: 401 is Unauthorized not badRequestPost
-	public static Response badRequestPost(Object payload, String msg) {
-		JsonElement res = new Gson().toJsonTree(mapify(false, msg, payload));
-		return Response.status(401).entity(res.toString()).build();
-	}
 }

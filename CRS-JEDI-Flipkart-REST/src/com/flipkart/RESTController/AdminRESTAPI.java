@@ -149,7 +149,7 @@ public class AdminRESTAPI {
 		if(res){
 			return ResponseHelpers.successPost(course, "Course Added Successfully");
 		}
-		return ResponseHelpers.badRequestPost(null, "Course Add Failed");
+		return ResponseHelpers.badRequest(null, "Course Add Failed");
 	}
 	
 	
