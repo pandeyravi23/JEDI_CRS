@@ -4,6 +4,10 @@
 package com.flipkart.RESTController;
 
 import java.util.*;
+
+import javax.validation.Valid;
+import javax.validation.ValidationException;
+import javax.validation.constraints.*;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -31,11 +35,11 @@ public class StudentRESTAPI {
 	private Student student = null;
 	private User user = null;
 	
-	
 	@GET
 	@Path("/details/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getStudentDetails(@PathParam("id") int id) {
+	public Response getStudentDetails(
+			@PathParam("id") int id) throws ValidationException {
 		student = studentOperation.getStudentByID(id);
 		if(student == null) {
 			return ResponseHelpers.badRequest(null, "Student with id: " + id + " doesn't exist");
@@ -96,11 +100,10 @@ public class StudentRESTAPI {
 			return ResponseHelpers.badRequest(null, "Studentt with id: " + studentID + " doesn't exist");
 		}
 		studentOperation.addCourse(student, courseID);
-		return ResponseHelpers.success(courseID, "Course with ID " + courseID + " succesfully added");
+		return ResponseHelpers.successPost(courseID, "Course with ID " + courseID + " succesfully added");
 	}
 	
-	
-	@POST
+	@DELETE
 	@Path("/deleteCourse")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteCourse(@FormParam("courseID") int courseID, @FormParam("studentID") int studentID) {
@@ -123,7 +126,7 @@ public class StudentRESTAPI {
 			return ResponseHelpers.badRequest(null, "Studentt with id: " + studentID + " doesn't exist");
 		}
 		studentOperation.registerCourses(courseCart, student);
-		return ResponseHelpers.success(courseCart, "Successfully registered for courses");
+		return ResponseHelpers.successPost(courseCart, "Successfully registered for courses");
 	}
 	
 	
@@ -169,7 +172,7 @@ public class StudentRESTAPI {
 		student.setPaymentStatus(false);
 		
 		authentication.registerStudent(user, student, password);
-		return ResponseHelpers.success(student, "Successfully registered");
+		return ResponseHelpers.successPost(student, "Successfully registered");
 	}
 
 	

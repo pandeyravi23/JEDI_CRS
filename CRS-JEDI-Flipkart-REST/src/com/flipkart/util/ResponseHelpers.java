@@ -9,7 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
 /**
- * @author parth
+ * @author JEDI04
  *
  */
 public class ResponseHelpers {
@@ -22,13 +22,13 @@ public class ResponseHelpers {
 	}
 	
 	public static Response success(Object payload, String msg) {
-		JsonElement res = new Gson().toJsonTree(mapify(true, "Success", payload));
+		JsonElement res = new Gson().toJsonTree(mapify(true, msg, payload));
 		return Response.status(200).entity(res.toString()).build();
 	}
 	
 	public static Response badRequest(Object payload, String msg) {
 		JsonElement res = new Gson().toJsonTree(mapify(false, msg, payload));
-		return Response.status(200).entity(res.toString()).build();
+		return Response.status(400).entity(res.toString()).build();
 	}
 	
 	public static Response somethingWentWrong(Object payload) {
@@ -41,6 +41,8 @@ public class ResponseHelpers {
 		return Response.status(201).entity(res.toString()).build();
 	}
 	
+	
+	// TODO: 401 is Unauthorized not badRequestPost
 	public static Response badRequestPost(Object payload, String msg) {
 		JsonElement res = new Gson().toJsonTree(mapify(false, msg, payload));
 		return Response.status(401).entity(res.toString()).build();

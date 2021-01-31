@@ -72,31 +72,6 @@ public class ProfessorOperation implements ProfessorInterface {
 	}
 
 	/**
-	 * Grade Students in a batch with mentioned courseId
-	 * 
-	 * @param courseId
-	 * @return true if grading operation is successful else false 
-	 */
-//	public Boolean gradeStudents(int courseId) {
-//		try {
-//			ArrayList<JSONObject> studentsEnrolled = professorDaoOperation.getEnrolledStudents(courseId);
-//			if (studentsEnrolled.size() > 0) {
-//				professorDaoOperation.setGrades(studentsEnrolled, courseId);
-//			} else {
-//				throw new ProfessorCRSException("No Student to Grade!!!");
-//			}
-//		} catch (ProfessorCRSException e) {
-//			logger.info("\n\n");
-//			logger.error(e.getMessage());
-//			logger.info("\n\n");
-//		} catch (Exception e) {
-//			logger.info(e.getMessage());
-//		}
-//
-//		return true;
-//	}
-
-	/**
 	 * Get and display all courses alloted to the professor with given courseId
 	 * 
 	 * @param professorId Professor Id

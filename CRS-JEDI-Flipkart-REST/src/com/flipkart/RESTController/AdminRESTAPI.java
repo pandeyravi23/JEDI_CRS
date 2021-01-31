@@ -12,6 +12,7 @@ import com.flipkart.dao.AdminDAOOperation;
 import java.util.ArrayList;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -40,9 +41,14 @@ public class AdminRESTAPI {
 	public Response getReportCard(@QueryParam("id") Integer id)
 	{
 		ArrayList<JSONObject> reportCard = adminOperation.generateReportCard(id);
+		
 		if(reportCard.size() == 0)
-			return Response.status(400).entity("No students found.").build();
-		return Response.status(200).entity(reportCard.toString()).build();
+			return ResponseHelpers.badRequest(reportCard, "Unable to generate report card for id : "  + id);
+		return ResponseHelpers.success(reportCard, "Report Card for " + id + "successfully generated.");
+		
+//		if(reportCard.size() == 0)
+//			return Response.status(400).entity("No students found.").build();
+//		return Response.status(200).entity(reportCard.toString()).build();
 		
 	}
 	
@@ -54,9 +60,9 @@ public class AdminRESTAPI {
 		ArrayList<JSONObject> students =  adminOperation.getRegisteredStudents();
 		if(students.size() == 0)
 		{
-			return Response.status(400).entity("No students found").build();
+			return ResponseHelpers.badRequest(students, "No students found.");
 		}
-		return Response.status(200).entity(students.toString()).build();
+		return ResponseHelpers.success(students, "Success");
 	}
 	
 //	@POST
@@ -78,7 +84,7 @@ public class AdminRESTAPI {
 	@Consumes("text/plain")
 	@Produces(MediaType.APPLICATION_JSON)
 //	public void addProfessor(Professor obj, @PathParam("password") String password)
-	public void addProfessor(String str)
+	public Response addProfessor(String str)
 	{
 		System.out.println(str);
 		JSONObject obj = new JSONObject(str);
@@ -92,12 +98,20 @@ public class AdminRESTAPI {
 		System.out.println(prof.getUserName());
 		System.out.println(password);
 		
-		adminOperation.addProfessor(password, prof);
+		int status = adminOperation.addProfessor(password, prof);
 //		{"userId":115, "userName":"Prof Bhavya", "role":"Testprof", "email":"profbhavya@gmail.com", "department":"ENI", "address":"prof ka ghar", "age":40, "gender":"male", "contact":"9660054658", "nationality":"indian"}
 //		int status = adminOperation.addProfessor(password, prof);
 //		if(status == 1)
 //			return Response.status(200).entity("Professor added successfully.").build();
 //		return Response.status(400).entity("Professor could not be added.").build();
+		
+		if(status == 0)
+		{
+			return ResponseHelpers.badRequest(status, "Professor entry " + prof.getEmail() + " already exists in database.");
+		}
+		
+		return ResponseHelpers.success(status, "Prof. " + prof.getUserName() + " added.");
+		
 	}
 	
 
@@ -125,6 +139,7 @@ public class AdminRESTAPI {
 	}
 	
 
+	
 	@POST
 	@Path("/addCourse")
 	@Consumes("application/json")
@@ -132,8 +147,47 @@ public class AdminRESTAPI {
 	public Response addCourse(Course course) {
 		boolean res = adminOperation.addCourse2(course);
 		if(res){
-			return ResponseHelpers.successPost(course, "Course added successfully");
+			return ResponseHelpers.successPost(course, "Course Added Successfully");
 		}
 		return ResponseHelpers.badRequestPost(null, "Course Add Failed");
+	}
+	
+	
+	@DELETE
+	@Path("/deleteCourse")
+	@Consumes("application/json")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteCourse(@QueryParam("courseID") Integer courseID) {
+		boolean res = adminOperation.deleteCourse(courseID);
+		if(res==false) {
+			return ResponseHelpers.badRequest(null, "Failed to delete Course ");
+		}
+		return ResponseHelpers.success(null, "Course Deleted Successfully");
+	}
+	
+	
+	@PUT 
+	@Path("/allotProfessor")
+	@Consumes("application/json")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response allotProfessor(@QueryParam("courseID") Integer courseID,@QueryParam("professorID") Integer professorID) {
+		boolean res = adminOperation.allotCourse(courseID,professorID);
+		if(res==false) {
+			return ResponseHelpers.badRequest(null, "Failed to Allocate Course");
+		}
+		return ResponseHelpers.success(null, "Course Alloted Successfully");
+	}
+	
+	@PUT
+	@Path("/approveStudent")
+	@Consumes("application/json")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response approveStudent(@QueryParam("studentID") Integer studentID) {
+		boolean res = adminOperation.approveStudents(studentID);
+		JSONObject msg = new JSONObject();
+		if(res==false) {
+			return ResponseHelpers.badRequest(null, "Some Error Occured");
+		}
+		return ResponseHelpers.success(null, "Student Approved!!");
 	}
 }
