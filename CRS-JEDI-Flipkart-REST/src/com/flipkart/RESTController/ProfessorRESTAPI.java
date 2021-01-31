@@ -5,6 +5,7 @@ package com.flipkart.RESTController;
 
 import java.util.ArrayList;
 
+import javax.validation.constraints.Size;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -72,6 +73,7 @@ public class ProfessorRESTAPI {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateGrade(@FormParam("courseID") Integer courseID,
 			@FormParam("studentID") Integer studentID,
+		    @Size(min = 1, max = 2, message = "The length of Grade should be between 1 to 2")
 			@FormParam("grade") String grade) {
 		boolean res = professorOperation.updateStudentGrade(courseID,studentID,grade);
 		if (res) {
