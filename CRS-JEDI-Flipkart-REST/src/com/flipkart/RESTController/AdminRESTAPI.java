@@ -10,6 +10,8 @@ import com.flipkart.dao.AdminDAOOperation;
 
 import java.util.ArrayList;
 
+import javax.validation.Valid;
+import javax.validation.ValidationException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
@@ -64,9 +66,9 @@ public class AdminRESTAPI {
 	public Response openRegistration() {
 		boolean res = adminOperation.startRegistrationWindow();
 		if(res){
-			return ResponseHelpers.success(null, "Registration Closed");
+			return ResponseHelpers.success(null, "Registration Opened");
 		}
-		return ResponseHelpers.badRequest(null, "Request to close registration failed");
+		return ResponseHelpers.badRequest(null, "Request to open registration failed");
 
 	}
 
@@ -87,7 +89,7 @@ public class AdminRESTAPI {
 	@Path("/addCourse")
 	@Consumes("application/json")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addCourse(Course course) {
+	public Response addCourse(@Valid Course course) throws ValidationException{
 		boolean res = adminOperation.addCourse2(course);
 		if(res){
 			return ResponseHelpers.successPost(course, "Course Added Successfully");
