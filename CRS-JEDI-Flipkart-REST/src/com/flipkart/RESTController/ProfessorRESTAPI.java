@@ -34,6 +34,13 @@ import com.flipkart.util.ResponseHelpers;
 public class ProfessorRESTAPI {
 	ProfessorOperation professorOperation = ProfessorOperation.getInstance();
 	
+	/**
+	 * Get the list of alloted course
+	 * @param professorId
+	 * @return Response
+	 * @throws ValidationException
+	 */
+	
 	@GET
 	@Path("/allottedCourses")
 	@Produces(MediaType.APPLICATION_JSON)
