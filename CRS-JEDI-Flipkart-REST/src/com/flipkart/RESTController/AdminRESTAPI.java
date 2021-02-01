@@ -128,6 +128,11 @@ public class AdminRESTAPI {
 	}
 	
 
+	/**
+	 * Opens the Registration Window for course registration
+	 * @return Response
+	 */
+	
 	@PUT
 	@Path("/openRegistration")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -140,6 +145,11 @@ public class AdminRESTAPI {
 
 	}
 
+	
+	/**
+	 * Closes the Registration Window for course registration
+	 * @return Response
+	 */
 	
 	@PUT
 	@Path("/closeRegistration")
@@ -154,6 +164,13 @@ public class AdminRESTAPI {
 	
 
 	
+	/**
+	 * Adds new course in course catalog
+	 * @param course
+	 * @return Response
+	 * @throws ValidationException
+	 */
+	
 	@POST
 	@Path("/addCourse")
 	@Consumes("application/json")
@@ -165,6 +182,14 @@ public class AdminRESTAPI {
 		}
 		return ResponseHelpers.badRequest(null, "Course Add Failed");
 	}
+	
+	
+	/**
+	 * Deletes course from course catalog and course table
+	 * @param courseID
+	 * @return Response
+	 * @throws ValidationException
+	 */
 	
 	
 	@DELETE
@@ -182,6 +207,16 @@ public class AdminRESTAPI {
 		}
 		return ResponseHelpers.success(null, "Course Deleted Successfully");
 	}
+	
+	
+	
+	/**
+	 * Allot course to the professor
+	 * @param courseID
+	 * @param professorID
+	 * @return Respose
+	 * @throws ValidationException
+	 */
 	
 	
 	@PUT 
@@ -204,6 +239,15 @@ public class AdminRESTAPI {
 		}
 		return ResponseHelpers.success(null, "Course Alloted Successfully");
 	}
+	
+	
+	/**
+	 * Approves New Student's Registration by entering studentID
+	 *
+	 * @param studentID
+	 * @return Response
+	 * @throws ValidationException
+	 */
 	
 	@PUT
 	@Path("/approveStudent")
