@@ -8,11 +8,14 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.flipkart.dao.AdminDAOOperation;
+import com.flipkart.helper.AddAdminHelper;
 
 import java.util.ArrayList;
 
 import javax.validation.Valid;
 import javax.validation.ValidationException;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -26,6 +29,7 @@ import javax.ws.rs.core.Response;
 
 import org.json.JSONObject;
 
+import com.flipkart.bean.Admin;
 import com.flipkart.bean.Course;
 import com.flipkart.bean.Professor;
 import com.flipkart.service.AdminOperation;
@@ -41,7 +45,11 @@ public class AdminRESTAPI {
 	@GET
 	@Path("/getReportCard")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getReportCard(@QueryParam("id") Integer id)
+	public Response getReportCard(
+			@NotNull
+			@DecimalMin(value = "100", message = "Student ID has to be of 3 digits")
+			@Digits(fraction = 0, integer = 3)
+			@QueryParam("id") Integer id) throws ValidationException
 	{
 		ArrayList<JSONObject> reportCard = adminOperation.generateReportCard(id);
 		
@@ -49,9 +57,6 @@ public class AdminRESTAPI {
 			return ResponseHelpers.badRequest(reportCard, "Unable to generate report card for id : "  + id);
 		return ResponseHelpers.success(reportCard, "Report Card for " + id + "successfully generated.");
 		
-//		if(reportCard.size() == 0)
-//			return Response.status(400).entity("No students found.").build();
-//		return Response.status(200).entity(reportCard.toString()).build();
 		
 	}
 	
@@ -68,19 +73,6 @@ public class AdminRESTAPI {
 		return ResponseHelpers.success(students, "Success");
 	}
 	
-//	@POST
-//	@Path("/addProfessor")
-////	@Consumes("application/json")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public Response addProfessor(@FormParam("password") String password, @FormParam("professor") Professor prof)
-//	{
-//		
-////		{"userId":115, "userName":"Prof Bhavya", "role":"Testprof", "email":"profbhavya@gmail.com", "department":"ENI", "address":"prof ka ghar", "age":40, "gender":"male", "contact":"9660054658", "nationality":"indian"}
-//		int status = adminOperation.addProfessor(password, prof);
-//		if(status == 1)
-//			return Response.status(200).entity("Professor added successfully.").build();
-//		return Response.status(400).entity("Professor could not be added.").build();
-//	}
 	
 	@POST
 	@Path("/addProfessor")
@@ -102,11 +94,6 @@ public class AdminRESTAPI {
 		System.out.println(password);
 		
 		int status = adminOperation.addProfessor(password, prof);
-//		{"userId":115, "userName":"Prof Bhavya", "role":"Testprof", "email":"profbhavya@gmail.com", "department":"ENI", "address":"prof ka ghar", "age":40, "gender":"male", "contact":"9660054658", "nationality":"indian"}
-//		int status = adminOperation.addProfessor(password, prof);
-//		if(status == 1)
-//			return Response.status(200).entity("Professor added successfully.").build();
-//		return Response.status(400).entity("Professor could not be added.").build();
 		
 		if(status == 0)
 		{
@@ -115,6 +102,29 @@ public class AdminRESTAPI {
 		
 		return ResponseHelpers.success(status, "Prof. " + prof.getUserName() + " added.");
 		
+	}
+	
+	
+	@POST
+	@Path("/addAdmin")
+	@Consumes("application/json")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response addAdmin(@Valid AddAdminHelper helper) throws ValidationException
+	{
+		Admin admin = helper.getAdmin();
+		String password = helper.getPassword();
+		
+		System.out.println(admin.toString());
+		System.out.println(password);
+		
+		int status = adminOperation.addAdmin(admin, password);
+		
+		if(status == 0)
+		{
+			return ResponseHelpers.badRequest(status, "Admin entry " + admin.getEmail() + " already exists in database.");
+		}
+		
+		return ResponseHelpers.success(status, "Admin " + admin.getUserName() + " added.");
 	}
 	
 
@@ -130,6 +140,7 @@ public class AdminRESTAPI {
 
 	}
 
+	
 	@PUT
 	@Path("/closeRegistration")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -160,7 +171,11 @@ public class AdminRESTAPI {
 	@Path("/deleteCourse")
 	@Consumes("application/json")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteCourse(@NotNull @QueryParam("courseID") Integer courseID) {
+	public Response deleteCourse(
+			@NotNull
+			@DecimalMin(value = "100", message = "courseID value has to be of 3 digits")
+			@Digits(fraction = 0, integer = 3)
+			@QueryParam("courseID") Integer courseID) throws ValidationException{
 		boolean res = adminOperation.deleteCourse(courseID);
 		if(res==false) {
 			return ResponseHelpers.badRequest(null, "Failed to delete Course ");
@@ -173,7 +188,16 @@ public class AdminRESTAPI {
 	@Path("/allotProfessor")
 	@Consumes("application/json")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response allotProfessor(@NotNull @QueryParam("courseID") Integer courseID,@NotNull @QueryParam("professorID") Integer professorID) {
+	public Response allotProfessor(
+			@NotNull
+			@DecimalMin(value = "100", message = "courseID value has to be of 3 digits")
+			@Digits(fraction = 0, integer = 3)
+			@QueryParam("courseID") Integer courseID, 
+			
+			@NotNull
+			@DecimalMin(value = "100", message = "ProfessorID value has to be of 3 digits")
+			@Digits(fraction = 0, integer = 3)
+			@QueryParam("professorID") Integer professorID) throws ValidationException{
 		boolean res = adminOperation.allotCourse(courseID,professorID);
 		if(res==false) {
 			return ResponseHelpers.badRequest(null, "Failed to Allocate Course");
@@ -185,7 +209,11 @@ public class AdminRESTAPI {
 	@Path("/approveStudent")
 	@Consumes("application/json")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response approveStudent(@NotNull @QueryParam("studentID") Integer studentID) {
+	public Response approveStudent(
+			@NotNull
+			@DecimalMin(value = "100", message = "studentID value has to be of 3 digits")
+			@Digits(fraction = 0, integer = 3)
+			@QueryParam("studentID") Integer studentID) throws ValidationException{
 		boolean res = adminOperation.approveStudents(studentID);
 		JSONObject msg = new JSONObject();
 		if(res==false) {

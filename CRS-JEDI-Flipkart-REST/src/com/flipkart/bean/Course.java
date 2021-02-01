@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -18,6 +19,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Course {
 	
 	@NotNull
+	@DecimalMin(value = "100", message = "CourseID has to be of 3 digits")
+	@Digits(fraction = 0, integer = 3)
     private int courseID;
     
 	@NotNull
