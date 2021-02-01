@@ -3,6 +3,8 @@ package com.flipkart.service;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
@@ -69,7 +71,7 @@ public class AdminOperation implements AdminInterface {
 	 * Adds New Professor to the table and throws Exception 
 	 * if Failed to Add
 	 */
-	public int addProfessor(String password, Professor prof) {
+	public int addProfessor(String password, @Valid Professor prof) {
 		// TODO Auto-generated method stub
 		
 		int res = 0;
@@ -124,36 +126,36 @@ public class AdminOperation implements AdminInterface {
 	 * if Failed to Add
 	 */
 	@Override
-	public void addAdmin() {
+	public int addAdmin(Admin admin, String pwd1) {
 		// TODO Auto-generated method stub
-		
+		int res = 0;
 		try {
-			Scanner sc = new Scanner(System.in);
-			logger.info("Enter the new email : ");
+//			Scanner sc = new Scanner(System.in);
+//			logger.info("Enter the new email : ");
+//	
+//			
+//			String email = ValidationOperation.readEmail();
+//			if (email.equals("-1")){
+//				throw new AdminCRSException("Admin Not Added\n");
+//			}
+//			String pwd1 = ValidationOperation.readPassword();
+//	
+//			Admin admin = new Admin();
+//			admin.setEmail(email);
+//			logger.info("Enter name : ");
+//			admin.setUserName(sc.nextLine());
+//			logger.info("Enter address : ");
+//			admin.setAddress(sc.nextLine());
+//			logger.info("Enter Age : ");
+//			admin.setAge(Integer.parseInt(sc.nextLine()));
+//			logger.info("Enter Gender : (male/female) : ");
+//			admin.setGender(sc.nextLine());
+//			logger.info("Enter contact number : ");
+//			admin.setContact(sc.nextLine());
+//			logger.info("Enter nationality : ");
+//			admin.setNationality(sc.nextLine());
 	
-			
-			String email = ValidationOperation.readEmail();
-			if (email.equals("-1")){
-				throw new AdminCRSException("Admin Not Added\n");
-			}
-			String pwd1 = ValidationOperation.readPassword();
-	
-			Admin admin = new Admin();
-			admin.setEmail(email);
-			logger.info("Enter name : ");
-			admin.setUserName(sc.nextLine());
-			logger.info("Enter address : ");
-			admin.setAddress(sc.nextLine());
-			logger.info("Enter Age : ");
-			admin.setAge(Integer.parseInt(sc.nextLine()));
-			logger.info("Enter Gender : (male/female) : ");
-			admin.setGender(sc.nextLine());
-			logger.info("Enter contact number : ");
-			admin.setContact(sc.nextLine());
-			logger.info("Enter nationality : ");
-			admin.setNationality(sc.nextLine());
-	
-			int res = adminDAO.addAdmin(pwd1, admin);
+			res = adminDAO.addAdmin(pwd1, admin);
 			if (res == 1) {
 				logger.info("Admin added successfully");
 			} else {
@@ -167,6 +169,8 @@ public class AdminOperation implements AdminInterface {
 		{
 			logger.warn(e.getMessage());
 		}
+		
+		return res;
 	}
 
 	/**
