@@ -24,7 +24,7 @@ public class Course {
     private int courseID;
     
 	@NotNull
-    @Size(min = 2, max = 30, message = "The length of Course Name should be between 1 to 25")
+    @Size(min = 2, max = 30, message = "The length of Course Name should be between 2 to 30")
     private String courseName;
     
     private int professorAllotted;
