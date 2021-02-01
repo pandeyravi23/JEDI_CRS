@@ -18,6 +18,8 @@ import com.flipkart.service.StudentOperation;
 import com.flipkart.util.ResponseHelpers;
 
 /**
+ * Class to handle all Student related API operations.
+ * 
  * @author JEDI04
  *
  */
@@ -29,6 +31,14 @@ public class StudentRESTAPI {
 	private Student student = null;
 	private User user = null;
 	
+	
+	/**
+     * Method to get the details of a student.
+     *
+     * @param id of the student whose details are to be fetched 
+     * @return Response success when request serviced else bad request.
+     * @throws ValidationException  
+     */
 	@GET
 	@Path("/details/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -45,6 +55,12 @@ public class StudentRESTAPI {
 	}
 	
 	
+	/**
+     * Method to get all the courses in course catalog.
+     *
+     * @return Response success when request serviced else bad request.
+     * @throws ValidationException  
+     */
 	@GET
 	@Path("/allCourses")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -56,6 +72,14 @@ public class StudentRESTAPI {
 		return ResponseHelpers.success(allCourses, "Success Updated");
 	}
 	
+	
+	/**
+     * Method to get the courses a student has registered for.
+     *
+     * @param id of the student whose details are to be fetched 
+     * @return Response success when request serviced else bad request.
+     * @throws ValidationException  
+     */
 	@GET
 	@Path("/registeredCourses/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -79,6 +103,13 @@ public class StudentRESTAPI {
 	}
 	
 	
+	/**
+     * Method to get the grades a student has attained.
+     *
+     * @param id of the student whose details are to be fetched 
+     * @return Response success when request serviced else bad request.
+     * @throws ValidationException  
+     */
 	@GET
 	@Path("/grades/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -95,6 +126,14 @@ public class StudentRESTAPI {
 	}
 	
 	
+	/**
+     * Method to add a course to registered courses of a student.
+     *
+     * @param courseID ID of the course which is to be added
+     * @param studentID ID of student   
+     * @return Response success when request serviced else bad request.
+     * @throws ValidationException  
+     */
 	@POST
 	@Path("/addCourse")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -116,6 +155,15 @@ public class StudentRESTAPI {
 		return ResponseHelpers.successPost(courseID, "Course with ID " + courseID + " succesfully added");
 	}
 	
+	
+	/**
+     * Method to delete a course to registered courses of a student.
+     *
+     * @param courseID ID of the course which is to be deleted
+     * @param studentID ID of student   
+     * @return Response success when request serviced else bad request.
+     * @throws ValidationException  
+     */
 	@DELETE
 	@Path("/deleteCourse")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -138,8 +186,14 @@ public class StudentRESTAPI {
 	}
 	
 	
-	
-	// TODO: Make sure validation with ArrayList works
+	/**
+     * Method to register courses for a student.
+     *
+     * @param courseCart ArrayList that contains current course selections
+     * @param studentID ID of student   
+     * @return Response success when request serviced else bad request.
+     * @throws ValidationException  
+     */
 	@POST
 	@Path("/registerCourses/{studentID}")
 	@Consumes("application/json")
@@ -163,6 +217,22 @@ public class StudentRESTAPI {
 	}
 	
 	
+	/**
+     * Method to register a new student into the system.
+     *
+     * @param email Email of the new student
+     * @param password Password of the new student
+     * @param name Name of the new student
+     * @param age Age of the new student
+     * @param address Address of the new student
+     * @param contact Contact of the new student
+     * @param gender Gender of the new student
+     * @param nationality Nationality of the new student
+     * @param branch Branch of the new student
+     * @param rollno Roll number of the new student   
+     * @return Response success when request serviced else bad request.
+     * @throws ValidationException  
+     */
 	@POST
 	@Path("/registerStudent")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -240,6 +310,19 @@ public class StudentRESTAPI {
 	}
 
 	
+	/**
+     * Method to update details of a student.
+     *
+     * @param studentID ID of the student
+     * @param name Name of the student
+     * @param age Age of the student
+     * @param address Address of the student
+     * @param contact Contact of the student
+     * @param gender Gender of the student
+     * @param nationality Nationality of the student   
+     * @return Response success when request serviced else bad request.
+     * @throws ValidationException  
+     */
 	@PUT
 	@Path("/updateInfo")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -286,6 +369,14 @@ public class StudentRESTAPI {
 	}	
 	
 	
+	/**
+     * Method to make payment after course registration.
+     *
+     * @param studentID ID of student
+     * @param method Payment method chosen by student   
+     * @return Response success when request serviced else bad request.
+     * @throws ValidationException  
+     */
 	@PUT
 	@Path("/payment/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
