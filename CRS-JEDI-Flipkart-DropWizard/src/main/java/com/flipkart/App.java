@@ -27,8 +27,7 @@ public class App extends Application<Configuration> {
     @Override
     public void run(Configuration c, Environment e) throws Exception {
         LOGGER.info("Registering REST resources");
-        // All the rest services are to be registered here using this syntax
-        e.jersey().register(new HelloRestController());
+      
         e.jersey().register(new AdminRESTAPI());
         e.jersey().register(new ProfessorRESTAPI());
         e.jersey().register(new StudentRESTAPI());

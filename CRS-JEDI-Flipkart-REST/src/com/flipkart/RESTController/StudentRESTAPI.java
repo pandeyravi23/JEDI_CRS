@@ -115,7 +115,7 @@ public class StudentRESTAPI {
 			@FormParam("studentID") int studentID) throws ValidationException {
 		student = studentOperation.getStudentByID(studentID);
 		if(student == null) {
-			return ResponseHelpers.badRequest(null, "Studentt with id: " + studentID + " doesn't exist");
+			return ResponseHelpers.badRequest(null, "Student with id: " + studentID + " doesn't exist");
 		}
 		studentOperation.addCourse(student, courseID);
 		return ResponseHelpers.successPost(courseID, "Course with ID " + courseID + " succesfully added");
