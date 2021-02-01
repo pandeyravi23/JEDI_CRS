@@ -18,7 +18,6 @@ import com.flipkart.bean.Course;
 import com.flipkart.bean.Grades;
 import com.flipkart.bean.Student;
 import com.flipkart.bean.User;
-import com.flipkart.client.StudentCRSMenu;
 import com.flipkart.service.AuthCredentialSystemOperations;
 import com.flipkart.service.StudentOperation;
 import com.flipkart.util.ResponseHelpers;
