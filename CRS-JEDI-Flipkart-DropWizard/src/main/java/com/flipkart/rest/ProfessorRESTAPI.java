@@ -54,6 +54,12 @@ public class ProfessorRESTAPI {
 		return ResponseHelpers.badRequest(null, "No Allotted Courses");
 	}
 	
+	/**
+	 * Method to view enrolled students
+	 * @param courseID course Id
+	 * @return Response containing list of enrolled students
+	 * @throws ValidationException
+	 */
 	@GET
 	@Path("/enrolledStudents")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -67,7 +73,12 @@ public class ProfessorRESTAPI {
 		return ResponseHelpers.success(arr, "Success");
 	}
 	
-	
+	/**
+	 * Method to view student grades
+	 * @param courseID course id
+	 * @return Response returns students grades
+	 * @throws ValidationException
+	 */
 	@GET
 	@Path("/viewGrades")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -82,7 +93,14 @@ public class ProfessorRESTAPI {
 		return ResponseHelpers.badRequest(null, "No student to view grades");
 	}
 	
-	
+	/**
+	 * Method to view update grade
+	 * @param courseID course id
+	 * @param studentID student id
+	 * @param grade grade
+	 * @return response containing status of grade updated
+	 * @throws ValidationException
+	 */
 	@PUT
 	@Path("/updateGrade")
 	@Produces(MediaType.APPLICATION_JSON)
