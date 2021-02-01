@@ -57,9 +57,6 @@ public class AdminRESTAPI {
 			return ResponseHelpers.badRequest(reportCard, "Unable to generate report card for id : "  + id);
 		return ResponseHelpers.success(reportCard, "Report Card for " + id + "successfully generated.");
 		
-//		if(reportCard.size() == 0)
-//			return Response.status(400).entity("No students found.").build();
-//		return Response.status(200).entity(reportCard.toString()).build();
 		
 	}
 	
@@ -76,19 +73,6 @@ public class AdminRESTAPI {
 		return ResponseHelpers.success(students, "Success");
 	}
 	
-//	@POST
-//	@Path("/addProfessor")
-////	@Consumes("application/json")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public Response addProfessor(@FormParam("password") String password, @FormParam("professor") Professor prof)
-//	{
-//		
-////		{"userId":115, "userName":"Prof Bhavya", "role":"Testprof", "email":"profbhavya@gmail.com", "department":"ENI", "address":"prof ka ghar", "age":40, "gender":"male", "contact":"9660054658", "nationality":"indian"}
-//		int status = adminOperation.addProfessor(password, prof);
-//		if(status == 1)
-//			return Response.status(200).entity("Professor added successfully.").build();
-//		return Response.status(400).entity("Professor could not be added.").build();
-//	}
 	
 	@POST
 	@Path("/addProfessor")
@@ -110,11 +94,6 @@ public class AdminRESTAPI {
 		System.out.println(password);
 		
 		int status = adminOperation.addProfessor(password, prof);
-//		{"userId":115, "userName":"Prof Bhavya", "role":"Testprof", "email":"profbhavya@gmail.com", "department":"ENI", "address":"prof ka ghar", "age":40, "gender":"male", "contact":"9660054658", "nationality":"indian"}
-//		int status = adminOperation.addProfessor(password, prof);
-//		if(status == 1)
-//			return Response.status(200).entity("Professor added successfully.").build();
-//		return Response.status(400).entity("Professor could not be added.").build();
 		
 		if(status == 0)
 		{
@@ -149,6 +128,11 @@ public class AdminRESTAPI {
 	}
 	
 
+	/**
+	 * Opens the Registration Window for course registration
+	 * @return Response
+	 */
+	
 	@PUT
 	@Path("/openRegistration")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -161,6 +145,11 @@ public class AdminRESTAPI {
 
 	}
 
+	
+	/**
+	 * Closes the Registration Window for course registration
+	 * @return Response
+	 */
 	
 	@PUT
 	@Path("/closeRegistration")
@@ -175,6 +164,13 @@ public class AdminRESTAPI {
 	
 
 	
+	/**
+	 * Adds new course in course catalog
+	 * @param course
+	 * @return Response
+	 * @throws ValidationException
+	 */
+	
 	@POST
 	@Path("/addCourse")
 	@Consumes("application/json")
@@ -186,6 +182,14 @@ public class AdminRESTAPI {
 		}
 		return ResponseHelpers.badRequest(null, "Course Add Failed");
 	}
+	
+	
+	/**
+	 * Deletes course from course catalog and course table
+	 * @param courseID
+	 * @return Response
+	 * @throws ValidationException
+	 */
 	
 	
 	@DELETE
@@ -203,6 +207,16 @@ public class AdminRESTAPI {
 		}
 		return ResponseHelpers.success(null, "Course Deleted Successfully");
 	}
+	
+	
+	
+	/**
+	 * Allot course to the professor
+	 * @param courseID
+	 * @param professorID
+	 * @return Respose
+	 * @throws ValidationException
+	 */
 	
 	
 	@PUT 
@@ -225,6 +239,15 @@ public class AdminRESTAPI {
 		}
 		return ResponseHelpers.success(null, "Course Alloted Successfully");
 	}
+	
+	
+	/**
+	 * Approves New Student's Registration by entering studentID
+	 *
+	 * @param studentID
+	 * @return Response
+	 * @throws ValidationException
+	 */
 	
 	@PUT
 	@Path("/approveStudent")
