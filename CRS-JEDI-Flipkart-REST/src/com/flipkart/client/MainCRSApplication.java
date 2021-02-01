@@ -151,7 +151,7 @@ public class MainCRSApplication {
 					break;
 				case 3: // Admin
 					AdminCRSMenu adminClient = new AdminCRSMenu();
-					adminClient.AdminClient();
+//					adminClient.AdminClient();
 					break;
 					
 				default: 
