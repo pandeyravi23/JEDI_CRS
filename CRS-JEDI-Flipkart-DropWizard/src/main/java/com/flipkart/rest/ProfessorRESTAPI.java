@@ -35,7 +35,7 @@ public class ProfessorRESTAPI {
 	ProfessorOperation professorOperation = ProfessorOperation.getInstance();
 	
 	/**
-	 * Get the list of alloted course
+	 * Get the list of alloted courses
 	 * @param professorId
 	 * @return Response
 	 * @throws ValidationException
