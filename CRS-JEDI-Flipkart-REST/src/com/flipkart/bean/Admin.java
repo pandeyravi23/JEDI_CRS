@@ -18,14 +18,11 @@ import com.flipkart.bean.User;
  *
  */
 public class Admin extends User {
-	@NotNull
 	private int adminId;
 	
-	@NotNull
 	@Size(min = 2, max = 30, message = "The length of Username should be between 2 to 25")
 	private String adminName;
 	
-	@NotNull
 	@Pattern(message = "Invalid Email Address->" +
             "Valid emails:user@gmail.com or my.user@domain.com etc.",
             regexp = "^[a-zA-Z0-9_!#$%&�*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")

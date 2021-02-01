@@ -4,7 +4,7 @@
 package com.flipkart.validator;
 
 /**
- * @author parth
+ * @author JEDI04
  *
  */
 import org.glassfish.jersey.server.ResourceConfig;
@@ -20,4 +20,6 @@ public class ApplicationConfig extends ResourceConfig {
 		register(AdminRESTAPI.class);
 		register(ProfessorRESTAPI.class);
 	}
+
 }
+
