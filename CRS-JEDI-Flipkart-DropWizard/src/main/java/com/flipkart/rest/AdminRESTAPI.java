@@ -37,11 +37,23 @@ import com.google.gson.Gson;
 import com.flipkart.util.ResponseHelpers;
 import com.flipkart.util.ValidationOperation;
 
-
+/**
+ * Handles Admin related functionality 
+ * through rest services
+ * 
+ * @author JEDI04
+ * 
+ */
 @Path("/admin")
 public class AdminRESTAPI {
 	AdminOperation adminOperation = AdminOperation.getInstance();
 	
+	/**
+	 * 
+	 * @param id Student ID
+	 * @return Response object containing report card
+	 * @throws ValidationException
+	 */
 	@GET
 	@Path("/getReportCard")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -60,6 +72,10 @@ public class AdminRESTAPI {
 		
 	}
 	
+	/**
+	 * Returns list of registered students
+	 * @return Response object containing list of registered students
+	 */
 	@GET
 	@Path("/getRegisteredStudents")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -73,7 +89,11 @@ public class AdminRESTAPI {
 		return ResponseHelpers.success(students, "Success");
 	}
 	
-	
+	/**
+	 * Functionality to add professor
+	 * @param str Details of professor to be added
+	 * @return Response object containing status
+	 */
 	@POST
 	@Path("/addProfessor")
 	@Consumes("text/plain")
@@ -104,7 +124,12 @@ public class AdminRESTAPI {
 		
 	}
 	
-	
+	/**
+	 * Functionality to add admin
+	 * @param helper Admin helper object containing deatils of admin
+	 * @return Response object containing status
+	 * @throws ValidationException
+	 */
 	@POST
 	@Path("/addAdmin")
 	@Consumes("application/json")
