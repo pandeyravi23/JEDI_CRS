@@ -11,8 +11,6 @@ import org.glassfish.jersey.server.ResourceConfig;
 
 import com.flipkart.RESTController.*;
 
-
-
 public class ApplicationConfig extends ResourceConfig {
 
 	public ApplicationConfig() {
@@ -20,6 +18,5 @@ public class ApplicationConfig extends ResourceConfig {
 		register(AdminRESTAPI.class);
 		register(ProfessorRESTAPI.class);
 	}
-
 }
 
