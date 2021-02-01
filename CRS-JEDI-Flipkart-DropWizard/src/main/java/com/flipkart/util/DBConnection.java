@@ -1,5 +1,6 @@
 package com.flipkart.util;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -31,7 +32,14 @@ public class DBConnection {
             try {
             	Properties prop = new Properties();
                 //InputStream inputStream = DBConnection.class.getClassLoader().getResourceAsStream("./configs.properties");
-            	InputStream inputStream = new FileInputStream("C:\\Users\\chinm\\OneDrive\\Desktop\\Flipkart_Internship\\JEDI_Bootcamp\\GitRepo\\JEDI_SRS\\CRS-JEDI-Flipkart-DropWizard\\src\\configs.properties");
+
+            	//InputStream inputStream = new FileInputStream("C:\\Users\\chinm\\OneDrive\\Desktop\\Flipkart_Internship\\JEDI_Bootcamp\\GitRepo\\JEDI_SRS\\CRS-JEDI-Flipkart-DropWizard\\src\\configs.properties");
+
+            	String filePath = new File("").getAbsolutePath();
+            	System.out.println(filePath);
+    			InputStream inputStream = new FileInputStream(filePath.concat("/src/configs.properties"));
+//            	InputStream inputStream = new FileInputStream("D:\\JEDI\\CRS\\JEDI_SRS\\CRS-JEDI-Flipkart-DropWizard\\src\\configs.properties");
+
                 prop.load(inputStream);
                 String driver = prop.getProperty("driver");
                 String url = prop.getProperty("url");
