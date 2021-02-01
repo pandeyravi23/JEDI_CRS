@@ -17,7 +17,7 @@ public class HelloRestController {
 	 @Path("/hello")
 	 @Produces(MediaType.APPLICATION_JSON)
     public String getEmployees() {
-        return "my dropwizard service";
+        return "Hello there";
     }
 
 }
