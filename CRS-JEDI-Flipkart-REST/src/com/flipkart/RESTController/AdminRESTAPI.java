@@ -47,6 +47,8 @@ import com.flipkart.util.ValidationOperation;
 /**
  * Handles Admin related functionality through rest services
  * 
+ * Validators NotNull-checks for null values, Size checks for
+ * length of string and DecimalMin/DecimalMax checks for integer range
  * @author JEDI04
  * 
  */
@@ -137,6 +139,7 @@ public class AdminRESTAPI {
 	 * 
 	 * @param str Details of professor to be added
 	 * @return Response object containing status
+	 * @throws ValidationException
 	 */
 	@POST
 	@Path("/addProfessor")
@@ -256,7 +259,7 @@ public class AdminRESTAPI {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addCourse(@Valid Course course) throws ValidationException {
 		try {
-			boolean res = adminOperation.addCourse2(course);
+			boolean res = adminOperation.addCourse(course);
 			if (res) {
 				return ResponseHelpers.successPost(course, "Course Added Successfully");
 			}

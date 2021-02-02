@@ -50,6 +50,9 @@ public class AdminOperation implements AdminInterface {
 	 * Generate Report Card for a given Student Id
 	 * 
 	 * @param sid Student ID of the student whose report card is to be generated.
+	 * 
+	 * @return Report card as an ArrayList of JsonObjects.
+	 * @throws AdminCRSException,Exception
 	 */
 	@Override
 	public ArrayList<JSONObject> generateReportCard(int sid) throws AdminCRSException, Exception
@@ -63,6 +66,7 @@ public class AdminOperation implements AdminInterface {
 	 * Generated a lost of all the students who have successfully registered for courses and completed their requirements.
 	 * 
 	 * @return ArrayList of JsonObjects containing the name and id of the registered students.
+	 * @throws AdminCRSException,Exception
 	 */
 	public ArrayList<JSONObject> getRegisteredStudents() throws AdminCRSException, Exception
 	{
@@ -71,6 +75,9 @@ public class AdminOperation implements AdminInterface {
 
 	/**
 	 * Adds New Professor to the table and throws Exception if Failed to Add
+	 * 
+	 * @return Returns 1 if Professor is successfully added, else 0.
+	 * @throws AdminCRSException,Exception
 	 */
 	public int addProfessor(String password, Professor prof) throws AdminCRSException, Exception{
 		if(adminDAO.verifyEmail(prof.getEmail()) == false)
@@ -90,6 +97,11 @@ public class AdminOperation implements AdminInterface {
 
 	/**
 	 * Adds New Admin to the table and throws Exception if Failed to Add
+	 * 
+	 * @param admin	Admin object 
+	 * @param pwd1 Password
+	 * @return Returns 1 if admin is successfully added, else 0.
+	 * @throws AdminCRSException,Exception
 	 */
 	@Override
 	public int addAdmin(Admin admin, String pwd1) throws AdminCRSException, Exception{
@@ -117,37 +129,6 @@ public class AdminOperation implements AdminInterface {
 	public boolean approveStudents(int studentID) throws AdminCRSException,Exception {
 		// TODO Auto-generated method stub
 		return adminDAO.approveStudent(studentID);
-	}
-
-	/**
-	 * Adds course to catalog with the entered details throws exception if duplicate
-	 * course id is provided by the admin
-	 */
-	@Override
-	public void addCourse() {
-		// TODO Auto-generated method stub
-		//// Exception related to existing course ID
-		try {
-			logger.info("In addCourse method");
-			Course course = new Course();
-			Scanner sc = new Scanner(System.in);
-			logger.info("Enter Course Name");
-			course.setCourseName(sc.nextLine());
-			logger.info("Enter Course Id");
-			course.setCourseID(sc.nextInt());
-			logger.info("Enter Number of Credits");
-			course.setCredits(sc.nextInt());
-			boolean res = adminDAO.addCourse(course);
-			if (res == false)
-				throw new AdminCRSException("Failed to Add New Course");
-			logger.info("====================================");
-			logger.info("Add Course Status : " + res);
-			logger.info("====================================");
-		} catch (AdminCRSException e) {
-			logger.info(e.getMessage());
-		} catch (Exception e) {
-			logger.info(e.getMessage());
-		}
 	}
 
 	/**
@@ -201,10 +182,11 @@ public class AdminOperation implements AdminInterface {
 	/**
 	 * Displays list of registered students
 	 * 
+	 * @param course Course object
 	 * @throws ProfessorCRSException,Exception
 	 */
 
-	public boolean addCourse2(Course course) throws AdminCRSException, Exception {
+	public boolean addCourse(Course course) throws AdminCRSException, Exception {
 		// TODO Auto-generated method stub
 		//// Exception related to existing course ID
 		boolean res = false;

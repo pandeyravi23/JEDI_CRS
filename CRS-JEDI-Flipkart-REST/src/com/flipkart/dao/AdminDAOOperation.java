@@ -62,7 +62,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	 * 
 	 * @param email Email address of the new user to be added.
 	 * @return False if the email already exists in database else returns true.
-	 * 
+	 * @throws AdminCRSException,Exception
 	 */
 
 	public boolean verifyEmail(String email) {
@@ -93,6 +93,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	 *                 using its attributes.
 	 * 
 	 * @return Returns 1 if new admin is successfully added. Else returns 0.
+	 * @throws AdminCRSException,Exception
 	 */
 	public int addAdmin(String password, Admin admin) throws AdminCRSException, Exception{
 		String sqlQuery = SQLQueriesConstant.ADD_USER_TO_CREDENTIALS;
@@ -136,6 +137,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	 * @param prof     Details of the new professor sent using the Professor bean
 	 *                 class' attributes.
 	 * @return Returns 1 if professor is successfully added. Else returns 0.
+	 * 
 	 */	
 	public int addProfessor(String password, Professor prof) throws AdminCRSException, Exception{
 		String credQuery = SQLQueriesConstant.ADD_USER_TO_CREDENTIALS;
@@ -178,7 +180,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	 * 
 	 * @param studentId StudentID of the student whose report card is to be
 	 *                  generated.
-	 * 
+	 * @throws AdminCRSException,Exception
 	 */
 
 	
@@ -434,8 +436,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	
 	/**
 	 * Shows list of all unapproved students
-	 * @return ArrayList of JSON object containing student information 
-	 * who are unapproved
+	 * @return ArrayList of JSON object containing student information who are unapproved.
 	 * @throws AdminCRSException,Exception
 	 */
 	public ArrayList<JSONObject> showunapproved() throws AdminCRSException,Exception{
@@ -466,6 +467,9 @@ public class AdminDAOOperation implements AdminDAOInterface {
 
 	/**
 	 * Displays List of all registered students
+	 * 
+	 * @return ArrayList with details of registered students.
+	 * @throws AdminCRSException,Exception
 	 */
 	public ArrayList<JSONObject> getRegisteredStudents() throws AdminCRSException, Exception{
 		ArrayList<JSONObject> students = new ArrayList<JSONObject>();
