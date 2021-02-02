@@ -23,7 +23,6 @@ public interface AdminInterface {
 	public int addProfessor(String password, Professor prof) throws AdminCRSException,Exception;
 	public int addAdmin(Admin admin, String pwd1) throws AdminCRSException, Exception;
 	public boolean approveStudents(int studentID) throws AdminCRSException, Exception;
-	public void addCourse();
 	public boolean deleteCourse(int courseID) throws AdminCRSException, Exception;
 	public boolean startRegistrationWindow() throws Exception;
 	public boolean closeRegistrationWindow() throws Exception;

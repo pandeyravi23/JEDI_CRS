@@ -22,6 +22,8 @@ import com.flipkart.util.ResponseHelpers;
 /**
  * Class to handle all Student related API operations.
  * 
+ * Validators NotNull-checks for null values, Size checks for
+ * length of string and DecimalMin/DecimalMax checks for integer range
  * @author JEDI04
  *
  */
