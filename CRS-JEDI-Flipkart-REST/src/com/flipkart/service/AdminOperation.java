@@ -1,5 +1,6 @@
 package com.flipkart.service;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -238,27 +239,24 @@ public class AdminOperation implements AdminInterface {
 
 	/**
 	 * Opens registration window.
+	 * 
+	 * @throws Exception
 	 */
-	public boolean startRegistrationWindow() {
+	public boolean startRegistrationWindow() throws Exception {
 		boolean res = false;
-		try {
-			res = adminDAO.startRegistrationWindow();
-		} catch (Exception e) {
-			logger.info(e.getMessage());
-		}
+		res = adminDAO.startRegistrationWindow();
+
 		return res;
 	}
 
 	/**
 	 * Closes registration window.
+	 * @throws Exception 
 	 */
-	public boolean closeRegistrationWindow() {
+	public boolean closeRegistrationWindow() throws Exception {
 		boolean res = false;
-		try {
-			res = adminDAO.closeRegistrationWindow();
-		} catch (Exception e) {
-			logger.info(e.getMessage());
-		}
+		res = adminDAO.closeRegistrationWindow();
+
 		return res;
 	}
 

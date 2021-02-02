@@ -380,39 +380,31 @@ public class AdminDAOOperation implements AdminDAOInterface {
 
 	/**
 	 * Opens registration window.
+	 * @throws SQLException, Exception
 	 */
-	public boolean startRegistrationWindow() {
-		;
+	public boolean startRegistrationWindow() throws SQLException, Exception {
+
 		boolean res = false;
-		try {
-			ps = connection.prepareStatement(SQLQueriesConstant.OPEN_REGISTRATION_WINDOW);
-			if (ps.executeUpdate() > 0) {
-				res = true;
-				logger.info("Registration Window Started.\n");
-			}
-		} catch (SQLException e) {
-			logger.info(e.getMessage());
-		} catch (Exception e) {
-			logger.info(e.getMessage());
+
+		ps = connection.prepareStatement(SQLQueriesConstant.OPEN_REGISTRATION_WINDOW);
+		if (ps.executeUpdate() > 0) {
+			res = true;
+			logger.info("Registration Window Started.\n");
 		}
+
 		return res;
 	}
 
 	/**
 	 * Closes registration window.
+	 * @throws SQLException, Exception
 	 */
-	public boolean closeRegistrationWindow() {
+	public boolean closeRegistrationWindow() throws SQLException, Exception {
 		boolean res = false;
-		try {
-			ps = connection.prepareStatement(SQLQueriesConstant.CLOSE_REGISTRATION_WINDOW);
-			if (ps.executeUpdate() > 0) {
-				res = true;
-				logger.info("Registration Window Closed.\n");
-			}
-		} catch (SQLException e) {
-			logger.info(e.getMessage());
-		} catch (Exception e) {
-			logger.info(e.getMessage());
+		ps = connection.prepareStatement(SQLQueriesConstant.CLOSE_REGISTRATION_WINDOW);
+		if (ps.executeUpdate() > 0) {
+			res = true;
+			logger.info("Registration Window Closed.\n");
 		}
 		return res;
 	}

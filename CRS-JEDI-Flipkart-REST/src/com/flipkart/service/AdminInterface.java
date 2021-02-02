@@ -22,7 +22,7 @@ public interface AdminInterface {
 	public boolean approveStudents(int studentID);
 	public void addCourse();
 	public boolean deleteCourse(int courseID);
-	public boolean startRegistrationWindow();
-	public boolean closeRegistrationWindow();
+	public boolean startRegistrationWindow() throws Exception;
+	public boolean closeRegistrationWindow() throws Exception;
 
 }
