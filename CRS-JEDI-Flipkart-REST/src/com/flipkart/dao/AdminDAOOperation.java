@@ -18,7 +18,6 @@ import com.flipkart.bean.Professor;
 import com.flipkart.util.DBConnection;
 import com.flipkart.constant.SQLQueriesConstant;
 import com.flipkart.exception.AdminCRSException;
-import com.flipkart.exception.StudentCRSException;
 
 /**
  * Data Access object for Admin class which is responsible for all the
@@ -94,41 +93,38 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	 * @return Returns 1 if new admin is successfully added. Else returns 0.
 	 */
 	
-	public int addAdmin(String password, Admin admin) {
-		try {
-			String sqlQuery = SQLQueriesConstant.ADD_USER_TO_CREDENTIALS;
-			ps = connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS);
+	public int addAdmin(String password, Admin admin) throws AdminCRSException, Exception{
+		String sqlQuery = SQLQueriesConstant.ADD_USER_TO_CREDENTIALS;
+		ps = connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS);
 
-			ps.setInt(1, 3);
-			ps.setString(2, admin.getEmail());
-			ps.setString(3, password);
-			ps.setInt(4, 1);
-			ps.setString(5, admin.getAddress());
-			ps.setInt(6, admin.getAge());
-			ps.setString(7, admin.getGender());
-			ps.setString(8, admin.getContact());
-			ps.setString(9, admin.getNationality());
+		ps.setInt(1, 3);
+		ps.setString(2, admin.getEmail());
+		ps.setString(3, password);
+		ps.setInt(4, 1);
+		ps.setString(5, admin.getAddress());
+		ps.setInt(6, admin.getAge());
+		ps.setString(7, admin.getGender());
+		ps.setString(8, admin.getContact());
+		ps.setString(9, admin.getNationality());
 
-			ps.executeUpdate();
-			ResultSet rs = ps.getGeneratedKeys();
+		int res = ps.executeUpdate();
+		if(res == 0)
+			throw new AdminCRSException("Failed to add admin to the credentials table.");
+		ResultSet rs = ps.getGeneratedKeys();
 
-			rs.next();
-			admin.setUserId(rs.getInt(1));
+		rs.next();
+		admin.setUserId(rs.getInt(1));
 
-			String adminQuery = SQLQueriesConstant.ADD_NEW_ADMIN;
-			ps = connection.prepareStatement(adminQuery);
-			ps.setInt(1, admin.getUserId());
-			ps.setString(2, admin.getUserName());
-			ps.setString(3, admin.getEmail());
-
-			ps.executeUpdate();
-			return 1;
-		} catch (SQLException e) {
-			logger.info(e.getMessage());
-		} catch (Exception e) {
-			logger.info(e.getMessage());
-		}
-		return 0;
+		String adminQuery = SQLQueriesConstant.ADD_NEW_ADMIN;
+		ps = connection.prepareStatement(adminQuery);
+		ps.setInt(1, admin.getUserId());
+		ps.setString(2, admin.getUserName());
+		ps.setString(3, admin.getEmail());
+		int res2 = ps.executeUpdate();
+		
+		if(res2 == 0)
+			throw new AdminCRSException("Failed to add new professor to the professor table.");
+		return 1;
 	}
 
 	/**
@@ -141,42 +137,39 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	 * @return Returns 1 if professor is successfully added. Else returns 0.
 	 */
 	
-	public int addProfessor(String password, Professor prof) {
-		try {
-			String credQuery = SQLQueriesConstant.ADD_USER_TO_CREDENTIALS;
-			ps = connection.prepareStatement(credQuery, Statement.RETURN_GENERATED_KEYS);
-			ps.setInt(1, 2);
-			ps.setString(2, prof.getEmail());
-			ps.setString(3, password);
-			ps.setInt(4, 1);
-			ps.setString(5, prof.getAddress());
-			ps.setInt(6, prof.getAge());
-			ps.setString(7, prof.getGender());
-			ps.setString(8, prof.getContact());
-			ps.setString(9, prof.getNationality());
+	public int addProfessor(String password, Professor prof) throws AdminCRSException, Exception{
+		String credQuery = SQLQueriesConstant.ADD_USER_TO_CREDENTIALS;
+		ps = connection.prepareStatement(credQuery, Statement.RETURN_GENERATED_KEYS);
+		ps.setInt(1, 2);
+		ps.setString(2, prof.getEmail());
+		ps.setString(3, password);
+		ps.setInt(4, 1);
+		ps.setString(5, prof.getAddress());
+		ps.setInt(6, prof.getAge());
+		ps.setString(7, prof.getGender());
+		ps.setString(8, prof.getContact());
+		ps.setString(9, prof.getNationality());
 
-			ps.executeUpdate();
-			ResultSet rs = ps.getGeneratedKeys();
+		int res = ps.executeUpdate();
+		if(res == 0)
+			throw new AdminCRSException("Failed to add professor to the credentials table.");
+		ResultSet rs = ps.getGeneratedKeys();
 
-			rs.next();
-			prof.setUserId(rs.getInt(1));
+		rs.next();
+		prof.setUserId(rs.getInt(1));
 
-			String profQuery = SQLQueriesConstant.ADD_NEW_PROFESSOR;
-			ps = connection.prepareStatement(profQuery);
-			ps.setInt(1, prof.getUserId());
-			ps.setString(2, prof.getUserName());
-			ps.setString(3, prof.getEmail());
-			ps.setString(4, prof.getRole());
-			ps.setString(5, prof.getDepartment());
-			ps.executeUpdate();
-
-			return 1;
-		} catch (SQLException e) {
-			logger.info(e.getMessage());
-		} catch (Exception e) {
-			logger.info(e.getMessage());
-		}
-		return 0;
+		String profQuery = SQLQueriesConstant.ADD_NEW_PROFESSOR;
+		ps = connection.prepareStatement(profQuery);
+		ps.setInt(1, prof.getUserId());
+		ps.setString(2, prof.getUserName());
+		ps.setString(3, prof.getEmail());
+		ps.setString(4, prof.getRole());
+		ps.setString(5, prof.getDepartment());
+		int res2 = ps.executeUpdate();
+		
+		if(res2 == 0)
+			throw new AdminCRSException("Failed to add new professor to the professor table.");
+		return 1;
 	}
 
 	/**
@@ -188,7 +181,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	 * 
 	 */
 	
-	public ArrayList<JSONObject> printGrades(int studentId) throws StudentCRSException, Exception{
+	public ArrayList<JSONObject> printGrades(int studentId) throws AdminCRSException, Exception{
 		ArrayList<JSONObject> grades = new ArrayList<JSONObject>();
 			String str = SQLQueriesConstant.GET_GRADES_BY_STUDENT_ID;
 			ps = connection.prepareStatement(str);
@@ -201,7 +194,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 			else {
 				logger.info("Student with ID " + studentId + " has not registered for any course!");
 				logger.info("=======================================");
-				throw new StudentCRSException("Student ID " + studentId + " does not exist.");
+				throw new AdminCRSException("Student ID " + studentId + " does not exist.");
 			}
 			logger.info("=======================================");
 			logger.info("        Report Card of " + name + " :");
@@ -461,7 +454,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	/**
 	 * Displays List of all registered students
 	 */
-	public ArrayList<JSONObject> getRegisteredStudents() throws StudentCRSException, Exception{
+	public ArrayList<JSONObject> getRegisteredStudents() throws AdminCRSException, Exception{
 		ArrayList<JSONObject> students = new ArrayList<JSONObject>();
 			
 		String  s = SQLQueriesConstant.GET_REGISTERED_STUDENTS;
@@ -469,7 +462,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 		ResultSet stl = ps.executeQuery();
 		logger.info("=======================================");
 		if (stl.next() == false) {
-			throw new StudentCRSException("No Student Exists.");
+			throw new AdminCRSException("No Student Exists.");
 		} else {
 			logger.info(String.format("%-10s\t%-15s", "StudentID", "Student Name"));
 			do {

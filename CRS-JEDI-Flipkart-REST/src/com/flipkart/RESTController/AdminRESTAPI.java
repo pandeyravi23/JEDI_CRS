@@ -8,10 +8,12 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.flipkart.dao.AdminDAOOperation;
+import com.flipkart.exception.AdminCRSException;
 import com.flipkart.exception.StudentCRSException;
 import com.flipkart.helper.AddAdminHelper;
 import com.flipkart.helper.AddProfessorHelper;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.validation.Valid;
@@ -70,10 +72,15 @@ public class AdminRESTAPI {
 		ArrayList<JSONObject> reportCard = new ArrayList<JSONObject>();
 		try {
 			 reportCard = adminOperation.generateReportCard(id);
-		}catch(StudentCRSException e)
+		}catch(AdminCRSException e)
 		{
 			return ResponseHelpers.badRequest(reportCard, e.getMessage());
-		}catch(Exception e)
+		}
+		catch(SQLException e)
+		{
+			return ResponseHelpers.somethingWentWrong("Some error occured in SQL.");
+		}
+		catch(Exception e)
 		{
 			return ResponseHelpers.somethingWentWrong(reportCard);
 		}
@@ -97,9 +104,13 @@ public class AdminRESTAPI {
 		try {
 			students = adminOperation.getRegisteredStudents();
 		}
-		catch(StudentCRSException e)
+		catch(AdminCRSException e)
 		{
 			return ResponseHelpers.badRequest(students, "No registered students found.");
+		}
+		catch(SQLException e)
+		{
+			return ResponseHelpers.somethingWentWrong("Some error occured in SQL.");
 		}
 		catch(Exception e)
 		{
@@ -125,10 +136,22 @@ public class AdminRESTAPI {
 	{
 		String password = helper.getPassword();
 		Professor prof = helper.getProf();
-		int status = adminOperation.addProfessor(password, prof);
-		if(status == 0)
+		int status = 0;
+		try{
+			status = adminOperation.addProfessor(password, prof);
+		}
+		catch(AdminCRSException e)
 		{
 			return ResponseHelpers.badRequest(status, "Professor entry " + prof.getEmail() + " already exists in database.");
+		}
+		catch(Exception e)
+		{
+			return ResponseHelpers.somethingWentWrong("Some internal error occured.");
+		}
+		
+		if(status == 0)
+		{
+			return ResponseHelpers.badRequest(status, "Professor entry " + prof.getEmail() + " already exists in the database.");
 		}
 		return ResponseHelpers.success(status, "Prof. " + prof.getUserName() + " added.");		
 	}
@@ -147,7 +170,20 @@ public class AdminRESTAPI {
 	{
 		Admin admin = helper.getAdmin();
 		String password = helper.getPassword();
-		int status = adminOperation.addAdmin(admin, password);
+		int status = 0;
+		try
+		{
+			status = adminOperation.addAdmin(admin, password);
+		}
+		catch(AdminCRSException e)
+		{
+			return ResponseHelpers.badRequest(status, "Admin entry " + admin.getEmail() + " already exists in the database.");	
+		}
+		catch(Exception e)
+		{
+			return ResponseHelpers.somethingWentWrong("Some internal error occured.");
+		}
+		
 		if(status == 0)
 		{
 			return ResponseHelpers.badRequest(status, "Admin entry " + admin.getEmail() + " already exists in database.");
