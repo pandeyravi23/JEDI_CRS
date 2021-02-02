@@ -46,6 +46,7 @@ public class ProfessorRESTAPI {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllottedCourses(
 			@NotNull
+			@DecimalMin(value = "100", message = "Professor ID has to be greater than 100")
 			@QueryParam("professorId") Integer professorId) throws ValidationException{ 
 		ArrayList<JSONObject> al = professorOperation.showCourses(professorId);
 		if (al.size()>0) {
@@ -65,6 +66,7 @@ public class ProfessorRESTAPI {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getEnrolledStudents(
 			@NotNull
+			@DecimalMin(value = "100", message = "Professor ID has to be greater than 100")
 			@QueryParam("courseID") Integer courseID) throws ValidationException{ 
 		ArrayList<JSONObject> arr = professorOperation.viewStudentsEnrolled(courseID);
 		if(arr.size()==0) {

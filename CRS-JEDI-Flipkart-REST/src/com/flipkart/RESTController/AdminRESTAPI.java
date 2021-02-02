@@ -8,7 +8,9 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.flipkart.dao.AdminDAOOperation;
+import com.flipkart.exception.StudentCRSException;
 import com.flipkart.helper.AddAdminHelper;
+import com.flipkart.helper.AddProfessorHelper;
 
 import java.util.ArrayList;
 
@@ -32,6 +34,7 @@ import org.json.JSONObject;
 import com.flipkart.bean.Admin;
 import com.flipkart.bean.Course;
 import com.flipkart.bean.Professor;
+import com.flipkart.bean.ReportCard;
 import com.flipkart.service.AdminOperation;
 import com.google.gson.Gson;
 import com.flipkart.util.ResponseHelpers;
@@ -49,9 +52,10 @@ public class AdminRESTAPI {
 	AdminOperation adminOperation = AdminOperation.getInstance();
 	
 	/**
+	 * Generates the report card of a student containing the course name, courseId and grade obtained in the course.
 	 * 
 	 * @param id Student ID
-	 * @return Response object containing report card
+	 * @return Response object containing report card as an ArrayList of JsonObjects.
 	 * @throws ValidationException
 	 */
 	@GET
@@ -59,21 +63,29 @@ public class AdminRESTAPI {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getReportCard(
 			@NotNull
-			@DecimalMin(value = "100", message = "Student ID has to be of 3 digits")
-			@Digits(fraction = 0, integer = 3)
+			@DecimalMin(value = "100", message = "Student ID has to be greater than 100")
+			@Digits(fraction = 0, integer = 3, message = "Student ID has to be of 3 digits")
 			@QueryParam("id") Integer id) throws ValidationException
 	{
-		ArrayList<JSONObject> reportCard = adminOperation.generateReportCard(id);
+		ArrayList<JSONObject> reportCard = new ArrayList<JSONObject>();
+		try {
+			 reportCard = adminOperation.generateReportCard(id);
+		}catch(StudentCRSException e)
+		{
+			return ResponseHelpers.badRequest(reportCard, e.getMessage());
+		}catch(Exception e)
+		{
+			return ResponseHelpers.somethingWentWrong(reportCard);
+		}
 		
 		if(reportCard.size() == 0)
 			return ResponseHelpers.badRequest(reportCard, "Unable to generate report card for id : "  + id);
 		return ResponseHelpers.success(reportCard, "Report Card for " + id + "successfully generated.");
-		
-		
 	}
 	
 	/**
 	 * Returns list of registered students
+	 * 
 	 * @return Response object containing list of registered students
 	 */
 	@GET
@@ -81,47 +93,44 @@ public class AdminRESTAPI {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getRegisteredStudents()
 	{
-		ArrayList<JSONObject> students =  adminOperation.getRegisteredStudents();
-		if(students.size() == 0)
-		{
-			return ResponseHelpers.badRequest(students, "No students found.");
+		ArrayList<JSONObject> students = new ArrayList<JSONObject>();
+		try {
+			students = adminOperation.getRegisteredStudents();
 		}
+		catch(StudentCRSException e)
+		{
+			return ResponseHelpers.badRequest(students, "No registered students found.");
+		}
+		catch(Exception e)
+		{
+			return ResponseHelpers.somethingWentWrong(students);
+		}
+		
+		if(students.size() == 0)
+			return ResponseHelpers.badRequest(students, "No registered students found.");
 		return ResponseHelpers.success(students, "Success");
 	}
 	
 	/**
 	 * Functionality to add professor
+	 * 
 	 * @param str Details of professor to be added
 	 * @return Response object containing status
 	 */
 	@POST
 	@Path("/addProfessor")
-	@Consumes("text/plain")
+	@Consumes("application/json")
 	@Produces(MediaType.APPLICATION_JSON)
-//	public void addProfessor(Professor obj, @PathParam("password") String password)
-	public Response addProfessor(String str)
+	public Response addProfessor(@Valid AddProfessorHelper helper) throws ValidationException
 	{
-		System.out.println(str);
-		JSONObject obj = new JSONObject(str);
-		
-		System.out.println(obj.toString());
-		System.out.println(obj.getString("userName"));
-		String password = obj.getString("password");
-		obj.remove("password");
-		Gson gson = new Gson();
-		Professor prof = gson.fromJson(obj.toString(), Professor.class);
-		System.out.println(prof.getUserName());
-		System.out.println(password);
-		
+		String password = helper.getPassword();
+		Professor prof = helper.getProf();
 		int status = adminOperation.addProfessor(password, prof);
-		
 		if(status == 0)
 		{
 			return ResponseHelpers.badRequest(status, "Professor entry " + prof.getEmail() + " already exists in database.");
 		}
-		
-		return ResponseHelpers.success(status, "Prof. " + prof.getUserName() + " added.");
-		
+		return ResponseHelpers.success(status, "Prof. " + prof.getUserName() + " added.");		
 	}
 	
 	/**
@@ -138,17 +147,11 @@ public class AdminRESTAPI {
 	{
 		Admin admin = helper.getAdmin();
 		String password = helper.getPassword();
-		
-		System.out.println(admin.toString());
-		System.out.println(password);
-		
 		int status = adminOperation.addAdmin(admin, password);
-		
 		if(status == 0)
 		{
 			return ResponseHelpers.badRequest(status, "Admin entry " + admin.getEmail() + " already exists in database.");
 		}
-		
 		return ResponseHelpers.success(status, "Admin " + admin.getUserName() + " added.");
 	}
 	
