@@ -28,7 +28,7 @@ public interface StudentDAOInterface {
 	
 	public void setPaymentStatus(Student student, String method) throws Exception;
 	
-	public void registerStudent(Student student, int id);
+	public void registerStudent(Student student, int id) throws Exception;
 
 	public void addCourseToGrades(int studentID, int courseID);
 

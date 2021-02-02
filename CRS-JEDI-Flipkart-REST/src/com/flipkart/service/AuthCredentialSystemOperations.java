@@ -93,18 +93,17 @@ public class AuthCredentialSystemOperations implements AuthCredentialSystemInter
 	 * @param password Password of the user
 	 */
 	public void registerStudent(User user, Student student, String password) throws Exception {
+		int id = -1;
+		if(userDaoOperation.checkEmailAvailability(user.getEmail()) == false) {
+			throw new CommonException("Another user has already registered with this email");
+		}
 		try {
-			int id = registerUser(user, password);
-			if(id == -1) {
-				throw new CommonException(">>>>>>>>> Entry could not be added. <<<<<<<<<");
-			}
+			id = registerUser(user, password);
 			studentDaoOperation.registerStudent(student, id);
 		}
-		catch(CommonException e) {
-			logger.warn(e.getMessage());
-		}
 		catch(Exception e) {
-			logger.warn(e.getMessage());
+			logger.info(e.getMessage());
+			throw e;
 		}
 	}
 
@@ -116,14 +115,9 @@ public class AuthCredentialSystemOperations implements AuthCredentialSystemInter
 	 * @return The id of the newly registered user
 	 */
 	@Override
-	public int registerUser(User user, String password) {
+	public int registerUser(User user, String password) throws Exception {
 		int id = -1;
-		try {
-			id = userDaoOperation.registerUser(user, password);
-		}
-		catch(Exception e) {
-			logger.warn(e.getMessage());
-		}
+		id = userDaoOperation.registerUser(user, password);
 		return id;
 	}
 

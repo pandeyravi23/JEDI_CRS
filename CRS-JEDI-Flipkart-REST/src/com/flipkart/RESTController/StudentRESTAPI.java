@@ -276,14 +276,14 @@ public class StudentRESTAPI {
 			@Size(min = 5, max = 30, message = "The length of password should be between 5 to 30")
 			@FormParam("password") String password,
 			
-			@Size(min = 5, max = 30, message = "The length of name should be between 5 to 30")
+			@Size(min = 3, max = 30, message = "The length of name should be between 5 to 30")
 			@FormParam("name") String name, 
 			
 			@DecimalMin(value = "15", message = "Student shall be minimum of age 15 yr")
 		    @DecimalMax(value = "30", message = "Student can not have age more than 30 yr")
 			@FormParam("age") Integer age, 
 			
-			@Size(min = 5, max = 30, message = "The length of address should be between 5 to 30")
+			@Size(min = 3, max = 30, message = "The length of address should be between 5 to 30")
 			@FormParam("address") String address, 
 			
 			@Size(min = 5, max = 30, message = "The length of contact should be between 5 to 30")
@@ -293,10 +293,10 @@ public class StudentRESTAPI {
             regexp = "^male$|^female$")
 			@FormParam("gender") String gender,
 			
-			@Size(min = 5, max = 30, message = "The length of nationality should be between 5 to 30")
+			@Size(min = 3, max = 30, message = "The length of nationality should be between 5 to 30")
 			@FormParam("nationality") String nationality, 
 			
-			@Size(min = 5, max = 30, message = "The length of branch should be between 5 to 30")
+			@Size(min = 2, max = 30, message = "The length of branch should be between 5 to 30")
 			@FormParam("branch") String branch, 
 			
 			@NotNull
@@ -341,7 +341,7 @@ public class StudentRESTAPI {
 			authentication.registerStudent(user, student, password);
 			return ResponseHelpers.successPost(student, "Successfully registered");
 		}
-		catch(StudentCRSException e) {
+		catch(CommonException e) {
 			return ResponseHelpers.badRequest(null, e.getMessage());
 		}
 		catch(Exception e) {

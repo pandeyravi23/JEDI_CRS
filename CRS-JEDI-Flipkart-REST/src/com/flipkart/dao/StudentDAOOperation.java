@@ -395,30 +395,19 @@ public class StudentDAOOperation implements StudentDAOInterface {
 	 * @param id The id that the student is to be registered with.
 	 */
 	@Override
-	public void registerStudent(Student student, int id) {
-		try {
-			connection = DBConnection.getConnection();
-			ps = connection.prepareStatement(SQLQueriesConstant.REGISTER_STUDENT_QUERY);
+	public void registerStudent(Student student, int id) throws Exception {
+		connection = DBConnection.getConnection();
+		ps = connection.prepareStatement(SQLQueriesConstant.REGISTER_STUDENT_QUERY);
 
-			ps.setInt(1, id);
-			ps.setString(2,  student.getUserName());
-			ps.setString(3,  student.getEmail());
-			ps.setInt(4, student.getRollNo());
-			ps.setString(5, student.getBranch());
-			ps.setBoolean(6, student.getIsRegistered());
-			ps.setBoolean(7, student.getPaymentStatus());
-			
-			ps.executeUpdate();
-		}
-		catch(SQLException e) {
-			logger.warn(e.getMessage() + "\n");
-		}
-		catch(Exception e) {
-			logger.warn(e.getMessage() + "\n");
-		}
-		finally {
-			// connection.close();
-		}
+		ps.setInt(1, id);
+		ps.setString(2, student.getUserName());
+		ps.setString(3, student.getEmail());
+		ps.setInt(4, student.getRollNo());
+		ps.setString(5, student.getBranch());
+		ps.setBoolean(6, student.getIsRegistered());
+		ps.setBoolean(7, student.getPaymentStatus());
+
+		ps.executeUpdate();
 	}
 	
 	/**
