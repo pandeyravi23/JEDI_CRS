@@ -12,6 +12,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * Class to interact with variables present in Course Class
  * using Getters and Setters Methods
+ * Validators NotNull-checks for null values, Size checks for
+ * length of string and DecimalMin/DecimalMax checks for integer range
  * @author JEDI04
  */
 

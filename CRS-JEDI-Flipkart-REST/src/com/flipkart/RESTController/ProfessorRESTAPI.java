@@ -29,6 +29,10 @@ import com.flipkart.service.ProfessorOperation;
 import com.flipkart.util.ResponseHelpers;
 
 /**
+ * 
+ * Handles all Http requests related to professor operations
+ * Validators NotNull-checks for null values, Size checks for
+ * length of string and DecimalMin/DecimalMax checks for integer range
  * @author JEDI04
  *
  */
