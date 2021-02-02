@@ -341,6 +341,7 @@ public class StudentRESTAPI {
 			student.setPaymentStatus(false);
 			
 			authentication.registerStudent(user, student, password);
+			student = studentOperation.getStudentByEmail(email);
 			return ResponseHelpers.successPost(student, "Successfully registered");
 		}
 		catch(CommonException e) {
