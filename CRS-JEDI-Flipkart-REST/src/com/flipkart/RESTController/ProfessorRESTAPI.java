@@ -5,6 +5,7 @@ package com.flipkart.RESTController;
 
 import java.util.ArrayList;
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
 import javax.validation.ValidationException;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -45,6 +46,8 @@ public class ProfessorRESTAPI {
 	@Path("/allottedCourses")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllottedCourses(
+			@DecimalMin(value = "100", message = "ProfessorID value has to be of 3 digits")
+			@Digits(fraction = 0, integer = 3)
 			@NotNull
 			@QueryParam("professorId") Integer professorId) throws ValidationException{ 
 		ArrayList<JSONObject> al = professorOperation.showCourses(professorId);
@@ -64,6 +67,8 @@ public class ProfessorRESTAPI {
 	@Path("/enrolledStudents")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getEnrolledStudents(
+			@DecimalMin(value = "100", message = "courseID value has to be of 3 digits")
+			@Digits(fraction = 0, integer = 3)
 			@NotNull
 			@QueryParam("courseID") Integer courseID) throws ValidationException{ 
 		ArrayList<JSONObject> arr = professorOperation.viewStudentsEnrolled(courseID);
@@ -83,6 +88,8 @@ public class ProfessorRESTAPI {
 	@Path("/viewGrades")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response viewGrades(
+			@DecimalMin(value = "100", message = "courseID value has to be of 3 digits")
+			@Digits(fraction = 0, integer = 3)
 			@NotNull
 			@QueryParam("courseID") Integer courseID) throws ValidationException{ 
 		ArrayList<JSONObject> al = professorOperation.viewGrades(courseID);
@@ -105,8 +112,13 @@ public class ProfessorRESTAPI {
 	@Path("/updateGrade")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateGrade(
+			@DecimalMin(value = "100", message = "courseID value has to be of 3 digits")
+			@Digits(fraction = 0, integer = 3)
 			@NotNull
 			@FormParam("courseID") Integer courseID,
+			
+			@DecimalMin(value = "100", message = "StudentID value has to be of 3 digits")
+			@Digits(fraction = 0, integer = 3)
 			@NotNull
 			@FormParam("studentID") Integer studentID,
 			@NotNull
