@@ -1,5 +1,6 @@
 package com.flipkart.service;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -14,11 +15,13 @@ import com.flipkart.bean.Course;
 import com.flipkart.bean.Professor;
 import com.flipkart.dao.AdminDAOOperation;
 import com.flipkart.exception.AdminCRSException;
+import com.flipkart.exception.ProfessorCRSException;
+import com.flipkart.exception.StudentCRSException;
 import com.flipkart.util.ValidationOperation;
 
 /**
- * Performs All the Admin Operations
- * and Extends Admin Interface
+ * Performs All the Admin Operations and Extends Admin Interface
+ * 
  * @author JEDI04
  *
  */
@@ -27,19 +30,16 @@ public class AdminOperation implements AdminInterface {
 
 	public static Logger logger = Logger.getLogger(AdminOperation.class);
 	AdminDAOOperation adminDAO = AdminDAOOperation.getInstance();
-	
+
 	// Method for lazy loading
 	private static AdminOperation instance = null;
-	
-	private AdminOperation()
-	{
-		
+
+	private AdminOperation() {
+
 	}
-	
-	synchronized public static AdminOperation getInstance()
-	{
-		if(instance == null)
-		{
+
+	synchronized public static AdminOperation getInstance() {
+		if (instance == null) {
 			instance = new AdminOperation();
 		}
 		return instance;
@@ -69,8 +69,7 @@ public class AdminOperation implements AdminInterface {
 	}
 
 	/**
-	 * Adds New Professor to the table and throws Exception 
-	 * if Failed to Add
+	 * Adds New Professor to the table and throws Exception if Failed to Add
 	 */
 	public int addProfessor(String password, Professor prof) throws AdminCRSException, Exception{
 		if(adminDAO.verifyEmail(prof.getEmail()) == false)
@@ -89,8 +88,7 @@ public class AdminOperation implements AdminInterface {
 	}
 
 	/**
-	 * Adds New Admin to the table and throws Exception
-	 * if Failed to Add
+	 * Adds New Admin to the table and throws Exception if Failed to Add
 	 */
 	@Override
 	public int addAdmin(Admin admin, String pwd1) throws AdminCRSException, Exception{
@@ -109,8 +107,7 @@ public class AdminOperation implements AdminInterface {
 	}
 
 	/**
-	 * Approves New Student's Registration After Viewing
-	 * the details 
+	 * Approves New Student's Registration After Viewing the details
 	 */
 	@Override
 	public boolean approveStudents(int studentID) {
@@ -119,9 +116,8 @@ public class AdminOperation implements AdminInterface {
 	}
 
 	/**
-	 * Adds course to catalog with the entered details
-	 * throws exception if duplicate course id is
-	 * provided by the admin
+	 * Adds course to catalog with the entered details throws exception if duplicate
+	 * course id is provided by the admin
 	 */
 	@Override
 	public void addCourse() {
@@ -138,23 +134,21 @@ public class AdminOperation implements AdminInterface {
 			logger.info("Enter Number of Credits");
 			course.setCredits(sc.nextInt());
 			boolean res = adminDAO.addCourse(course);
-			if(res==false)
+			if (res == false)
 				throw new AdminCRSException("Failed to Add New Course");
 			logger.info("====================================");
 			logger.info("Add Course Status : " + res);
 			logger.info("====================================");
 		} catch (AdminCRSException e) {
 			logger.info(e.getMessage());
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			logger.info(e.getMessage());
 		}
 	}
 
 	/**
-	 * Deletes course from course catalog and 
-	 * course tables with the entered course id 
-	 * by admin
+	 * Deletes course from course catalog and course tables with the entered course
+	 * id by admin
 	 */
 //	@Override
 	public boolean deleteCourse(int courseID) {
@@ -167,80 +161,63 @@ public class AdminOperation implements AdminInterface {
 		}
 		return false;
 	}
-	
-	
-	
+
 	/**
-	 * Allot course to professor with the entered 
-	 * course ID and Professor ID
-	 * by Admin
+	 * Allot course to professor with the entered course ID and Professor ID by
+	 * Admin
 	 */
 //	@Override
 	public boolean allotCourse(int courseID, int professorID) {
 		try {
 			adminDAO.showcourses();
 			adminDAO.showprofessor();
-			return adminDAO.allotCourses(courseID,professorID);
-		} catch(Exception e) {
+			return adminDAO.allotCourses(courseID, professorID);
+		} catch (Exception e) {
 			logger.info(e.getMessage());
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Opens registration window.
+	 * 
+	 * @throws Exception
 	 */
-	public boolean startRegistrationWindow()
-	{
+	public boolean startRegistrationWindow() throws Exception {
 		boolean res = false;
-		try {
-			res = adminDAO.startRegistrationWindow();
-		}
-		catch(Exception e)
-		{
-			logger.info(e.getMessage());
-		}
+		res = adminDAO.startRegistrationWindow();
+
 		return res;
 	}
-	
-	
+
 	/**
 	 * Closes registration window.
+	 * @throws Exception 
 	 */
-	public boolean closeRegistrationWindow()
-	{
+	public boolean closeRegistrationWindow() throws Exception {
 		boolean res = false;
-		try {
-			res = adminDAO.closeRegistrationWindow();
-		}
-		catch(Exception e)
-		{
-			logger.info(e.getMessage());
-		}
+		res = adminDAO.closeRegistrationWindow();
+
 		return res;
 	}
-	
+
 	/**
 	 * Displays list of registered students
+	 * 
+	 * @throws ProfessorCRSException,Exception
 	 */
-	
-	public boolean addCourse2(Course course) {
+
+	public boolean addCourse2(Course course) throws AdminCRSException, Exception {
 		// TODO Auto-generated method stub
 		//// Exception related to existing course ID
 		boolean res = false;
-		try {
-			res = adminDAO.addCourse(course);
-			if(res==false)
-				throw new AdminCRSException("Failed to Add New Course");
-			logger.info("====================================");
-			logger.info("Add Course Status : " + res);
-			logger.info("====================================");
-		} catch (AdminCRSException e) {
-			logger.info(e.getMessage());
-		}
-		catch (Exception e) {
-			logger.info(e.getMessage());
-		}
+		res = adminDAO.addCourse(course);
+		if (res == false)
+			throw new AdminCRSException("Failed to Add New Course");
+		logger.info("====================================");
+		logger.info("Add Course Status : " + res);
+		logger.info("====================================");
+
 		return res;
 	}
 }
