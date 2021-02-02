@@ -23,6 +23,7 @@ import javax.ws.rs.core.Response;
 import org.json.JSONObject;
 
 import com.flipkart.bean.Course;
+import com.flipkart.bean.Professor;
 import com.flipkart.exception.ProfessorCRSException;
 import com.flipkart.service.ProfessorOperation;
 import com.flipkart.util.ResponseHelpers;
@@ -48,11 +49,15 @@ public class ProfessorRESTAPI {
 	@Path("/allottedCourses")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllottedCourses(
-			@NotNull 
-			@DecimalMin(value = "100", message = "ProfessorID has to be of 3 digits")
-			@QueryParam("professorId") Integer professorId)
+			@DecimalMin(value = "100", message = "ProfessorID value has to be of 3 digits") @Digits(fraction = 0, integer = 3) @NotNull @QueryParam("professorId") Integer professorId)
 			throws ValidationException {
 		try {
+
+			String professorName = professorOperation.getProfessorById(professorId);
+			System.out.println("--------" + professorName);
+			if (professorName==null) {
+				return ResponseHelpers.badRequest(null, "No Professoor with " + professorId + " exists");
+			}
 			ArrayList<JSONObject> al = professorOperation.showCourses(professorId);
 			if (al.size() > 0) {
 				return ResponseHelpers.success(al, "Success");
@@ -77,7 +82,7 @@ public class ProfessorRESTAPI {
 	@Path("/enrolledStudents")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getEnrolledStudents(
-			@NotNull @DecimalMin(value = "100", message = "CourseID has to be of 3 digits") @QueryParam("courseID") Integer courseID)
+			@DecimalMin(value = "100", message = "courseID value has to be of 3 digits") @Digits(fraction = 0, integer = 3) @NotNull @QueryParam("courseID") Integer courseID)
 			throws ValidationException {
 		try {
 			ArrayList<JSONObject> arr = professorOperation.viewStudentsEnrolled(courseID);
@@ -103,9 +108,10 @@ public class ProfessorRESTAPI {
 	@GET
 	@Path("/viewGrades")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response viewGrades(@NotNull
-			@DecimalMin(value = "100", message = "ProfessorID has to be of 3 digits")
-			@QueryParam("courseID") Integer courseID) throws ValidationException {
+
+	public Response viewGrades(
+			@DecimalMin(value = "100", message = "courseID value has to be of 3 digits") @Digits(fraction = 0, integer = 3) @NotNull @QueryParam("courseID") Integer courseID)
+			throws ValidationException {
 		try {
 			ArrayList<JSONObject> al = professorOperation.viewGrades(courseID);
 			JSONObject obj = new JSONObject();
@@ -132,11 +138,19 @@ public class ProfessorRESTAPI {
 	@PUT
 	@Path("/updateGrade")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateGrade(@NotNull 
+	public Response updateGrade(
+			@DecimalMin(value = "100", message = "courseID value has to be of 3 digits")
+			@Digits(fraction = 0, integer = 3)
+			@NotNull
 			@FormParam("courseID") Integer courseID,
-			@NotNull @FormParam("studentID") Integer studentID,
-			@NotNull @Size(min = 1, max = 2, message = "The length of Grade should be between 1 to 2") @FormParam("grade") String grade)
-			throws ValidationException {
+			
+			@DecimalMin(value = "100", message = "StudentID value has to be of 3 digits")
+			@Digits(fraction = 0, integer = 3)
+			@NotNull
+			@FormParam("studentID") Integer studentID,
+			@NotNull
+		    @Size(min = 1, max = 2, message = "The length of Grade should be between 1 to 2")
+			@FormParam("grade") String grade) throws ValidationException{
 		try {
 			boolean res = professorOperation.updateStudentGrade(courseID, studentID, grade);
 			if (res) {
@@ -149,7 +163,6 @@ public class ProfessorRESTAPI {
 			return ResponseHelpers.badRequest(null, e.getMessage());
 		} catch (Exception e) {
 			return ResponseHelpers.badRequest(null, e.getMessage());
-		}
 
 	}
 }

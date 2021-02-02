@@ -5,6 +5,7 @@ package com.flipkart.rest;
 
 import java.util.ArrayList;
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
 import javax.validation.ValidationException;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -46,6 +47,8 @@ public class ProfessorRESTAPI {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllottedCourses(
 			@NotNull
+			@DecimalMin(value = "100", message = "ProfessorID has to be of 3 digits")
+			@Digits(fraction = 0, integer = 3)
 			@QueryParam("professorId") Integer professorId) throws ValidationException{ 
 		ArrayList<JSONObject> al = professorOperation.showCourses(professorId);
 		if (al.size()>0) {
@@ -65,6 +68,8 @@ public class ProfessorRESTAPI {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getEnrolledStudents(
 			@NotNull
+			@DecimalMin(value = "100", message = "courseID has to be of 3 digits")
+			@Digits(fraction = 0, integer = 3)
 			@QueryParam("courseID") Integer courseID) throws ValidationException{ 
 		ArrayList<JSONObject> arr = professorOperation.viewStudentsEnrolled(courseID);
 		if(arr.size()==0) {
@@ -84,6 +89,8 @@ public class ProfessorRESTAPI {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response viewGrades(
 			@NotNull
+			@DecimalMin(value = "100", message = "courseID has to be of 3 digits")
+			@Digits(fraction = 0, integer = 3)
 			@QueryParam("courseID") Integer courseID) throws ValidationException{ 
 		ArrayList<JSONObject> al = professorOperation.viewGrades(courseID);
 		JSONObject obj = new JSONObject();
@@ -106,7 +113,12 @@ public class ProfessorRESTAPI {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateGrade(
 			@NotNull
+			@DecimalMin(value = "100", message = "courseID value has to be of 3 digits")
+			@Digits(fraction = 0, integer = 3)
 			@FormParam("courseID") Integer courseID,
+			
+			@DecimalMin(value = "100", message = "StudentID value has to be of 3 digits")
+			@Digits(fraction = 0, integer = 3)
 			@NotNull
 			@FormParam("studentID") Integer studentID,
 			@NotNull
