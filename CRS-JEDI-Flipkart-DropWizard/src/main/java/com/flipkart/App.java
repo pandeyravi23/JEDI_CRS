@@ -9,12 +9,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.flipkart.rest.AdminRESTAPI;
-import com.flipkart.rest.HelloRestController;
 import com.flipkart.rest.ProfessorRESTAPI;
 import com.flipkart.rest.StudentRESTAPI;
 
 /**
- * Hello world!
+ * 
+ * Author JEDI04
  *
  */
 public class App extends Application<Configuration> {
@@ -27,7 +27,6 @@ public class App extends Application<Configuration> {
     @Override
     public void run(Configuration c, Environment e) throws Exception {
         LOGGER.info("Registering REST resources");
-      
         e.jersey().register(new AdminRESTAPI());
         e.jersey().register(new ProfessorRESTAPI());
         e.jersey().register(new StudentRESTAPI());
