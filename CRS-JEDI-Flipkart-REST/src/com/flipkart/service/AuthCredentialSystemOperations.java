@@ -7,6 +7,7 @@ import com.flipkart.bean.User;
 import com.flipkart.dao.StudentDAOOperation;
 import com.flipkart.dao.UserDAOOperation;
 import com.flipkart.exception.CommonException;
+import com.flipkart.exception.StudentCRSException;
 
 /**
  * Class to handle all authentication processes.
@@ -91,13 +92,11 @@ public class AuthCredentialSystemOperations implements AuthCredentialSystemInter
 	 * @param user Object containing all information about user
 	 * @param student Object containing all information about student
 	 * @param password Password of the user
+	 * @throws StudentCRSException, Exception
 	 */
-	public void registerStudent(User user, Student student, String password) throws Exception {
-		int id = registerUser(user, password);
-		if (id == -1) {
-			throw new CommonException("Entry could not be added");
-		}
-		else if(userDaoOperation.checkEmailAvailability(user.getEmail()) == false) {
+	public void registerStudent(User user, Student student, String password) throws StudentCRSException, Exception {
+		int id = -1;
+		if(userDaoOperation.checkEmailAvailability(user.getEmail()) == false) {
 			throw new CommonException("Another user has already registered with this email");
 		}
 		try {
@@ -116,9 +115,10 @@ public class AuthCredentialSystemOperations implements AuthCredentialSystemInter
 	 * @param user Object containing all information about user
 	 * @param password Password of the user
 	 * @return The id of the newly registered user
+	 * @throws StudentCRSException, Exception
 	 */
 	@Override
-	public int registerUser(User user, String password) throws Exception {
+	public int registerUser(User user, String password) throws StudentCRSException, Exception {
 		int id = -1;
 		id = userDaoOperation.registerUser(user, password);
 		return id;
