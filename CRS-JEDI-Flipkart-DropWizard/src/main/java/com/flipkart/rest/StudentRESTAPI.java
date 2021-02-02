@@ -214,6 +214,9 @@ public class StudentRESTAPI {
 		if(student == null) {
 			return ResponseHelpers.badRequest(null, "Studentt with id: " + studentID + " doesn't exist");
 		}
+		else if(student.getIsRegistered() == true) {
+			return ResponseHelpers.badRequest(null, "Studentt with id: " + studentID + " has already registered");
+		}
 		if(studentOperation.registerCourses(courseCart, student))
 			return ResponseHelpers.successPost(courseCart, "Successfully registered for courses");
 		return ResponseHelpers.somethingWentWrong(null);
@@ -395,6 +398,12 @@ public class StudentRESTAPI {
 		student = studentOperation.getStudentByID(studentID);
 		if(student == null) {
 			return ResponseHelpers.badRequest(null, "Studentt with id: " + studentID + " doesn't exist");
+		}
+		else if(student.getIsRegistered() == false) {
+			return ResponseHelpers.badRequest(null, "Student with id: " + studentID + " has not registered yet.");
+		}
+		else if(student.getPaymentStatus() == true) {
+			return ResponseHelpers.badRequest(null, "Student with id: " + studentID + " has already made payment");
 		}
 		studentOperation.makePayment(student,method);
 		return ResponseHelpers.success(studentID, "Payment Successful");
