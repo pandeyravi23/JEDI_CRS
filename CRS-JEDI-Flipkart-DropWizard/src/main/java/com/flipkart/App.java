@@ -13,6 +13,7 @@ import com.flipkart.rest.ProfessorRESTAPI;
 import com.flipkart.rest.StudentRESTAPI;
 
 /**
+ * Class for registering all APIs and containing main method
  * 
  * Author JEDI04
  *
@@ -20,10 +21,18 @@ import com.flipkart.rest.StudentRESTAPI;
 public class App extends Application<Configuration> {
     private static final Logger LOGGER = LoggerFactory.getLogger(App.class);
  
+    /**
+     * Method to initialize the configurations
+     * 
+     */
     @Override
     public void initialize(Bootstrap<Configuration> b) {
     }
  
+    
+    /**
+     * Method to register APIs and run on the server
+     */
     @Override
     public void run(Configuration c, Environment e) throws Exception {
         LOGGER.info("Registering REST resources");
@@ -32,6 +41,11 @@ public class App extends Application<Configuration> {
         e.jersey().register(new StudentRESTAPI());
     }
  
+    /**
+     * Main method that is entry point for our application 
+     * @param args
+     * @throws Exception
+     */
     public static void main(String[] args) throws Exception {
         new App().run(args);
     }
