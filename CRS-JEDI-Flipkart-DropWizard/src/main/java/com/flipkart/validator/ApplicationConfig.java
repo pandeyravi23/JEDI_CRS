@@ -4,6 +4,8 @@
 package com.flipkart.validator;
 
 /**
+ * Registers REST api classes for connection with server
+ * to implement back-end functionality
  * @author JEDI04
  *
  */

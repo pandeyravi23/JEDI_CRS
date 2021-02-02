@@ -6,6 +6,11 @@ import com.flipkart.bean.Professor;
 import com.flipkart.bean.Student;
 import com.flipkart.bean.User;
 
+/**
+ * Interface for Authentication Credential System class
+ * @author JEDI04
+ *
+ */
 public interface AuthCredentialSystemInterface {
 	public int login(String username, String password);
 	

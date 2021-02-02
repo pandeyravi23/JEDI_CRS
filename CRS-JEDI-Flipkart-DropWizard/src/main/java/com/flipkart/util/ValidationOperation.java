@@ -10,10 +10,9 @@ import org.apache.log4j.Logger;
 import com.flipkart.service.AuthCredentialSystemOperations;
 
 /**
- * @author JEDI04
  * 
  * Class containing validation methods
- *
+ * @author JEDI04
  */
 public class ValidationOperation {
 	private static Logger logger = Logger.getLogger(ValidationOperation.class);

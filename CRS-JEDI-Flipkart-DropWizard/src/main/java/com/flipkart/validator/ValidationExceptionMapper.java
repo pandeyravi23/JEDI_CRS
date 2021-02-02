@@ -9,6 +9,7 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 /**
+ * Maps validators for parameters in HTTP requests
  * @author JEDI04
  *
  */

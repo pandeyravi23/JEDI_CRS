@@ -9,6 +9,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
 /**
+ * 
+ * Manages response for HTTP services for good and bad request
  * @author JEDI04
  *
  */
