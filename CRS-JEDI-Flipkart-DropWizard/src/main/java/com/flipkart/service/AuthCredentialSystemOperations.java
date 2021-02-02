@@ -92,13 +92,14 @@ public class AuthCredentialSystemOperations implements AuthCredentialSystemInter
 	 * @param student Object containing all information about student
 	 * @param password Password of the user
 	 */
-	public void registerStudent(User user, Student student, String password) {
+	public boolean registerStudent(User user, Student student, String password) {
 		try {
 			int id = registerUser(user, password);
 			if(id == -1) {
 				throw new CommonException(">>>>>>>>> Entry could not be added. <<<<<<<<<");
 			}
 			studentDaoOperation.registerStudent(student, id);
+			return true;
 		}
 		catch(CommonException e) {
 			logger.warn(e.getMessage());
@@ -106,6 +107,7 @@ public class AuthCredentialSystemOperations implements AuthCredentialSystemInter
 		catch(Exception e) {
 			logger.warn(e.getMessage());
 		}
+		return false;
 	}
 
 	/**

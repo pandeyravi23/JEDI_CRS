@@ -133,7 +133,7 @@ public class StudentDAOOperation implements StudentDAOInterface {
 	 * @param student The student object containing the student related information to make an entry
 	 * @param courseID The courseID with which an entry is to be made
 	 */
-	public void addCourse(Student student, int courseID){
+	public boolean addCourse(Student student, int courseID){
 		Course course = coursesDaoOperation.getCourseByID(courseID);
 		if(course == null) {
 			logger.info(">>>>>>>> Invalid Course ID <<<<<<<<<<\n");
@@ -155,9 +155,9 @@ public class StudentDAOOperation implements StudentDAOInterface {
 				int added = ps.executeUpdate();
 				if(added>0){
 					logger.info("Course " + courseID + " added successfully.\n");
+					addCourseToGrades(student.getUserId(),courseID);
+					return true;
 				}
-
-				addCourseToGrades(student.getUserId(),courseID);
 			}
 			catch(SQLException e) {
 				logger.warn(e.getMessage() + "\n");
@@ -166,6 +166,7 @@ public class StudentDAOOperation implements StudentDAOInterface {
 				logger.warn(e.getMessage() + "\n");
 			}
 		}
+		return false;
 	}
 
 	/**
@@ -175,7 +176,7 @@ public class StudentDAOOperation implements StudentDAOInterface {
 	 * @param student Student Object containing information regarding the student
 	 * @param courseID The courseID whose entry is to be removed
 	 */
-	public void dropCourse(Student student, int courseID){
+	public boolean dropCourse(Student student, int courseID){
 		Course course = coursesDaoOperation.getCourseByID(courseID);
 		if(course == null) {
 			logger.info(">>>>>>>> Invalid Course ID <<<<<<<<<<\n");
@@ -194,9 +195,9 @@ public class StudentDAOOperation implements StudentDAOInterface {
 				int dropped = ps.executeUpdate();
 				if(dropped>0) {
 					logger.info("Course " + courseID + " deleted successfully\n");
+					deleteCourseFromGrades(student.getUserId(),courseID);
+					return true;
 				}
-
-				deleteCourseFromGrades(student.getUserId(),courseID);
 			}
 			catch(SQLException e) {
 				logger.warn(e.getMessage() + "\n");
@@ -205,6 +206,7 @@ public class StudentDAOOperation implements StudentDAOInterface {
 				logger.warn(e.getMessage() + "\n");
 			}
 		}
+		return false;
 	}
 
 	/**
@@ -432,7 +434,7 @@ public class StudentDAOOperation implements StudentDAOInterface {
 	 * @param id The id that the student is to be registered with.
 	 */
 	@Override
-	public void registerStudent(Student student, int id) {
+	public boolean registerStudent(Student student, int id) {
 		try {
 			connection = DBConnection.getConnection();
 			ps = connection.prepareStatement(SQLQueriesConstant.REGISTER_STUDENT_QUERY);
@@ -446,6 +448,7 @@ public class StudentDAOOperation implements StudentDAOInterface {
 			ps.setBoolean(7, student.getPaymentStatus());
 			
 			ps.executeUpdate();
+			return true;
 		}
 		catch(SQLException e) {
 			logger.warn(e.getMessage() + "\n");
@@ -456,6 +459,7 @@ public class StudentDAOOperation implements StudentDAOInterface {
 		finally {
 			// connection.close();
 		}
+		return false;
 	}
 	
 	/**

@@ -14,8 +14,8 @@ import com.flipkart.exception.StudentCRSException;
  */
 public interface StudentDAOInterface {
 	public Student getStudentByEmail(String email);
-	public void addCourse(Student student, int courseID);
-	public void dropCourse(Student student, int courseID);
+	public boolean addCourse(Student student, int courseID);
+	public boolean dropCourse(Student student, int courseID);
 	public ArrayList<Course> getEnrolledCourses(Student student);
 
 	public void setRegistrationStatus(Student student);
@@ -28,7 +28,7 @@ public interface StudentDAOInterface {
 	
 	public void setPaymentStatus(Student student, String method);
 	
-	public void registerStudent(Student student, int id);
+	public boolean registerStudent(Student student, int id);
 
 	public void addCourseToGrades(int studentID, int courseID);
 

@@ -193,8 +193,8 @@ public class StudentOperation implements StudentInterface {
      */
     public boolean addCourse(Student student, int courseId){
         try{
-            studentDaoOperation.addCourse(student,courseId);
-            return true;
+            if(studentDaoOperation.addCourse(student,courseId))
+            	return true;
         }
         catch(Exception e){
             logger.warn(e.getMessage());
@@ -213,13 +213,12 @@ public class StudentOperation implements StudentInterface {
     public boolean deleteCourse(Student student, int courseId){
 
         try{
-            studentDaoOperation.dropCourse(student,courseId);
-            return true;
+            if(studentDaoOperation.dropCourse(student,courseId))
+            	return true;
         }
         catch(Exception e){
             logger.warn(e.getMessage());
         }
-
         return false;
     }
 
@@ -230,10 +229,10 @@ public class StudentOperation implements StudentInterface {
      * @param student Object containing all information about a student
      * @return True when courses registered successfully else False
      */
-    public boolean registerCourses(ArrayList<Integer> courseCart, Student student) {
+    public boolean registerCourses(ArrayList<Integer> courseCart, Student student){
     	try {
-    		courseCart.forEach(courseID -> {
-    			studentDaoOperation.addCourse(student, courseID);
+			courseCart.forEach(courseID -> {
+				studentDaoOperation.addCourse(student, courseID);
     		});
             logger.info("Proceed to make payment\n");
             setRegistrationStatus(student);
@@ -259,12 +258,12 @@ public class StudentOperation implements StudentInterface {
             }
             else {
                 courses = studentDaoOperation.getEnrolledCourses(student);
-                logger.info("================REGISTERED COURSES================\n");
-                logger.info("Course ID    Course Name    Credits");
-                courses.forEach(course -> {
-                	logger.info(String.format("%9d    %11s    %7d", course.getCourseID(), course.getCourseName(), course.getCredits()));
-                });
-                logger.info("==================================================\n");
+//                logger.info("================REGISTERED COURSES================\n");
+//                logger.info("Course ID    Course Name    Credits");
+//                courses.forEach(course -> {
+//                	logger.info(String.format("%9d    %11s    %7d", course.getCourseID(), course.getCourseName(), course.getCredits()));
+//                });
+//                logger.info("==================================================\n");
             } 
     	}
     	catch(StudentCRSException e) {
