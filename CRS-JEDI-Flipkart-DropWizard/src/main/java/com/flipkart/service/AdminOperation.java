@@ -176,6 +176,8 @@ public class AdminOperation implements AdminInterface {
 	/**
 	 * Approves New Student's Registration After Viewing
 	 * the details 
+	 * 
+	 * @return true if student is approved else false
 	 */
 	@Override
 	public boolean approveStudents(int studentID) {
@@ -220,6 +222,8 @@ public class AdminOperation implements AdminInterface {
 	 * Deletes course from course catalog and 
 	 * course tables with the entered course id 
 	 * by admin
+	 * 
+	 * @return true if course a course is deleted else false
 	 */
 //	@Override
 	public boolean deleteCourse(int courseID) {
@@ -239,6 +243,8 @@ public class AdminOperation implements AdminInterface {
 	 * Allot course to professor with the entered 
 	 * course ID and Professor ID
 	 * by Admin
+	 * 
+	 * @return true if course allotted successfully else false
 	 */
 //	@Override
 	public boolean allotCourse(int courseID, int professorID) {
@@ -254,6 +260,7 @@ public class AdminOperation implements AdminInterface {
 	
 	/**
 	 * Opens registration window.
+	 * @return true if registration status updated else false
 	 */
 	public boolean startRegistrationWindow()
 	{
@@ -271,6 +278,8 @@ public class AdminOperation implements AdminInterface {
 	
 	/**
 	 * Closes registration window.
+	 * 
+	 * @return true if registration status updated else false
 	 */
 	public boolean closeRegistrationWindow()
 	{
@@ -287,6 +296,8 @@ public class AdminOperation implements AdminInterface {
 	
 	/**
 	 * Displays list of registered students
+	 * 
+	 * @return true if course added else false
 	 */
 	
 	public boolean addCourse2(Course course) {

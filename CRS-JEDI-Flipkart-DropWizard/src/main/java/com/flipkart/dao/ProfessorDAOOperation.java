@@ -110,6 +110,7 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	 * the database
 	 * 
 	 * @param professorId Professor Id
+	 * @return List of Json object containing list of courses
 	 */
 	public ArrayList<JSONObject> showCourses(int professorId) {
 		ArrayList <JSONObject> arr = new ArrayList<JSONObject>();
@@ -143,7 +144,7 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	 * whose grade is Not Available from the database
 	 * 
 	 * @param courseId Course Id
-	 * @return returns list of enrolled students
+	 * @return list of Json object containing list of enrolled students
 	 */
 	public ArrayList<JSONObject> getEnrolledStudents(int courseId) {
 		ArrayList<JSONObject> arr = new ArrayList<JSONObject>();
@@ -242,6 +243,7 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	 * 
 	 * @param enrolledStudent List of enrolled student
 	 * @param courseId course id
+	 * @return List of Json objects containing student information with grades
 	 */
 	public ArrayList<JSONObject> showGrades(ArrayList<Student> enrolledStudent, int courseId) {
 		ArrayList<JSONObject> al = new ArrayList<JSONObject>();
@@ -278,7 +280,7 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	 * from the database
 	 * 
 	 * @param courseId course id
-	 * @return List of students in the course
+	 * @return List of students in the enrolled in the course
 	 */
 	public ArrayList<Student> getStudents(int courseId) {
 		ArrayList<Student> al = new ArrayList<Student>();
