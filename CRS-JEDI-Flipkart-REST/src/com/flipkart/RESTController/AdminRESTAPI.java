@@ -8,6 +8,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.flipkart.dao.AdminDAOOperation;
+import com.flipkart.exception.AdminCRSException;
 import com.flipkart.helper.AddAdminHelper;
 
 import java.util.ArrayList;
@@ -201,11 +202,19 @@ public class AdminRESTAPI {
 	@Consumes("application/json")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addCourse(@Valid Course course) throws ValidationException{
+		try {
 		boolean res = adminOperation.addCourse2(course);
 		if(res){
 			return ResponseHelpers.successPost(course, "Course Added Successfully");
 		}
 		return ResponseHelpers.badRequest(null, "Course Add Failed");
+		}
+		catch (AdminCRSException e) {
+			return ResponseHelpers.badRequest(null, e.getMessage());
+		}
+		catch (Exception e) {
+			return ResponseHelpers.badRequest(null, e.getMessage());
+		}
 	}
 	
 	

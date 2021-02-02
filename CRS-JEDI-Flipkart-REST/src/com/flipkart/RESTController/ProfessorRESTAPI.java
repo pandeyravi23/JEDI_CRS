@@ -58,9 +58,8 @@ public class ProfessorRESTAPI {
 		try {
 
 			String professorName = professorOperation.getProfessorById(professorId);
-			System.out.println("--------" + professorName);
 			if (professorName==null) {
-				return ResponseHelpers.badRequest(null, "No Professoor with " + professorId + " exists");
+				return ResponseHelpers.badRequest(null, "No Professor with " + professorId + " exists");
 			}
 			ArrayList<JSONObject> al = professorOperation.showCourses(professorId);
 			if (al.size() > 0) {
@@ -167,6 +166,6 @@ public class ProfessorRESTAPI {
 			return ResponseHelpers.badRequest(null, e.getMessage());
 		} catch (Exception e) {
 			return ResponseHelpers.badRequest(null, e.getMessage());
-
+		}
 	}
 }
