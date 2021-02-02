@@ -11,7 +11,7 @@ public interface AuthCredentialSystemInterface {
 	
 	public boolean checkEmailAvailability(String email);
 
-	public boolean registerStudent(User user, Student student, String password);
+	public void registerStudent(User user, Student student, String password) throws Exception;
 	
-	public int registerUser(User user, String password);
+	public int registerUser(User user, String password) throws Exception;
 }

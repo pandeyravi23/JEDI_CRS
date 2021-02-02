@@ -46,41 +46,39 @@ public class StudentDAOOperation implements StudentDAOInterface {
 
 	
 	
-	
-	public Student getStudentByID(int studentID) throws StudentCRSException {
+	/**
+	 * Method to get the student object from student ID
+	 * 
+	 * @param student The student object containing the student related information to make an entry
+	 * @throws StudentCRSException, Exception
+	 */
+	public Student getStudentByID(int studentID) throws StudentCRSException, Exception {
 		Student student = null;
-		try {
-			connection = DBConnection.getConnection();
-			ps = connection.prepareStatement(SQLQueriesConstant.GET_STUDENT_BY_ID_QUERY);
-			
-			ps.setInt(1, studentID);
-			
-			ResultSet result = ps.executeQuery();
-			if(!result.next()) {
-				throw new StudentCRSException("Student with id: " + studentID + " doesn't exist");
-			}
-			student = new Student();
-			student.setEmail(result.getString("email"));
-			student.setBranch(result.getString("branch"));
-			student.setUserId(result.getInt("id"));
-			boolean bool = result.getInt("isRegistered") == 1 ? true : false;
-			student.setIsRegistered(bool);
-			student.setUserName(result.getString("name"));
-			student.setRollNo(result.getInt("rollno"));	
-			student.setApproved(result.getBoolean("isApproved"));
-			student.setPaymentStatus(result.getBoolean("paymentStatus"));
-			student.setAge(result.getInt("age"));
-			student.setContact(result.getString("contact"));
-			student.setNationality(result.getString("nationality"));
-			student.setGender(result.getString("gender"));
-			student.setAddress(result.getString("address"));
+		connection = DBConnection.getConnection();
+		ps = connection.prepareStatement(SQLQueriesConstant.GET_STUDENT_BY_ID_QUERY);
+		
+		ps.setInt(1, studentID);
+		
+		ResultSet result = ps.executeQuery();
+		if(!result.next()) {
+			throw new StudentCRSException("Student with id: " + studentID + " doesn't exist");
 		}
-		catch(SQLException e) {
-			logger.warn(e.getMessage() + "\n");
-		}
-		catch(Exception e) {
-			logger.warn(e.getMessage() + "\n");
-		}
+		
+		student = new Student();
+		student.setEmail(result.getString("email"));
+		student.setBranch(result.getString("branch"));
+		student.setUserId(result.getInt("id"));
+		boolean bool = result.getInt("isRegistered") == 1 ? true : false;
+		student.setIsRegistered(bool);
+		student.setUserName(result.getString("name"));
+		student.setRollNo(result.getInt("rollno"));	
+		student.setApproved(result.getBoolean("isApproved"));
+		student.setPaymentStatus(result.getBoolean("paymentStatus"));
+		student.setAge(result.getInt("age"));
+		student.setContact(result.getString("contact"));
+		student.setNationality(result.getString("nationality"));
+		student.setGender(result.getString("gender"));
+		student.setAddress(result.getString("address"));
 		return student;
 	}
 	
@@ -132,41 +130,39 @@ public class StudentDAOOperation implements StudentDAOInterface {
 	 * 
 	 * @param student The student object containing the student related information to make an entry
 	 * @param courseID The courseID with which an entry is to be made
+	 * @throws StudentCRSException, Exception
 	 */
-	public boolean addCourse(Student student, int courseID){
+	public void addCourse(Student student, int courseID) throws StudentCRSException, Exception {
 		Course course = coursesDaoOperation.getCourseByID(courseID);
 		if(course == null) {
 			logger.info(">>>>>>>> Invalid Course ID <<<<<<<<<<\n");
+			throw new StudentCRSException("Course ID: " + courseID + " is invalid.");
 		}
 		else if(getCourse(student, courseID)){
 			logger.info("You have already added this course.\n");
+			throw new StudentCRSException("You have already added this course.");
 		}
 		else if(coursesDaoOperation.noOfEnrolledStudents(courseID)>=10){
 			logger.info("Course " + courseID + " is full. Please add some other course.\n");
+			throw new StudentCRSException("Course " + courseID + " is full. Please add some other course.");
+		}
+		else if(getNoOfCourses(student) == 6) {
+			throw new StudentCRSException("You have already registered for 6 courses can't add more.");
 		}
 		else{
-			try{
-				connection = DBConnection.getConnection();
-				ps = connection.prepareStatement(SQLQueriesConstant.ADD_COURSE_STUDENT_QUERY);
+			connection = DBConnection.getConnection();
+			ps = connection.prepareStatement(SQLQueriesConstant.ADD_COURSE_STUDENT_QUERY);
 
-				ps.setInt(1,student.getUserId());
-				ps.setInt(2,courseID);
+			ps.setInt(1,student.getUserId());
+			ps.setInt(2,courseID);
 
-				int added = ps.executeUpdate();
-				if(added>0){
-					logger.info("Course " + courseID + " added successfully.\n");
-					addCourseToGrades(student.getUserId(),courseID);
-					return true;
-				}
+			int added = ps.executeUpdate();
+			if(added>0){
+				logger.info("Course " + courseID + " added successfully.\n");
 			}
-			catch(SQLException e) {
-				logger.warn(e.getMessage() + "\n");
-			}
-			catch(Exception e) {
-				logger.warn(e.getMessage() + "\n");
-			}
+
+			addCourseToGrades(student.getUserId(),courseID);
 		}
-		return false;
 	}
 
 	/**
@@ -175,38 +171,35 @@ public class StudentDAOOperation implements StudentDAOInterface {
 	 * 
 	 * @param student Student Object containing information regarding the student
 	 * @param courseID The courseID whose entry is to be removed
+	 * @throws StudentCRSException, Exception
 	 */
-	public boolean dropCourse(Student student, int courseID){
+	public void dropCourse(Student student, int courseID) throws StudentCRSException, Exception {
 		Course course = coursesDaoOperation.getCourseByID(courseID);
 		if(course == null) {
 			logger.info(">>>>>>>> Invalid Course ID <<<<<<<<<<\n");
+			throw new StudentCRSException("Course ID: " + courseID + " is invalid.");
 		}
 		else if(!getCourse(student, courseID)){
 			logger.info("You have not registered for this course.\n");
+			throw new StudentCRSException("You have not registered for this course.");
+		}
+		else if(getNoOfCourses(student) == 4) {
+			throw new StudentCRSException("You have registered for only 4 courses can't drop any course.");
 		}
 		else {
-			try {
-				connection = DBConnection.getConnection();
-				ps = connection.prepareStatement(SQLQueriesConstant.DROP_COURSE_STUDENT_QUERY);
+			connection = DBConnection.getConnection();
+			ps = connection.prepareStatement(SQLQueriesConstant.DROP_COURSE_STUDENT_QUERY);
 
-				ps.setInt(1, student.getUserId());
-				ps.setInt(2, courseID);
+			ps.setInt(1, student.getUserId());
+			ps.setInt(2, courseID);
 
-				int dropped = ps.executeUpdate();
-				if(dropped>0) {
-					logger.info("Course " + courseID + " deleted successfully\n");
-					deleteCourseFromGrades(student.getUserId(),courseID);
-					return true;
-				}
+			int dropped = ps.executeUpdate();
+			if(dropped>0) {
+				logger.info("Course " + courseID + " deleted successfully\n");
 			}
-			catch(SQLException e) {
-				logger.warn(e.getMessage() + "\n");
-			}
-			catch(Exception e) {
-				logger.warn(e.getMessage() + "\n");
-			}
+
+			deleteCourseFromGrades(student.getUserId(),courseID);
 		}
-		return false;
 	}
 
 	/**
@@ -321,32 +314,23 @@ public class StudentDAOOperation implements StudentDAOInterface {
 	 * Method to fetch an ArrayList containing the Course objects of courses that a student is enrolled in.
 	 * 
 	 * @param student Student object containing the student information
-	 * @return An ArrayList containing the Course objects of courses that a student is enrolled in.
+	 * @return An ArrayList containing the Course objects of courses that a student is enrolled in
+	 * @throws StudentCRSException, Exception
 	 */
-	public ArrayList<Course> getEnrolledCourses(Student student){
+	public ArrayList<Course> getEnrolledCourses(Student student) throws StudentCRSException, Exception {
 		ArrayList<Course> enrolledCourses = new ArrayList<>();
+		connection = DBConnection.getConnection();
+		ps = connection.prepareStatement(SQLQueriesConstant.GET_ENROLLED_COURSES_QUERY);
 
-		try{
-			connection = DBConnection.getConnection();
-			ps = connection.prepareStatement(SQLQueriesConstant.GET_ENROLLED_COURSES_QUERY);
-
-			ps.setInt(1,student.getUserId());
-			ResultSet resultSet = ps.executeQuery();
-			while(resultSet.next()){
-				Course course = new Course();
-				course.setCourseID(resultSet.getInt("courseID"));
-				course.setCourseName(resultSet.getString("name"));
-				course.setCredits(resultSet.getInt("credits"));
-				enrolledCourses.add(course);
-			}
+		ps.setInt(1,student.getUserId());
+		ResultSet resultSet = ps.executeQuery();
+		while(resultSet.next()){
+			Course course = new Course();
+			course.setCourseID(resultSet.getInt("courseID"));
+			course.setCourseName(resultSet.getString("name"));
+			course.setCredits(resultSet.getInt("credits"));
+			enrolledCourses.add(course);
 		}
-		catch(SQLException e) {
-			logger.warn(e.getMessage() + "\n");
-		}
-		catch(Exception e) {
-			logger.warn(e.getMessage() + "\n");
-		}
-
 		return enrolledCourses;
 	}
 
@@ -376,32 +360,26 @@ public class StudentDAOOperation implements StudentDAOInterface {
 	 * 
 	 * @param studentID The studentId whose grades is to be fetched
 	 * @return returns an ArrayList of Grades containing grade objects corresponding to grades obtained by a student
+	 * @throws StudentCRSException, Exception
 	 */
-	public ArrayList<Grades> getGrades(int studentID){
+	public ArrayList<Grades> getGrades(int studentID) throws StudentCRSException, Exception {
 		ArrayList<Grades> grades = new ArrayList<>();
+		connection = DBConnection.getConnection();
+		ps = connection.prepareStatement(SQLQueriesConstant.GET_GRADES_QUERY);
 
-		try{
-			connection = DBConnection.getConnection();
-			ps = connection.prepareStatement(SQLQueriesConstant.GET_GRADES_QUERY);
-
-			ps.setInt(1,studentID);
-			ResultSet resultSet = ps.executeQuery();
-			while(resultSet.next()){
-				Grades grade = new Grades();
-				grade.setCourseID(resultSet.getInt("courseId"));
-				grade.setCourseName(resultSet.getString("courseName"));
-				grade.setGrade(resultSet.getString("grade"));
-				grade.setStudentId(resultSet.getInt("studentId"));
-				grades.add(grade);
-			}
+		ps.setInt(1,studentID);
+		ResultSet resultSet = ps.executeQuery();
+		boolean f = false;
+		while(resultSet.next()){
+			Grades grade = new Grades();
+			grade.setCourseID(resultSet.getInt("courseId"));
+			grade.setCourseName(resultSet.getString("courseName"));
+			grade.setGrade(resultSet.getString("grade"));
+			grade.setStudentId(resultSet.getInt("studentId"));
+			grades.add(grade);
+			f = true;
 		}
-		catch(SQLException e) {
-			logger.warn(e.getMessage() + "\n");
-		}
-		catch(Exception e) {
-			logger.warn(e.getMessage() + "\n");
-		}
-
+		if(!f) throw new StudentCRSException("Student hasn't registered for any course yet.");
 		return grades;
 	}
 	
@@ -409,22 +387,15 @@ public class StudentDAOOperation implements StudentDAOInterface {
 	 * Method to set the payment status of a Student to true
 	 * 
 	 * @param student Student object containing the student information
+	 * @throws StudentCRSException, Exception
 	 */
-	public void setPaymentStatus(Student student, String method) {
-		try{
-			connection = DBConnection.getConnection();
-			ps = connection.prepareStatement(SQLQueriesConstant.SET_PAYMENT_STATUS_QUERY);
+	public void setPaymentStatus(Student student, String method) throws StudentCRSException, Exception {
+		connection = DBConnection.getConnection();
+		ps = connection.prepareStatement(SQLQueriesConstant.SET_PAYMENT_STATUS_QUERY);
 
-			ps.setString(1, method);
-			ps.setInt(2, student.getUserId());
-			ps.executeUpdate();
-		}
-		catch(SQLException e) {
-			logger.warn(e.getMessage() + "\n");
-		}
-		catch(Exception e) {
-			logger.warn(e.getMessage() + "\n");
-		}
+		ps.setString(1, method);
+		ps.setInt(2, student.getUserId());
+		ps.executeUpdate();
 	}
 
 	/**
@@ -432,34 +403,22 @@ public class StudentDAOOperation implements StudentDAOInterface {
 	 * 
 	 * @param student Student object containing the student information
 	 * @param id The id that the student is to be registered with.
+	 * @throws StudentCRSException, Exception
 	 */
 	@Override
-	public boolean registerStudent(Student student, int id) {
-		try {
-			connection = DBConnection.getConnection();
-			ps = connection.prepareStatement(SQLQueriesConstant.REGISTER_STUDENT_QUERY);
+	public void registerStudent(Student student, int id) throws StudentCRSException, Exception {
+		connection = DBConnection.getConnection();
+		ps = connection.prepareStatement(SQLQueriesConstant.REGISTER_STUDENT_QUERY);
 
-			ps.setInt(1, id);
-			ps.setString(2,  student.getUserName());
-			ps.setString(3,  student.getEmail());
-			ps.setInt(4, student.getRollNo());
-			ps.setString(5, student.getBranch());
-			ps.setBoolean(6, student.getIsRegistered());
-			ps.setBoolean(7, student.getPaymentStatus());
-			
-			ps.executeUpdate();
-			return true;
-		}
-		catch(SQLException e) {
-			logger.warn(e.getMessage() + "\n");
-		}
-		catch(Exception e) {
-			logger.warn(e.getMessage() + "\n");
-		}
-		finally {
-			// connection.close();
-		}
-		return false;
+		ps.setInt(1, id);
+		ps.setString(2, student.getUserName());
+		ps.setString(3, student.getEmail());
+		ps.setInt(4, student.getRollNo());
+		ps.setString(5, student.getBranch());
+		ps.setBoolean(6, student.getIsRegistered());
+		ps.setBoolean(7, student.getPaymentStatus());
+
+		ps.executeUpdate();
 	}
 	
 	/**
@@ -467,33 +426,27 @@ public class StudentDAOOperation implements StudentDAOInterface {
 	 * 
 	 * @param student Student object containing the student information
 	 */
-	public void updateInfo(Student student){
-		try{
-			connection = DBConnection.getConnection();
-			ps = connection.prepareStatement(SQLQueriesConstant.UPDATE_STUDENT_CREDENTIAL_QUERY);
+	public void updateInfo(Student student) throws Exception {
+		connection = DBConnection.getConnection();
+		
+		ps = connection.prepareStatement(SQLQueriesConstant.UPDATE_STUDENT_CREDENTIAL_QUERY);
 
-			ps.setInt(1,student.getAge());
-			ps.setString(2,student.getAddress());
-			ps.setString(3,student.getContact());
-			ps.setString(4,student.getGender());
-			ps.setString(5,student.getNationality());
-			ps.setInt(6,student.getUserId());
+		ps.setInt(1,student.getAge());
+		ps.setString(2,student.getAddress());
+		ps.setString(3,student.getContact());
+		ps.setString(4,student.getGender());
+		ps.setString(5,student.getNationality());
+		ps.setInt(6,student.getUserId());
 
-			ps.executeUpdate();
+		ps.executeUpdate();
+		
+		logger.info(student.getUserId());
 
+		ps = connection.prepareStatement(SQLQueriesConstant.UPDATE_STUDENT_QUERY);
+		ps.setString(1, student.getUserName());
+		ps.setInt(2,student.getUserId());
 
-			ps = connection.prepareStatement(SQLQueriesConstant.UPDATE_STUDENT_QUERY);
-			ps.setString(1, student.getUserName());
-			ps.setInt(2,student.getUserId());
-
-			ps.executeUpdate();
-		}
-		catch(SQLException e) {
-			logger.warn(e.getMessage() + "\n");
-		}
-		catch(Exception e) {
-			logger.warn(e.getMessage() + "\n");
-		}
+		ps.executeUpdate();
 	}
 
 	/**

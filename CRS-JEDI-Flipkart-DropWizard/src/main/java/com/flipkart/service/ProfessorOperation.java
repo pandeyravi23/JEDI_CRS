@@ -41,10 +41,10 @@ public class ProfessorOperation implements ProfessorInterface {
 	 * grades are currently Not Available
 	 * 
 	 * @param courseId Course Id 
-	 * @return List of json objects containing information of enrolled students
+	 * @throws ProfessorCRSException, Exception
 	 */
 	
-	public ArrayList<JSONObject> viewStudentsEnrolled(int courseId) {		
+	public ArrayList<JSONObject> viewStudentsEnrolled(int courseId) throws ProfessorCRSException, Exception  {		
 		return professorDaoOperation.getEnrolledStudents(courseId);
 	}
 
@@ -52,24 +52,18 @@ public class ProfessorOperation implements ProfessorInterface {
 	 * Get and display grades of all students in a course linked with courseId
 	 * 
 	 * @param courseId Course Id
-	 * @return List of json objects containing student information with grades
+	 * @throws ProfessorCRSException, Exception
 	 */
-	public ArrayList<JSONObject> viewGrades(int courseId) {
+	public ArrayList<JSONObject> viewGrades(int courseId) throws ProfessorCRSException, Exception {
 		ArrayList<JSONObject> al = new ArrayList<JSONObject>();
-		try {
 			ArrayList<Student>studentsEnrolled = professorDaoOperation.getStudents(courseId);
 			if (studentsEnrolled.size() > 0) {
 				al = professorDaoOperation.showGrades(studentsEnrolled, courseId);
 			} else {
 				throw new ProfessorCRSException("No Student Present!!!");
 			}
-		} catch (ProfessorCRSException e) {
-			logger.info("\n\n");
-			logger.error(e.getMessage());
-			logger.info("\n\n");
-		} catch (Exception e) {
-			logger.info(e.getMessage());
-		}
+		
+		
 		return al;
 	}
 
@@ -77,9 +71,9 @@ public class ProfessorOperation implements ProfessorInterface {
 	 * Get and display all courses alloted to the professor with given courseId
 	 * 
 	 * @param professorId Professor Id
-	 * @return List of Json Objects containing courses
+	 * @throws ProfessorCRSException, Exception
 	 */
-	public ArrayList<JSONObject> showCourses(int professorId) {
+	public ArrayList<JSONObject> showCourses(int professorId) throws ProfessorCRSException, Exception{
 		ArrayList<JSONObject> ar = professorDaoOperation.showCourses(professorId);
 		return ar;
 	}
@@ -88,8 +82,9 @@ public class ProfessorOperation implements ProfessorInterface {
 	 * Method to return the professor name whose ID is provided
 	 * @param id The ID of the professor whose name is to be fetched
 	 * @return The name of the professor whose ID was passed
+	 * @throws ProfessorCRSException, Exception
 	 */
-	public String getProfessorById(int id) {
+	public String getProfessorById(int id) throws ProfessorCRSException, Exception {
 		String profName = null;
 		try {
 			profName = professorDaoOperation.getProfessorById(id);
@@ -105,8 +100,9 @@ public class ProfessorOperation implements ProfessorInterface {
 	 * 
 	 * @param email professor email to be verified
 	 * @return Professor object containing information of the professor
+	 * @throws ProfessorCRSException, Exception
 	 */
-	public Professor getProfessorByEmail(String email) {
+	public Professor getProfessorByEmail(String email) throws ProfessorCRSException, Exception{
 		Professor p = professorDaoOperation.getProfessorByEmail(email);
 		return p;
 	}
@@ -118,9 +114,24 @@ public class ProfessorOperation implements ProfessorInterface {
 	 * @param studentId
 	 * @param grade Grade that has to be allotted
 	 * @return boolean Returns true if update grade operation successful else returns false
+	 * 
 	 */
-	public boolean updateStudentGrade(int courseId, int studentId, String grade) {
+	public boolean updateStudentGrade(int courseId, int studentId, String grade) throws ProfessorCRSException, Exception{
 		return professorDaoOperation.updateStudentGrades(courseId, studentId, grade);
+	}
+	
+	
+	
+	/**
+	 * Returns professor object associated with given id
+	 * 
+	 * @param email professor email to be verified
+	 * @return Professor object containing information of the professor
+	 * @throws ProfessorCRSException, Exception
+	 */
+	public Professor getProfessorById2(int professorId) throws ProfessorCRSException, Exception{
+		Professor professor = professorDaoOperation.getProfessorById2(professorId);
+		return professor;
 	}
 
 }

@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import com.flipkart.dao.CoursesDAOOperation;
 import com.flipkart.dao.StudentDAOOperation;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 
@@ -41,18 +42,15 @@ public class StudentOperation implements StudentInterface {
     }
 
 
-
-    public Student getStudentByID(int studentID) {
+    /**
+	 * Method to get the student object from student ID
+	 * 
+	 * @param student The student object containing the student related information to make an entry
+	 * @throws StudentCRSException, Exception
+	 */
+    public Student getStudentByID(int studentID) throws StudentCRSException, Exception {
     	Student student = null;
-    	try {
-    		student = studentDaoOperation.getStudentByID(studentID);
-    	}
-    	catch(StudentCRSException e) {
-    		logger.error(e.getMessage());
-    	}
-    	catch(Exception e) {
-    		logger.warn(e.getMessage());
-    	}
+    	student = studentDaoOperation.getStudentByID(studentID);
     	return student;
     }
     
@@ -84,21 +82,11 @@ public class StudentOperation implements StudentInterface {
      * Operation to get all the courses that are present in the Course Catalog
      *
      * @return List of course objects each containing information about a course
+     * @throws StudentCRSException, Exception
      */
-    public ArrayList<Course> getAllCourses() {
+    public ArrayList<Course> getAllCourses() throws StudentCRSException, Exception {
     	ArrayList<Course> courses = null;
-    	try{
-            courses = coursesDaoOperation.getAllCourses();
-//            if(courses == null){
-//                throw new StudentCRSException("No courses available.\n");
-//            }
-        }
-//    	catch (StudentCRSException e){
-//    	    logger.warn(e.getMessage());
-//        }
-        catch (Exception e){
-            logger.warn(e.getMessage());
-        }
+        courses = coursesDaoOperation.getAllCourses();
     	return courses;
     }
 
@@ -107,46 +95,55 @@ public class StudentOperation implements StudentInterface {
      *
      */
     public void showCourses(){
-        try{
-            ArrayList<Course> courses = coursesDaoOperation.getAllCourses();
-            logger.info("================AVAILABLE COURSES================\n");
-            logger.info("Course ID    Course Name    Credits    Professor Allotted");
-            courses.forEach((course) ->{
-            	String professorAllotted = professorDAOOperation.getProfessorById(course.getProfessorAllotted());
-            	if(professorAllotted == null) {
-            		professorAllotted = "Not yet alloted";
-            	}
-            	logger.info(String.format("%9d    %11s    %7d    %18s", course.getCourseID(), course.getCourseName(), course.getCredits(), professorAllotted));
-            });
-            logger.info("=================================================\n");
-        }
-        catch (Exception e){
-            logger.warn(e.getMessage());
-        }
+        try {
+			try {
+			    ArrayList<Course> courses = coursesDaoOperation.getAllCourses();
+			    logger.info("================AVAILABLE COURSES================\n");
+			    logger.info("Course ID    Course Name    Credits    Professor Allotted");
+			    courses.forEach((course) ->{
+			    	String professorAllotted = null;
+					try {
+						professorAllotted = professorDAOOperation.getProfessorById(course.getProfessorAllotted());
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			    	if(professorAllotted == null) {
+			    		professorAllotted = "Not yet alloted";
+			    	}
+			    	logger.info(String.format("%9d    %11s    %7d    %18s", course.getCourseID(), course.getCourseName(), course.getCredits(), professorAllotted));
+			    });
+			    logger.info("=================================================\n");
+			}
+			catch (Exception e){
+			    logger.warn(e.getMessage());
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+		    logger.warn(e.getMessage());
+		}
     }
+
 
     /**
      * Method to print grades attained by student in each of his registered courses
      *
      * @param studentId User ID of the student
-     * @return 
+     * @return grades ArrayList containing grades attained by a student
+     * @throws StudentCRSException, Exception
      */
-    public ArrayList<Grades> viewGrades(int studentId){
+    public ArrayList<Grades> viewGrades(int studentId) throws StudentCRSException, Exception {
     	ArrayList<Grades> grades = null;
-    	
-    	try{
-    		grades = studentDaoOperation.getGrades(studentId);
-            logger.info("======================GRADES===================\n");
-            logger.info("Course ID    Course Name    Grade");
-            grades.forEach(grade -> {
-            	logger.info(String.format("%9d    %11s    %5s", grade.getCourseId(), grade.getCourseName(), grade.getGrade()));
-            });
-            logger.info("=================================================\n");
-        }
-        catch(Exception e){
-            logger.warn(e.getMessage());
-        }
-    	
+		grades = studentDaoOperation.getGrades(studentId);
+        logger.info("======================GRADES===================\n");
+        logger.info("Course ID    Course Name    Grade");
+        grades.forEach(grade -> {
+        	logger.info(String.format("%9d    %11s    %5s", grade.getCourseId(), grade.getCourseName(), grade.getGrade()));
+        });
+        logger.info("=================================================\n");
     	return grades;
     }
 
@@ -154,15 +151,19 @@ public class StudentOperation implements StudentInterface {
      * Method to access the fee payment process
      *
      * @param student Object containing all information about a student
+     * @throws StudentCRSException, Exception
      */
-    public void makePayment(Student student, String method){
-        try {
-        	studentDaoOperation.setPaymentStatus(student,method);
+    public void makePayment(Student student, String method) throws StudentCRSException, Exception {
+    	if(student.getIsRegistered() == false) {
+    		throw new StudentCRSException("Student has not yet completed course registration.");
+    	}
+    	else if(student.getPaymentStatus() == true) {
+    		throw new StudentCRSException("Payment has already been made.");
+    	}
+    	else {
+    		studentDaoOperation.setPaymentStatus(student, method);
         	student.setPaymentStatus(true);
-        }
-        catch(Exception e) {
-            logger.warn(e.getMessage());
-        }
+    	}
     }
 
     /**
@@ -170,18 +171,11 @@ public class StudentOperation implements StudentInterface {
      *
      * @param student Object containing all information about a student
      * @return True when update successful else False
+     * @throws StudentCRSException, Exception
      */
-    public boolean updateInfo(Student student){
-
-        try {
-            studentDaoOperation.updateInfo(student);
-            return true;
-        }
-        catch (Exception e){
-            logger.warn(e.getMessage());
-        }
-
-        return false;
+    public boolean updateInfo(Student student) throws StudentCRSException, Exception {
+        studentDaoOperation.updateInfo(student);
+        return true;
     }
 
     /**
@@ -190,17 +184,11 @@ public class StudentOperation implements StudentInterface {
      * @param student Object containing all information about a student
      * @param courseId ID of the course to be added
      * @return True when course added successfully else False
+     * @throws StudentCRSException, Exception
      */
-    public boolean addCourse(Student student, int courseId){
-        try{
-            if(studentDaoOperation.addCourse(student,courseId))
-            	return true;
-        }
-        catch(Exception e){
-            logger.warn(e.getMessage());
-        }
-
-        return false;
+    public boolean addCourse(Student student, int courseId) throws StudentCRSException, Exception {
+        studentDaoOperation.addCourse(student,courseId);
+        return true;
     }
 
     /**
@@ -209,16 +197,10 @@ public class StudentOperation implements StudentInterface {
      * @param student Object containing all information about a student
      * @param courseId ID of course to be deleted
      * @return True when course deleted successfully else False
+     * @throws StudentCRSException, Exception
      */
-    public boolean deleteCourse(Student student, int courseId){
-
-        try{
-            if(studentDaoOperation.dropCourse(student,courseId))
-            	return true;
-        }
-        catch(Exception e){
-            logger.warn(e.getMessage());
-        }
+    public boolean deleteCourse(Student student, int courseId) throws StudentCRSException, Exception {
+    	studentDaoOperation.dropCourse(student,courseId);
         return false;
     }
 
@@ -228,50 +210,65 @@ public class StudentOperation implements StudentInterface {
      * @param courseCart ArrayList that contains current course selections
      * @param student Object containing all information about a student
      * @return True when courses registered successfully else False
+     * @throws StudentCRSException, Exception
      */
-    public boolean registerCourses(ArrayList<Integer> courseCart, Student student){
-    	try {
-			courseCart.forEach(courseID -> {
-				studentDaoOperation.addCourse(student, courseID);
-    		});
-            logger.info("Proceed to make payment\n");
-            setRegistrationStatus(student);
-            student.setIsRegistered(true);
-            
-            return true;
+    public boolean registerCourses(ArrayList<Integer> courseCart, Student student) throws StudentCRSException, Exception {
+    	if(student.getIsRegistered()) {
+    		throw new StudentCRSException("Student has already registered courses.");
     	}
-    	catch(Exception e) {
-            logger.warn(e.getMessage());
+    	else if(courseCart.size() < 4) {
+    		throw new StudentCRSException("Less than 4 courses selected");
     	}
-    	return false;
+    	else if(courseCart.size() > 6){
+    		throw new StudentCRSException("More than 6 courses selected");
+    	}
+    	else if(getRegistrationSystemStatus() == false){
+    		throw new StudentCRSException("Registration Window is closed");
+		}
+    	else {
+    		try {
+    			for(Integer courseID: courseCart) {
+        			Course course = coursesDaoOperation.getCourseByID(courseID);
+        			if(course == null) {
+        				throw new StudentCRSException("Course ID: " + courseID + " is invalid.");
+        			}
+        			else if(coursesDaoOperation.noOfEnrolledStudents(courseID)>=10){
+        				throw new StudentCRSException("Course " + courseID + " is full.");
+        			}
+        		}
+    			for(Integer courseID: courseCart) {
+        			studentDaoOperation.addCourse(student, courseID);
+        		}
+    			logger.info("Proceed to make payment\n");
+                setRegistrationStatus(student);
+                student.setIsRegistered(true);
+    		}
+    		catch(StudentCRSException e) {
+    			throw new StudentCRSException(e.getMessage() + " Aborting registration process.");
+    		}
+    	}
+        return true;
     }
     /**
      * Method to fetch the registered courses for a student
      * @param student Student object containing data about the student
      * @return Returns the list of registered courses
+     * @throws StudentCRSException, Exception
      */
-    public ArrayList<Course> getRegisteredCourses(Student student) {
+    public ArrayList<Course> getRegisteredCourses(Student student) throws StudentCRSException, Exception {
     	ArrayList<Course> courses = null;
-    	try {
-    		if(!student.getIsRegistered()){
-                throw new StudentCRSException("You have not registered any courses yet. Please register courses.\n");
-            }
-            else {
-                courses = studentDaoOperation.getEnrolledCourses(student);
-//                logger.info("================REGISTERED COURSES================\n");
-//                logger.info("Course ID    Course Name    Credits");
-//                courses.forEach(course -> {
-//                	logger.info(String.format("%9d    %11s    %7d", course.getCourseID(), course.getCourseName(), course.getCredits()));
-//                });
-//                logger.info("==================================================\n");
-            } 
-    	}
-    	catch(StudentCRSException e) {
-    		logger.warn(e.getMessage());
-    	}
-    	catch(Exception e) {
-    		logger.warn(e.getMessage());
-    	}
+		if(!student.getIsRegistered()){
+            throw new StudentCRSException("You have not registered any courses yet. Please register courses.\n");
+        }
+        else {
+            courses = studentDaoOperation.getEnrolledCourses(student);
+            logger.info("================REGISTERED COURSES================\n");
+            logger.info("Course ID    Course Name    Credits");
+            courses.forEach(course -> {
+            	logger.info(String.format("%9d    %11s    %7d", course.getCourseID(), course.getCourseName(), course.getCredits()));
+            });
+            logger.info("==================================================\n");
+        }
     	return courses;
     }
 
