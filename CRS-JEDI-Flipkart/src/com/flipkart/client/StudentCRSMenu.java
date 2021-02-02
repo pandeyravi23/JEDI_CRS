@@ -133,7 +133,7 @@ public class StudentCRSMenu {
 						} else if (remaining > 0) {
 							status = Integer.toString(remaining) + " seats left";
 						}
-						logger.info(String.format("%9d    %11s    %7d    %6s", course.getCourseID(), course.getCourseName(), course.getCredits(), status));
+						logger.info(String.format("%-9d    %-11s    %-7d    %-6s", course.getCourseID(), course.getCourseName(), course.getCredits(), status));
 					});
 					
 					logger.info("=================================================\n");

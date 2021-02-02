@@ -104,7 +104,7 @@ public class StudentOperation implements StudentInterface {
             	if(professorAllotted == null) {
             		professorAllotted = "Not yet alloted";
             	}
-            	logger.info(String.format("%9d    %11s    %7d    %18s", course.getCourseID(), course.getCourseName(), course.getCredits(), professorAllotted));
+            	logger.info(String.format("%-9d    %-11s    %-7d    %-18s", course.getCourseID(), course.getCourseName(), course.getCredits(), professorAllotted));
             });
             logger.info("=========================================================\n");
         }
@@ -126,7 +126,7 @@ public class StudentOperation implements StudentInterface {
             logger.info("======================GRADES===================\n");
             logger.info("Course ID    Course Name    Grade");
             grades.forEach(grade -> {
-            	logger.info(String.format("%9d    %11s    %5s", grade.getCourseId(), grade.getCourseName(), grade.getGrade()));
+            	logger.info(String.format("%-9d    %-11s    %-5s", grade.getCourseId(), grade.getCourseName(), grade.getGrade()));
             });
             logger.info("=================================================\n");
         }
@@ -251,7 +251,7 @@ public class StudentOperation implements StudentInterface {
                 logger.info("================REGISTERED COURSES================\n");
                 logger.info("Course ID    Course Name    Credits");
                 enrolledCourses.forEach(course -> {
-                	logger.info(String.format("%9d    %11s    %7d", course.getCourseID(), course.getCourseName(), course.getCredits()));
+                	logger.info(String.format("%-9d    %-11s    %-7d", course.getCourseID(), course.getCourseName(), course.getCredits()));
                 });
                 logger.info("==================================================\n");
             }
