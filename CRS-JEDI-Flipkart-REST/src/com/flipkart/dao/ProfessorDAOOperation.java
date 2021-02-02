@@ -277,5 +277,36 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 
 		return al;
 	}
+	
+	
+	
+	/**
+	 * Method creates and returns professor object using professor ID from the database
+	 * 
+	 * @param email id of professor
+	 * @return Professor Object
+	 * @throws SQLException, Exception
+	 */
+	public Professor getProfessorById2(int professorId) throws SQLException, Exception {
+		Professor professor = null;
+
+		con = DBConnection.getConnection();
+		String str = SQLQueriesConstant.GET_PROFESSOR_OBJECT_BY_ID_QUERY;
+		stmt = con.prepareStatement(str);
+		stmt.setInt(1, professorId);
+		ResultSet rs = stmt.executeQuery();
+
+		while (rs.next()) {
+			professor = new Professor();
+			professor.setUserId(rs.getInt(1));
+			professor.setUserName(rs.getString(2));
+			professor.setEmail(rs.getString("email"));
+			professor.setRole(rs.getString("role"));
+			professor.setDepartment(rs.getString(5));
+			professor.setApproved(true);
+		}
+
+		return professor;
+	}
 
 }

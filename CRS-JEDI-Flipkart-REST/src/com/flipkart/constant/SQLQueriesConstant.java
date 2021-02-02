@@ -42,7 +42,8 @@ public class SQLQueriesConstant {
 	public static final String SHOW_GRADES_PROFESSOR_QUERY = "Select grade from grades where studentId = ? and courseId = ?";
 	public static final String GET_STUDENTS_PROFESSOR_QUERY = "select id,name,email,branch from student where id in (select studentId from grades where courseId = ?)";
 	public static final String GET_PROFESSOR_BY_ID_QUERY = "SELECT name FROM professor WHERE id = ?";
-
+	public static final String GET_PROFESSOR_OBJECT_BY_ID_QUERY = "SELECT * FROM professor WHERE id = ?";
+	
 	// SQL Queries for Course
 	public static final String GET_COURSE_BY_ID_QUERY = "SELECT * FROM course WHERE id=?";
 	public static final String GET_ALL_COURSES_QUERY = "SELECT cc.courseId, cc.courseName, cc.credits, c.professorId FROM courseCatalog AS cc INNER JOIN course AS c ON cc.courseId = c.id";
@@ -60,7 +61,7 @@ public class SQLQueriesConstant {
 	public static final String UPDATE_PROFESSOR_IN_COURSE = "update course set professorId = ? where id=?";
 	public static final String GET_COURSE_CATALAOG_QUERY = "select courseName,credits from courseCatalog where courseId=?";
 	public static final String ADD_NEWCOURSE_IN_COURSE = "insert into course(id,name,professorId,credits) values(?,?,?,?)";
-	public static final String GET_STUDENT_DETAILS = "select c.*, s.name from credentials as c join student as s on s.id = c.id where c.isApproved = 0";
+	public static final String GET_STUDENT_DETAILS = "select c.*, s.name from credentials as c join student as s on s.id = c.id where c.isApproved = 0 and c.role=1";
 	public static final String UPDATE_USER_IN_CREDENTIALS = "update credentials set isApproved=1 where id = ?";
 	public static final String DELETE_USER_FROM_CREDENTIALS = "Delete from credentials where id = ?";
 	public static final String DELETE_STUDENT_BY_ID = "Delete from student where id = ?";
@@ -70,7 +71,10 @@ public class SQLQueriesConstant {
 	public static final String DELETE_COURSE_BY_ID = "delete from course where id = ?";
 	public static final String OPEN_REGISTRATION_WINDOW = "update registrationDetails set isOpen=true";
 	public static final String CLOSE_REGISTRATION_WINDOW = "update registrationDetails set isOpen=false";
-	public static final String GET_COURSE_INFO_BY_ID = "select courseId,courseName from courseCatalog";
+	public static final String GET_COURSE_INFO = "select courseId,courseName from courseCatalog";
+	public static final String GET_COURSE_INFO_BY_ID = "select courseId,courseName from courseCatalog where courseId=?";
 	public static final String GET_PROFESSOR_INFO_BY_ID = "select id,name from professor";
 	public static final String GET_REGISTERED_STUDENTS = "select id,name from student where isRegistered=1";
+	public static final String GET_ISAPPROVED_FROM_CREDENTIALS = "select isApproved from credentials where id=?";
+	
 }

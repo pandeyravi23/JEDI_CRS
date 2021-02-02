@@ -30,9 +30,10 @@ import com.flipkart.util.ResponseHelpers;
 
 /**
  * 
- * Handles all Http requests related to professor operations
- * Validators NotNull-checks for null values, Size checks for
- * length of string and DecimalMin/DecimalMax checks for integer range
+ * Handles all Http requests related to professor operations Validators
+ * NotNull-checks for null values, Size checks for length of string and
+ * DecimalMin/DecimalMax checks for integer range
+ * 
  * @author JEDI04
  *
  */
@@ -48,7 +49,6 @@ public class ProfessorRESTAPI {
 	 * @return Response
 	 * @throws ValidationException
 	 */
-
 	@GET
 	@Path("/allottedCourses")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -58,7 +58,7 @@ public class ProfessorRESTAPI {
 		try {
 
 			String professorName = professorOperation.getProfessorById(professorId);
-			if (professorName==null) {
+			if (professorName == null) {
 				return ResponseHelpers.badRequest(null, "No Professor with " + professorId + " exists");
 			}
 			ArrayList<JSONObject> al = professorOperation.showCourses(professorId);
@@ -111,7 +111,6 @@ public class ProfessorRESTAPI {
 	@GET
 	@Path("/viewGrades")
 	@Produces(MediaType.APPLICATION_JSON)
-
 	public Response viewGrades(
 			@DecimalMin(value = "100", message = "courseID value has to be of 3 digits") @Digits(fraction = 0, integer = 3) @NotNull @QueryParam("courseID") Integer courseID)
 			throws ValidationException {
@@ -134,7 +133,7 @@ public class ProfessorRESTAPI {
 	 * 
 	 * @param courseID  course id
 	 * @param studentID student id
-	 * @param grade grade
+	 * @param grade     grade
 	 * @return response containing status of grade updated
 	 * @throws ValidationException
 	 */
@@ -142,18 +141,11 @@ public class ProfessorRESTAPI {
 	@Path("/updateGrade")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateGrade(
-			@DecimalMin(value = "100", message = "courseID value has to be of 3 digits")
-			@Digits(fraction = 0, integer = 3)
-			@NotNull
-			@FormParam("courseID") Integer courseID,
-			
-			@DecimalMin(value = "100", message = "StudentID value has to be of 3 digits")
-			@Digits(fraction = 0, integer = 3)
-			@NotNull
-			@FormParam("studentID") Integer studentID,
-			@NotNull
-		    @Size(min = 1, max = 2, message = "The length of Grade should be between 1 to 2")
-			@FormParam("grade") String grade) throws ValidationException{
+			@DecimalMin(value = "100", message = "courseID value has to be of 3 digits") @Digits(fraction = 0, integer = 3) @NotNull @FormParam("courseID") Integer courseID,
+
+			@DecimalMin(value = "100", message = "StudentID value has to be of 3 digits") @Digits(fraction = 0, integer = 3) @NotNull @FormParam("studentID") Integer studentID,
+			@NotNull @Size(min = 1, max = 2, message = "The length of Grade should be between 1 to 2") @FormParam("grade") String grade)
+			throws ValidationException {
 		try {
 			boolean res = professorOperation.updateStudentGrade(courseID, studentID, grade);
 			if (res) {
@@ -163,6 +155,32 @@ public class ProfessorRESTAPI {
 		}
 
 		catch (ProfessorCRSException e) {
+			return ResponseHelpers.badRequest(null, e.getMessage());
+		} catch (Exception e) {
+			return ResponseHelpers.badRequest(null, e.getMessage());
+		}
+	}
+
+	/**
+	 * Method to view student grades
+	 * 
+	 * @param professorId professorID
+	 * @return Response returns students grades
+	 * @throws ValidationException
+	 */
+	@GET
+	@Path("/professorDetails")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getProfessorById(
+			@DecimalMin(value = "100", message = "professorID value has to be of 3 digits") @Digits(fraction = 0, integer = 3) @NotNull @QueryParam("professorID") Integer professorID)
+			throws ValidationException {
+		try {
+			Professor professor = professorOperation.getProfessorById2(professorID);
+			if (professor == null) {
+				return ResponseHelpers.badRequest(null, "No professor found with id " + professorID);
+			}
+			return ResponseHelpers.success(professor, "Success");
+		} catch (ProfessorCRSException e) {
 			return ResponseHelpers.badRequest(null, e.getMessage());
 		} catch (Exception e) {
 			return ResponseHelpers.badRequest(null, e.getMessage());
