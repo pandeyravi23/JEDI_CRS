@@ -239,7 +239,7 @@ public class AdminRESTAPI {
 	 * Allot course to the professor
 	 * @param courseID
 	 * @param professorID
-	 * @return Respose
+	 * @return Response
 	 * @throws ValidationException
 	 */
 	
