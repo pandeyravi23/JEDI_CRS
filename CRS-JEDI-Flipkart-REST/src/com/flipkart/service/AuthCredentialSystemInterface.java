@@ -13,5 +13,5 @@ public interface AuthCredentialSystemInterface {
 
 	public void registerStudent(User user, Student student, String password) throws Exception;
 	
-	public int registerUser(User user, String password);
+	public int registerUser(User user, String password) throws Exception;
 }
