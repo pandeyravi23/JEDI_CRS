@@ -42,8 +42,13 @@ public class StudentOperation implements StudentInterface {
     }
 
 
-
-    public Student getStudentByID(int studentID) throws Exception {
+    /**
+	 * Method to get the student object from student ID
+	 * 
+	 * @param student The student object containing the student related information to make an entry
+	 * @throws StudentCRSException, Exception
+	 */
+    public Student getStudentByID(int studentID) throws StudentCRSException, Exception {
     	Student student = null;
     	student = studentDaoOperation.getStudentByID(studentID);
     	return student;
@@ -77,8 +82,9 @@ public class StudentOperation implements StudentInterface {
      * Operation to get all the courses that are present in the Course Catalog
      *
      * @return List of course objects each containing information about a course
+     * @throws StudentCRSException, Exception
      */
-    public ArrayList<Course> getAllCourses() throws Exception {
+    public ArrayList<Course> getAllCourses() throws StudentCRSException, Exception {
     	ArrayList<Course> courses = null;
         courses = coursesDaoOperation.getAllCourses();
     	return courses;
@@ -126,9 +132,10 @@ public class StudentOperation implements StudentInterface {
      * Method to print grades attained by student in each of his registered courses
      *
      * @param studentId User ID of the student
-     * @return 
+     * @return grades ArrayList containing grades attained by a student
+     * @throws StudentCRSException, Exception
      */
-    public ArrayList<Grades> viewGrades(int studentId) throws Exception {
+    public ArrayList<Grades> viewGrades(int studentId) throws StudentCRSException, Exception {
     	ArrayList<Grades> grades = null;
 		grades = studentDaoOperation.getGrades(studentId);
         logger.info("======================GRADES===================\n");
@@ -144,8 +151,9 @@ public class StudentOperation implements StudentInterface {
      * Method to access the fee payment process
      *
      * @param student Object containing all information about a student
+     * @throws StudentCRSException, Exception
      */
-    public void makePayment(Student student, String method) throws Exception {
+    public void makePayment(Student student, String method) throws StudentCRSException, Exception {
     	if(student.getIsRegistered() == false) {
     		throw new StudentCRSException("Student has not yet completed course registration.");
     	}
@@ -163,8 +171,9 @@ public class StudentOperation implements StudentInterface {
      *
      * @param student Object containing all information about a student
      * @return True when update successful else False
+     * @throws StudentCRSException, Exception
      */
-    public boolean updateInfo(Student student) throws Exception {
+    public boolean updateInfo(Student student) throws StudentCRSException, Exception {
         studentDaoOperation.updateInfo(student);
         return true;
     }
@@ -175,8 +184,9 @@ public class StudentOperation implements StudentInterface {
      * @param student Object containing all information about a student
      * @param courseId ID of the course to be added
      * @return True when course added successfully else False
+     * @throws StudentCRSException, Exception
      */
-    public boolean addCourse(Student student, int courseId) throws Exception {
+    public boolean addCourse(Student student, int courseId) throws StudentCRSException, Exception {
         studentDaoOperation.addCourse(student,courseId);
         return true;
     }
@@ -187,8 +197,9 @@ public class StudentOperation implements StudentInterface {
      * @param student Object containing all information about a student
      * @param courseId ID of course to be deleted
      * @return True when course deleted successfully else False
+     * @throws StudentCRSException, Exception
      */
-    public boolean deleteCourse(Student student, int courseId) throws Exception {
+    public boolean deleteCourse(Student student, int courseId) throws StudentCRSException, Exception {
     	studentDaoOperation.dropCourse(student,courseId);
         return false;
     }
@@ -199,8 +210,9 @@ public class StudentOperation implements StudentInterface {
      * @param courseCart ArrayList that contains current course selections
      * @param student Object containing all information about a student
      * @return True when courses registered successfully else False
+     * @throws StudentCRSException, Exception
      */
-    public boolean registerCourses(ArrayList<Integer> courseCart, Student student) throws Exception {
+    public boolean registerCourses(ArrayList<Integer> courseCart, Student student) throws StudentCRSException, Exception {
     	if(student.getIsRegistered()) {
     		throw new StudentCRSException("Student has already registered courses.");
     	}
@@ -210,6 +222,9 @@ public class StudentOperation implements StudentInterface {
     	else if(courseCart.size() > 6){
     		throw new StudentCRSException("More than 6 courses selected");
     	}
+    	else if(getRegistrationSystemStatus() == false){
+    		throw new StudentCRSException("Registration Window is closed");
+		}
     	else {
     		try {
     			for(Integer courseID: courseCart) {
@@ -238,8 +253,9 @@ public class StudentOperation implements StudentInterface {
      * Method to fetch the registered courses for a student
      * @param student Student object containing data about the student
      * @return Returns the list of registered courses
+     * @throws StudentCRSException, Exception
      */
-    public ArrayList<Course> getRegisteredCourses(Student student) throws Exception {
+    public ArrayList<Course> getRegisteredCourses(Student student) throws StudentCRSException, Exception {
     	ArrayList<Course> courses = null;
 		if(!student.getIsRegistered()){
             throw new StudentCRSException("You have not registered any courses yet. Please register courses.\n");

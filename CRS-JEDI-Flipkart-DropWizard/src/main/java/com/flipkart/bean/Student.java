@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * Class to interact with variables present in Student Class
  * using Getters and Setters Methods
- * @author JEDI04
+ *  @author JEDI04
  */
 
 @XmlRootElement(name = "student")

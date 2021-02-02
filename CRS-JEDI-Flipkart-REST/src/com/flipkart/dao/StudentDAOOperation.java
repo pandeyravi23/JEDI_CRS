@@ -46,8 +46,13 @@ public class StudentDAOOperation implements StudentDAOInterface {
 
 	
 	
-	
-	public Student getStudentByID(int studentID) throws Exception {
+	/**
+	 * Method to get the student object from student ID
+	 * 
+	 * @param student The student object containing the student related information to make an entry
+	 * @throws StudentCRSException, Exception
+	 */
+	public Student getStudentByID(int studentID) throws StudentCRSException, Exception {
 		Student student = null;
 		connection = DBConnection.getConnection();
 		ps = connection.prepareStatement(SQLQueriesConstant.GET_STUDENT_BY_ID_QUERY);
@@ -125,8 +130,9 @@ public class StudentDAOOperation implements StudentDAOInterface {
 	 * 
 	 * @param student The student object containing the student related information to make an entry
 	 * @param courseID The courseID with which an entry is to be made
+	 * @throws StudentCRSException, Exception
 	 */
-	public void addCourse(Student student, int courseID) throws Exception {
+	public void addCourse(Student student, int courseID) throws StudentCRSException, Exception {
 		Course course = coursesDaoOperation.getCourseByID(courseID);
 		if(course == null) {
 			logger.info(">>>>>>>> Invalid Course ID <<<<<<<<<<\n");
@@ -165,8 +171,9 @@ public class StudentDAOOperation implements StudentDAOInterface {
 	 * 
 	 * @param student Student Object containing information regarding the student
 	 * @param courseID The courseID whose entry is to be removed
+	 * @throws StudentCRSException, Exception
 	 */
-	public void dropCourse(Student student, int courseID) throws Exception {
+	public void dropCourse(Student student, int courseID) throws StudentCRSException, Exception {
 		Course course = coursesDaoOperation.getCourseByID(courseID);
 		if(course == null) {
 			logger.info(">>>>>>>> Invalid Course ID <<<<<<<<<<\n");
@@ -307,9 +314,10 @@ public class StudentDAOOperation implements StudentDAOInterface {
 	 * Method to fetch an ArrayList containing the Course objects of courses that a student is enrolled in.
 	 * 
 	 * @param student Student object containing the student information
-	 * @return An ArrayList containing the Course objects of courses that a student is enrolled in.
+	 * @return An ArrayList containing the Course objects of courses that a student is enrolled in
+	 * @throws StudentCRSException, Exception
 	 */
-	public ArrayList<Course> getEnrolledCourses(Student student) throws Exception {
+	public ArrayList<Course> getEnrolledCourses(Student student) throws StudentCRSException, Exception {
 		ArrayList<Course> enrolledCourses = new ArrayList<>();
 		connection = DBConnection.getConnection();
 		ps = connection.prepareStatement(SQLQueriesConstant.GET_ENROLLED_COURSES_QUERY);
@@ -352,8 +360,9 @@ public class StudentDAOOperation implements StudentDAOInterface {
 	 * 
 	 * @param studentID The studentId whose grades is to be fetched
 	 * @return returns an ArrayList of Grades containing grade objects corresponding to grades obtained by a student
+	 * @throws StudentCRSException, Exception
 	 */
-	public ArrayList<Grades> getGrades(int studentID) throws Exception {
+	public ArrayList<Grades> getGrades(int studentID) throws StudentCRSException, Exception {
 		ArrayList<Grades> grades = new ArrayList<>();
 		connection = DBConnection.getConnection();
 		ps = connection.prepareStatement(SQLQueriesConstant.GET_GRADES_QUERY);
@@ -378,8 +387,9 @@ public class StudentDAOOperation implements StudentDAOInterface {
 	 * Method to set the payment status of a Student to true
 	 * 
 	 * @param student Student object containing the student information
+	 * @throws StudentCRSException, Exception
 	 */
-	public void setPaymentStatus(Student student, String method) throws Exception {
+	public void setPaymentStatus(Student student, String method) throws StudentCRSException, Exception {
 		connection = DBConnection.getConnection();
 		ps = connection.prepareStatement(SQLQueriesConstant.SET_PAYMENT_STATUS_QUERY);
 
@@ -393,9 +403,10 @@ public class StudentDAOOperation implements StudentDAOInterface {
 	 * 
 	 * @param student Student object containing the student information
 	 * @param id The id that the student is to be registered with.
+	 * @throws StudentCRSException, Exception
 	 */
 	@Override
-	public void registerStudent(Student student, int id) throws Exception {
+	public void registerStudent(Student student, int id) throws StudentCRSException, Exception {
 		connection = DBConnection.getConnection();
 		ps = connection.prepareStatement(SQLQueriesConstant.REGISTER_STUDENT_QUERY);
 
