@@ -37,7 +37,9 @@ import com.flipkart.bean.Admin;
 import com.flipkart.bean.Course;
 import com.flipkart.bean.Professor;
 import com.flipkart.bean.ReportCard;
+import com.flipkart.bean.Student;
 import com.flipkart.service.AdminOperation;
+import com.flipkart.service.StudentOperation;
 import com.google.gson.Gson;
 import com.flipkart.util.ResponseHelpers;
 import com.flipkart.util.ValidationOperation;
@@ -70,9 +72,16 @@ public class AdminRESTAPI {
 			@QueryParam("id") Integer id) throws ValidationException
 	{
 		ArrayList<JSONObject> reportCard = new ArrayList<JSONObject>();
+		StudentOperation studentOperation = StudentOperation.getInstance();
 		try {
-			 reportCard = adminOperation.generateReportCard(id);
-		}catch(AdminCRSException e)
+			Student student = studentOperation.getStudentByID(id);
+			reportCard = adminOperation.generateReportCard(id);
+		}
+		catch(StudentCRSException e)
+		{
+			return ResponseHelpers.badRequest(reportCard, e.getMessage());
+		}
+		catch(AdminCRSException e)
 		{
 			return ResponseHelpers.badRequest(reportCard, e.getMessage());
 		}
