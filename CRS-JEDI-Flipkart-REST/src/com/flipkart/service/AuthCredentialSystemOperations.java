@@ -97,7 +97,7 @@ public class AuthCredentialSystemOperations implements AuthCredentialSystemInter
 		if (id == -1) {
 			throw new CommonException("Entry could not be added");
 		}
-		else if(userDaoOperation.checkEmailAvailability(user.getEmail()) == true) {
+		else if(userDaoOperation.checkEmailAvailability(user.getEmail()) == false) {
 			throw new CommonException("Another user has already registered with this email");
 		}
 		else {

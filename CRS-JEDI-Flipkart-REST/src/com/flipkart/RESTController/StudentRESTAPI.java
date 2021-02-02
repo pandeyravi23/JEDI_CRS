@@ -341,7 +341,7 @@ public class StudentRESTAPI {
 			authentication.registerStudent(user, student, password);
 			return ResponseHelpers.successPost(student, "Successfully registered");
 		}
-		catch(StudentCRSException e) {
+		catch(CommonException e) {
 			return ResponseHelpers.badRequest(null, e.getMessage());
 		}
 		catch(Exception e) {

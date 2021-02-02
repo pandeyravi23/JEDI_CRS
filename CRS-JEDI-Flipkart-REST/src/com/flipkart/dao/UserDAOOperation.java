@@ -72,22 +72,14 @@ public class UserDAOOperation implements UserDAOInterface {
 	 * @param email The email address whose presence is to be verified.
 	 */
 	@Override
-	public boolean checkEmailAvailability(String email) {
-		try {
-			connection = DBConnection.getConnection();
-			ps = connection.prepareStatement(SQLQueriesConstant.CHECK_EMAIL_AVAILABILITY_QUERY);
-			ps.setString(1, email);
-			
-			ResultSet result = ps.executeQuery();
-			if(result.next())
-				return false;
-		}
-		catch(SQLException e) {
-			logger.warn(e.getMessage() + "\n");
-		}
-		catch(Exception e) {
-			logger.warn(e.getMessage() + "\n");
-		}
+	public boolean checkEmailAvailability(String email) throws Exception{
+		connection = DBConnection.getConnection();
+		ps = connection.prepareStatement(SQLQueriesConstant.CHECK_EMAIL_AVAILABILITY_QUERY);
+		ps.setString(1, email);
+
+		ResultSet result = ps.executeQuery();
+		if (result.next())
+			return false;
 		return true;
 	}
 	
