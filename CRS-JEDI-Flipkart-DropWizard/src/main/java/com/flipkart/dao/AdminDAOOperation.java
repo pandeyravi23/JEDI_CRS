@@ -197,7 +197,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 			else {
 				logger.info("Student with ID " + studentId + " has not registered for any course!");
 				logger.info("=======================================");
-				throw new AdminCRSException("Student ID " + studentId + " does not exist.");
+				throw new AdminCRSException("Student has not registered for any courses.");
 			}
 			logger.info("=======================================");
 			logger.info("        Report Card of " + name + " :");
