@@ -43,7 +43,6 @@ public class User {
     
     @NotNull
     @DecimalMin(value = "10", message = "Age shall be minimum of 10 years")
-    @DecimalMax(value = "40", message = "Age should not be more than 40 years")
 	protected int age;
     
 	@NotNull

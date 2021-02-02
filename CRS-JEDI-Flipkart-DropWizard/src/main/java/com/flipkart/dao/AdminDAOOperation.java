@@ -242,13 +242,11 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	}
 
 	/**
-	 * 
-	 * approveStudent Used to approve the newly registered students in order to and
+	 * approveStudent Used to approve the newly registered students in order to
 	 * allow them to login and register for courses.
-	 * 
+	 * @param studentID
 	 * @return true if student approved successfully else false
 	 */
-	
 	public boolean approveStudent(int studentID) {
 		try {
 			String str = SQLQueriesConstant.UPDATE_USER_IN_CREDENTIALS;
