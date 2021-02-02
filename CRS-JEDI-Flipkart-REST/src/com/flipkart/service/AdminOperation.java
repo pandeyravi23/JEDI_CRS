@@ -1,9 +1,11 @@
 package com.flipkart.service;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import javax.validation.Valid;
+import javax.validation.ValidationException;
 import javax.validation.constraints.NotNull;
 
 import org.apache.log4j.Logger;
@@ -174,11 +176,13 @@ public class AdminOperation implements AdminInterface {
 	}
 
 	/**
-	 * Approves New Student's Registration After Viewing
-	 * the details 
+	 * Approves New Student's Registration
+	 * @param studentID
+	 * @return true if student is approved successfully else returns false
+	 * @throws AdminCRSException,Exception
 	 */
 	@Override
-	public boolean approveStudents(int studentID) {
+	public boolean approveStudents(int studentID) throws AdminCRSException,Exception {
 		// TODO Auto-generated method stub
 		return adminDAO.approveStudent(studentID);
 	}
@@ -218,38 +222,31 @@ public class AdminOperation implements AdminInterface {
 
 	/**
 	 * Deletes course from course catalog and 
-	 * course tables with the entered course id 
-	 * by admin
+	 * course tables with the entered course id by admin
+	 * @param courseId Course Id of the course to be deleted.
+	 * @return True if the course is successfully deleted. False otherwise.
+	 * @throws AdminCRSException,Exception
 	 */
-//	@Override
-	public boolean deleteCourse(int courseID) {
+	@Override
+	public boolean deleteCourse(int courseID) throws AdminCRSException,Exception {
 		// TODO Auto-generated method stub
-		try {
-			boolean res = adminDAO.deleteCourse(courseID);
-			return res;
-		} catch (Exception e) {
-			logger.info(e.getMessage());
-		}
-		return false;
+		return adminDAO.deleteCourse(courseID);
 	}
 	
 	
 	
 	/**
-	 * Allot course to professor with the entered 
-	 * course ID and Professor ID
-	 * by Admin
+	 * Allot course to the professor
+	 * @param courseID
+	 * @param professorID
+	 * @return true if course is alloted successfully else return false
+	 * @throws AdminCRSException,Exception
 	 */
 //	@Override
-	public boolean allotCourse(int courseID, int professorID) {
-		try {
-			adminDAO.showcourses();
-			adminDAO.showprofessor();
-			return adminDAO.allotCourses(courseID,professorID);
-		} catch(Exception e) {
-			logger.info(e.getMessage());
-		}
-		return false;
+	public boolean allotCourse(int courseID, int professorID) throws AdminCRSException,Exception {
+		adminDAO.showcourses();
+		adminDAO.showprofessor();
+		return adminDAO.allotCourses(courseID,professorID);
 	}
 	
 	/**
@@ -308,4 +305,5 @@ public class AdminOperation implements AdminInterface {
 		}
 		return res;
 	}
+	
 }

@@ -8,6 +8,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.flipkart.dao.AdminDAOOperation;
+import com.flipkart.exception.AdminCRSException;
 import com.flipkart.helper.AddAdminHelper;
 
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ import com.flipkart.util.ValidationOperation;
 @Path("/admin")
 public class AdminRESTAPI {
 	AdminOperation adminOperation = AdminOperation.getInstance();
-	
+	AdminDAOOperation adminDAOOperation = AdminDAOOperation.getInstance();
 	/**
 	 * 
 	 * @param id Student ID
@@ -188,14 +189,12 @@ public class AdminRESTAPI {
 	}
 	
 
-	
 	/**
 	 * Adds new course in course catalog
 	 * @param course
 	 * @return Response
 	 * @throws ValidationException
 	 */
-	
 	@POST
 	@Path("/addCourse")
 	@Consumes("application/json")
@@ -215,8 +214,6 @@ public class AdminRESTAPI {
 	 * @return Response
 	 * @throws ValidationException
 	 */
-	
-	
 	@DELETE
 	@Path("/deleteCourse")
 	@Consumes("application/json")
@@ -226,11 +223,14 @@ public class AdminRESTAPI {
 			@DecimalMin(value = "100", message = "courseID value has to be of 3 digits")
 			@Digits(fraction = 0, integer = 3)
 			@QueryParam("courseID") Integer courseID) throws ValidationException{
-		boolean res = adminOperation.deleteCourse(courseID);
-		if(res==false) {
-			return ResponseHelpers.badRequest(null, "Failed to delete Course ");
+		try {
+			boolean res = adminOperation.deleteCourse(courseID);
+			return ResponseHelpers.success(null, "Course Deleted Successfully");
+		}catch(AdminCRSException e){
+			return ResponseHelpers.badRequest(null, e.getMessage());
+		}catch(Exception e){
+			return ResponseHelpers.badRequest(null, e.getMessage());
 		}
-		return ResponseHelpers.success(null, "Course Deleted Successfully");
 	}
 	
 	
@@ -239,11 +239,9 @@ public class AdminRESTAPI {
 	 * Allot course to the professor
 	 * @param courseID
 	 * @param professorID
-	 * @return Respose
+	 * @return Response object containing message
 	 * @throws ValidationException
 	 */
-	
-	
 	@PUT 
 	@Path("/allotProfessor")
 	@Consumes("application/json")
@@ -258,19 +256,23 @@ public class AdminRESTAPI {
 			@DecimalMin(value = "100", message = "ProfessorID value has to be of 3 digits")
 			@Digits(fraction = 0, integer = 3)
 			@QueryParam("professorID") Integer professorID) throws ValidationException{
-		boolean res = adminOperation.allotCourse(courseID,professorID);
-		if(res==false) {
-			return ResponseHelpers.badRequest(null, "Failed to Allocate Course");
+		try {
+			boolean res = adminOperation.allotCourse(courseID,professorID);
+			return ResponseHelpers.success(null, "Course Alloted Successfully");
+			
+		}catch(AdminCRSException e) {
+			return ResponseHelpers.badRequest(null, e.getMessage());
+		}catch(Exception e) {
+			return ResponseHelpers.badRequest(null, e.getMessage());
 		}
-		return ResponseHelpers.success(null, "Course Alloted Successfully");
 	}
 	
 	
 	/**
-	 * Approves New Student's Registration by entering studentID
-	 *
+	 * approveStudent Used to approve the newly registered students in order to
+	 * allow them to login and register for courses.
 	 * @param studentID
-	 * @return Response
+	 * @return Response object containing message
 	 * @throws ValidationException
 	 */
 	
@@ -283,11 +285,83 @@ public class AdminRESTAPI {
 			@DecimalMin(value = "100", message = "studentID value has to be of 3 digits")
 			@Digits(fraction = 0, integer = 3)
 			@QueryParam("studentID") Integer studentID) throws ValidationException{
+		try {
 		boolean res = adminOperation.approveStudents(studentID);
-		JSONObject msg = new JSONObject();
-		if(res==false) {
+		if(res==true) {
+			return ResponseHelpers.success(null, "Student Approved!");
+		}
+		else{
 			return ResponseHelpers.badRequest(null, "Some Error Occured");
 		}
-		return ResponseHelpers.success(null, "Student Approved!!");
+		}catch(AdminCRSException e) {
+			return ResponseHelpers.badRequest(null, e.getMessage());
+		}
+		catch(Exception e) {
+			return ResponseHelpers.badRequest(null, e.getMessage());
+		}
+	}
+	
+	/**
+	 * Shows list of all professors
+	 * @return Response object
+	 */
+	@GET
+	@Path("/showProfessor")
+	@Consumes("application/json")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response showProfessor(){
+		ArrayList<JSONObject> arr = new ArrayList<JSONObject>();
+		try {
+			arr = adminDAOOperation.showprofessor();
+			return ResponseHelpers.success(arr, "List of Professors");
+		}catch(AdminCRSException e) {
+			return ResponseHelpers.badRequest(null, e.getMessage());
+		}
+		catch(Exception e) {
+			return ResponseHelpers.badRequest(null, e.getMessage());
+		}
+	}
+	
+	/**
+	 * Shows list of all courses
+	 * @return Response object
+	 */
+	@GET
+	@Path("/showCourses")
+	@Consumes("application/json")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response showCourses(){
+		ArrayList<JSONObject> arr = new ArrayList<JSONObject>();
+		try {
+			arr = adminDAOOperation.showcourses();
+			return ResponseHelpers.success(arr, "List of Courses");
+		}catch(AdminCRSException e) {
+			return ResponseHelpers.badRequest(null, e.getMessage());
+		}
+		catch(Exception e) {
+			return ResponseHelpers.badRequest(null, e.getMessage());
+		}
+	}
+	
+	
+	/**
+	 * Shows list of students who are not approved
+	 * @return Response object
+	 */
+	@GET
+	@Path("/showUnapproved")
+	@Consumes("application/json")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response showUnapproved(){
+		ArrayList<JSONObject> arr = new ArrayList<JSONObject>();
+		try {
+			arr = adminDAOOperation.showunapproved();
+			return ResponseHelpers.success(arr, "List of Unappoved Students");
+		}catch(AdminCRSException e) {
+			return ResponseHelpers.badRequest(null, e.getMessage());
+		}
+		catch(Exception e) {
+			return ResponseHelpers.badRequest(null, e.getMessage());
+		}
 	}
 }

@@ -9,6 +9,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.validation.ValidationException;
+
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
 
@@ -16,6 +18,7 @@ import com.flipkart.bean.Admin;
 import com.flipkart.bean.Course;
 import com.flipkart.bean.Professor;
 import com.flipkart.util.DBConnection;
+import com.google.gson.annotations.JsonAdapter;
 import com.flipkart.constant.SQLQueriesConstant;
 import com.flipkart.exception.AdminCRSException;
 import com.flipkart.exception.StudentCRSException;
@@ -242,25 +245,28 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	}
 
 	/**
-	 * 
-	 * approveStudent Used to approve the newly registered students in order to and
-	 * allow them to login and register for courses.
-	 * 
+	 * Approves New Student's Registration
+	 * @param studentID
+	 * @return true if student is approved successfully else returns false
+	 * @throws AdminCRSException,Exception
 	 */
-	
-	public boolean approveStudent(int studentID) {
-		try {
-			String str = SQLQueriesConstant.UPDATE_USER_IN_CREDENTIALS;
-			ps = connection.prepareStatement(str);
-			ps.setInt(1,studentID);
-			ps.executeUpdate();
-			return true;
-		}catch (SQLException e) {
-			logger.info(e.getMessage());
-		} catch (Exception e) {
-			logger.info(e.getMessage());
+	@Override
+	public boolean approveStudent(int studentID) throws AdminCRSException,Exception {
+		String str = SQLQueriesConstant.GET_ISAPPROVED_FROM_CREDENTIALS;
+		ps = connection.prepareStatement(str);
+		ps.setInt(1,studentID);
+		ResultSet rs = ps.executeQuery();
+		if(rs.next()==false) {
+			throw new AdminCRSException("No student with id: "+ studentID + " exists");
 		}
-		return false;
+		if(rs.getInt("isApproved")==1) {
+			throw new AdminCRSException("Student with id: " + studentID + " already Approved");
+		}
+		str = SQLQueriesConstant.UPDATE_USER_IN_CREDENTIALS;
+		ps = connection.prepareStatement(str);
+		ps.setInt(1,studentID);
+		ps.executeUpdate();
+		return true;
 	}
 
 	/**
@@ -295,91 +301,82 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	/**
 	 * Deletes a course from course catalog and course tables where id matches the
 	 * given courseId.
-	 * 
 	 * @param courseId Course Id of the course to be deleted.
 	 * @return True if the course is successfully deleted. False otherwise.
+	 * @throws AdminCRSException,Exception
 	 */
-	
-	public boolean deleteCourse(int courseId) {
-		try {
-			String str = SQLQueriesConstant.DELETE_COURSE_IN_CATALOG;
-			ps = connection.prepareStatement(str);
-			ps.setInt(1, courseId);
-			int val = ps.executeUpdate();
-			str = SQLQueriesConstant.DELETE_COURSE_BY_ID;
-			ps = connection.prepareStatement(str);
-			ps.setInt(1, courseId);
-			ps.executeUpdate();
-			if (val > 0) {
-				return true;
-			}
-		} catch (SQLException e) {
-			logger.info(e.getMessage());
-		} catch (Exception e) {
-			logger.info(e.getMessage());
+	public boolean deleteCourse(int courseId) throws AdminCRSException,Exception {
+		String str = SQLQueriesConstant.GET_COURSE_INFO_BY_ID;
+		ps = connection.prepareStatement(str);
+		ps.setInt(1, courseId);
+		ResultSet rs = ps.executeQuery();
+		if(rs.next()==false)
+			throw new AdminCRSException("No Course with ID: " + courseId + " exists");
+		str = SQLQueriesConstant.DELETE_COURSE_IN_CATALOG;
+		ps = connection.prepareStatement(str);
+		ps.setInt(1, courseId);
+		int val = ps.executeUpdate();
+		str = SQLQueriesConstant.DELETE_COURSE_BY_ID;
+		ps = connection.prepareStatement(str);
+		ps.setInt(1, courseId);
+		ps.executeUpdate();
+		if (val > 0) {
+			return true;
 		}
-		return false;
+		throw new AdminCRSException("Failed to Delete course");
 	}
 
 	/**
 	 * Assign course with particular course ID to the corresponding professor with
 	 * ID entered by the Admin. In case, already some other professor is assigned to
 	 * the course, it is modified.
-	 * 
-	 * @param courseId    Course ID of the course to which the professor is to be
-	 *                    assigned/modified.
-	 * @param professorID Professor ID of the course.
-	 * 
+	 * @param courseId    
+	 * @param professorID 
+	 * @return true if course is alloted successfully else return false
+	 * @throws AdminCRSException,Exception
 	 */
-	public boolean allotCourses(int courseId, int professorID) {
-		try {
-			String str = SQLQueriesConstant.GET_PROFESSOR_NAME_BY_ID;
+	public boolean allotCourses(int courseId, int professorID) throws AdminCRSException,Exception {
+		String str = SQLQueriesConstant.GET_PROFESSOR_NAME_BY_ID;
+		ps = connection.prepareStatement(str);
+		ps.setInt(1, professorID);
+		ResultSet rs = ps.executeQuery();
+		if (rs.next() == false) {
+			throw new AdminCRSException("No professor with ID: " + professorID + " exists");
+		}
+		str = SQLQueriesConstant.GET_COURSE_NAME_BY_ID;
+		ps = connection.prepareStatement(str);
+		ps.setInt(1, courseId);
+		rs = ps.executeQuery();
+		if (rs.next()) {
+			str = SQLQueriesConstant.UPDATE_PROFESSOR_IN_COURSE;
 			ps = connection.prepareStatement(str);
 			ps.setInt(1, professorID);
-			ResultSet rs = ps.executeQuery();
-			if (rs.next() == false) {
-				return false;
+			ps.setInt(2, courseId);
+			int status = ps.executeUpdate();
+			if (status > 0) {
+				return true;
+			} else {
+				throw new AdminCRSException("Some Error Occurred");
 			}
-			str = SQLQueriesConstant.GET_COURSE_NAME_BY_ID;
+		} else {
+			str = SQLQueriesConstant.GET_COURSE_CATALAOG_QUERY;
 			ps = connection.prepareStatement(str);
 			ps.setInt(1, courseId);
 			rs = ps.executeQuery();
-			if (rs.next()) {
-				str = SQLQueriesConstant.UPDATE_PROFESSOR_IN_COURSE;
-				ps = connection.prepareStatement(str);
-				ps.setInt(1, professorID);
-				ps.setInt(2, courseId);
-				int status = ps.executeUpdate();
-				if (status > 0) {
-					return true;
-				} else {
-					return false;
-				}
-			} else {
-				str = SQLQueriesConstant.GET_COURSE_CATALAOG_QUERY;
+			if (rs.next() == false) {
+				throw new AdminCRSException("No Course with ID: " + courseId + " exists");
+			}
+			do {
+				str = SQLQueriesConstant.ADD_NEWCOURSE_IN_COURSE;
 				ps = connection.prepareStatement(str);
 				ps.setInt(1, courseId);
-				rs = ps.executeQuery();
-				if (rs.next() == false) {
-					return false;
-				}
-				do {
-					str = SQLQueriesConstant.ADD_NEWCOURSE_IN_COURSE;
-					ps = connection.prepareStatement(str);
-					ps.setInt(1, courseId);
-					ps.setString(2, rs.getString("courseName"));
-					ps.setInt(3, professorID);
-					ps.setInt(4, rs.getInt("credits"));
-					ps.executeUpdate();
-				} while (rs.next());
-				return true;
-			}
-		} catch (SQLException e) {
-			logger.info(e.getMessage());
-		} catch (Exception e) {
-			logger.info(e.getMessage());
+				ps.setString(2, rs.getString("courseName"));
+				ps.setInt(3, professorID);
+				ps.setInt(4, rs.getInt("credits"));
+				ps.executeUpdate();
+			} while (rs.next());
+			return true;
 		}
-		return false;
 	}
 
 	/**
@@ -423,55 +420,86 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	
 
 	/**
-	 * shows All available courses
+	 * Shows list of all courses
+	 * @return ArrayList of JSON object containing courses information
+	 * @throws AdminCRSException,Exception
 	 */
-	public void showcourses() {
-		try {
-			logger.info("=======================================");
-			String s = SQLQueriesConstant.GET_COURSE_INFO_BY_ID;
-			ps = connection.prepareStatement(s);
-			ResultSet courl = ps.executeQuery();
-			if (courl.next() == false) {
-				logger.info("No Course Exists!!");
-				logger.info("=======================================");
-			} else {
-				logger.info("CourseID           CourseName");
-				do {
-					logger.info(courl.getInt("courseId") + "                " + courl.getString("courseName"));
-				} while (courl.next());
-				logger.info("=======================================");
-			}
-		} catch (SQLException e) {
-			logger.info(e.getMessage());
-		} catch (Exception e) {
-			logger.info(e.getMessage());
+	public ArrayList<JSONObject> showcourses() throws AdminCRSException,Exception{
+		ArrayList<JSONObject> arr = new ArrayList<JSONObject>();
+		String s = SQLQueriesConstant.GET_COURSE_INFO;
+		ps = connection.prepareStatement(s);
+		ResultSet courl = ps.executeQuery();
+		if (courl.next() == false) {
+			throw new AdminCRSException("Sorry No Courses to Show");
+		} else {
+			do {
+				JSONObject obj = new JSONObject();
+				obj.put("courseId", courl.getInt("courseId"));
+				obj.put("courseName", courl.getString("courseName"));
+				arr.add(obj);
+			} while (courl.next());
 		}
+		if(arr.size()==0)
+			throw new AdminCRSException("Sorry No Courses to Show");
+		return arr;
 	}
 
 	/**
-	 * shows All available professors
+	 * Shows list of all professors
+	 * @return ArrayList of JSON object containing Professor information
+	 * @throws AdminCRSException,Exception
 	 */
-	
-	public void showprofessor() {
-		try {
-			String s = SQLQueriesConstant.GET_PROFESSOR_INFO_BY_ID;
-			ps = connection.prepareStatement(s);
-			ResultSet profl = ps.executeQuery();
-			if (profl.next() == false) {
-				logger.info("No Professor Exists!!");
-				logger.info("=======================================");
-			} else {
-				logger.info("ProfessorID        ProfessorName");
-				do {
-					logger.info(profl.getInt("id") + "                " + profl.getString("name"));
-				} while (profl.next());
-				logger.info("=======================================");
-			}
-		} catch (SQLException e) {
-			logger.info(e.getMessage());
-		} catch (Exception e) {
-			logger.info(e.getMessage());
+	public ArrayList<JSONObject> showprofessor() throws AdminCRSException,Exception{
+		ArrayList<JSONObject> arr = new ArrayList<JSONObject>();
+		String s = SQLQueriesConstant.GET_PROFESSOR_INFO_BY_ID;
+		ps = connection.prepareStatement(s);
+		ResultSet profl = ps.executeQuery();
+		if (profl.next() == false) {
+			throw new AdminCRSException("Sorry No Professor to Show");
+		} else {
+			do {
+				JSONObject obj = new JSONObject();
+				obj.put("id", profl.getInt("id"));
+				obj.put("name", profl.getString("name"));
+				arr.add(obj);
+			} while (profl.next());
 		}
+		if(arr.size()==0)
+			throw new AdminCRSException("Sorry No Professor to Show");
+		return arr;
+	}
+	
+	
+	/**
+	 * Shows list of all unapproved students
+	 * @return ArrayList of JSON object containing student information 
+	 * who are unapproved
+	 * @throws AdminCRSException,Exception
+	 */
+	public ArrayList<JSONObject> showunapproved() throws AdminCRSException,Exception{
+		ArrayList<JSONObject> arr = new ArrayList<JSONObject>();
+		String s = SQLQueriesConstant.GET_STUDENT_DETAILS;
+		ps = connection.prepareStatement(s);
+		ResultSet stul = ps.executeQuery();
+		if (stul.next() == false) {
+			throw new AdminCRSException("No student left Unapproved");
+		} else {
+			do {
+				JSONObject obj = new JSONObject();
+				obj.put("Student Name",stul.getString("name"));
+				obj.put("Student ID",stul.getInt("id"));
+				obj.put("Email" , stul.getString("email"));
+				obj.put("Address" , stul.getString("address"));
+				obj.put("Age" , stul.getInt("age"));
+				obj.put("Gender" , stul.getString("gender"));
+				obj.put("Contact Number" , stul.getString("contact"));
+				obj.put("Nationality" , stul.getString("nationality"));
+				arr.add(obj);
+			} while (stul.next());
+		}
+		if(arr.size()==0)
+			throw new AdminCRSException("No student left Unapproved");
+		return arr;
 	}
 
 	/**
