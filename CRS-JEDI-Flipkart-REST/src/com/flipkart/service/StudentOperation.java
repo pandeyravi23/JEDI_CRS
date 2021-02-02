@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import com.flipkart.dao.CoursesDAOOperation;
 import com.flipkart.dao.StudentDAOOperation;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 
@@ -88,22 +89,36 @@ public class StudentOperation implements StudentInterface {
      *
      */
     public void showCourses(){
-        try{
-            ArrayList<Course> courses = coursesDaoOperation.getAllCourses();
-            logger.info("================AVAILABLE COURSES================\n");
-            logger.info("Course ID    Course Name    Credits    Professor Allotted");
-            courses.forEach((course) ->{
-            	String professorAllotted = professorDAOOperation.getProfessorById(course.getProfessorAllotted());
-            	if(professorAllotted == null) {
-            		professorAllotted = "Not yet alloted";
-            	}
-            	logger.info(String.format("%9d    %11s    %7d    %18s", course.getCourseID(), course.getCourseName(), course.getCredits(), professorAllotted));
-            });
-            logger.info("=================================================\n");
-        }
-        catch (Exception e){
-            logger.warn(e.getMessage());
-        }
+        try {
+			try {
+			    ArrayList<Course> courses = coursesDaoOperation.getAllCourses();
+			    logger.info("================AVAILABLE COURSES================\n");
+			    logger.info("Course ID    Course Name    Credits    Professor Allotted");
+			    courses.forEach((course) ->{
+			    	String professorAllotted = null;
+					try {
+						professorAllotted = professorDAOOperation.getProfessorById(course.getProfessorAllotted());
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			    	if(professorAllotted == null) {
+			    		professorAllotted = "Not yet alloted";
+			    	}
+			    	logger.info(String.format("%9d    %11s    %7d    %18s", course.getCourseID(), course.getCourseName(), course.getCredits(), professorAllotted));
+			    });
+			    logger.info("=================================================\n");
+			}
+			catch (Exception e){
+			    logger.warn(e.getMessage());
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+		    logger.warn(e.getMessage());
+		}
     }
 
     /**
