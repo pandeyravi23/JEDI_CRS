@@ -185,7 +185,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	 * 
 	 * @param studentId StudentID of the student whose report card is to be
 	 *                  generated.
-	 * 
+	 * @return List of json objects containing grades information
 	 */
 	
 	public ArrayList<JSONObject> printGrades(int studentId) {
@@ -246,6 +246,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	 * approveStudent Used to approve the newly registered students in order to and
 	 * allow them to login and register for courses.
 	 * 
+	 * @return true if student approved successfully else false
 	 */
 	
 	public boolean approveStudent(int studentID) {
@@ -330,6 +331,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	 *                    assigned/modified.
 	 * @param professorID Professor ID of the course.
 	 * 
+	 * @return true if course allotted successfully else false
 	 */
 	public boolean allotCourses(int courseId, int professorID) {
 		try {
@@ -384,9 +386,10 @@ public class AdminDAOOperation implements AdminDAOInterface {
 
 	/**
 	 * Opens registration window.
+	 * 
+	 * @return true if registration status updated else false
 	 */
 	public boolean startRegistrationWindow() {
-		;
 		boolean res = false;
 		try {
 			ps = connection.prepareStatement(SQLQueriesConstant.OPEN_REGISTRATION_WINDOW);
@@ -404,6 +407,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 
 	/**
 	 * Closes registration window.
+	 * @return true if registration status updated else false
 	 */
 	public boolean closeRegistrationWindow() {
 		boolean res = false;
@@ -476,6 +480,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 
 	/**
 	 * Displays List of all registered students
+	 * @return List of Json objects with list of enrolled students
 	 */
 	public ArrayList<JSONObject> getRegisteredStudents() {
 		ArrayList<JSONObject> students = new ArrayList<JSONObject>();
@@ -507,5 +512,11 @@ public class AdminDAOOperation implements AdminDAOInterface {
 			logger.info(e.getMessage());
 		}
 		return students;
+	}
+
+	@Override
+	public void approveStudent() {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -151,8 +151,10 @@ public class StudentRESTAPI {
 		if(student == null) {
 			return ResponseHelpers.badRequest(null, "Studentt with id: " + studentID + " doesn't exist");
 		}
-		studentOperation.addCourse(student, courseID);
-		return ResponseHelpers.successPost(courseID, "Course with ID " + courseID + " succesfully added");
+		if(studentOperation.addCourse(student, courseID))
+			return ResponseHelpers.successPost(courseID, "Course with ID " + courseID + " succesfully added");
+	
+		return ResponseHelpers.somethingWentWrong(null);
 	}
 	
 	
@@ -181,8 +183,10 @@ public class StudentRESTAPI {
 		if(student == null) {
 			return ResponseHelpers.badRequest(null, "Studentt with id: " + studentID + " doesn't exist");
 		}
-		studentOperation.deleteCourse(student, courseID);
-		return ResponseHelpers.success(courseID, "Course with ID " + courseID + " succesfully deleted");
+		if(studentOperation.deleteCourse(student, courseID))
+			return ResponseHelpers.success(courseID, "Course with ID " + courseID + " succesfully deleted");
+		
+		return ResponseHelpers.somethingWentWrong(null);
 	}
 	
 	
@@ -200,8 +204,6 @@ public class StudentRESTAPI {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response registerCourses(
 			@NotNull
-			@DecimalMin(value = "100", message = "courseId value in courseCart has to be of 3 digits")
-			@Digits(fraction = 0, integer = 3)
 			ArrayList<Integer> courseCart,
 			
 			@NotNull
@@ -212,8 +214,12 @@ public class StudentRESTAPI {
 		if(student == null) {
 			return ResponseHelpers.badRequest(null, "Studentt with id: " + studentID + " doesn't exist");
 		}
-		studentOperation.registerCourses(courseCart, student);
-		return ResponseHelpers.successPost(courseCart, "Successfully registered for courses");
+		else if(student.getIsRegistered() == true) {
+			return ResponseHelpers.badRequest(null, "Studentt with id: " + studentID + " has already registered");
+		}
+		if(studentOperation.registerCourses(courseCart, student))
+			return ResponseHelpers.successPost(courseCart, "Successfully registered for courses");
+		return ResponseHelpers.somethingWentWrong(null);
 	}
 	
 	
@@ -305,8 +311,9 @@ public class StudentRESTAPI {
 		student.setIsRegistered(false);
 		student.setPaymentStatus(false);
 		
-		authentication.registerStudent(user, student, password);
-		return ResponseHelpers.successPost(student, "Successfully registered");
+		if(authentication.registerStudent(user, student, password))
+			return ResponseHelpers.successPost(student, "Successfully registered");
+		return ResponseHelpers.somethingWentWrong(null);
 	}
 
 	
@@ -391,6 +398,12 @@ public class StudentRESTAPI {
 		student = studentOperation.getStudentByID(studentID);
 		if(student == null) {
 			return ResponseHelpers.badRequest(null, "Studentt with id: " + studentID + " doesn't exist");
+		}
+		else if(student.getIsRegistered() == false) {
+			return ResponseHelpers.badRequest(null, "Student with id: " + studentID + " has not registered yet.");
+		}
+		else if(student.getPaymentStatus() == true) {
+			return ResponseHelpers.badRequest(null, "Student with id: " + studentID + " has already made payment");
 		}
 		studentOperation.makePayment(student,method);
 		return ResponseHelpers.success(studentID, "Payment Successful");

@@ -41,6 +41,7 @@ public class ProfessorOperation implements ProfessorInterface {
 	 * grades are currently Not Available
 	 * 
 	 * @param courseId Course Id 
+	 * @return List of json objects containing information of enrolled students
 	 */
 	
 	public ArrayList<JSONObject> viewStudentsEnrolled(int courseId) {		
@@ -51,6 +52,7 @@ public class ProfessorOperation implements ProfessorInterface {
 	 * Get and display grades of all students in a course linked with courseId
 	 * 
 	 * @param courseId Course Id
+	 * @return List of json objects containing student information with grades
 	 */
 	public ArrayList<JSONObject> viewGrades(int courseId) {
 		ArrayList<JSONObject> al = new ArrayList<JSONObject>();
@@ -75,6 +77,7 @@ public class ProfessorOperation implements ProfessorInterface {
 	 * Get and display all courses alloted to the professor with given courseId
 	 * 
 	 * @param professorId Professor Id
+	 * @return List of Json Objects containing courses
 	 */
 	public ArrayList<JSONObject> showCourses(int professorId) {
 		ArrayList<JSONObject> ar = professorDaoOperation.showCourses(professorId);
@@ -119,4 +122,5 @@ public class ProfessorOperation implements ProfessorInterface {
 	public boolean updateStudentGrade(int courseId, int studentId, String grade) {
 		return professorDaoOperation.updateStudentGrades(courseId, studentId, grade);
 	}
+
 }

@@ -3,6 +3,7 @@ package com.flipkart.service;
 import com.flipkart.bean.Course;
 import com.flipkart.bean.Grades;
 import com.flipkart.bean.Student;
+import com.flipkart.exception.StudentCRSException;
 
 import java.util.ArrayList;
 
@@ -28,7 +29,7 @@ public interface StudentInterface {
 
     public boolean deleteCourse(Student student,int courseId);
     
-    public boolean registerCourses(ArrayList<Integer> courseCart, Student student);
+    public boolean registerCourses(ArrayList<Integer> courseCart, Student student) throws StudentCRSException;
 
     public void viewRegisteredCourses(Student student);
     
