@@ -77,6 +77,6 @@ public class SQLQueriesConstant {
 	public static final String GET_COURSE_INFO_BY_ID = "select courseId,courseName from courseCatalog where courseId=?";
 	public static final String GET_PROFESSOR_INFO_BY_ID = "select id,name from professor";
 	public static final String GET_REGISTERED_STUDENTS = "select id,name from student where isRegistered=1";
-	public static final String GET_ISAPPROVED_FROM_CREDENTIALS = "select isApproved from credentials where id=?";
+	public static final String GET_ISAPPROVED_FROM_CREDENTIALS = "select isApproved from credentials where id=? and role=1";
 	
 }
