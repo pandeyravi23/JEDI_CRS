@@ -43,6 +43,8 @@ public class SQLQueriesConstant {
 	public static final String GET_STUDENTS_PROFESSOR_QUERY = "select id,name,email,branch from student where id in (select studentId from grades where courseId = ?)";
 	public static final String GET_PROFESSOR_BY_ID_QUERY = "SELECT name FROM professor WHERE id = ?";
 	public static final String GET_PROFESSOR_OBJECT_BY_ID_QUERY = "SELECT * FROM professor WHERE id = ?";
+	public static final String GET_PROFESSOR_STUDENTS_QUERY = "Select * from student where id = ?";
+
 	
 	// SQL Queries for Course
 	public static final String GET_COURSE_BY_ID_QUERY = "SELECT * FROM course WHERE id=?";

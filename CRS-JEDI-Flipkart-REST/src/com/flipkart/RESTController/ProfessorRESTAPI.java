@@ -151,7 +151,7 @@ public class ProfessorRESTAPI {
 			if (res) {
 				return ResponseHelpers.success("Grade Updated", "Success");
 			}
-			return ResponseHelpers.badRequest(null, "Update Grade Failed");
+			return ResponseHelpers.badRequest(null, "Update grade failed as student doesn't exist in the course");
 		}
 
 		catch (ProfessorCRSException e) {
