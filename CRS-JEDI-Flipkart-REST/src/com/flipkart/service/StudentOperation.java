@@ -222,6 +222,9 @@ public class StudentOperation implements StudentInterface {
     	else if(courseCart.size() > 6){
     		throw new StudentCRSException("More than 6 courses selected");
     	}
+    	else if(getRegistrationSystemStatus() == false){
+    		throw new StudentCRSException("Registration Window is closed");
+		}
     	else {
     		try {
     			for(Integer courseID: courseCart) {
