@@ -13,13 +13,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "student")
 public class Student extends User{
 	
-	/**
-	 * Manages the setting, retrieving and updating the attributes
-	 * of a Student
-	 * @author JEDI04
-	 *
-	 */
-	
 	@NotNull 
 	private int rollNo;
 	
@@ -28,7 +21,6 @@ public class Student extends User{
 	@NotNull 
 	@Size(min = 2, max = 30, message = "The length of Branch should be between 2 to 25")
 	private String branch;
-	
 	
 	private boolean paymentStatus;
 	

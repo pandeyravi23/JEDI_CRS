@@ -14,6 +14,8 @@ import com.flipkart.bean.User;
 /**
  * Manages the setting, retrieving and updating the attributes
  * of an Admin
+ * Validators NotNull-checks for null values, Size checks for
+ * length of string and DecimalMin/DecimalMax checks for integer range
  * @author JEDI04
  *
  */
