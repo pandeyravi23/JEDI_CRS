@@ -12,7 +12,7 @@ import com.flipkart.exception.CommonException;
  */
 public interface CoursesDAOInterface {
 	public Course getCourseByID(int courseID);
-	public ArrayList<Course> getAllCourses() throws CommonException;
+	public ArrayList<Course> getAllCourses() throws CommonException, Exception;
 
 	public int noOfEnrolledStudents(int courseID);
 }

@@ -9,7 +9,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Class to interact with variables present in User Class
- * using Getters and Setters Methods.
+ * using Getters and Setters Methods
+ * Validators NotNull-checks for null values, Size checks for
+ * length of string and DecimalMin/DecimalMax checks for integer range
  * @author JEDI04
  */
 
@@ -41,7 +43,6 @@ public class User {
     
     @NotNull
     @DecimalMin(value = "10", message = "Age shall be minimum of 10 years")
-    @DecimalMax(value = "40", message = "Age should not be more than 40 years")
 	protected int age;
     
 	@NotNull

@@ -9,9 +9,9 @@ package com.flipkart.validator;
  */
 import org.glassfish.jersey.server.ResourceConfig;
 
-import com.flipkart.rest.*;
-
-
+import com.flipkart.rest.AdminRESTAPI;
+import com.flipkart.rest.ProfessorRESTAPI;
+import com.flipkart.rest.StudentRESTAPI;
 
 public class ApplicationConfig extends ResourceConfig {
 

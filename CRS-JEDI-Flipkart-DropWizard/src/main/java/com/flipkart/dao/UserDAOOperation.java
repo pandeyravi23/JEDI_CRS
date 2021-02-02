@@ -3,6 +3,8 @@ package com.flipkart.dao;
 import java.sql.*;
 
 import com.flipkart.constant.SQLQueriesConstant;
+import com.flipkart.exception.StudentCRSException;
+
 import org.apache.log4j.Logger;
 
 import com.flipkart.bean.User;
@@ -70,24 +72,17 @@ public class UserDAOOperation implements UserDAOInterface {
 	 * Method to check whether or not an email address is present.
 	 * 
 	 * @param email The email address whose presence is to be verified.
+	 * @throws StudentCRSException, Exception
 	 */
 	@Override
-	public boolean checkEmailAvailability(String email) {
-		try {
-			connection = DBConnection.getConnection();
-			ps = connection.prepareStatement(SQLQueriesConstant.CHECK_EMAIL_AVAILABILITY_QUERY);
-			ps.setString(1, email);
-			
-			ResultSet result = ps.executeQuery();
-			if(result.next())
-				return false;
-		}
-		catch(SQLException e) {
-			logger.warn(e.getMessage() + "\n");
-		}
-		catch(Exception e) {
-			logger.warn(e.getMessage() + "\n");
-		}
+	public boolean checkEmailAvailability(String email) throws StudentCRSException, Exception{
+		connection = DBConnection.getConnection();
+		ps = connection.prepareStatement(SQLQueriesConstant.CHECK_EMAIL_AVAILABILITY_QUERY);
+		ps.setString(1, email);
+
+		ResultSet result = ps.executeQuery();
+		if (result.next())
+			return false;
 		return true;
 	}
 	
@@ -96,37 +91,29 @@ public class UserDAOOperation implements UserDAOInterface {
 	 * 
 	 * @param user User Object containing the necessary information of the user whose entry is to made.
 	 * @param password The password with which the entry is to be made.
+	 * @throws StudentCRSException, Exception
 	 */
 	@Override
-	public int registerUser(User user, String password) {
+	public int registerUser(User user, String password) throws StudentCRSException, Exception {
 		int id = -1;
-		try {
-			connection = DBConnection.getConnection();
-			ps = connection.prepareStatement(SQLQueriesConstant.REGISTER_USER_QUERY, Statement.RETURN_GENERATED_KEYS);
+		connection = DBConnection.getConnection();
+		ps = connection.prepareStatement(SQLQueriesConstant.REGISTER_USER_QUERY, Statement.RETURN_GENERATED_KEYS);
 
-			ps.setInt(1, Integer.parseInt(user.getRole()));
-			ps.setString(2,  user.getEmail());
-			ps.setString(3,  password);
-			ps.setBoolean(4,  user.isApproved());
-			ps.setString(5, user.getAddress());
-			ps.setInt(6, user.getAge());
-			ps.setString(7, user.getGender());
-			ps.setString(8,  user.getContact());
-			ps.setString(9, user.getNationality());
-			
-			ps.executeUpdate();
-			ResultSet resultSet = ps.getGeneratedKeys();
-			
-			resultSet.next();
-			id = resultSet.getInt(1);
-			return id;
-		}
-		catch(SQLException e) {
-			logger.warn(e.getMessage() + "\n");
-		}
-		catch(Exception e) {
-			logger.warn(e.getMessage() + "\n");
-		}
+		ps.setInt(1, Integer.parseInt(user.getRole()));
+		ps.setString(2,  user.getEmail());
+		ps.setString(3,  password);
+		ps.setBoolean(4,  user.isApproved());
+		ps.setString(5, user.getAddress());
+		ps.setInt(6, user.getAge());
+		ps.setString(7, user.getGender());
+		ps.setString(8,  user.getContact());
+		ps.setString(9, user.getNationality());
+		
+		ps.executeUpdate();
+		ResultSet resultSet = ps.getGeneratedKeys();
+		
+		resultSet.next();
+		id = resultSet.getInt(1);
 		return id;
 	}
 

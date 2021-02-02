@@ -3,7 +3,6 @@ package com.flipkart.service;
 import com.flipkart.bean.Course;
 import com.flipkart.bean.Grades;
 import com.flipkart.bean.Student;
-import com.flipkart.exception.StudentCRSException;
 
 import java.util.ArrayList;
 
@@ -14,28 +13,26 @@ import java.util.ArrayList;
  */
 
 public interface StudentInterface {
-
-    public void showCourses();
     
-    public ArrayList<Course> getAllCourses();
+    public ArrayList<Course> getAllCourses() throws Exception;
 
-    public ArrayList<Grades> viewGrades(int studentId);
+    public ArrayList<Grades> viewGrades(int studentId) throws Exception;
 
-    public void makePayment(Student student, String method);
+    public void makePayment(Student student, String method) throws Exception;
 
-    public boolean updateInfo(Student student);
+    public boolean updateInfo(Student student) throws Exception;
 
-    public boolean addCourse(Student student,int courseId);
+    public boolean addCourse(Student student,int courseId) throws Exception;
 
-    public boolean deleteCourse(Student student,int courseId);
+    public boolean deleteCourse(Student student,int courseId) throws Exception;
     
-    public boolean registerCourses(ArrayList<Integer> courseCart, Student student) throws StudentCRSException;
+    public boolean registerCourses(ArrayList<Integer> courseCart, Student student) throws Exception;
 
     public void viewRegisteredCourses(Student student);
     
     public Student getStudentByEmail(String email);
     
-    public Student getStudentByID(int studentID);
+    public Student getStudentByID(int studentID) throws Exception;
 
     public void setRegistrationStatus(Student student);
     
@@ -43,5 +40,5 @@ public interface StudentInterface {
 
     public boolean getRegistrationSystemStatus();
     
-    public ArrayList<Course> getRegisteredCourses(Student student);
+    public ArrayList<Course> getRegisteredCourses(Student student) throws Exception;
 }
