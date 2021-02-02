@@ -16,6 +16,7 @@ import com.flipkart.bean.Professor;
 import com.flipkart.dao.AdminDAOOperation;
 import com.flipkart.exception.AdminCRSException;
 import com.flipkart.exception.ProfessorCRSException;
+import com.flipkart.exception.StudentCRSException;
 import com.flipkart.util.ValidationOperation;
 
 /**
@@ -47,21 +48,24 @@ public class AdminOperation implements AdminInterface {
 	/**
 	 * Generate Report Card for a given Student Id
 	 * 
+	 * @param sid Student ID of the student whose report card is to be generated.
 	 */
 	@Override
-	public ArrayList<JSONObject> generateReportCard(int sid) {
-//		if(adminDAO.getRegisteredStudents().size() == 0) {
-//			logger.info("   =======================================");
-//			return ;
-//		}
-		logger.info("Please Enter Student ID to Generate Report Card");
-//		Scanner sc = new Scanner(System.in);
-//		int sid = sc.nextInt();
-		ArrayList<JSONObject> reportCard = adminDAO.printGrades(sid);
+
+	public ArrayList<JSONObject> generateReportCard(int sid) throws StudentCRSException, Exception
+	{
+		ArrayList<JSONObject> reportCard =  adminDAO.printGrades(sid);
 		return reportCard;
 	}
-
-	public ArrayList<JSONObject> getRegisteredStudents() {
+	
+	
+	/**
+	 * Generated a lost of all the students who have successfully registered for courses and completed their requirements.
+	 * 
+	 * @return ArrayList of JsonObjects containing the name and id of the registered students.
+	 */
+	public ArrayList<JSONObject> getRegisteredStudents() throws StudentCRSException, Exception
+	{
 		return adminDAO.getRegisteredStudents();
 	}
 

@@ -188,9 +188,9 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	 * 
 	 */
 
-	public ArrayList<JSONObject> printGrades(int studentId) {
+	
+	public ArrayList<JSONObject> printGrades(int studentId) throws StudentCRSException, Exception{
 		ArrayList<JSONObject> grades = new ArrayList<JSONObject>();
-		try {
 			String str = SQLQueriesConstant.GET_GRADES_BY_STUDENT_ID;
 			ps = connection.prepareStatement(str);
 			ps.setInt(1, studentId);
@@ -202,7 +202,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 			else {
 				logger.info("Student with ID " + studentId + " has not registered for any course!");
 				logger.info("=======================================");
-				return grades;
+				throw new StudentCRSException("Student ID " + studentId + " does not exist.");
 			}
 			logger.info("=======================================");
 			logger.info("        Report Card of " + name + " :");
@@ -223,21 +223,6 @@ public class AdminDAOOperation implements AdminDAOInterface {
 			}
 			logger.info("=======================================");
 
-//			while(rs.next())
-//			{
-//				JSONObject grade = new JSONObject();
-//				grade.put("courseId", rs.getInt("courseId"));
-//				grade.put("name", rs.getString("name"));
-//				grade.put("grade",  rs.getString("grade"));
-//				
-//				grades.add(grade);
-//			}
-
-		} catch (SQLException e) {
-			logger.info(e.getMessage());
-		} catch (Exception e) {
-			logger.info(e.getMessage());
-		}
 		return grades;
 	}
 
@@ -464,35 +449,28 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	/**
 	 * Displays List of all registered students
 	 */
-	public ArrayList<JSONObject> getRegisteredStudents() {
+	public ArrayList<JSONObject> getRegisteredStudents() throws StudentCRSException, Exception{
 		ArrayList<JSONObject> students = new ArrayList<JSONObject>();
-		try {
-			String s = SQLQueriesConstant.GET_REGISTERED_STUDENTS;
-			ps = connection.prepareStatement(s);
-			ResultSet stl = ps.executeQuery();
-			logger.info("=======================================");
-			if (stl.next() == false) {
-				throw new StudentCRSException("No Student Exists!!");
-			} else {
-				logger.info(String.format("%-10s\t%-15s", "StudentID", "Student Name"));
-				do {
-					logger.info(String.format("%-10d\t%-15s", stl.getInt("id"), stl.getString("name")));
-					JSONObject student = new JSONObject();
-					student.put("studentId", stl.getInt("id"));
-					student.put("name", stl.getString("name"));
 
-					students.add(student);
-				} while (stl.next());
-				logger.info("=======================================");
-				return students;
-			}
-		} catch (StudentCRSException e) {
-			logger.info(e.getMessage());
-		} catch (SQLException e) {
-			logger.info(e.getMessage());
-		} catch (Exception e) {
-			logger.info(e.getMessage());
-		}
-		return students;
+		String  s = SQLQueriesConstant.GET_REGISTERED_STUDENTS;
+		ps = connection.prepareStatement(s);
+		ResultSet stl = ps.executeQuery();
+		logger.info("=======================================");
+		if (stl.next() == false) {
+			throw new StudentCRSException("No Student Exists.");
+		} else {
+			logger.info(String.format("%-10s\t%-15s", "StudentID", "Student Name"));
+			do {
+				logger.info(String.format("%-10d\t%-15s", stl.getInt("id"), stl.getString("name")));
+				JSONObject student = new JSONObject();
+				student.put("studentId", stl.getInt("id"));
+				student.put("name", stl.getString("name"));
+				
+				students.add(student);
+			} while (stl.next());
+			logger.info("=======================================");
+			return students;
+		}		
+
 	}
 }

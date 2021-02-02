@@ -92,7 +92,7 @@ public class AuthCredentialSystemOperations implements AuthCredentialSystemInter
 	 * @param student Object containing all information about student
 	 * @param password Password of the user
 	 */
-	public void registerStudent(User user, Student student, String password) {
+	public void registerStudent(User user, Student student, String password) throws Exception {
 		try {
 			int id = registerUser(user, password);
 			if(id == -1) {
