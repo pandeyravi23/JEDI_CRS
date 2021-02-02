@@ -100,8 +100,13 @@ public class AuthCredentialSystemOperations implements AuthCredentialSystemInter
 		else if(userDaoOperation.checkEmailAvailability(user.getEmail()) == false) {
 			throw new CommonException("Another user has already registered with this email");
 		}
-		else {
+		try {
+			id = registerUser(user, password);
 			studentDaoOperation.registerStudent(student, id);
+		}
+		catch(Exception e) {
+			logger.info(e.getMessage());
+			throw e;
 		}
 	}
 
@@ -113,7 +118,7 @@ public class AuthCredentialSystemOperations implements AuthCredentialSystemInter
 	 * @return The id of the newly registered user
 	 */
 	@Override
-	public int registerUser(User user, String password) {
+	public int registerUser(User user, String password) throws Exception {
 		int id = -1;
 		id = userDaoOperation.registerUser(user, password);
 		return id;

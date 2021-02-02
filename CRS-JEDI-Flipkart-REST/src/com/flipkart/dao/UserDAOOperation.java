@@ -90,35 +90,26 @@ public class UserDAOOperation implements UserDAOInterface {
 	 * @param password The password with which the entry is to be made.
 	 */
 	@Override
-	public int registerUser(User user, String password) {
+	public int registerUser(User user, String password) throws Exception {
 		int id = -1;
-		try {
-			connection = DBConnection.getConnection();
-			ps = connection.prepareStatement(SQLQueriesConstant.REGISTER_USER_QUERY, Statement.RETURN_GENERATED_KEYS);
+		connection = DBConnection.getConnection();
+		ps = connection.prepareStatement(SQLQueriesConstant.REGISTER_USER_QUERY, Statement.RETURN_GENERATED_KEYS);
 
-			ps.setInt(1, Integer.parseInt(user.getRole()));
-			ps.setString(2,  user.getEmail());
-			ps.setString(3,  password);
-			ps.setBoolean(4,  user.isApproved());
-			ps.setString(5, user.getAddress());
-			ps.setInt(6, user.getAge());
-			ps.setString(7, user.getGender());
-			ps.setString(8,  user.getContact());
-			ps.setString(9, user.getNationality());
-			
-			ps.executeUpdate();
-			ResultSet resultSet = ps.getGeneratedKeys();
-			
-			resultSet.next();
-			id = resultSet.getInt(1);
-			return id;
-		}
-		catch(SQLException e) {
-			logger.warn(e.getMessage() + "\n");
-		}
-		catch(Exception e) {
-			logger.warn(e.getMessage() + "\n");
-		}
+		ps.setInt(1, Integer.parseInt(user.getRole()));
+		ps.setString(2,  user.getEmail());
+		ps.setString(3,  password);
+		ps.setBoolean(4,  user.isApproved());
+		ps.setString(5, user.getAddress());
+		ps.setInt(6, user.getAge());
+		ps.setString(7, user.getGender());
+		ps.setString(8,  user.getContact());
+		ps.setString(9, user.getNationality());
+		
+		ps.executeUpdate();
+		ResultSet resultSet = ps.getGeneratedKeys();
+		
+		resultSet.next();
+		id = resultSet.getInt(1);
 		return id;
 	}
 

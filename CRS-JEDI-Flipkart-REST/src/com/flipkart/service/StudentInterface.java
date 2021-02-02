@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public interface StudentInterface {
 
-    public void showCourses();
+    //public void showCourses();
     
     public ArrayList<Course> getAllCourses() throws Exception;
 
