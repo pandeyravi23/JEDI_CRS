@@ -7,7 +7,6 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Class to interact with variables present in Course Class
@@ -17,7 +16,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author JEDI04
  */
 
-@XmlRootElement(name = "course")
 public class Course {
 	
 	@NotNull

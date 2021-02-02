@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Class to interact with variables present in Professor Class
@@ -14,7 +13,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author JEDI04
  */
 
-@XmlRootElement(name = "professor")
 public class Professor extends User {
 	
 	@NotNull

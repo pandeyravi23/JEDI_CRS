@@ -5,7 +5,6 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Class to interact with variables present in User Class
@@ -15,7 +14,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author JEDI04
  */
 
-@XmlRootElement(name = "user")
+
 public class User {
 	@NotNull
 	protected int userId;

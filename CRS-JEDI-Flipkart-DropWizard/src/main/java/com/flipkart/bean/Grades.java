@@ -4,7 +4,6 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 
 /**
@@ -14,7 +13,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 
 
-@XmlRootElement(name = "grades")
 public class Grades {
 	
 	@DecimalMin(value = "100", message = "studentID has to be of 3 digits")
