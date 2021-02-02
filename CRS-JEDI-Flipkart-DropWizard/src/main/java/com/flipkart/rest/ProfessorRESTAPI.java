@@ -117,6 +117,5 @@ public class ProfessorRESTAPI {
 			return ResponseHelpers.success("Grade Updated", "Success");
 		}
 		return ResponseHelpers.badRequest(null, "Update Grade Failed");
-
 	}
 }
