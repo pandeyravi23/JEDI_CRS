@@ -15,6 +15,8 @@ import org.json.JSONObject;
 import com.flipkart.bean.Professor;
 import com.flipkart.bean.Student;
 import com.flipkart.constant.SQLQueriesConstant;
+import com.flipkart.exception.AdminCRSException;
+import com.flipkart.exception.ProfessorCRSException;
 import com.flipkart.util.DBConnection;
 import com.mysql.cj.protocol.Resultset;
 
@@ -27,6 +29,7 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	private static Logger logger = Logger.getLogger(ProfessorDAOOperation.class);
 	Connection con;
 	PreparedStatement stmt;
+	PreparedStatement ps = null;
 
 	private static ProfessorDAOOperation instance = null;
 
@@ -131,13 +134,20 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	 * @throws SQLException, Exception
 	 */
 	public ArrayList<JSONObject> getEnrolledStudents(int courseId) throws SQLException, Exception {
+		
 		ArrayList<JSONObject> arr = new ArrayList<JSONObject>();
 
 		con = DBConnection.getConnection();
-		String str = SQLQueriesConstant.GET_ENROLLED_STUDENTS_PROFESSOR_QUERY;
+		String str = SQLQueriesConstant.GET_COURSE_INFO_BY_ID;
+		ps = con.prepareStatement(str);
+		ps.setInt(1, courseId);
+		ResultSet rs = ps.executeQuery();
+		if(rs.next()==false)
+			throw new  ProfessorCRSException("No Course with ID: " + courseId + " exists");
+		str = SQLQueriesConstant.GET_ENROLLED_STUDENTS_PROFESSOR_QUERY;
 		stmt = con.prepareStatement(str);
 		stmt.setInt(1, courseId);
-		ResultSet rs = stmt.executeQuery();
+		rs = stmt.executeQuery();
 		rs = stmt.executeQuery();
 		while (rs.next()) {
 			Student st = new Student();
@@ -199,7 +209,21 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	public boolean updateStudentGrades(int courseId, int studentId, String grades) throws SQLException, Exception {
 
 		con = DBConnection.getConnection();
-		String str = SQLQueriesConstant.UPDATE_GRADES_PROFESSOR_QUERY;
+		String str = SQLQueriesConstant.GET_COURSE_INFO_BY_ID;
+		ps = con.prepareStatement(str);
+		ps.setInt(1, courseId);
+		ResultSet rs = ps.executeQuery();
+		if(rs.next()==false)
+			throw new  ProfessorCRSException("No Course with ID: " + courseId + " exists");
+		
+		str = SQLQueriesConstant.GET_PROFESSOR_STUDENTS_QUERY;
+		ps = con.prepareStatement(str);
+		ps.setInt(1, studentId);
+		rs = ps.executeQuery();
+		if(rs.next()==false)
+			throw new  ProfessorCRSException("No student with ID: " + studentId + " exists");
+		
+		str = SQLQueriesConstant.UPDATE_GRADES_PROFESSOR_QUERY;
 		stmt = con.prepareStatement(str);
 		stmt.setString(1, grades);
 		stmt.setInt(2, courseId);
@@ -225,15 +249,22 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 		ArrayList<JSONObject> al = new ArrayList<JSONObject>();
 
 		con = DBConnection.getConnection();
+		String str = SQLQueriesConstant.GET_COURSE_INFO_BY_ID;
+		ps = con.prepareStatement(str);
+		ps.setInt(1, courseId);
+		ResultSet rs = ps.executeQuery();
+		if(rs.next()==false)
+			throw new  ProfessorCRSException("No Course with ID: " + courseId + " exists");
+		
 		logger.info("=======================================================");
 		logger.info(String.format("%-8s\t%-15s\t%-15s", "UserID", "StudentName", "Grade Obtained"));
 		for (Student st : enrolledStudent) {
 			JSONObject obj = new JSONObject();
-			String str = SQLQueriesConstant.SHOW_GRADES_PROFESSOR_QUERY;
+			str = SQLQueriesConstant.SHOW_GRADES_PROFESSOR_QUERY;
 			stmt = con.prepareStatement(str);
 			stmt.setInt(1, st.getUserId());
 			stmt.setInt(2, courseId);
-			ResultSet rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
 			while (rs.next()) {
 				logger.info(
 						String.format("%-8s\t%-15s\t%-15s", st.getUserId(), st.getUserName(), rs.getString("grade")));
@@ -260,10 +291,16 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 		ArrayList<Student> al = new ArrayList<Student>();
 
 		con = DBConnection.getConnection();
-		String str = SQLQueriesConstant.GET_STUDENTS_PROFESSOR_QUERY;
+		String str = SQLQueriesConstant.GET_COURSE_INFO_BY_ID;
+		ps = con.prepareStatement(str);
+		ps.setInt(1, courseId);
+		ResultSet rs = ps.executeQuery();
+		if(rs.next()==false)
+			throw new  ProfessorCRSException("No Course with ID: " + courseId + " exists");
+		
+		str = SQLQueriesConstant.GET_STUDENTS_PROFESSOR_QUERY;
 		stmt = con.prepareStatement(str);
 		stmt.setInt(1, courseId);
-		ResultSet rs = stmt.executeQuery();
 		rs = stmt.executeQuery();
 
 		while (rs.next()) {
