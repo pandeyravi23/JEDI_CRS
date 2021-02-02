@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 
 import com.flipkart.bean.Course;
 import com.flipkart.constant.SQLQueriesConstant;
+import com.flipkart.exception.CommonException;
 import com.flipkart.util.DBConnection;
 
 /**
@@ -79,31 +80,24 @@ public class CoursesDAOOperation implements CoursesDAOInterface {
 	 * @return ArrayList of Courses containing all courses and their details fetched 
 	 * from course and course catalog database
 	 */
-	public ArrayList<Course> getAllCourses() {
+	public ArrayList<Course> getAllCourses() throws Exception {
 		ArrayList<Course> courses = new ArrayList<>();
 
-		try{
-			connection = DBConnection.getConnection();
-			ps = connection.prepareStatement(SQLQueriesConstant.GET_ALL_COURSES_QUERY);
+		connection = DBConnection.getConnection();
+		ps = connection.prepareStatement(SQLQueriesConstant.GET_ALL_COURSES_QUERY);
 
-			ResultSet resultSet = ps.executeQuery();
-
-			while(resultSet.next()){
-				Course course = new Course();
-				course.setCourseID(resultSet.getInt("courseId"));
-				course.setCourseName(resultSet.getString("courseName"));
-				course.setCredits(resultSet.getInt("credits"));
-				course.setProfessorAllotted(resultSet.getInt("professorId"));
-				courses.add(course);
-			}
+		ResultSet resultSet = ps.executeQuery();
+		if(!resultSet.next()) {
+			throw new CommonException("No courses are available in course catalog.");
 		}
-		catch(SQLException e) {
-			logger.warn(e.getMessage() + "\n");
+		while(resultSet.next()){
+			Course course = new Course();
+			course.setCourseID(resultSet.getInt("courseId"));
+			course.setCourseName(resultSet.getString("courseName"));
+			course.setCredits(resultSet.getInt("credits"));
+			course.setProfessorAllotted(resultSet.getInt("professorId"));
+			courses.add(course);
 		}
-		catch(Exception e) {
-			logger.warn(e.getMessage() + "\n");
-		}
-
 		return courses;
 	}
 

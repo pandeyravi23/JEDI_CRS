@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Class to interact with variables present in User Class
- * using Getters and Setters Methods
+ * using Getters and Setters Methods.
  * @author JEDI04
  */
 

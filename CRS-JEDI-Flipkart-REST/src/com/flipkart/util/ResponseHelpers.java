@@ -37,7 +37,7 @@ public class ResponseHelpers {
 	}
 	
 	public static Response successPost(Object payload, String msg) {
-		JsonElement res = new Gson().toJsonTree(mapify(true, "Success", payload));
+		JsonElement res = new Gson().toJsonTree(mapify(true, msg, payload));
 		return Response.status(201).entity(res.toString()).build();
 	}
 	

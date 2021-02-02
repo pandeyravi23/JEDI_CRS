@@ -13,7 +13,6 @@ import javax.validation.ValidationException;
 
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
-
 import com.flipkart.bean.Admin;
 import com.flipkart.bean.Course;
 import com.flipkart.bean.Professor;
@@ -21,7 +20,6 @@ import com.flipkart.util.DBConnection;
 import com.google.gson.annotations.JsonAdapter;
 import com.flipkart.constant.SQLQueriesConstant;
 import com.flipkart.exception.AdminCRSException;
-import com.flipkart.exception.StudentCRSException;
 
 /**
  * Data Access object for Admin class which is responsible for all the
@@ -66,7 +64,7 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	 * @return False if the email already exists in database else returns true.
 	 * 
 	 */
-	
+
 	public boolean verifyEmail(String email) {
 		try {
 			String sqlQuery = SQLQueriesConstant.GET_STUDENT_ID_BY_EMAIL;
@@ -96,42 +94,38 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	 * 
 	 * @return Returns 1 if new admin is successfully added. Else returns 0.
 	 */
-	
-	public int addAdmin(String password, Admin admin) {
-		try {
-			String sqlQuery = SQLQueriesConstant.ADD_USER_TO_CREDENTIALS;
-			ps = connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS);
+	public int addAdmin(String password, Admin admin) throws AdminCRSException, Exception{
+		String sqlQuery = SQLQueriesConstant.ADD_USER_TO_CREDENTIALS;
+		ps = connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS);
 
-			ps.setInt(1, 3);
-			ps.setString(2, admin.getEmail());
-			ps.setString(3, password);
-			ps.setInt(4, 1);
-			ps.setString(5, admin.getAddress());
-			ps.setInt(6, admin.getAge());
-			ps.setString(7, admin.getGender());
-			ps.setString(8, admin.getContact());
-			ps.setString(9, admin.getNationality());
+		ps.setInt(1, 3);
+		ps.setString(2, admin.getEmail());
+		ps.setString(3, password);
+		ps.setInt(4, 1);
+		ps.setString(5, admin.getAddress());
+		ps.setInt(6, admin.getAge());
+		ps.setString(7, admin.getGender());
+		ps.setString(8, admin.getContact());
+		ps.setString(9, admin.getNationality());
 
-			ps.executeUpdate();
-			ResultSet rs = ps.getGeneratedKeys();
+		int res = ps.executeUpdate();
+		if(res == 0)
+			throw new AdminCRSException("Failed to add admin to the credentials table.");
+		ResultSet rs = ps.getGeneratedKeys();
 
-			rs.next();
-			admin.setUserId(rs.getInt(1));
+		rs.next();
+		admin.setUserId(rs.getInt(1));
 
-			String adminQuery = SQLQueriesConstant.ADD_NEW_ADMIN;
-			ps = connection.prepareStatement(adminQuery);
-			ps.setInt(1, admin.getUserId());
-			ps.setString(2, admin.getUserName());
-			ps.setString(3, admin.getEmail());
-
-			ps.executeUpdate();
-			return 1;
-		} catch (SQLException e) {
-			logger.info(e.getMessage());
-		} catch (Exception e) {
-			logger.info(e.getMessage());
-		}
-		return 0;
+		String adminQuery = SQLQueriesConstant.ADD_NEW_ADMIN;
+		ps = connection.prepareStatement(adminQuery);
+		ps.setInt(1, admin.getUserId());
+		ps.setString(2, admin.getUserName());
+		ps.setString(3, admin.getEmail());
+		int res2 = ps.executeUpdate();
+		
+		if(res2 == 0)
+			throw new AdminCRSException("Failed to add new professor to the professor table.");
+		return 1;
 	}
 
 	/**
@@ -142,44 +136,40 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	 * @param prof     Details of the new professor sent using the Professor bean
 	 *                 class' attributes.
 	 * @return Returns 1 if professor is successfully added. Else returns 0.
-	 */
-	
-	public int addProfessor(String password, Professor prof) {
-		try {
-			String credQuery = SQLQueriesConstant.ADD_USER_TO_CREDENTIALS;
-			ps = connection.prepareStatement(credQuery, Statement.RETURN_GENERATED_KEYS);
-			ps.setInt(1, 2);
-			ps.setString(2, prof.getEmail());
-			ps.setString(3, password);
-			ps.setInt(4, 1);
-			ps.setString(5, prof.getAddress());
-			ps.setInt(6, prof.getAge());
-			ps.setString(7, prof.getGender());
-			ps.setString(8, prof.getContact());
-			ps.setString(9, prof.getNationality());
+	 */	
+	public int addProfessor(String password, Professor prof) throws AdminCRSException, Exception{
+		String credQuery = SQLQueriesConstant.ADD_USER_TO_CREDENTIALS;
+		ps = connection.prepareStatement(credQuery, Statement.RETURN_GENERATED_KEYS);
+		ps.setInt(1, 2);
+		ps.setString(2, prof.getEmail());
+		ps.setString(3, password);
+		ps.setInt(4, 1);
+		ps.setString(5, prof.getAddress());
+		ps.setInt(6, prof.getAge());
+		ps.setString(7, prof.getGender());
+		ps.setString(8, prof.getContact());
+		ps.setString(9, prof.getNationality());
 
-			ps.executeUpdate();
-			ResultSet rs = ps.getGeneratedKeys();
+		int res = ps.executeUpdate();
+		if(res == 0)
+			throw new AdminCRSException("Failed to add professor to the credentials table.");
+		ResultSet rs = ps.getGeneratedKeys();
 
-			rs.next();
-			prof.setUserId(rs.getInt(1));
+		rs.next();
+		prof.setUserId(rs.getInt(1));
 
-			String profQuery = SQLQueriesConstant.ADD_NEW_PROFESSOR;
-			ps = connection.prepareStatement(profQuery);
-			ps.setInt(1, prof.getUserId());
-			ps.setString(2, prof.getUserName());
-			ps.setString(3, prof.getEmail());
-			ps.setString(4, prof.getRole());
-			ps.setString(5, prof.getDepartment());
-			ps.executeUpdate();
-
-			return 1;
-		} catch (SQLException e) {
-			logger.info(e.getMessage());
-		} catch (Exception e) {
-			logger.info(e.getMessage());
-		}
-		return 0;
+		String profQuery = SQLQueriesConstant.ADD_NEW_PROFESSOR;
+		ps = connection.prepareStatement(profQuery);
+		ps.setInt(1, prof.getUserId());
+		ps.setString(2, prof.getUserName());
+		ps.setString(3, prof.getEmail());
+		ps.setString(4, prof.getRole());
+		ps.setString(5, prof.getDepartment());
+		int res2 = ps.executeUpdate();
+		
+		if(res2 == 0)
+			throw new AdminCRSException("Failed to add new professor to the professor table.");
+		return 1;
 	}
 
 	/**
@@ -190,22 +180,22 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	 *                  generated.
 	 * 
 	 */
+
 	
-	public ArrayList<JSONObject> printGrades(int studentId) {
+	public ArrayList<JSONObject> printGrades(int studentId) throws AdminCRSException, Exception{
 		ArrayList<JSONObject> grades = new ArrayList<JSONObject>();
-		try {
 			String str = SQLQueriesConstant.GET_GRADES_BY_STUDENT_ID;
 			ps = connection.prepareStatement(str);
 			ps.setInt(1, studentId);
 			ResultSet rs = ps.executeQuery();
-			
+
 			String name = "";
 			if (rs.next())
 				name = rs.getString("sname");
 			else {
 				logger.info("Student with ID " + studentId + " has not registered for any course!");
 				logger.info("=======================================");
-				return grades;
+				throw new AdminCRSException("Student ID " + studentId + " does not exist.");
 			}
 			logger.info("=======================================");
 			logger.info("        Report Card of " + name + " :");
@@ -215,32 +205,17 @@ public class AdminDAOOperation implements AdminDAOInterface {
 				do {
 					logger.info(rs.getInt("courseId") + "          " + rs.getString("name") + "         "
 							+ rs.getString("grade"));
-					
+
 					JSONObject grade = new JSONObject();
 					grade.put("courseId", rs.getInt("courseId"));
 					grade.put("name", rs.getString("name"));
-					grade.put("grade",  rs.getString("grade"));
-					
+					grade.put("grade", rs.getString("grade"));
+
 					grades.add(grade);
 				} while (rs.next());
 			}
 			logger.info("=======================================");
-			
-//			while(rs.next())
-//			{
-//				JSONObject grade = new JSONObject();
-//				grade.put("courseId", rs.getInt("courseId"));
-//				grade.put("name", rs.getString("name"));
-//				grade.put("grade",  rs.getString("grade"));
-//				
-//				grades.add(grade);
-//			}
 
-		} catch (SQLException e) {
-			logger.info(e.getMessage());
-		} catch (Exception e) {
-			logger.info(e.getMessage());
-		}
 		return grades;
 	}
 
@@ -278,22 +253,18 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	 * 
 	 * 
 	 * @return True if the course is successfully added. False otherwise.
+	 * @throws SQLException, Exception
 	 */
-	public boolean addCourse(Course course) {
-		try {
-			String str = SQLQueriesConstant.ADD_COURSE_IN_CATALOG;
-			ps = connection.prepareStatement(str);
-			ps.setString(1, course.getCourseName());
-			ps.setInt(2, course.getCourseID());
-			ps.setInt(3, course.getCredits());
-			int val = ps.executeUpdate();
-			if (val > 0) {
-				return true;
-			}
-		} catch (SQLException e) {
-			logger.info(e.getMessage());
-		} catch (Exception e) {
-			logger.info(e.getMessage());
+	public boolean addCourse(Course course) throws SQLException, Exception {
+
+		String str = SQLQueriesConstant.ADD_COURSE_IN_CATALOG;
+		ps = connection.prepareStatement(str);
+		ps.setString(1, course.getCourseName());
+		ps.setInt(2, course.getCourseID());
+		ps.setInt(3, course.getCredits());
+		int val = ps.executeUpdate();
+		if (val > 0) {
+			return true;
 		}
 		return false;
 	}
@@ -381,43 +352,34 @@ public class AdminDAOOperation implements AdminDAOInterface {
 
 	/**
 	 * Opens registration window.
+	 * @throws SQLException, Exception
 	 */
-	public boolean startRegistrationWindow() {
-		;
+	public boolean startRegistrationWindow() throws SQLException, Exception {
+
 		boolean res = false;
-		try {
-			ps = connection.prepareStatement(SQLQueriesConstant.OPEN_REGISTRATION_WINDOW);
-			if (ps.executeUpdate() > 0) {
-				res = true;
-				logger.info("Registration Window Started.\n");
-			}
-		} catch (SQLException e) {
-			logger.info(e.getMessage());
-		} catch (Exception e) {
-			logger.info(e.getMessage());
+
+		ps = connection.prepareStatement(SQLQueriesConstant.OPEN_REGISTRATION_WINDOW);
+		if (ps.executeUpdate() > 0) {
+			res = true;
+			logger.info("Registration Window Started.\n");
 		}
+
 		return res;
 	}
 
 	/**
 	 * Closes registration window.
+	 * @throws SQLException, Exception
 	 */
-	public boolean closeRegistrationWindow() {
+	public boolean closeRegistrationWindow() throws SQLException, Exception {
 		boolean res = false;
-		try {
-			ps = connection.prepareStatement(SQLQueriesConstant.CLOSE_REGISTRATION_WINDOW);
-			if (ps.executeUpdate() > 0) {
-				res = true;
-				logger.info("Registration Window Closed.\n");
-			}
-		} catch (SQLException e) {
-			logger.info(e.getMessage());
-		} catch (Exception e) {
-			logger.info(e.getMessage());
+		ps = connection.prepareStatement(SQLQueriesConstant.CLOSE_REGISTRATION_WINDOW);
+		if (ps.executeUpdate() > 0) {
+			res = true;
+			logger.info("Registration Window Closed.\n");
 		}
 		return res;
 	}
-	
 
 	/**
 	 * Shows list of all courses
@@ -505,35 +467,28 @@ public class AdminDAOOperation implements AdminDAOInterface {
 	/**
 	 * Displays List of all registered students
 	 */
-	public ArrayList<JSONObject> getRegisteredStudents() {
+	public ArrayList<JSONObject> getRegisteredStudents() throws AdminCRSException, Exception{
 		ArrayList<JSONObject> students = new ArrayList<JSONObject>();
-		try {
-			String  s = SQLQueriesConstant.GET_REGISTERED_STUDENTS;
-			ps = connection.prepareStatement(s);
-			ResultSet stl = ps.executeQuery();
+
+		String  s = SQLQueriesConstant.GET_REGISTERED_STUDENTS;
+		ps = connection.prepareStatement(s);
+		ResultSet stl = ps.executeQuery();
+		logger.info("=======================================");
+		if (stl.next() == false) {
+			throw new AdminCRSException("No Student Exists.");
+		} else {
+			logger.info(String.format("%-10s\t%-15s", "StudentID", "Student Name"));
+			do {
+				logger.info(String.format("%-10d\t%-15s", stl.getInt("id"), stl.getString("name")));
+				JSONObject student = new JSONObject();
+				student.put("studentId", stl.getInt("id"));
+				student.put("name", stl.getString("name"));
+				
+				students.add(student);
+			} while (stl.next());
 			logger.info("=======================================");
-			if (stl.next() == false) {
-				throw new StudentCRSException("No Student Exists!!");
-			} else {
-				logger.info(String.format("%-10s\t%-15s", "StudentID", "Student Name"));
-				do {
-					logger.info(String.format("%-10d\t%-15s", stl.getInt("id"), stl.getString("name")));
-					JSONObject student = new JSONObject();
-					student.put("studentId", stl.getInt("id"));
-					student.put("name", stl.getString("name"));
-					
-					students.add(student);
-				} while (stl.next());
-				logger.info("=======================================");
-				return students;
-			}		
-		} catch (StudentCRSException e) {
-			logger.info(e.getMessage());
-		} catch (SQLException e) {
-			logger.info(e.getMessage());
-		} catch (Exception e) {
-			logger.info(e.getMessage());
-		}
-		return students;
+			return students;
+		}		
+
 	}
 }

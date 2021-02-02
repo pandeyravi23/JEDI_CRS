@@ -18,10 +18,8 @@ import com.flipkart.constant.SQLQueriesConstant;
 import com.flipkart.util.DBConnection;
 import com.mysql.cj.protocol.Resultset;
 
-
 /**
- * Undertakes all operations for professor related 
- * queries to the database
+ * Undertakes all operations for professor related queries to the database
  * 
  * @author JEDI04
  */
@@ -48,30 +46,26 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	 * 
 	 * @param email Email Id of professor
 	 * @return Professor Object
+	 * @throws SQLException, Exception
 	 */
-	public Professor getProfessorByEmail(String email) {
+	public Professor getProfessorByEmail(String email) throws SQLException, Exception {
 		Professor professor = new Professor();
-		try {
 
-			con = DBConnection.getConnection();
-			String str = SQLQueriesConstant.GET_PROFESSOR_BY_EMAIL;
-			stmt = con.prepareStatement(str);
-			stmt.setString(1, email);
-			ResultSet rs = stmt.executeQuery();
+		con = DBConnection.getConnection();
+		String str = SQLQueriesConstant.GET_PROFESSOR_BY_EMAIL;
+		stmt = con.prepareStatement(str);
+		stmt.setString(1, email);
+		ResultSet rs = stmt.executeQuery();
 
-			while (rs.next()) {
-				professor = new Professor();
-				professor.setUserId(rs.getInt(1));
-				professor.setUserName(rs.getString(2));
-				professor.setEmail(rs.getString("email"));
-				professor.setRole(rs.getString("role"));
-				professor.setDepartment(rs.getString(5));
-			}
-		} catch (SQLException e) {
-			logger.info(e.getMessage());
-		} catch (Exception e) {
-			logger.info(e.getMessage());
+		while (rs.next()) {
+			professor = new Professor();
+			professor.setUserId(rs.getInt(1));
+			professor.setUserName(rs.getString(2));
+			professor.setEmail(rs.getString("email"));
+			professor.setRole(rs.getString("role"));
+			professor.setDepartment(rs.getString(5));
 		}
+
 		return professor;
 	}
 
@@ -80,28 +74,20 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	 * 
 	 * @param professorID Professor Id
 	 * @return Professor Name corresponding to the given id
+	 * @throws SQLException, Exception
 	 */
-	
-	public String getProfessorById(int professorID) {
+
+	public String getProfessorById(int professorID) throws SQLException, Exception {
 		String professorName = null;
+		con = DBConnection.getConnection();
+		stmt = con.prepareStatement(SQLQueriesConstant.GET_PROFESSOR_BY_ID_QUERY);
 
-		try {
-			con = DBConnection.getConnection();
-			// String sqlQuery = "SELECT name FROM professor WHERE id = ?";
-			stmt = con.prepareStatement(SQLQueriesConstant.GET_PROFESSOR_BY_ID_QUERY);
+		stmt.setInt(1, professorID);
 
-			stmt.setInt(1, professorID);
-
-			ResultSet resultSet = stmt.executeQuery();
-			if (resultSet.next()) {
-				professorName = resultSet.getString("name");
-			}
-		} catch (SQLException e) {
-			logger.info(e.getMessage());
-		} catch (Exception e) {
-			logger.info(e.getMessage());
+		ResultSet resultSet = stmt.executeQuery();
+		if (resultSet.next()) {
+			professorName = resultSet.getString("name");
 		}
-
 		return professorName;
 	}
 
@@ -110,31 +96,29 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	 * the database
 	 * 
 	 * @param professorId Professor Id
+	 * @return List of courses allotted to the professor
+	 * @throws SQLException, Exception
 	 */
-	public ArrayList<JSONObject> showCourses(int professorId) {
-		ArrayList <JSONObject> arr = new ArrayList<JSONObject>();
-		try {
-			con = DBConnection.getConnection();
-			String str = SQLQueriesConstant.SHOW_COURSES_PROFESSOR_QUERY;
-			stmt = con.prepareStatement(str);
-			stmt.setInt(1, professorId);
-			ResultSet rs = stmt.executeQuery();
-			logger.info("===============================================");
-			logger.info(String.format("%-8s\t%-15s\t%-15s", "ID","CourseName","Credits"));
-			while (rs.next()) {
-				JSONObject obj = new JSONObject();
-				logger.info(String.format("%-8s\t%-15s\t%-15s", rs.getInt(1),rs.getString(2),rs.getString(3)));
-				obj.put("id",rs.getInt(1));
-				obj.put("CourseName",rs.getString(2));
-				obj.put("Credits",rs.getInt(3));
-				arr.add(obj);
-			}
-			logger.info("================================================\n\n");
-		} catch (SQLException e) {
-			logger.info(e.getMessage());
-		} catch (Exception e) {
-			logger.info(e.getMessage());
+	public ArrayList<JSONObject> showCourses(int professorId) throws SQLException, Exception {
+		ArrayList<JSONObject> arr = new ArrayList<JSONObject>();
+
+		con = DBConnection.getConnection();
+		String str = SQLQueriesConstant.SHOW_COURSES_PROFESSOR_QUERY;
+		stmt = con.prepareStatement(str);
+		stmt.setInt(1, professorId);
+		ResultSet rs = stmt.executeQuery();
+		logger.info("===============================================");
+		logger.info(String.format("%-8s\t%-15s\t%-15s", "ID", "CourseName", "Credits"));
+		while (rs.next()) {
+			JSONObject obj = new JSONObject();
+			logger.info(String.format("%-8s\t%-15s\t%-15s", rs.getInt(1), rs.getString(2), rs.getString(3)));
+			obj.put("id", rs.getInt(1));
+			obj.put("CourseName", rs.getString(2));
+			obj.put("Credits", rs.getInt(3));
+			arr.add(obj);
 		}
+		logger.info("================================================\n\n");
+
 		return arr;
 	}
 
@@ -144,31 +128,27 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	 * 
 	 * @param courseId Course Id
 	 * @return returns list of enrolled students
+	 * @throws SQLException, Exception
 	 */
-	public ArrayList<JSONObject> getEnrolledStudents(int courseId) {
+	public ArrayList<JSONObject> getEnrolledStudents(int courseId) throws SQLException, Exception {
 		ArrayList<JSONObject> arr = new ArrayList<JSONObject>();
-		try {
-			con = DBConnection.getConnection();
-			String str = SQLQueriesConstant.GET_ENROLLED_STUDENTS_PROFESSOR_QUERY;
-			stmt = con.prepareStatement(str);
-			stmt.setInt(1, courseId);
-			ResultSet rs = stmt.executeQuery();
-			rs = stmt.executeQuery();
-			while (rs.next()) {
-				Student st = new Student();
-				JSONObject obj = new JSONObject();
-				obj.put("id",rs.getInt("id"));
-				obj.put("name",rs.getString("name"));
-				obj.put("email",rs.getString("email"));
-				obj.put("branch",rs.getString("branch"));
-				arr.add(obj);
-			}
 
-		} catch (SQLException e) {
-			logger.info(e.getMessage());
-		} catch (Exception e) {
-			logger.info(e.getMessage());
+		con = DBConnection.getConnection();
+		String str = SQLQueriesConstant.GET_ENROLLED_STUDENTS_PROFESSOR_QUERY;
+		stmt = con.prepareStatement(str);
+		stmt.setInt(1, courseId);
+		ResultSet rs = stmt.executeQuery();
+		rs = stmt.executeQuery();
+		while (rs.next()) {
+			Student st = new Student();
+			JSONObject obj = new JSONObject();
+			obj.put("id", rs.getInt("id"));
+			obj.put("name", rs.getString("name"));
+			obj.put("email", rs.getString("email"));
+			obj.put("branch", rs.getString("branch"));
+			arr.add(obj);
 		}
+
 		return arr;
 	}
 
@@ -178,11 +158,12 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	 * 
 	 * @param toGrade  List of students to be graded
 	 * @param courseId course Id
+	 * @throws SQLException, Exception
 	 */
-	public void setGrades(ArrayList<Student> toGrade, int courseId) {
+	public void setGrades(ArrayList<Student> toGrade, int courseId) throws SQLException, Exception {
 
-		Scanner sc = new Scanner(System.in);
 		try {
+			Scanner sc = new Scanner(System.in);
 			con = DBConnection.getConnection();
 			for (Student st : toGrade) {
 				logger.info("Please Enter Grade for " + st.getUserName());
@@ -201,39 +182,33 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 					logger.info("Couldn't upload try again");
 				}
 			}
-		} catch (SQLException e) {
-			logger.info(e.getMessage());
 		} catch (Exception e) {
-			logger.info(e.getMessage());
+			logger.warn(e);
 		}
-		return;
 	}
 
 	/**
 	 * Updates grades of a single student belonging to a particular courseId
 	 * 
-	 * @param courseId course id of the course whose grade has to be updated
+	 * @param courseId  course id of the course whose grade has to be updated
 	 * @param studentId student id whose grade has to be updated
-	 * @param grades grade to be entered
+	 * @param grades    grade to be entered
 	 * @return true if grades updated else false
+	 * @throws SQLException, Exception
 	 */
-	public boolean updateStudentGrades(int courseId, int studentId, String grades) {
-		try {
-			con = DBConnection.getConnection();
-			String str = SQLQueriesConstant.UPDATE_GRADES_PROFESSOR_QUERY;
-			stmt = con.prepareStatement(str);
-			stmt.setString(1, grades);
-			stmt.setInt(2, courseId);
-			stmt.setInt(3, studentId);
-			int status = stmt.executeUpdate();
-			if (status > 0) {
-				return true;
-			}
-		} catch (SQLException e) {
-			logger.info(e.getMessage());
-		} catch (Exception e) {
-			logger.info(e.getMessage());
+	public boolean updateStudentGrades(int courseId, int studentId, String grades) throws SQLException, Exception {
+
+		con = DBConnection.getConnection();
+		String str = SQLQueriesConstant.UPDATE_GRADES_PROFESSOR_QUERY;
+		stmt = con.prepareStatement(str);
+		stmt.setString(1, grades);
+		stmt.setInt(2, courseId);
+		stmt.setInt(3, studentId);
+		int status = stmt.executeUpdate();
+		if (status > 0) {
+			return true;
 		}
+
 		return false;
 	}
 
@@ -241,35 +216,35 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	 * Show Grades of all enrolled students associated with the courseId
 	 * 
 	 * @param enrolledStudent List of enrolled student
-	 * @param courseId course id
+	 * @param courseId        course id
+	 * @return List of students containing with grades
+	 * @throws SQLException, Exception
 	 */
-	public ArrayList<JSONObject> showGrades(ArrayList<Student> enrolledStudent, int courseId) {
+	public ArrayList<JSONObject> showGrades(ArrayList<Student> enrolledStudent, int courseId)
+			throws SQLException, Exception {
 		ArrayList<JSONObject> al = new ArrayList<JSONObject>();
-		try {
-			con = DBConnection.getConnection();
-			logger.info("=======================================================");
-			logger.info(String.format("%-8s\t%-15s\t%-15s", "UserID","StudentName","Grade Obtained"));
-			for (Student st : enrolledStudent) {
-				JSONObject obj= new JSONObject();
-				String str = SQLQueriesConstant.SHOW_GRADES_PROFESSOR_QUERY;
-				stmt = con.prepareStatement(str);
-				stmt.setInt(1, st.getUserId());
-				stmt.setInt(2, courseId);
-				ResultSet rs = stmt.executeQuery();
-				while (rs.next()) {
-					logger.info(String.format("%-8s\t%-15s\t%-15s", st.getUserId(),st.getUserName(),rs.getString("grade")));
-					obj.put("UserID", st.getUserId());
-					obj.put("Student Name",st.getUserName());
-					obj.put("Grade", rs.getString("grade"));
-					al.add(obj);
-				}
+
+		con = DBConnection.getConnection();
+		logger.info("=======================================================");
+		logger.info(String.format("%-8s\t%-15s\t%-15s", "UserID", "StudentName", "Grade Obtained"));
+		for (Student st : enrolledStudent) {
+			JSONObject obj = new JSONObject();
+			String str = SQLQueriesConstant.SHOW_GRADES_PROFESSOR_QUERY;
+			stmt = con.prepareStatement(str);
+			stmt.setInt(1, st.getUserId());
+			stmt.setInt(2, courseId);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				logger.info(
+						String.format("%-8s\t%-15s\t%-15s", st.getUserId(), st.getUserName(), rs.getString("grade")));
+				obj.put("UserID", st.getUserId());
+				obj.put("Student Name", st.getUserName());
+				obj.put("Grade", rs.getString("grade"));
+				al.add(obj);
 			}
-			logger.info("=======================================================");
-		} catch (SQLException e) {
-			logger.info(e.getMessage());
-		} catch (Exception e) {
-			logger.info(e.getMessage());
 		}
+		logger.info("=======================================================");
+
 		return al;
 	}
 
@@ -279,31 +254,27 @@ public class ProfessorDAOOperation implements ProfessorDAOInterface {
 	 * 
 	 * @param courseId course id
 	 * @return List of students in the course
+	 * @throws SQLException, Exception
 	 */
-	public ArrayList<Student> getStudents(int courseId) {
+	public ArrayList<Student> getStudents(int courseId) throws SQLException, Exception {
 		ArrayList<Student> al = new ArrayList<Student>();
-		try {
-			con = DBConnection.getConnection();
-			String str = SQLQueriesConstant.GET_STUDENTS_PROFESSOR_QUERY;
-			stmt = con.prepareStatement(str);
-			stmt.setInt(1, courseId);
-			ResultSet rs = stmt.executeQuery();
-			rs = stmt.executeQuery();
 
-			while (rs.next()) {
-				Student st = new Student();
-				st.setUserId(rs.getInt("id"));
-				st.setUserName(rs.getString("name"));
-				st.setEmail(rs.getString("email"));
-				st.setBranch(rs.getString("branch"));
-				al.add(st);
-			}
+		con = DBConnection.getConnection();
+		String str = SQLQueriesConstant.GET_STUDENTS_PROFESSOR_QUERY;
+		stmt = con.prepareStatement(str);
+		stmt.setInt(1, courseId);
+		ResultSet rs = stmt.executeQuery();
+		rs = stmt.executeQuery();
 
-		} catch (SQLException e) {
-			logger.info(e.getMessage());
-		} catch (Exception e) {
-			logger.info(e.getMessage());
+		while (rs.next()) {
+			Student st = new Student();
+			st.setUserId(rs.getInt("id"));
+			st.setUserName(rs.getString("name"));
+			st.setEmail(rs.getString("email"));
+			st.setBranch(rs.getString("branch"));
+			al.add(st);
 		}
+
 		return al;
 	}
 

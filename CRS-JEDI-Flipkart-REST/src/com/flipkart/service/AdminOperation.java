@@ -16,11 +16,13 @@ import com.flipkart.bean.Course;
 import com.flipkart.bean.Professor;
 import com.flipkart.dao.AdminDAOOperation;
 import com.flipkart.exception.AdminCRSException;
+import com.flipkart.exception.ProfessorCRSException;
+import com.flipkart.exception.StudentCRSException;
 import com.flipkart.util.ValidationOperation;
 
 /**
- * Performs All the Admin Operations
- * and Extends Admin Interface
+ * Performs All the Admin Operations and Extends Admin Interface
+ * 
  * @author JEDI04
  *
  */
@@ -29,19 +31,16 @@ public class AdminOperation implements AdminInterface {
 
 	public static Logger logger = Logger.getLogger(AdminOperation.class);
 	AdminDAOOperation adminDAO = AdminDAOOperation.getInstance();
-	
+
 	// Method for lazy loading
 	private static AdminOperation instance = null;
-	
-	private AdminOperation()
-	{
-		
+
+	private AdminOperation() {
+
 	}
-	
-	synchronized public static AdminOperation getInstance()
-	{
-		if(instance == null)
-		{
+
+	synchronized public static AdminOperation getInstance() {
+		if (instance == null) {
 			instance = new AdminOperation();
 		}
 		return instance;
@@ -50,128 +49,61 @@ public class AdminOperation implements AdminInterface {
 	/**
 	 * Generate Report Card for a given Student Id
 	 * 
+	 * @param sid Student ID of the student whose report card is to be generated.
 	 */
 	@Override
-	public ArrayList<JSONObject> generateReportCard(int sid) {
-//		if(adminDAO.getRegisteredStudents().size() == 0) {
-//			logger.info("   =======================================");
-//			return ;
-//		}
-		logger.info("Please Enter Student ID to Generate Report Card");
-//		Scanner sc = new Scanner(System.in);
-//		int sid = sc.nextInt();
+	public ArrayList<JSONObject> generateReportCard(int sid) throws AdminCRSException, Exception
+	{
 		ArrayList<JSONObject> reportCard =  adminDAO.printGrades(sid);
 		return reportCard;
 	}
 	
-	public ArrayList<JSONObject> getRegisteredStudents()
+	
+	/**
+	 * Generated a lost of all the students who have successfully registered for courses and completed their requirements.
+	 * 
+	 * @return ArrayList of JsonObjects containing the name and id of the registered students.
+	 */
+	public ArrayList<JSONObject> getRegisteredStudents() throws AdminCRSException, Exception
 	{
 		return adminDAO.getRegisteredStudents();
 	}
 
 	/**
-	 * Adds New Professor to the table and throws Exception 
-	 * if Failed to Add
+	 * Adds New Professor to the table and throws Exception if Failed to Add
 	 */
-	public int addProfessor(String password, @Valid Professor prof) {
-		// TODO Auto-generated method stub
+	public int addProfessor(String password, Professor prof) throws AdminCRSException, Exception{
+		if(adminDAO.verifyEmail(prof.getEmail()) == false)
+		{
+			throw new AdminCRSException("Professor already exists in the database.");
+		}
 		
 		int res = 0;
-		try {
-//			Scanner sc = new Scanner(System.in);
-//	
-//			logger.info("Enter the new email : ");
-//			
-//			String email = ValidationOperation.readEmail();
-//			if (email.equals("-1")){
-//				throw new AdminCRSException("Professor Not Added\n");
-//			}
-//			String pwd1 = ValidationOperation.readPassword();
-//	
-//			logger.info("Please enter name : ");
-//			Professor prof = new Professor();
-//			prof.setEmail(email);
-//			prof.setUserName(sc.nextLine());
-//			logger.info("Enter designation : ");
-//			prof.setRole(sc.nextLine());
-//			logger.info("Enter department : ");
-//			prof.setDepartment(sc.nextLine());
-//			logger.info("Enter address : ");
-//			prof.setAddress(sc.nextLine());
-//			logger.info("Enter Age : ");
-//			prof.setAge(Integer.parseInt(sc.nextLine()));
-//			logger.info("Enter Gender : (male/female) : ");
-//			prof.setGender(sc.nextLine());
-//			logger.info("Enter contact number : ");
-//			prof.setContact(sc.nextLine());
-//			logger.info("Enter nationality : ");
-//			prof.setNationality(sc.nextLine());
-	
-			res = adminDAO.addProfessor(password, prof);
-			if (res == 1) {
-				logger.info("Professor successfully added.");
-			} else {
-				logger.info("Unable to add professor.");
-			}
-//		}catch(AdminCRSException e) {
-//			logger.warn(e.getMessage());
+		res = adminDAO.addProfessor(password, prof);
+		if (res == 1) {
+			logger.info("Professor successfully added.");
+		} else {
+			logger.info("Unable to add professor.");
 		}
-		catch(Exception e) {
-			logger.warn(e.getMessage());
-		}
-		
 		return res;
 	}
 
 	/**
-	 * Adds New Admin to the table and throws Exception
-	 * if Failed to Add
+	 * Adds New Admin to the table and throws Exception if Failed to Add
 	 */
 	@Override
-	public int addAdmin(Admin admin, String pwd1) {
-		// TODO Auto-generated method stub
-		int res = 0;
-		try {
-//			Scanner sc = new Scanner(System.in);
-//			logger.info("Enter the new email : ");
-//	
-//			
-//			String email = ValidationOperation.readEmail();
-//			if (email.equals("-1")){
-//				throw new AdminCRSException("Admin Not Added\n");
-//			}
-//			String pwd1 = ValidationOperation.readPassword();
-//	
-//			Admin admin = new Admin();
-//			admin.setEmail(email);
-//			logger.info("Enter name : ");
-//			admin.setUserName(sc.nextLine());
-//			logger.info("Enter address : ");
-//			admin.setAddress(sc.nextLine());
-//			logger.info("Enter Age : ");
-//			admin.setAge(Integer.parseInt(sc.nextLine()));
-//			logger.info("Enter Gender : (male/female) : ");
-//			admin.setGender(sc.nextLine());
-//			logger.info("Enter contact number : ");
-//			admin.setContact(sc.nextLine());
-//			logger.info("Enter nationality : ");
-//			admin.setNationality(sc.nextLine());
-	
-			res = adminDAO.addAdmin(pwd1, admin);
-			if (res == 1) {
-				logger.info("Admin added successfully");
-			} else {
-				throw new AdminCRSException("Unable to add admin");
-			}
-		}catch(AdminCRSException e)
+	public int addAdmin(Admin admin, String pwd1) throws AdminCRSException, Exception{
+		if(adminDAO.verifyEmail(admin.getEmail()) == false)
 		{
-			logger.warn(e.getMessage());
-		}
-		catch(Exception e)
-		{
-			logger.warn(e.getMessage());
+			throw new AdminCRSException("Admin already exists in the database.");
 		}
 		
+		int res = adminDAO.addAdmin(pwd1, admin);
+		if (res == 1) {
+			logger.info("Admin added successfully");
+		} else {
+			logger.info("Unable to add admin");
+		}
 		return res;
 	}
 
@@ -188,9 +120,8 @@ public class AdminOperation implements AdminInterface {
 	}
 
 	/**
-	 * Adds course to catalog with the entered details
-	 * throws exception if duplicate course id is
-	 * provided by the admin
+	 * Adds course to catalog with the entered details throws exception if duplicate
+	 * course id is provided by the admin
 	 */
 	@Override
 	public void addCourse() {
@@ -207,15 +138,14 @@ public class AdminOperation implements AdminInterface {
 			logger.info("Enter Number of Credits");
 			course.setCredits(sc.nextInt());
 			boolean res = adminDAO.addCourse(course);
-			if(res==false)
+			if (res == false)
 				throw new AdminCRSException("Failed to Add New Course");
 			logger.info("====================================");
 			logger.info("Add Course Status : " + res);
 			logger.info("====================================");
 		} catch (AdminCRSException e) {
 			logger.info(e.getMessage());
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			logger.info(e.getMessage());
 		}
 	}
@@ -232,9 +162,7 @@ public class AdminOperation implements AdminInterface {
 		// TODO Auto-generated method stub
 		return adminDAO.deleteCourse(courseID);
 	}
-	
-	
-	
+
 	/**
 	 * Allot course to the professor
 	 * @param courseID
@@ -242,67 +170,51 @@ public class AdminOperation implements AdminInterface {
 	 * @return true if course is alloted successfully else return false
 	 * @throws AdminCRSException,Exception
 	 */
-//	@Override
+	@Override
 	public boolean allotCourse(int courseID, int professorID) throws AdminCRSException,Exception {
-		adminDAO.showcourses();
-		adminDAO.showprofessor();
 		return adminDAO.allotCourses(courseID,professorID);
 	}
-	
+
 	/**
 	 * Opens registration window.
+	 * 
+	 * @throws Exception
 	 */
-	public boolean startRegistrationWindow()
-	{
+	public boolean startRegistrationWindow() throws Exception {
 		boolean res = false;
-		try {
-			res = adminDAO.startRegistrationWindow();
-		}
-		catch(Exception e)
-		{
-			logger.info(e.getMessage());
-		}
+		res = adminDAO.startRegistrationWindow();
+
 		return res;
 	}
-	
-	
+
 	/**
 	 * Closes registration window.
+	 * @throws Exception 
 	 */
-	public boolean closeRegistrationWindow()
-	{
+	public boolean closeRegistrationWindow() throws Exception {
 		boolean res = false;
-		try {
-			res = adminDAO.closeRegistrationWindow();
-		}
-		catch(Exception e)
-		{
-			logger.info(e.getMessage());
-		}
+		res = adminDAO.closeRegistrationWindow();
+
 		return res;
 	}
-	
+
 	/**
 	 * Displays list of registered students
+	 * 
+	 * @throws ProfessorCRSException,Exception
 	 */
-	
-	public boolean addCourse2(Course course) {
+
+	public boolean addCourse2(Course course) throws AdminCRSException, Exception {
 		// TODO Auto-generated method stub
 		//// Exception related to existing course ID
 		boolean res = false;
-		try {
-			res = adminDAO.addCourse(course);
-			if(res==false)
-				throw new AdminCRSException("Failed to Add New Course");
-			logger.info("====================================");
-			logger.info("Add Course Status : " + res);
-			logger.info("====================================");
-		} catch (AdminCRSException e) {
-			logger.info(e.getMessage());
-		}
-		catch (Exception e) {
-			logger.info(e.getMessage());
-		}
+		res = adminDAO.addCourse(course);
+		if (res == false)
+			throw new AdminCRSException("Failed to Add New Course");
+		logger.info("====================================");
+		logger.info("Add Course Status : " + res);
+		logger.info("====================================");
+
 		return res;
 	}
 	

@@ -9,8 +9,11 @@ import javax.ws.rs.core.MediaType;
 
 import com.flipkart.dao.AdminDAOOperation;
 import com.flipkart.exception.AdminCRSException;
+import com.flipkart.exception.StudentCRSException;
 import com.flipkart.helper.AddAdminHelper;
+import com.flipkart.helper.AddProfessorHelper;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.validation.Valid;
@@ -33,14 +36,14 @@ import org.json.JSONObject;
 import com.flipkart.bean.Admin;
 import com.flipkart.bean.Course;
 import com.flipkart.bean.Professor;
+import com.flipkart.bean.ReportCard;
 import com.flipkart.service.AdminOperation;
 import com.google.gson.Gson;
 import com.flipkart.util.ResponseHelpers;
 import com.flipkart.util.ValidationOperation;
 
 /**
- * Handles Admin related functionality 
- * through rest services
+ * Handles Admin related functionality through rest services
  * 
  * @author JEDI04
  * 
@@ -49,10 +52,12 @@ import com.flipkart.util.ValidationOperation;
 public class AdminRESTAPI {
 	AdminOperation adminOperation = AdminOperation.getInstance();
 	AdminDAOOperation adminDAOOperation = AdminDAOOperation.getInstance();
+
 	/**
+	 * Generates the report card of a student containing the course name, courseId and grade obtained in the course.
 	 * 
 	 * @param id Student ID
-	 * @return Response object containing report card
+	 * @return Response object containing report card as an ArrayList of JsonObjects.
 	 * @throws ValidationException
 	 */
 	@GET
@@ -60,73 +65,101 @@ public class AdminRESTAPI {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getReportCard(
 			@NotNull
-			@DecimalMin(value = "100", message = "Student ID has to be of 3 digits")
-			@Digits(fraction = 0, integer = 3)
+			@DecimalMin(value = "100", message = "Student ID has to be greater than 100")
+			@Digits(fraction = 0, integer = 3, message = "Student ID has to be of 3 digits")
 			@QueryParam("id") Integer id) throws ValidationException
 	{
-		ArrayList<JSONObject> reportCard = adminOperation.generateReportCard(id);
+		ArrayList<JSONObject> reportCard = new ArrayList<JSONObject>();
+		try {
+			 reportCard = adminOperation.generateReportCard(id);
+		}catch(AdminCRSException e)
+		{
+			return ResponseHelpers.badRequest(reportCard, e.getMessage());
+		}
+		catch(SQLException e)
+		{
+			return ResponseHelpers.somethingWentWrong("Some error occured in SQL.");
+		}
+		catch(Exception e)
+		{
+			return ResponseHelpers.somethingWentWrong(reportCard);
+		}
 		
 		if(reportCard.size() == 0)
 			return ResponseHelpers.badRequest(reportCard, "Unable to generate report card for id : "  + id);
 		return ResponseHelpers.success(reportCard, "Report Card for " + id + "successfully generated.");
-		
-		
 	}
-	
+
 	/**
 	 * Returns list of registered students
+	 * 
 	 * @return Response object containing list of registered students
 	 */
 	@GET
 	@Path("/getRegisteredStudents")
 	@Produces(MediaType.APPLICATION_JSON)
+
 	public Response getRegisteredStudents()
 	{
-		ArrayList<JSONObject> students =  adminOperation.getRegisteredStudents();
-		if(students.size() == 0)
-		{
-			return ResponseHelpers.badRequest(students, "No students found.");
+		ArrayList<JSONObject> students = new ArrayList<JSONObject>();
+		try {
+			students = adminOperation.getRegisteredStudents();
 		}
+		catch(AdminCRSException e)
+		{
+			return ResponseHelpers.badRequest(students, "No registered students found.");
+		}
+		catch(SQLException e)
+		{
+			return ResponseHelpers.somethingWentWrong("Some error occured in SQL.");
+		}
+		catch(Exception e)
+		{
+			return ResponseHelpers.somethingWentWrong(students);
+		}
+		
+		if(students.size() == 0)
+			return ResponseHelpers.badRequest(students, "No registered students found.");
 		return ResponseHelpers.success(students, "Success");
 	}
-	
+
 	/**
 	 * Functionality to add professor
+	 * 
 	 * @param str Details of professor to be added
 	 * @return Response object containing status
 	 */
 	@POST
 	@Path("/addProfessor")
-	@Consumes("text/plain")
+	@Consumes("application/json")
 	@Produces(MediaType.APPLICATION_JSON)
-//	public void addProfessor(Professor obj, @PathParam("password") String password)
-	public Response addProfessor(String str)
+	public Response addProfessor(@Valid AddProfessorHelper helper) throws ValidationException
 	{
-		System.out.println(str);
-		JSONObject obj = new JSONObject(str);
-		
-		System.out.println(obj.toString());
-		System.out.println(obj.getString("userName"));
-		String password = obj.getString("password");
-		obj.remove("password");
-		Gson gson = new Gson();
-		Professor prof = gson.fromJson(obj.toString(), Professor.class);
-		System.out.println(prof.getUserName());
-		System.out.println(password);
-		
-		int status = adminOperation.addProfessor(password, prof);
-		
-		if(status == 0)
+		String password = helper.getPassword();
+		Professor prof = helper.getProf();
+		int status = 0;
+		try{
+			status = adminOperation.addProfessor(password, prof);
+		}
+		catch(AdminCRSException e)
 		{
 			return ResponseHelpers.badRequest(status, "Professor entry " + prof.getEmail() + " already exists in database.");
 		}
+		catch(Exception e)
+		{
+			return ResponseHelpers.somethingWentWrong("Some internal error occured.");
+		}
 		
-		return ResponseHelpers.success(status, "Prof. " + prof.getUserName() + " added.");
-		
+		if(status == 0)
+		{
+			return ResponseHelpers.badRequest(status, "Professor entry " + prof.getEmail() + " already exists in the database.");
+		}
+		return ResponseHelpers.success(status, "Prof. " + prof.getUserName() + " added.");		
 	}
-	
+
 	/**
 	 * Functionality to add admin
+	 * 
 	 * @param helper Admin helper object containing deatils of admin
 	 * @return Response object containing status
 	 * @throws ValidationException
@@ -135,62 +168,75 @@ public class AdminRESTAPI {
 	@Path("/addAdmin")
 	@Consumes("application/json")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addAdmin(@Valid AddAdminHelper helper) throws ValidationException
-	{
+	public Response addAdmin(@Valid AddAdminHelper helper) throws ValidationException {
 		Admin admin = helper.getAdmin();
 		String password = helper.getPassword();
-		
-		System.out.println(admin.toString());
-		System.out.println(password);
-		
-		int status = adminOperation.addAdmin(admin, password);
+		int status = 0;
+		try
+		{
+			status = adminOperation.addAdmin(admin, password);
+		}
+		catch(AdminCRSException e)
+		{
+			return ResponseHelpers.badRequest(status, "Admin entry " + admin.getEmail() + " already exists in the database.");	
+		}
+		catch(Exception e)
+		{
+			return ResponseHelpers.somethingWentWrong("Some internal error occured.");
+		}
 		
 		if(status == 0)
 		{
 			return ResponseHelpers.badRequest(status, "Admin entry " + admin.getEmail() + " already exists in database.");
 		}
-		
 		return ResponseHelpers.success(status, "Admin " + admin.getUserName() + " added.");
 	}
-	
 
 	/**
 	 * Opens the Registration Window for course registration
+	 * 
 	 * @return Response
 	 */
-	
+
 	@PUT
 	@Path("/openRegistration")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response openRegistration() {
-		boolean res = adminOperation.startRegistrationWindow();
-		if(res){
-			return ResponseHelpers.success(null, "Registration Opened");
+		try {
+			boolean res = adminOperation.startRegistrationWindow();
+			if (res) {
+				return ResponseHelpers.success(null, "Registration Opened");
+			}
+			return ResponseHelpers.badRequest(null, "Request to open registration failed");
+		} catch (Exception e) {
+			return ResponseHelpers.badRequest(null, e.getMessage());
 		}
-		return ResponseHelpers.badRequest(null, "Request to open registration failed");
-
 	}
 
-	
 	/**
 	 * Closes the Registration Window for course registration
+	 * 
 	 * @return Response
 	 */
-	
+
 	@PUT
 	@Path("/closeRegistration")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response closeRegistration() {
-		boolean res = adminOperation.closeRegistrationWindow();
-		if(res){
-			return ResponseHelpers.success(null, "Registration Closed");
+		try {
+			boolean res = adminOperation.closeRegistrationWindow();
+			if (res) {
+				return ResponseHelpers.success(null, "Registration Closed");
+			}
+			return ResponseHelpers.badRequest(null, "Request to close registration failed");
+		} catch (Exception e) {
+			return ResponseHelpers.badRequest(null, e.getMessage());
 		}
-		return ResponseHelpers.badRequest(null, "Request to close registration failed");
 	}
-	
 
 	/**
 	 * Adds new course in course catalog
+	 * 
 	 * @param course
 	 * @return Response
 	 * @throws ValidationException
@@ -199,17 +245,23 @@ public class AdminRESTAPI {
 	@Path("/addCourse")
 	@Consumes("application/json")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addCourse(@Valid Course course) throws ValidationException{
-		boolean res = adminOperation.addCourse2(course);
-		if(res){
-			return ResponseHelpers.successPost(course, "Course Added Successfully");
+	public Response addCourse(@Valid Course course) throws ValidationException {
+		try {
+			boolean res = adminOperation.addCourse2(course);
+			if (res) {
+				return ResponseHelpers.successPost(course, "Course Added Successfully");
+			}
+			return ResponseHelpers.badRequest(null, "Course Add Failed");
+		} catch (AdminCRSException e) {
+			return ResponseHelpers.badRequest(null, e.getMessage());
+		} catch (Exception e) {
+			return ResponseHelpers.badRequest(null, e.getMessage());
 		}
-		return ResponseHelpers.badRequest(null, "Course Add Failed");
 	}
-	
-	
+
 	/**
 	 * Deletes course from course catalog and course table
+	 * 
 	 * @param courseID
 	 * @return Response
 	 * @throws ValidationException
@@ -232,16 +284,16 @@ public class AdminRESTAPI {
 			return ResponseHelpers.badRequest(null, e.getMessage());
 		}
 	}
-	
-	
-	
+
 	/**
 	 * Allot course to the professor
+	 * 
 	 * @param courseID
 	 * @param professorID
 	 * @return Response object containing message
 	 * @throws ValidationException
 	 */
+	
 	@PUT 
 	@Path("/allotProfessor")
 	@Consumes("application/json")
@@ -266,8 +318,7 @@ public class AdminRESTAPI {
 			return ResponseHelpers.badRequest(null, e.getMessage());
 		}
 	}
-	
-	
+
 	/**
 	 * approveStudent Used to approve the newly registered students in order to
 	 * allow them to login and register for courses.
@@ -275,7 +326,6 @@ public class AdminRESTAPI {
 	 * @return Response object containing message
 	 * @throws ValidationException
 	 */
-	
 	@PUT
 	@Path("/approveStudent")
 	@Consumes("application/json")
