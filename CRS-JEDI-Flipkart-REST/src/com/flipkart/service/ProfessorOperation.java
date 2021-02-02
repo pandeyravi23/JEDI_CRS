@@ -119,5 +119,19 @@ public class ProfessorOperation implements ProfessorInterface {
 	public boolean updateStudentGrade(int courseId, int studentId, String grade) throws ProfessorCRSException, Exception{
 		return professorDaoOperation.updateStudentGrades(courseId, studentId, grade);
 	}
+	
+	
+	
+	/**
+	 * Returns professor object associated with given id
+	 * 
+	 * @param email professor email to be verified
+	 * @return Professor object containing information of the professor
+	 * @throws ProfessorCRSException, Exception
+	 */
+	public Professor getProfessorById2(int professorId) throws ProfessorCRSException, Exception{
+		Professor professor = professorDaoOperation.getProfessorById2(professorId);
+		return professor;
+	}
 
 }
