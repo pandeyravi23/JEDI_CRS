@@ -93,7 +93,6 @@ public class ProfessorCRSMenu {
 			int choice = sc.nextInt();
 			allotedCourse(professorId);
 			if (choice == 2) {
-				viewStudents();
 				updateStudentGrades();
 			} 
 			else {
@@ -141,16 +140,14 @@ public class ProfessorCRSMenu {
 	 * 
 	 */
 	public void updateStudentGrades() {
-		Scanner sc = null;
+		Scanner sc = new Scanner(System.in);
 		try {
-			sc = new Scanner(System.in);
 			logger.info("Enter courseId");
 			int courseId = sc.nextInt();
 			logger.info("Enter studentId");
 			int studentId = sc.nextInt();
 			logger.info("Enter Grade");
 			String grade = sc.next();
-
 			boolean status = professorOperation.updateStudentGrade(courseId, studentId, grade);
 			logger.info("Update Grade Status : " + status + "\n\n");
 
@@ -190,4 +187,6 @@ public class ProfessorCRSMenu {
 			logger.info(e.getMessage() + "\n");
 		}
 	}
+	
+	
 }
