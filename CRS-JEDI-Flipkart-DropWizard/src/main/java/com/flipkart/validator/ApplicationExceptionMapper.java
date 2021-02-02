@@ -1,18 +1,18 @@
 package com.flipkart.validator;
 
-
-/**
- * Maps validators for parameters in HTTP requests
- * 
- * @author JEDI04
- *
- */
  
 import javax.ws.rs.core.MediaType;
+
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
  
+/**
+ * Registers REST api classes for connection with server
+ * to implement back-end functionality
+ * @author JEDI04
+ *
+ */
 @Provider
 public class ApplicationExceptionMapper implements ExceptionMapper<Exception> {
  
